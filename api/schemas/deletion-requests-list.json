@@ -1,0 +1,7 @@
+{
+    "title": "Deletion Requests List",
+    "type": "array",
+    "items": {
+        "$ref": "deletion-request.json"
+    }
+}

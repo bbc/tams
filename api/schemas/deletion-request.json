@@ -1,0 +1,92 @@
+{
+    "type": "object",
+    "title": "Deletion Request",
+    "description": "Describes an ongoing deletion request",
+    "required": [
+        "id",
+        "flow_id",
+        "timerange_to_delete",
+        "delete_flow",
+        "status"
+    ],
+    "properties": {
+        "id": {
+            "description": "Deletion Request ID",
+            "type": "string",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "flow_id": {
+            "description": "ID of the flow to which the deletion request relates",
+            "type": "string",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "timerange_to_delete": {
+            "description": "The time range of FlowSegments to be deleted in this request.",
+            "type": "string",
+            "pattern": "[\\[\\(]\\d*:\\d*_\\d*:\\d*[\\]\\)]"
+        },
+        "timerange_remaining": {
+            "description": "The time range of FlowSegments not yet deleted by this request.",
+            "type": "string",
+            "pattern": "[\\[\\(]\\d*:\\d*_\\d*:\\d*[\\]\\)]"
+        },
+        "delete_flow": {
+            "description": "Whether the Flow should be deleted once the timerange has been",
+            "type": "boolean"
+        },
+        "created": {
+            "description": "Date/Time when this deletion request was created",
+            "type": "string",
+            "format": "date-time"
+        },
+        "updated": {
+            "description": "Date/Time when this deletion request was updated",
+            "type": "string",
+            "format": "date-time"
+        },
+        "expiry": {
+            "description": "Date/Time when this deletion request will be deleted",
+            "type": "string",
+            "format": "date-time"
+        },
+        "status": {
+            "description": "Status of the delete request",
+            "type": "string",
+            "enum": [
+                "created",
+                "started",
+                "done",
+                "error"
+            ]
+        },
+        "error": {
+            "description": "Provides more information for the error status.",
+            "type": "object",
+            "required": [
+                "type", "summary", "time"
+            ],
+            "properties": {
+                "type": {
+                    "description": "The error type name.",
+                    "type": "string"
+                },
+                "summary": {
+                    "description": "Summary description of the error and causes.",
+                    "type": "string"
+                },
+                "traceback": {
+                    "description": "Stack trace leading to error (as a list of strings)",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "time": {
+                    "description": "Time at which the error ocurred, to aid in log correlation",
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        }
+    }
+}

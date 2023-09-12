@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "description": "Describes a data Flow",
+  "title": "Data Flow",
+  "allOf": [
+    { "$ref": "flow-core.json" },
+    {
+      "type": "object",
+      "required": [
+        "format"
+      ],
+      "properties": {
+        "format" : {
+          "description": "The primary content type URN for the flow.",
+          "type": "string",
+          "enum": ["urn:x-nmos:format:data"]
+        },
+        "data_type" : {
+          "description": "The type of information encoded in the flow, identified using a URN.",
+          "type": "string"
+        }
+      }
+    }
+  ]
+}

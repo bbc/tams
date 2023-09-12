@@ -1,0 +1,25 @@
+{
+  "id": "6101df05-06bb-41b8-8af4-cf7cd33df209",
+  "source_id": "41d7f7eb-c48d-4513-9b37-17b418d26d7f",
+  "generation": 1,
+  "created": "2018-03-06T09:10:22Z",
+  "metadata_updated": "2018-03-06T09:12:22Z",
+  "segments_updated": "2018-03-06T11:14:32Z",
+  "description": "audio capture web",
+  "label": "capture_1",
+  "format": "urn:x-nmos:format:audio",
+  "created_by": "tams-dev",
+  "tags": {
+    "quality": "web",
+    "_tams_segmentation_rate": "375/8"
+  },
+  "codec": "audio/aac",
+  "container": "video/mp2t",
+  "avg_bit_rate": 128,
+  "timerange": "[1537349337:0_1537349347:21333333)",
+  "sample_rate": 48000,
+  "channels": 2,
+  "bit_depth": 24,
+  "coded_frame_size": 1024,
+  "mp4_oti": 2
+}

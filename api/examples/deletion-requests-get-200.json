@@ -1,0 +1,49 @@
+[
+    {
+        "id": "9f0187c1-419c-44d2-8269-e869ba409462",
+        "flow_id": "d14c70ad-6c59-4092-b51f-b75f6edf04e3",
+        "timerange_to_delete": "[1537349337:0_1537349347:21333333)",
+        "timerange_remaining": "[1537349339:0_1537349347:21333333)",
+        "delete_flow": true,
+        "created": "2018-12-10T15:40:08.339376+00:00",
+        "updated": "2018-12-10T15:40:09.339393+00:00",
+        "expiry": "2018-12-11T15:40:09.339393+00:00",
+        "status": "started"
+    },
+    {
+        "id": "58b3793e-c9ad-4a7f-b680-e823685bb52d",
+        "flow_id": "58b3793e-c9ad-4a7f-b680-e823685bb52d",
+        "timerange_to_delete": "[0:0_1000:0)",
+        "timerange_remaining": "[900:0_1000:0)",
+        "delete_flow": false,
+        "created": "2018-12-10T15:40:08.339376+00:00",
+        "updated": "2018-12-10T15:40:09.339393+00:00",
+        "expiry": "2018-12-11T15:40:09.339393+00:00",
+        "status": "started"
+    },
+    {
+        "id": "3f04ae16-8b78-4426-9ccf-85ddaf908937",
+        "flow_id": "f43619e9-6333-438d-95b3-1e89f426d920",
+        "timerange_to_delete": "[0:0_1000:0)",
+        "timerange_remaining": "[900:0_1000:0)",
+        "delete_flow": false,
+        "created": "2018-12-10T15:40:08.339376+00:00",
+        "updated": "2018-12-10T15:18:52.426792+00:00",
+        "expiry": "2018-12-11T15:40:09.339393+00:00",
+        "status": "error",
+        "error": {
+            "type": "TAMSError",
+            "summary": "Flow delete failed because ...",
+            "traceback": [
+                "Exception: The flow segment could not be deleted",
+                "The above exception was the direct cause of the following exception:",
+                "",
+                "",
+                "Traceback (most recent call last):",
+                "  <traceback...>",
+                "TAMSError: Unable to continue"
+            ],
+            "time": "2018-12-10T15:18:52.426792+00:00"
+        }
+    }
+]
