@@ -1,10 +1,9 @@
 # syntax=docker/dockerfile:1
 
 # Args needed for base images
-ARG CLOUDFIT_BASE_NAME=ap-docker.artifactory.labs.bbc/cloudfit/cloudfit_base
-ARG CLOUDFIT_BASE_LABEL=latest
-ARG PYQAML_DOCKER_LABEL=latest
-ARG ASYNCAPI_DOCKER_LABEL=latest
+ARG CLOUDFIT_BASE_NAME=python
+ARG CLOUDFIT_BASE_LABEL=3.10
+
 ARG OAS_LINT_DOCKER_LABEL=latest
 
 ###############################################################################
@@ -41,7 +40,8 @@ COPY --from=layer /api /data
 ###############################################################################
 # Stage: oaslint
 ###############################################################################
-FROM ap-docker.artifactory.labs.bbc/cloudfit/oaslint:${OAS_LINT_DOCKER_LABEL} AS oaslint
+# FROM ap-docker.artifactory.labs.bbc/cloudfit/oaslint:${OAS_LINT_DOCKER_LABEL} AS oaslint
+FROM stoplight/spectral as oaslint
 
 WORKDIR /data/
 

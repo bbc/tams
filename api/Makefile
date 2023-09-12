@@ -5,18 +5,18 @@ all: lint render
 
 build-lint:
 	docker pull ap-docker.artifactory.labs.bbc/cloudfit/cloudfit_base:latest >/dev/null 2>/dev/null || true
-	DOCKER_BUILDKIT=1 docker build -f Dockerfile.multi --build-arg VERSION=0.0.1 --build-arg BUILD_TAG=local --build-arg CLOUDFIT_BASE_NAME=ap-docker.artifactory.labs.bbc/cloudfit/cloudfit_base --build-arg CLOUDFIT_BASE_LABEL=latest  --target oasvalidate -t tams_api_oasvalidate:local .
+	DOCKER_BUILDKIT=1 docker build -f Dockerfile.multi --build-arg VERSION=0.0.1 --build-arg BUILD_TAG=local --target oasvalidate -t tams_api_oasvalidate:local .
 
 lint: build-lint
-	docker run --rm  -ti tams_api_oasvalidate:local lint /data/TimeAddressableMediaStore.yaml
+	docker run --rm tams_api_oasvalidate:local lint /data/TimeAddressableMediaStore.yaml
 
 
 build-render:
 	docker pull ap-docker.artifactory.labs.bbc/cloudfit/cloudfit_base:latest >/dev/null 2>/dev/null || true
-	DOCKER_BUILDKIT=1 docker build -f Dockerfile.multi --build-arg VERSION=0.0.1 --build-arg BUILD_TAG=local --build-arg CLOUDFIT_BASE_NAME=ap-docker.artifactory.labs.bbc/cloudfit/cloudfit_base --build-arg CLOUDFIT_BASE_LABEL=latest  --target oasrender -t tams_api_oasrender:local .
+	DOCKER_BUILDKIT=1 docker build -f Dockerfile.multi --build-arg VERSION=0.0.1 --build-arg BUILD_TAG=local --target oasrender -t tams_api_oasrender:local .
 
 render: build-render
-	docker run --rm  -ti -v "${topdir}/docs:/docs" tams_api_oasrender:local bundle /data/TimeAddressableMediaStore.yaml -o /docs/TimeAddressableMediaStore.html
+	docker run --rm -v "${topdir}/docs:/docs" tams_api_oasrender:local bundle /data/TimeAddressableMediaStore.yaml -o /docs/TimeAddressableMediaStore.html
 
 
 mock-server-up:
