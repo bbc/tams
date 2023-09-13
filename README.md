@@ -5,7 +5,7 @@ BBC R&D have demonstrated use of the TAMS approach as part of composable, softwa
 
 ## Documentation
 - OpenAPI Specification: [TimeAddressableMediaStore.yaml](./api/TimeAddressableMediaStore.yaml)
-- Rendered Documentation: **TODO: Link to docs render**
+- Rendered Documentation: <https://fictional-fortnight-ov54w43.pages.github.io/TimeAddressableMediaStore.html>
 
 This repo contains some automation to run a mock version of the API using [Stoplight Prism](https://stoplight.io/open-source/prism). To run the mock server using Docker, try something like the command below (or run `make mock-server-up`):
 ```
@@ -24,17 +24,17 @@ Segments may be stored separately from the metadata defining where they belong i
 ### Reading and Writing in the Store
 The process of reading from the store is:
 1. Client identifies the Flow ID and timerange of interest
-2. Client makes a request to [`GET flows/<flow_id>/segments?timerange=<timerange>`]() and receives a list of segments, timeranges and download URLs
+2. Client makes a request to [`GET flows/<flow_id>/segments?timerange=<timerange>`](https://fictional-fortnight-ov54w43.pages.github.io/TimeAddressableMediaStore.html#operation/GET_flows-flowId) and receives a list of segments, timeranges and download URLs
 3. Client downloads each URL, concatenates the segments together and unwraps the grains within
 4. The first and last Flow Segment may contain more grains than requested, so the client should skip any received not in the requested timerange
 
 The process of writing to the store is:
 1. Client creates a Flow if necessary
-2. Client makes a request to [`POST flows/<flow_id>/storage`]() with the timerange to be written
+2. Client makes a request to [`POST flows/<flow_id>/storage`](https://fictional-fortnight-ov54w43.pages.github.io/TimeAddressableMediaStore.html#operation/POST_flows-flowId-storage) with the timerange to be written
 3. Store responds with a list of segment timeranges and URLs to PUT segments to, along with an optional `pre` URL to call before writing
 4. If a `pre` URL was given, client calls it
 5. Client breaks content into segments as instructed and uploads it
-6. Client makes requests to [`POST flows/<flow_id>/segments`]() with details of each new segment created, to register them on the timeline
+6. Client makes requests to [`POST flows/<flow_id>/segments`](https://fictional-fortnight-ov54w43.pages.github.io/TimeAddressableMediaStore.html#operation/POST_flows-flowId-segments) with details of each new segment created, to register them on the timeline
 
 ### Flows, Sources and Mutation
 Flows in the store are assumed to be immutable: once a grain has been written to a point on the timeline on a specific Flow, it cannot be changed. However Flows can always be extended, with empty spaces on the timeline filled in, and areas of the timeline can be permanently erased.
