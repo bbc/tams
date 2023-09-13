@@ -33,6 +33,7 @@ servers:
         description: API version
         default: version
 security:
+  - {}
   - basic_auth: []
   - bearer_token_auth: []
 
