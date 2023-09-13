@@ -10,7 +10,7 @@ If you've fixed a problem or thought of an improvement, feel free to fork the re
 1. Fork the repository
 2. Make, commit and push changes to a branch on your fork (make sure the commit message contains your email address)
 3. If you haven't already done so, sign the CLA (see below)
-4. Open a Pull Request with your changes
+4. Open a Pull Request with your changes. Don't worry about leaving empty spaces on the PR template (it's aimed at internal contributions), just fill in the description
 
 ## Contributor Licence Agreement (CLA)
 We desire that contributors of pull requests have signed, and submitted by email, an [Individual Contributor Licence Agreement (ICLA)](./ICLA.md), which is based on the Apache CLA.
