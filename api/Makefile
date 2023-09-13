@@ -1,7 +1,7 @@
 NUM_OF_PARENT:=$(shell echo $$(( $(words $(MAKEFILE_LIST)))) )
 topdir:=$(realpath $(dir $(word $(NUM_OF_PARENT),$(MAKEFILE_LIST))))
 
-all: lint render
+all: help
 
 build-lint:
 	docker pull ap-docker.artifactory.labs.bbc/cloudfit/cloudfit_base:latest >/dev/null 2>/dev/null || true
@@ -32,4 +32,12 @@ mock-server-healthy:
 	@echo
 
 
-.PHONY: all build-lint lint build-render render mock-server-up mock-server-down mock-server-healthy
+help:
+	@echo "tams-api"
+	@echo "make lint                - Lint API specification document"
+	@echo "make render              - Generate HTML rendered version of OpenAPI document"
+	@echo "make mock-server-up      - Start a mock API server on http://localhost:4010"
+	@echo "make mock-server-down    - Stop the mock API server"
+	@echo "make mock-server-healthy - Connect to mock API server, confirm it is working"
+
+.PHONY: all build-lint lint build-render render mock-server-up mock-server-down mock-server-healthy help
