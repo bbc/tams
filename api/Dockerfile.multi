@@ -1,0 +1,36 @@
+# syntax=docker/dockerfile:1
+
+# Args needed for base images
+ARG CLOUDFIT_BASE_NAME=python
+ARG CLOUDFIT_BASE_LABEL=3.10
+
+###############################################################################
+# Stage: apilayer - Base layer with API specs installed
+###############################################################################
+FROM ${CLOUDFIT_BASE_NAME}:${CLOUDFIT_BASE_LABEL} AS layer
+WORKDIR /api/
+
+# Install api example, schemas, etc.
+COPY ./examples ./examples
+COPY ./schemas ./schemas
+COPY ./TimeAddressableMediaStore.yaml .
+
+###############################################################################
+# Stage: oasvalidate - Validates OpenAPI specifications
+###############################################################################
+FROM redocly/openapi-cli AS oasvalidate
+WORKDIR /data/
+
+# Copy in documentation source files
+COPY --from=layer /api /data
+
+COPY .redocly.lint-ignore.yaml /data/
+
+###############################################################################
+# Stage: oasrender - Renders OpenAPI specifications
+###############################################################################
+FROM ghcr.io/redocly/redoc/cli:v2.0.0-rc.59 AS oasrender
+WORKDIR /data/
+
+# Copy in documentation source files
+COPY --from=layer /api /data

@@ -1,0 +1,16 @@
+[
+  {
+    "object_id": "tams-825c7818-3534-11e9-9e96-9b9372493d75/99c27f3f-ab67-47ae-8dd3-e5c146912b50",
+    "range": "[1520333039:978666666_1520333083:498645833]",
+    "sample_count": 2088960,
+    "sample_offset": 0,
+    "get_url": "https://example.store.com/tams-825c7818-3534-11e9-9e96-9b9372493d75/99c27f3f-ab67-47ae-8dd3-e5c146912b50?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=0&X-Amz-Date=20230316T115854Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&X-Amz-Signature=0"
+  },
+  {
+    "object_id": "tams-825c7818-3534-11e9-9e96-9b9372493d75/e8cf92ec-b026-4d3b-8be0-ca42782037a2",
+    "range": "[1520333083:498666666_1520333095:18645833)",
+    "sample_count": 552960,
+    "sample_offset": 0,
+    "get_url": "https://example.store.com/tams-825c7818-3534-11e9-9e96-9b9372493d75/e8cf92ec-b026-4d3b-8be0-ca42782037a2?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=0&X-Amz-Date=20230316T115854Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&X-Amz-Signature=0"
+  }
+]

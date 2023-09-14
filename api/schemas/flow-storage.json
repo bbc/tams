@@ -1,0 +1,53 @@
+{
+  "type": "object",
+  "description": "Gives information on storage for particular flow segments. This example is for a media store that provided URLs for storing media objects in bucket. Different backends may add additional/different fields",
+  "title": "storage",
+  "properties": {
+    "pre": {
+      "type": "array",
+      "description": "Actions that need to be taken before the segments can be written to",
+      "items": {
+        "type": "object",
+        "description": "An action",
+        "required": [
+          "action"
+        ],
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": [
+              "create_bucket"
+            ]
+          },
+          "bucket_id": {
+            "type": "string",
+            "description": "The name of the bucket that needs to be created"
+          },
+          "put_url": { "$ref": "http-request.json" },
+          "put_cors_url": { "$ref": "http-request.json" }
+        }
+      }
+    },
+    "segments": {
+      "type": "object",
+      "description": "Mapping of timeranges (validated by regex) to segment storage locations.",
+      "patternProperties": {
+        "^[\\[\\(]?([0-9]+:[0-9]+)?_([0-9]+:[0-9]+)?[\\]\\)]?$": {
+          "type": "object",
+          "required": [
+            "object_id"
+          ],
+          "properties": {
+            "object_id": {
+              "description": "The object store identifier for the media object covering this time range.",
+              "type": "string"
+            },
+            "put_url": { "$ref": "http-request.json" },
+            "put_cors_url": { "$ref": "http-request.json" }
+          }
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

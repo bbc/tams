@@ -1,0 +1,73 @@
+{
+  "type": "object",
+  "description": "Provides the location and metadata of the media files corresponding to time range segments of a Flow.",
+  "title": "Flow Segment",
+  "required": [
+    "object_id"
+  ],
+  "oneOf": [
+    {
+      "required": [
+        "first_ts",
+        "last_ts"
+      ]
+    },
+    {
+      "required": [
+        "range"
+      ]
+    }
+  ],
+  "properties": {
+    "object_id" : {
+      "description": "The object store identifier for the media object.",
+      "type": "string"
+    },
+    "ts_offset": {
+      "description": "The timestamp offset between the timestamps stored in the media file and the corresponding timestamp in the segment, ie. ts_offset = segment ts - media object ts.",
+      "type": "string",
+      "format": "timeoffset"
+    },
+    "range": {
+      "description": "The timerange from the first media unit in the segment to the last (exclusive if exclusive_last_ts is true).",
+      "type": "string",
+      "format": "inclusive_start_timerange"
+    },
+    "first_ts" : {
+      "description": "The timestamp of the first media unit in the segment (not media file).",
+      "type": "string",
+      "format": "timestamp"
+    },
+    "last_duration": {
+      "description": "The duration of the last media unit in the segment (not media file). Defaults to 1/rate if a fixed media rate is set.",
+      "type": "string",
+      "format": "timeoffset"
+    },
+    "last_ts" : {
+      "description": "The timestamp of the last media unit or end of the last media unit if exclusive_last_ts is true.",
+      "type": "string",
+      "format": "timestamp"
+    },
+    "exclusive_last_ts" : {
+      "description": "A true value indicates that the last_ts timestamp is the exclusive end of the last media unit in the segment.",
+      "type": "boolean",
+      "default": false
+    },
+    "sample_offset": {
+      "description": "The start of the segment represented as a count of audio samples, video frames or data items from the start of the media file.",
+      "type": "integer"
+    },
+    "sample_count": {
+      "description": "The count of media units in the segment (not media file). The count could be less than expected given the segment duration is there are gaps.",
+      "type": "integer"
+    },
+    "get_url": {
+      "description": "A URL to which a GET request can be made to directly retrieve the contents of the segment. This is optional, and not all media store backends may provide it.",
+      "type": "string"
+    },
+    "key_frame_count": {
+      "description": "The number of key frames in the segment",
+      "type": "integer"
+    }
+  }
+}

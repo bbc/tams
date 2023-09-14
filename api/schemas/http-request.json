@@ -1,0 +1,29 @@
+{
+    "type": "object",
+    "description": "Gives information on a particular http request a client should perform",
+    "required": [
+        "url"
+    ],
+    "properties": {
+        "url": {
+            "description": "The URL to make the request to",
+            "type": "string"
+        },
+        "body": {
+            "description": "The text of the body which needs to be included in the request",
+            "type": "string"
+        },
+        "content-type": {
+            "description": "The content type which must be used",
+            "type": "string"
+        },
+        "headers": {
+            "description": "Additional headers that should be included",
+            "type": "object",
+            "additionalProperties": {
+                "type": "string"
+            }
+        }
+    },
+    "additionalProperties": true
+  }

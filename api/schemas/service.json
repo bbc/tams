@@ -1,0 +1,42 @@
+{
+  "type": "object",
+  "description": "Provides information about the store service",
+  "title": "Service",
+  "required": [
+    "type",
+    "version",
+    "media_store"
+  ],
+  "properties": {
+    "name": {
+      "description": "The service instance name",
+      "type": "string"
+    },
+    "description": {
+      "description": "The service instance description",
+      "type": "string"
+    },
+    "type": {
+      "description": "The type identifier for the service. The value must start with 'urn:x-tams:service'",
+      "type": "string"
+    },
+    "version": {
+      "description": "The API and implementation version",
+      "type": "string"
+    },
+    "media_store": {
+      "type": "object",
+      "description": "Provide information about the media store for this service",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "description": "The type of the media store. This determines the endpoints for reading and writing media",
+          "type": "string",
+          "enum": ["http_object_store"]
+        }
+      }
+    }
+  }
+}

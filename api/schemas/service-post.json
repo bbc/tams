@@ -1,0 +1,15 @@
+{
+    "title": "Update Service Info",
+    "description": "Post update to the service info",
+    "type": "object",
+    "properties": {
+        "name": {
+            "description": "The service instance name",
+            "type": "string"
+        },
+        "description": {
+            "description": "The service instance description",
+            "type": "string"
+        }
+    }
+}

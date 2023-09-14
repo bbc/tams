@@ -1,0 +1,10 @@
+{
+  "type": "object",
+  "description": "Describes a Flow",
+  "title": "Flow",
+  "oneOf": [
+    { "$ref": "flow-video.json" },
+    { "$ref": "flow-audio.json" },
+    { "$ref": "flow-data.json" }
+  ]
+}
