@@ -5,7 +5,7 @@ BBC R&D have demonstrated use of the TAMS approach as part of composable, softwa
 
 ## Documentation
 - OpenAPI Specification: [TimeAddressableMediaStore.yaml](./api/TimeAddressableMediaStore.yaml)
-- Rendered Documentation: <https://fictional-fortnight-ov54w43.pages.github.io/TimeAddressableMediaStore.html>
+- Rendered Documentation: [TimeAddressableMediaStore.html](https://fictional-fortnight-ov54w43.pages.github.io/TimeAddressableMediaStore.html)
 
 This repo contains some automation to run a mock version of the API using [Stoplight Prism](https://stoplight.io/open-source/prism). To run the mock server using Docker, try something like the command below (or run `make mock-server-up`):
 ```
