@@ -501,7 +501,7 @@ paths:
         list, not a 404.
       operationId: GET_flows-flowId-segments
       tags:
-        - Flows
+        - FlowSegments
       parameters:
         - name: object_id
           in: query
