@@ -2,7 +2,7 @@ name: CI Workflow
 run-name: ${{ format('{0} triggered {1} on {2}', (github.event_name == 'workflow_dispatch' && format('User {0}', github.actor) || format('{0} event', github.event_name) ), github.workflow, github.ref) }}
 on:
   schedule:
-    - cron: '0 4 * * 1-5'
+    - cron: '0 4 * * 1'
 
   push:
 
