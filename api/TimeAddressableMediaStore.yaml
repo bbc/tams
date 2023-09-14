@@ -21,6 +21,8 @@ info:
     The TAMS consists of a media store for the media flow segment objects and a service providing
     a database index of the flow segments. This document is a specification of the service API.
 
+    See the [bbc/tams](https://github.com/bbc/tams) repository for more background on TAMS.
+
     **Note**: the examples provided in this specification are for a system which uses a media
     store that provides HTTP URLs for uploading and downloading media objects in buckets. This
     could for example be implemented using an AWS S3 compatible store using presigned URLs or by
@@ -30,6 +32,7 @@ info:
   contact:
     name: 'BBC R&D - Cloud-Fit Production Team'
     email: 'cloudfit-opensource@rd.bbc.co.uk'
+    url: https://github.com/bbc/tams
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
