@@ -4,8 +4,6 @@
 ARG CLOUDFIT_BASE_NAME=python
 ARG CLOUDFIT_BASE_LABEL=3.10
 
-ARG OAS_LINT_DOCKER_LABEL=latest
-
 ###############################################################################
 # Stage: apilayer - Base layer with API specs installed
 ###############################################################################
@@ -32,17 +30,6 @@ COPY .redocly.lint-ignore.yaml /data/
 # Stage: oasrender - Renders OpenAPI specifications
 ###############################################################################
 FROM ghcr.io/redocly/redoc/cli:v2.0.0-rc.59 AS oasrender
-WORKDIR /data/
-
-# Copy in documentation source files
-COPY --from=layer /api /data
-
-###############################################################################
-# Stage: oaslint
-###############################################################################
-# FROM ap-docker.artifactory.labs.bbc/cloudfit/oaslint:${OAS_LINT_DOCKER_LABEL} AS oaslint
-FROM stoplight/spectral as oaslint
-
 WORKDIR /data/
 
 # Copy in documentation source files
