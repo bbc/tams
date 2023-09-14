@@ -1,5 +1,5 @@
-# Time Addressable Media Store API
-This repository contains API definitions for a Time-Addressable Media Store (TAMS) server, which can be used to store, query and access segmented media - distinct from files and streams, but sharing characteristics of both.
+# Time-addressable Media Store API
+This repository contains API definitions for a Time-addressable Media Store (TAMS) server, which can be used to store, query and access segmented media - distinct from files and streams, but sharing characteristics of both.
 
 BBC R&D have demonstrated use of the TAMS approach as part of composable, software-defined workflows which can run in the cloud, on-premise or in a hybrid environment.
 We've built a prototype implementation of this API, along with services for movement and transformation of streams and files, which serve as the media backend for other projects such as our [remote wildlife camera](https://www.bbc.co.uk/rd/blog/2022-04-video-cloud-media-store-ingest-service) work.

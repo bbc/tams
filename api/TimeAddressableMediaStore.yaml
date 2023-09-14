@@ -15,9 +15,9 @@
 #
 openapi: 3.1.0
 info:
-  title: Time Addressable Media Store
+  title: Time-addressable Media Store
   description: |
-    The Time Addressable Media Store (TAMS) is used for storing segmented media flows.
+    The Time-addressable Media Store (TAMS) is used for storing segmented media flows.
     The TAMS consists of a media store for the media flow segment objects and a service providing
     a database index of the flow segments. This document is a specification of the service API.
 
