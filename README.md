@@ -15,11 +15,13 @@ docker run --rm --init --name mock-tams -v "$(pwd)":/data:ro -p 4010:4010 stopli
 A mock API server will start at <http://localhost:4010>
 
 ## Design
-The store handles Flows (based on the Flows in the [AMWA NMOS MS-04 model](https://specs.amwa.tv/ms-04/releases/v1.0.0/docs/2.1._Summary_and_Definitions.html) and aligned with the principles and schemas of [AMWA NMOS IS-04](https://specs.amwa.tv/is-04/releases/v1.3.2/APIs/schemas/) to facilitate easy integration of NMOS-compliant media devices), which exist on an infinite timeline, are immutable and can be grouped by Sources (from the same document). Each grain of media (_e.g._ frame of video or audio samples) in a Flow can be uniquely addressed by a `<flow_id, timestamp>` tuple (or more commonly a flow ID and timerange). Because the store is immutable, a flow ID and timerange can be used to pass media by reference, only referring back to the store to retrieve the actual media essence when it needs to be transformed or rendered to a screen or speaker.
+The store handles Flows which exist on an infinite timeline, are immutable, and can be grouped by Sources (based on the Flows and Sources in the [AMWA NMOS MS-04 model](https://specs.amwa.tv/ms-04/releases/v1.0.0/docs/2.1._Summary_and_Definitions.html)). A flow ID and timerange refers to a sequence of grains (_e.g._ frames of video or set of audio samples) and any point in a Flow can be uniquely addressed by a `<flow_id, timestamp>` tuple. This unique address for each grain is powerful - since it is guaranteed to refer to a specific frame, or set of audio samples, it can be safely passed around other tools or programs. At any time the unique address can be exchanged for the media data by an API call. But if that is not needed, media work can be done purely by reference.
 
 Grains are grouped into Flow Segments, containing for example one second of content, wrapped in a container format such as MPEG-TS. The store provides a mechanism to upload and register new segments, and an interface to request all the segments covering a particular timerange and their download URLs; an approach inspired by chunked streaming protocols like HTTP Live Streaming.
 
-Segments may be stored separately from the metadata linking them to a position on the timeline, separating the metadata and data planes. For example our implementation uses an object store (_e.g._ AWS S3) for the segments and avoids proxying them through our servers, taking advantage of the scalability of cloud object storage. Segments are also de-coupled from their point in the timeline by a link between their `<flow_id, timestamp>` tuple and the underlying object ID, so a single segment can appear at multiple points in multiple flows. This allows for copy-on-write semantics: immutability means a new Flow must be created to make changes to existing parts of the timeline, but for unmodified portions of the timeline that is a metadata operation, and the original Flow's segments are re-used.
+Segments may be stored separately from the metadata linking them to a position on the timeline, separating the metadata and data planes. For example our implementation uses an object store (_e.g._ AWS S3) for the segments, passing S3 URLs to the client to upload directly and taking advantage of the scalability of cloud object storage. Segments are also de-coupled from their point in the timeline by a link between their `<flow_id, timestamp>` tuple and the underlying object ID, so a single segment can appear at multiple points in multiple flows. This allows for copy-on-write semantics: immutability means a new Flow must be created to make changes to existing parts of the timeline, but for unmodified portions of the timeline the new `<flow_id, timestamp>` tuple points to the existing object ID.
+
+The Flow model is aligned with the principles and schemas of [AMWA NMOS IS-04](https://specs.amwa.tv/is-04/releases/v1.3.2/APIs/schemas/) to facilitate easy integration of NMOS-compliant media devices.
 
 ### Reading and Writing in the Store
 The process of reading from the store is:
@@ -29,7 +31,7 @@ The process of reading from the store is:
 4. The first and last Flow Segment may contain more grains than requested, so the client should skip any received not in the requested timerange
 
 The process of writing to the store is:
-1. Client creates a Flow if necessary
+1. Client creates a Flow if necessary by making a request to [`PUT flows/<flow_id>`](https://fictional-fortnight-ov54w43.pages.github.io/TimeAddressableMediaStore.html#operation/PUT_flows-flowId)
 2. Client makes a request to [`POST flows/<flow_id>/storage`](https://fictional-fortnight-ov54w43.pages.github.io/TimeAddressableMediaStore.html#operation/POST_flows-flowId-storage) with the timerange to be written
 3. Store responds with a list of segment timeranges and URLs to PUT segments to, along with an optional `pre` URL to call before writing
 4. If a `pre` URL was given, client calls it
