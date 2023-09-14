@@ -1,7 +1,29 @@
 # Time Addressable Media Store API
-This repository contains API definitions for a Time Addressable Media Store (TAMS) server, which can be used to store, query and access segmented media. TAMS is an approach to storing, accessing and manipulating media (video, audio and data) as short segments indexed by time, in a way that supports both linear and random access.
+This repository contains API definitions for a Time-Addressable Media Store (TAMS) server, which can be used to store, query and access segmented media - distinct from files and streams, but sharing characteristics of both.
 
-BBC R&D have demonstrated use of the TAMS approach as part of composable, software-defined workflows which can run in the cloud, on-premise or in a hybrid environment. We've built a prototype implementation of this API, along with services for movement and transformation of streams and files, which serve as the media backend for other projects such as our [remote wildlife camera](https://www.bbc.co.uk/rd/blog/2022-04-video-cloud-media-store-ingest-service) work. For more detail on the architecture and motivation see **TODO: Link to blog**.
+BBC R&D have demonstrated use of the TAMS approach as part of composable, software-defined workflows which can run in the cloud, on-premise or in a hybrid environment.
+We've built a prototype implementation of this API, along with services for movement and transformation of streams and files, which serve as the media backend for other projects such as our [remote wildlife camera](https://www.bbc.co.uk/rd/blog/2022-04-video-cloud-media-store-ingest-service) work.
+
+Time-addressable media is defined by a timeline, with media elements placed upon it, building upon concepts familiar from IMF.
+Media stored in TAMS are identified with UUIDs according to the scheme used in [AMWA NMOS IS-04](https://specs.amwa.tv/is-04/releases/v1.3.2/APIs/schemas/).
+Once written, the media, and their association with the timeline, are immutable.
+
+Thanks to this immutability, a UUID and a timerange always refers to a specific sequence of media.
+Unless you need to read the samples, you don’t need to copy the media, instead just working by reference.
+Metadata operations can all be carried out without moving media files around, so lightweight metadata operations can have lightweight implementations.
+
+We designed TAMS cloud-first.
+When run on public cloud services TAMS benefits from the scalability, robustness and availability of any well-designed cloud service.
+Freed from the limitations of a fixed-size appliance, the TAMS can become the core of a whole media ecosystem.
+Next-generation tools and systems communicate via, or with reference to, the store, just by making HTTP requests.
+Immutability means that references are always valid.
+Wide availability means large organisations like the BBC can easily share assets between staff and partners.
+Access controls can be put in place as needed for business reasons, using standard web security techniques, rather than being imposed by technical limitations.
+
+Thanks to adopting cloud-style separation of concerns, essence storage is delegated to a cloud service.
+As a result storage can be chosen on a flexible and dynamic basis.
+Media can be moved between locations and storage tiers as needed.
+Users of TAMS are insulated from the details of the underlying storage.
 
 ## Documentation
 - OpenAPI Specification: [TimeAddressableMediaStore.yaml](./api/TimeAddressableMediaStore.yaml)
@@ -15,7 +37,7 @@ docker run --rm --init --name mock-tams -v "$(pwd)":/data:ro -p 4010:4010 stopli
 A mock API server will start at <http://localhost:4010>
 
 ## Design
-The store handles Flows which exist on an infinite timeline, are immutable, and can be grouped by Sources (based on the Flows and Sources in the [AMWA NMOS MS-04 model](https://specs.amwa.tv/ms-04/releases/v1.0.0/docs/2.1._Summary_and_Definitions.html)). A flow ID and timerange refers to a sequence of grains (_e.g._ frames of video or set of audio samples) and any point in a Flow can be uniquely addressed by a `<flow_id, timestamp>` tuple. This unique address for each grain is powerful - since it is guaranteed to refer to a specific frame, or set of audio samples, it can be safely passed around other tools or programs. At any time the unique address can be exchanged for the media data by an API call. But if that is not needed, media work can be done purely by reference.
+The store handles Flows which exist on an infinite timeline, are immutable, and can be grouped by Sources (based on the Flows and Sources in the [AMWA NMOS MS-04 model](https://specs.amwa.tv/ms-04/releases/v1.0.0/docs/2.1._Summary_and_Definitions.html)). A flow ID and timerange refers to a sequence of grains (_e.g._ frames of video or set of audio samples) and any point in a Flow can be uniquely addressed by a `<flow_id, timestamp>` tuple. This unique address is guaranteed to refer to a specific frame, or set of audio samples, so it can be safely passed around other tools or programs. At any time the unique address can be exchanged for the media data by an API call. But if that is not needed, media work can be done purely by reference.
 
 Grains are grouped into Flow Segments, containing for example one second of content, wrapped in a container format such as MPEG-TS. The store provides a mechanism to upload and register new segments, and an interface to request all the segments covering a particular timerange and their download URLs; an approach inspired by chunked streaming protocols like HTTP Live Streaming.
 
