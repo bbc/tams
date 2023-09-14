@@ -18,9 +18,13 @@ jobs:
   CI:
     name: CI
     runs-on: ubuntu-22.04
+    outputs:
+      shouldUpload: ${{ steps.shouldUpload.outputs.upload }}
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # check out the entire repo history for SHA verification in lastSuccessful step
 
       - name: Lint specification
         run: make lint
@@ -29,12 +33,34 @@ jobs:
       - name: Render API docs
         run: make render
 
+      #################################
+      ## Upload deployable artefacts ##
+      #################################
+      - name: Identify latest successful run
+        id: lastSuccessful
+        uses: SamhammerAG/last-successful-build-action@1c368a27a90596574a71ac0ede422a897d0e8e84  # @v4
+        with:
+          branch: ${{ github.ref_name }}
+          workflow: ${{ github.workflow }}
+          verify: true
+
+      - name: Determine if this workflow should upload artefacts
+        id: shouldUpload
+        shell: bash
+        run: |
+          if [ "${{ steps.lastSuccessful.outputs.sha }}" != "${{ github.sha }}" ] && [ "${{ github.ref_name }}" == "main" ]
+          then
+            echo "upload=true" >> $GITHUB_OUTPUT;
+          else
+            echo "upload=false" >> $GITHUB_OUTPUT;
+          fi
+
       - name: Setup pages
-        if: ${{ inputs.forceDocsUpload || ( github.ref == 'refs/heads/main' ) }}
+        if: ${{ inputs.forceDocsUpload || ( steps.shouldUpload.outputs.upload == 'true' ) }}
         uses: actions/configure-pages@v3
 
       - name: Upload documentation artifact
-        if: ${{ inputs.forceDocsUpload || ( github.ref == 'refs/heads/main' ) }}
+        if: ${{ inputs.forceDocsUpload || ( steps.shouldUpload.outputs.upload == 'true' ) }}
         uses: actions/upload-pages-artifact@v2
         with:
           path: './api/docs'
@@ -48,7 +74,7 @@ jobs:
       id-token: write
     runs-on: ubuntu-22.04
     needs: CI
-    if: ${{ inputs.forceDocsUpload || ( github.ref == 'refs/heads/main' ) }}
+    if: ${{ inputs.forceDocsUpload || ( needs.CI.outputs.shouldUpload == 'true' ) }}
     steps:
       - name: Deploy documentation to GitHub Pages
         id: deployment
