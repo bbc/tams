@@ -657,7 +657,7 @@ paths:
             X-Paging-Next-Timerange:
               description: The 'timerange' to use in the Post data to get the next page. If 'X-Paging-Next-Timerange' is not present then it is the last page.
               schema:
-                type: integer
+                $ref: '#/components/schemas/timerange_type'
             X-Paging-Limit:
               description: Identifies the current limit being used for paging. This may not match the requested value if the requested value was too high for the implementation.
               schema:
