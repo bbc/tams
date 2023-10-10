@@ -84,7 +84,7 @@
     "timerange": {
       "description": "The time range of samples available in the flow.",
       "type": "string",
-      "pattern": "^(\\[|\\()?(\\d+:\\d+)?(_(\\d+:\\d+)?)?(\\]|\\))?$"
+      "pattern": "^(\\[|\\()?(-?\\d+:\\d+)?(_(-?\\d+:\\d+)?)?(\\]|\\))?$"
     }
   }
 }
