@@ -24,7 +24,7 @@
       "type": "string"
     },
     "ts_offset": {
-      "description": "The timestamp offset between the timestamps stored in the media file and the corresponding timestamp in the segment, ie. ts_offset = segment ts - media object ts.",
+      "description": "The timestamp offset between the timestamps stored in the media file and the corresponding timestamp in the segment, ie. ts_offset = segment ts - media object ts. Assumed to be 0:0 if not set.",
       "type": "string",
       "pattern": "^-?\\d+:\\d+$"
     },
@@ -34,17 +34,17 @@
       "pattern": "^(\\[)?-?\\d+:\\d+(_-?\\d+:\\d+)?(\\]|\\))?$"
     },
     "first_ts" : {
-      "description": "The timestamp of the first media unit in the segment (not media file).",
+      "description": "The timestamp of the first media unit in the segment (which may not be the first unit in the object).",
       "type": "string",
       "pattern": "^-?\\d+:\\d+$"
     },
     "last_duration": {
-      "description": "The duration of the last media unit in the segment (not media file). Defaults to 1/rate if a fixed media rate is set.",
+      "description": "The duration of the last media unit in the segment (which may differ from that of the object). Defaults to 1/rate if a fixed media rate is set.",
       "type": "string",
       "pattern": "^\\d+:\\d+$"
     },
     "last_ts" : {
-      "description": "The timestamp of the last media unit or end of the last media unit if exclusive_last_ts is true.",
+      "description": "The timestamp of the start of the last media unit in the segment, or end of the last media unit in the segment if exclusive_last_ts is true.",
       "type": "string",
       "pattern": "^-?\\d+:\\d+$"
     },
@@ -54,11 +54,12 @@
       "default": false
     },
     "sample_offset": {
-      "description": "The start of the segment represented as a count of audio samples, video frames or data items from the start of the media file.",
-      "type": "integer"
+      "description": "The start of the segment represented as a count of audio samples, video frames or data items from the start of the object.",
+      "type": "integer",
+      "default": 0
     },
     "sample_count": {
-      "description": "The count of media units in the segment (not media file). The count could be less than expected given the segment duration is there are gaps.",
+      "description": "The count of media units in the segment (which may be fewer than in the object). The count could be less than expected given the segment duration and rate if there are gaps. If not set, every sample from sample_offset onwards is used",
       "type": "integer"
     },
     "get_url": {
