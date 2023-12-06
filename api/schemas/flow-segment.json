@@ -59,7 +59,7 @@
       "default": 0
     },
     "sample_count": {
-      "description": "The count of media units in the segment (which may be fewer than in the object). The count could be less than expected given the segment duration and rate if there are gaps. If not set, every sample in the object is used",
+      "description": "The count of media units in the segment (which may be fewer than in the object). The count could be less than expected given the segment duration and rate if there are gaps. If not set, every sample from sample_offset onwards is used",
       "type": "integer"
     },
     "get_url": {

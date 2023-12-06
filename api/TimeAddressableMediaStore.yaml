@@ -555,16 +555,20 @@ paths:
 
         For newly-written objects, the client is responsible for ensuring that the segment written to the store obeys the following restrictions:
         - The object id provided for a segment MUST be one which was received in a POST from /storage for this flow.
-        - The first media unit written to the object MUST have a timestamp located inside the time range
+        - The timestamp of the first media unit written to the object MUST be located inside the time range
           that was associated with this object id in the response from the POST request to /storage for this flow.
         - All media units in the object SHOULD be used by the segment.
-        - The timestamps of each media unit in the file MUST equal its position on the Flow timeline, OR `ts_offset` MUST be set such that `media_unit_ts + ts_offset = segment_ts`
+        - The timestamps of each media unit in the file MUST equal its position on the Flow timeline, OR `ts_offset` MUST
+          be set such that `media_unit_ts + ts_offset = segment_ts`
         - The `sample_offset` SHOULD be zero.
 
-        For objects that have been re-used from other flows, the `sample_offset` and `sample_count` MAY be used to specify part of the object to use:
+        For objects that have been re-used from other flows, the `sample_offset` and `sample_count` MAY be used to
+        specify part of the object to use:
         - The `range` (or `first_ts` and `last_ts`) fields indicate the new segment's position in the flow
         - The sample associated with the start of the range (or `first_ts`) MUST be the one selected by `sample_offset`
-        - Likewise, the sample associated with the end of the range (or `last_ts`) MUST be the one selected by `sample_offset + sample_count`.
+        - Likewise, the sample associated with the end of the range (or `last_ts`) MUST be the one selected by
+          `sample_offset + sample_count - 1`, unless `exclusive_last_ts == true`, in which case it will be
+          `sample_offset + sample_count`.
 
       operationId: POST_flows-flowId-segments
       tags:
