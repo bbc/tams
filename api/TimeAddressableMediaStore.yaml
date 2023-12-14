@@ -275,7 +275,7 @@ paths:
                 rawvideo:
                   summary: Video Flow - Uncompressed (Quicktime)
                   value:
-                    $ref: examples/flow-get-200-video-raw.
+                    $ref: examples/flow-get-200-video-raw.json
                 ttml:
                   summary: Data Flow - TTML
                   description: TAMS can also be used for storing non-AV content such as subtitles or event data
@@ -561,8 +561,18 @@ paths:
                 type: boolean
           content:
             application/json:
-              example:
-                $ref: examples/flow-segments-get-200.json
+              examples:
+                basic:
+                  summary: Basic Example
+                  value:
+                    $ref: examples/flow-segments-get-200.json
+                sample_count:
+                  summary: Partial Segment
+                  description: |
+                    This example takes part of an existing segment, offsets it with `ts_offset` and then selects a
+                    subset of the samples within using `ts_offset` for the second segment in the sequence.
+                  value:
+                    $ref: examples/flow-segments-get-200-sample-offset.json
     post:
       description: |
         Register a new flow segment, attaching the object id given to a point in the flow timeline.
