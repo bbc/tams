@@ -263,8 +263,24 @@ paths:
             application/json:
               schema:
                 $ref: schemas/flow.json
-              example:
-                $ref: examples/flow-get-200.json
+              examples:
+                video:
+                  summary: Video Flow - H.264 Codec
+                  value:
+                    $ref: examples/flow-get-200-video-h264.json
+                audio:
+                  summary: Audio Flow - AAC Codec
+                  value:
+                    $ref: examples/flow-get-200-audio-aac.json
+                rawvideo:
+                  summary: Video Flow - Uncompressed (Quicktime)
+                  value:
+                    $ref: examples/flow-get-200-video-raw.
+                ttml:
+                  summary: Data Flow - TTML
+                  description: TAMS can also be used for storing non-AV content such as subtitles or event data
+                  value:
+                    $ref: examples/flow-get-200-data-ttml.json
         "404":
           description: The requested flow does not exist.
         "400":

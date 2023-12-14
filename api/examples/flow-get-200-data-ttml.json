@@ -1,0 +1,13 @@
+{
+    "id": "e85efab4-993b-4ad6-9af3-4cd8d0d38860",
+    "source_id": "a77d0061-0878-4e8a-a114-772d03f952c1",
+    "format": "urn:x-nmos:format:data",
+    "generation": 0,
+    "created": "2023-12-14T16:34:58.131620",
+    "tags": {
+        "_tams_segmentation_rate": "200"
+    },
+    "codec": "application/ttml+xml",
+    "container": "application/ttml+xml",
+    "data_type": "urn:x-tams:data:subtitle"
+}
