@@ -1,7 +1,7 @@
 {
   "type": "object",
+  "title": "Media Bucket Segment Store",
   "description": "Gives information on storage for particular flow segments. This example is for a media store that provided URLs for storing media objects in bucket. Different backends may add additional/different fields",
-  "title": "storage",
   "properties": {
     "pre": {
       "type": "array",

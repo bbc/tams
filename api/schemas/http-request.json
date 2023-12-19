@@ -1,5 +1,6 @@
 {
     "type": "object",
+    "title": "HTTP Request",
     "description": "Gives information on a particular http request a client should perform",
     "required": [
         "url"
