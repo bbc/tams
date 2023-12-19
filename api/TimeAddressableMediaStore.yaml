@@ -561,6 +561,10 @@ paths:
                 type: boolean
           content:
             application/json:
+              schema:
+                type: array
+                items:
+                  $ref: schemas/flow-segment.json
               examples:
                 basic:
                   summary: Basic Example
