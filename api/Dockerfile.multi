@@ -16,21 +16,21 @@ COPY ./schemas ./schemas
 COPY ./TimeAddressableMediaStore.yaml .
 
 ###############################################################################
-# Stage: oasvalidate - Validates OpenAPI specifications
+# Stage: bundle - Bundles specification and schemas into a single file
 ###############################################################################
-FROM redocly/openapi-cli AS oasvalidate
-WORKDIR /data/
+FROM redocly/cli as bundle
 
 # Copy in documentation source files
 COPY --from=layer /api /data
 
-COPY .redocly.lint-ignore.yaml /data/
+###############################################################################
+# Stage: oaslint - Validates OpenAPI specifications
+###############################################################################
+FROM stoplight/spectral:6.10 as oaslint
 
-###############################################################################
-# Stage: oasrender - Renders OpenAPI specifications
-###############################################################################
-FROM ghcr.io/redocly/redoc/cli:v2.0.0-rc.59 AS oasrender
 WORKDIR /data/
+
+COPY .spectral.yaml /data/
 
 # Copy in documentation source files
 COPY --from=layer /api /data

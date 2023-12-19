@@ -1,0 +1,4 @@
+extends: spectral:oas
+rules:
+  # Reduce severity of unused components: they're needed for docs readability
+  oas3-unused-component: info
