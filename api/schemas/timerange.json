@@ -1,0 +1,6 @@
+{
+    "title": "TimeRange",
+    "description": "A time range of timestamps. It is represented using a pair ot timestamps with inclusivity and exclusivity markers.\n\nE.g.\n* \"[0:0_10:0)\" represents 10 seconds of media starting at timestamp \"0:0\" and ending before \"10:0\".\n* \"(5:0_\" represents a time range starting after \"5:0\" and to eternity.\n* \"[1694429247:0_1694429248:0)\" is a 1 second TAI time range starting at 2023-09-11T10:46:50.0Z UTC.\n* A \"[\" or \"]\" indicates that bound is inclusive, and a \"(\" or \")\" indicates that bound is exclusive.\n\nDetails of the format can be found in the TimeRange class provided in the Python\n[mediatimestamp](https://github.com/bbc/rd-apmm-python-lib-mediatimestamp) library.\n",
+    "type": "string",
+    "pattern": "^(\\[|\\()?(-?\\d+:\\d+)?(_(-?\\d+:\\d+)?)?(\\]|\\))?$"
+ }

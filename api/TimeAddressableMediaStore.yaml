@@ -163,7 +163,7 @@ paths:
           description: Filter on flows that overlap the given time range.
           schema:
             default: _
-            $ref: '#/components/schemas/timerange_type'
+            $ref: 'schemas/timerange.json'
         - name: format
           in: query
           description: Filter on flow format.
@@ -251,7 +251,7 @@ paths:
           description: Limit the returned available segment time range to this time range.
           schema:
             default: _
-            $ref: '#/components/schemas/timerange_type'
+            $ref: 'schemas/timerange.json'
       responses:
         "200":
           description: ""
@@ -546,7 +546,7 @@ paths:
             X-Paging-Timerange:
               description: Identifies the time range for the returned data set.
               schema:
-                $ref: '#/components/schemas/timerange_type'
+                $ref: 'schemas/timerange.json'
             X-Paging-Count:
               description: The number of items in the returned data set.
               schema:
@@ -627,7 +627,7 @@ paths:
           description: Only delete flow segments that are completely covered by the given time range.
           schema:
             default: _
-            $ref: '#/components/schemas/timerange_type'
+            $ref: 'schemas/timerange.json'
         - name: object_id
           in: query
           description: Filter on object identifier.
@@ -695,7 +695,7 @@ paths:
             X-Paging-Next-Timerange:
               description: The 'timerange' to use in the Post data to get the next page. If 'X-Paging-Next-Timerange' is not present then it is the last page.
               schema:
-                $ref: '#/components/schemas/timerange_type'
+                $ref: 'schemas/timerange.json'
             X-Paging-Limit:
               description: Identifies the current limit being used for paging. This may not match the requested value if the requested value was too high for the implementation.
               schema:
@@ -703,7 +703,7 @@ paths:
             X-Paging-Timerange:
               description: Identifies the time range for the returned data set.
               schema:
-                $ref: '#/components/schemas/timerange_type'
+                $ref: 'schemas/timerange.json'
             X-Paging-Count:
               description: The number of items in the returned data set.
               schema:
@@ -789,35 +789,6 @@ components:
       title: UUID
       pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
       type: string
-    timestamp_type:
-      title: Timestamp
-      description: |
-        A signed nanosecond resolution timestamp represented as <sign><seconds>:<nanoseconds>. The intended
-        interpretation of the value is assumed to be defined elsewhere.
-
-        E.g.
-        * "1:40000000" is the timestamp of the 27th video frame for 25 Hz video with origin at "0:0".
-        * "1694429247:40000000" is the TAI timestamp for a video frame at 2023-09-11T10:46:50.04Z UTC.
-
-        Details of the format can be found in the Timestamp class provided in the Python
-        [mediatimestamp](https://github.com/bbc/rd-apmm-python-lib-mediatimestamp) library.
-      type: string
-      pattern: '^-?\d+:\d+$'
-    timerange_type:
-      title: TimeRange
-      description: |
-        A time range of timestamps. It is represented using a pair ot timestamps with inclusivity and exclusivity markers.
-
-        E.g.
-        * "[0:0_10:0)" represents 10 seconds of media starting at timestamp "0:0" and ending before "10:0".
-        * "(5:0_" represents a time range starting after "5:0" and to eternity.
-        * "[1694429247:0_1694429248:0)" is a 1 second TAI time range starting at 2023-09-11T10:46:50.0Z UTC.
-        * A "[" or "]" indicates that bound is inclusive, and a "(" or ")" indicates that bound is exclusive.
-
-        Details of the format can be found in the TimeRange class provided in the Python
-        [mediatimestamp](https://github.com/bbc/rd-apmm-python-lib-mediatimestamp) library.
-      type: string
-      pattern: '^(\[|\()?(-?\d+:\d+)?(_(-?\d+:\d+)?)?(\]|\))?$'
     flowformat:
       title: Flow Format
       description: identifies the flow format using a URN string.
@@ -854,7 +825,7 @@ components:
       in: query
       description: Return only the results in the time range specified.
       schema:
-        $ref: '#/components/schemas/timerange_type'
+        $ref: 'schemas/timerange.json'
     trait_timerange_paged_limit:
       name: limit
       in: query
