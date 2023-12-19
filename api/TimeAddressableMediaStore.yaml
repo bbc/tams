@@ -37,18 +37,14 @@ info:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
 servers:
+  - url: 'http://localhost:4010'
+    description: Local mock of API
   - url: 'https://example.com/tams/{version}'
     description: Example TAMS service
     variables:
       version:
         description: API version
-        default: version
-  - url: /tams/{version}
-    description: Local mock of API and service running locally
-    variables:
-      version:
-        description: API version
-        default: version
+        default: v0.1
 security:
   - {}
   - basic_auth: []
