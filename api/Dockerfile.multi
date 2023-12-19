@@ -20,8 +20,12 @@ COPY ./TimeAddressableMediaStore.yaml .
 ###############################################################################
 FROM redocly/cli as bundle
 
+COPY ./bundle-api.sh /bundle-api.sh
+
 # Copy in documentation source files
 COPY --from=layer /api /data
+
+ENTRYPOINT [ "/bundle-api.sh" ]
 
 ###############################################################################
 # Stage: oaslint - Validates OpenAPI specifications
