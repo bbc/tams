@@ -1,0 +1,49 @@
+name: Commit Message Check
+run-name: ${{ format('{0} triggered by {1} on {2} {3}', github.workflow, (github.event_name == 'workflow_dispatch' && format('user {0}', github.actor) || format('{0} event', github.event_name) ), github.repository, github.ref_name) }}
+on:
+  pull_request:
+
+jobs:
+  CheckCommitMessages:
+    permissions:
+      contents: read
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check out PR code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: ${{github.event.pull_request.commits}} # only checkout commits from this PR
+          ref: ${{ github.ref }}
+
+      - name: Check PR commit messages don't start with 'FIXUP'
+        run: "[ $(git log --grep '^FIXUP' | wc -c) -eq 0 ]"
+
+      - name: Check PR commit messages don't start with 'SQUASH'
+        run: "[ $(git log --grep '^SQUASH' | wc -c) -eq 0 ]"
+
+      - name: Check PR commit messages don't start with 'AMEND'
+        run: "[ $(git log --grep '^AMEND' | wc -c) -eq 0 ]"
+
+      - name: Check PR commit messages don't start with 'REWORD'
+        run: "[ $(git log --grep '^REWORD' | wc -c) -eq 0 ]"
+
+      - name: Check PR commit messages don't start with 'DONOTMERGE'
+        run: "[ $(git log --grep '^DONOTMERGE' | wc -c) -eq 0 ]"
+
+      - name: Check PR commit messages don't start with 'WIP'
+        run: "[ $(git log --grep '^WIP' | wc -c) -eq 0 ]"
+
+      - name: Check PR commit messages don't start with 'TEMP'
+        run: "[ $(git log --grep '^TEMP' | wc -c) -eq 0 ]"
+
+      - name: Check PR commit messages don't start with '!fixup'
+        run: "[ $(git log --grep '^!fixup' | wc -c) -eq 0 ]"
+
+      - name: Check PR commit messages don't start with '!squash'
+        run: "[ $(git log --grep '^!squash' | wc -c) -eq 0 ]"
+
+      - name: Check PR commit messages don't start with '!amend'
+        run: "[ $(git log --grep '^!amend' | wc -c) -eq 0 ]"
+
+      - name: Check PR commit messages don't start with '!reword'
+        run: "[ $(git log --grep '^!reword' | wc -c) -eq 0 ]"
