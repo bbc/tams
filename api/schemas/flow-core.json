@@ -82,9 +82,8 @@
       "type": "integer"
     },
     "timerange": {
-      "description": "The time range of samples available in the flow.",
-      "type": "string",
-      "pattern": "^(\\[|\\()?(-?\\d+:\\d+)?(_(-?\\d+:\\d+)?)?(\\]|\\))?$"
+      "description": "The time range of samples available in the flow, as described by the [TimeRange](../schemas/timerange#top) type",
+      "$ref": "timerange.json"
     }
   }
 }

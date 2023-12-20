@@ -30,7 +30,7 @@
     },
     "segments": {
       "type": "object",
-      "description": "Mapping of timeranges (validated by regex) to segment storage locations.",
+      "description": "Mapping of timeranges (validated by regex) to segment storage locations. Format as described by the [TimeRange](../schemas/timerange#top) type",
       "patternProperties": {
         "^[\\[\\(]?([0-9]+:[0-9]+)?_([0-9]+:[0-9]+)?[\\]\\)]?$": {
           "type": "object",
