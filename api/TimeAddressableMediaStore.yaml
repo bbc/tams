@@ -37,18 +37,14 @@ info:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
 servers:
+  - url: 'http://localhost:4010'
+    description: Local mock of API
   - url: 'https://example.com/tams/{version}'
     description: Example TAMS service
     variables:
       version:
         description: API version
-        default: version
-  - url: /tams/{version}
-    description: Local mock of API and service running locally
-    variables:
-      version:
-        description: API version
-        default: version
+        default: v0.1
 security:
   - {}
   - basic_auth: []
@@ -734,7 +730,7 @@ paths:
     get:
       description: |
         List deletion requests currently being worked on, for monitoring in development.
-        
+
         This will not necessarily list all requests, nor return a consistent set in any particular order,
         and should not be relied upon by clients. However if there are any requests in the system, it will
         always return at least one.
@@ -772,7 +768,7 @@ paths:
     get:
       description: |
         Get information about a range of FlowSegments that are being deleted.
-        
+
         A deletion request is created when a client DELETEs a long ranges of segments, which takes longer than
         a single HTTP request. Clients will be redirected here to monitor the request's progress.
       operationId: GET_flow-delete-requests-request-id
@@ -790,9 +786,11 @@ paths:
 components:
   schemas:
     uuid:
+      title: UUID
       pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
       type: string
     timestamp_type:
+      title: Timestamp
       description: |
         A signed nanosecond resolution timestamp represented as <sign><seconds>:<nanoseconds>. The intended
         interpretation of the value is assumed to be defined elsewhere.
@@ -806,6 +804,7 @@ components:
       type: string
       pattern: '^-?\d+:\d+$'
     timerange_type:
+      title: TimeRange
       description: |
         A time range of timestamps. It is represented using a pair ot timestamps with inclusivity and exclusivity markers.
 
@@ -820,6 +819,7 @@ components:
       type: string
       pattern: '^(\[|\()?(-?\d+:\d+)?(_(-?\d+:\d+)?)?(\]|\))?$'
     flowformat:
+      title: Flow Format
       description: identifies the flow format using a URN string.
       enum:
         - urn:x-nmos:format:video
@@ -827,6 +827,7 @@ components:
         - urn:x-nmos:format:data
       type: string
     mimetype:
+      title: MIME Type
       pattern: .*/.*
       description: MIME Type string.
       type: string

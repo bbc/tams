@@ -27,7 +27,7 @@ Users of TAMS are insulated from the details of the underlying storage.
 
 ## Documentation
 - OpenAPI Specification: [TimeAddressableMediaStore.yaml](./api/TimeAddressableMediaStore.yaml)
-- Rendered Documentation: [TimeAddressableMediaStore.html](https://bbc.github.io/tams/TimeAddressableMediaStore.html)
+- Rendered Documentation: [https://bbc.github.io/tams](https://bbc.github.io/tams)
 
 This repo contains some automation to run a mock version of the API using [Stoplight Prism](https://stoplight.io/open-source/prism). To run the mock server using Docker, try something like the command below (or run `make mock-server-up`):
 ```
@@ -48,17 +48,17 @@ The Flow model is aligned with the principles and schemas of [AMWA NMOS IS-04](h
 ### Reading and Writing in the Store
 The process of reading from the store is:
 1. Client identifies the Flow ID and timerange of interest
-2. Client makes a request to [`GET flows/<flow_id>/segments?timerange=<timerange>`](https://bbc.github.io/tams/TimeAddressableMediaStore.html#operation/GET_flows-flowId-segments) and receives a list of segments, timeranges and download URLs
+2. Client makes a request to [`GET flows/<flow_id>/segments?timerange=<timerange>`](https://bbc.github.io/tams/#/operations/GET_flows-flowId-segments) and receives a list of segments, timeranges and download URLs
 3. Client downloads each URL, concatenates the segments together and unwraps the grains within
 4. The first and last Flow Segment may contain more grains than requested, so the client should skip any received not in the requested timerange
 
 The process of writing to the store is:
-1. Client creates a Flow if necessary by making a request to [`PUT flows/<flow_id>`](https://bbc.github.io/tams/TimeAddressableMediaStore.html#operation/PUT_flows-flowId)
-2. Client makes a request to [`POST flows/<flow_id>/storage`](https://bbc.github.io/tams/TimeAddressableMediaStore.html#operation/POST_flows-flowId-storage) with the timerange to be written
+1. Client creates a Flow if necessary by making a request to [`PUT flows/<flow_id>`](https://bbc.github.io/tams/#/operations/PUT_flows-flowId)
+2. Client makes a request to [`POST flows/<flow_id>/storage`](https://bbc.github.io/tams/#/operations/POST_flows-flowId-storage) with the timerange to be written
 3. Store responds with a list of segment timeranges and URLs to PUT segments to, along with an optional `pre` URL to call before writing
 4. If a `pre` URL was given, client calls it
 5. Client breaks content into segments as instructed and uploads it
-6. Client makes requests to [`POST flows/<flow_id>/segments`](https://bbc.github.io/tams/TimeAddressableMediaStore.html#operation/POST_flows-flowId-segments) with details of each new segment created, to register them on the timeline
+6. Client makes requests to [`POST flows/<flow_id>/segments`](https://bbc.github.io/tams/#/operations/POST_flows-flowId-segments) with details of each new segment created, to register them on the timeline
 
 ### Flows, Sources and Mutation
 Flows in the store are assumed to be immutable: once a grain has been written to a point on the timeline on a specific Flow, it cannot be changed. However Flows can always be extended, with empty spaces on the timeline filled in, and areas of the timeline can be permanently erased.

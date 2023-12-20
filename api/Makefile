@@ -3,20 +3,23 @@ topdir:=$(realpath $(dir $(word $(NUM_OF_PARENT),$(MAKEFILE_LIST))))
 
 all: help
 
+
 build-lint:
-	docker pull ap-docker.artifactory.labs.bbc/cloudfit/cloudfit_base:latest >/dev/null 2>/dev/null || true
-	DOCKER_BUILDKIT=1 docker build -f Dockerfile.multi --build-arg VERSION=0.0.1 --build-arg BUILD_TAG=local --target oasvalidate -t tams_api_oasvalidate:local .
+	docker pull stoplight/spectral:6.10 >/dev/null 2>/dev/null || true
+	DOCKER_BUILDKIT=1 docker build -f Dockerfile.multi --target oaslint -t tams_api_oaslint:local .
 
 lint: build-lint
-	docker run --rm tams_api_oasvalidate:local lint /data/TimeAddressableMediaStore.yaml
+	docker run --rm tams_api_oaslint:local lint --fail-severity=warn /data/TimeAddressableMediaStore.yaml
 
 
-build-render:
-	docker pull ap-docker.artifactory.labs.bbc/cloudfit/cloudfit_base:latest >/dev/null 2>/dev/null || true
-	DOCKER_BUILDKIT=1 docker build -f Dockerfile.multi --build-arg VERSION=0.0.1 --build-arg BUILD_TAG=local --target oasrender -t tams_api_oasrender:local .
+build-bundle:
+	docker pull redocly/cli:latest >/dev/null 2>/dev/null || true
+	DOCKER_BUILDKIT=1 docker build -f Dockerfile.multi --target bundle -t tams_api_bundle:local .
 
-render: build-render
-	docker run --rm -v "${topdir}/docs:/docs" tams_api_oasrender:local bundle /data/TimeAddressableMediaStore.yaml -o /docs/TimeAddressableMediaStore.html
+docs/TimeAddressableMediaStore_bundled.yaml: build-bundle
+	docker run --rm  tams_api_bundle:local bundle /data/TimeAddressableMediaStore.yaml > $@
+
+render: docs/TimeAddressableMediaStore_bundled.yaml
 
 
 mock-server-up:
@@ -40,4 +43,4 @@ help:
 	@echo "make mock-server-down    - Stop the mock API server"
 	@echo "make mock-server-healthy - Connect to mock API server, confirm it is working"
 
-.PHONY: all build-lint lint build-render render mock-server-up mock-server-down mock-server-healthy help
+.PHONY: all build-lint lint build-bundle render mock-server-up mock-server-down mock-server-healthy help
