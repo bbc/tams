@@ -263,8 +263,24 @@ paths:
             application/json:
               schema:
                 $ref: schemas/flow.json
-              example:
-                $ref: examples/flow-get-200.json
+              examples:
+                video:
+                  summary: Video Flow - H.264 Codec
+                  value:
+                    $ref: examples/flow-get-200-video-h264.json
+                audio:
+                  summary: Audio Flow - AAC Codec
+                  value:
+                    $ref: examples/flow-get-200-audio-aac.json
+                rawvideo:
+                  summary: Video Flow - Uncompressed (Quicktime)
+                  value:
+                    $ref: examples/flow-get-200-video-raw.json
+                ttml:
+                  summary: Data Flow - TTML
+                  description: TAMS can also be used for storing non-AV content such as subtitles or event data
+                  value:
+                    $ref: examples/flow-get-200-data-ttml.json
         "404":
           description: The requested flow does not exist.
         "400":
@@ -545,8 +561,22 @@ paths:
                 type: boolean
           content:
             application/json:
-              example:
-                $ref: examples/flow-segments-get-200.json
+              schema:
+                type: array
+                items:
+                  $ref: schemas/flow-segment.json
+              examples:
+                basic:
+                  summary: Basic Example
+                  value:
+                    $ref: examples/flow-segments-get-200.json
+                sample_count:
+                  summary: Partial Segment
+                  description: |
+                    This example takes part of an existing segment, offsets it with `ts_offset` and then selects a
+                    subset of the samples within using `ts_offset` for the second segment in the sequence.
+                  value:
+                    $ref: examples/flow-segments-get-200-sample-offset.json
     post:
       description: |
         Register a new flow segment, attaching the object id given to a point in the flow timeline.
