@@ -24,37 +24,37 @@
       "type": "string"
     },
     "ts_offset": {
-      "description": "The timestamp offset between the timestamps stored in the media file and the corresponding timestamp in the segment, ie. ts_offset = segment ts - media object ts. Assumed to be 0:0 if not set. Format as described by the [Timestamp](../schemas/timestamp#top) type, but cannot be negative",
+      "description": "The timestamp offset between the sample timestamps stored in the media file and the corresponding timestamp in the segment, ie. ts_offset = segment ts - media object ts. Assumed to be 0:0 if not set. Format as described by the [Timestamp](../schemas/timestamp#top) type, but cannot be negative",
       "$ref": "timestamp.json"
     },
     "range": {
-      "description": "The timerange from the first media unit in the segment to the last (exclusive end if exclusive_last_ts is true), as described by the [TimeRange](../schemas/timerange#top) type",
+      "description": "The timerange from the first sample in the segment to the last (exclusive end if exclusive_last_ts is true), as described by the [TimeRange](../schemas/timerange#top) type",
       "$ref": "timerange.json"
     },
     "first_ts" : {
-      "description": "The timestamp of the first media unit in the segment (which may not be the first unit in the object). Format as described by the [Timestamp](../schemas/timestamp#top) type",
+      "description": "The timestamp of the first sample in the segment (which may not be the first sample in the object). Format as described by the [Timestamp](../schemas/timestamp#top) type",
       "$ref": "timestamp.json"
     },
     "last_duration": {
-      "description": "The duration of the last media unit in the segment (which may differ from that of the object). Defaults to 1/rate if a fixed media rate is set. Format as described by the [Timestamp](../schemas/timestamp#top) type, but cannot be negative",
+      "description": "The duration of the last sample in the segment (which may differ from that of the object). Defaults to 1/rate if a fixed media rate is set. Format as described by the [Timestamp](../schemas/timestamp#top) type, but cannot be negative",
       "$ref": "timestamp.json"
     },
     "last_ts" : {
-      "description": "The timestamp of the start of the last media unit in the segment, or end of the last media unit in the segment if exclusive_last_ts is true. Format as described by the [Timestamp](../schemas/timestamp#top) type",
+      "description": "The timestamp of the start of the last sample in the segment, or end of the last sample in the segment if exclusive_last_ts is true. Format as described by the [Timestamp](../schemas/timestamp#top) type",
       "$ref": "timestamp.json"
     },
     "exclusive_last_ts" : {
-      "description": "A true value indicates that the last_ts timestamp is the exclusive end of the last media unit in the segment.",
+      "description": "A true value indicates that the last_ts timestamp is the exclusive end of the last sample in the segment.",
       "type": "boolean",
       "default": false
     },
     "sample_offset": {
-      "description": "The start of the segment represented as a count of audio samples, video frames or data items from the start of the object.",
+      "description": "The start of the segment represented as a count of samples from the start of the object.",
       "type": "integer",
       "default": 0
     },
     "sample_count": {
-      "description": "The count of media units in the segment (which may be fewer than in the object). The count could be less than expected given the segment duration and rate if there are gaps. If not set, every sample from sample_offset onwards is used",
+      "description": "The count of samples in the segment (which may be fewer than in the object). The count could be less than expected given the segment duration and rate if there are gaps. If not set, every sample from sample_offset onwards is used",
       "type": "integer"
     },
     "get_url": {
