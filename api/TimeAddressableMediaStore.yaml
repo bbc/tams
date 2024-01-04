@@ -514,7 +514,7 @@ paths:
 
         The flow segment may include timing and range adjustment information that the client needs to
         apply when extracting the samples from the media object.
-        - The range of samples must be limited to `sample_offset` to `sample_offset + sample_count`
+        - The range of samples must be limited to the range from `sample_offset` to `sample_offset + sample_count`
           (exclusive) if `sample_count` is set, or from `sample_offset` until the end if `sample_count`
           is not set.
         - The sample timestamp in the flow segment (`segment_ts`) is the timestamp in the media object
