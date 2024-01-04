@@ -506,10 +506,20 @@ paths:
       description: |
         Returns the flow segments.
 
-        The media store type, which is indicated in the /service resource, determines the information that
-        is provided in the response for downloading the flow segment's media object. The examples provided
-        here are for the "http_object_store" media store type. The flow segment includes a "get_url"
-        property which contains a HTTP URL for downloading the media object.
+        The flow segment provides information about the media object. The media store type, which is
+        indicated in the /service resource, determines the information that is included to allow the
+        flow segment's media object to be downloaded. The examples provided here are for the
+        "http_object_store" media store type which will include a "get_url" property that contains a
+        HTTP URL for downloading the media object.
+
+        The flow segment may include timing and range adjustment information that the client needs to
+        apply when extracting the samples from the media object.
+        - The range of samples must be limited to the range from `sample_offset` to `sample_offset + sample_count`
+          (exclusive) if `sample_count` is set, or from `sample_offset` until the end if `sample_count`
+          is not set.
+        - The sample timestamp in the flow segment (`segment_ts`) is the timestamp in the media object
+          (`media_object_ts`) adjusted by `ts_offset`: `segment_ts = media_object_ts + ts_offset`. The
+          `segment_ts` should equal the `first_ts` for the sample at `sample_offset`.
 
         Use the pagination options to limit the results to a time range and/or count. The list of flow
         segments can be empty. A request for segments from a non-existent flow will return an empty
@@ -581,11 +591,11 @@ paths:
 
         For newly-written objects, the client is responsible for ensuring that the segment written to the store obeys the following restrictions:
         - The object id provided for a segment MUST be one which was received in a POST from /storage for this flow.
-        - The timestamp of the first media unit written to the object MUST be located inside the time range
+        - The timestamp of the first sample written to the object MUST be located inside the time range
           that was associated with this object id in the response from the POST request to /storage for this flow.
-        - All media units in the object SHOULD be used by the segment.
-        - The timestamps of each media unit in the file MUST equal its position on the Flow timeline, OR `ts_offset` MUST
-          be set such that `media_unit_ts + ts_offset = segment_ts`
+        - All samples in the object SHOULD be used by the segment.
+        - The timestamps of each sample in the media object MUST equal its position on the Flow timeline, OR `ts_offset` MUST
+          be set such that `media_object_ts + ts_offset = segment_ts`
         - The `sample_offset` SHOULD be zero.
 
         For objects that have been re-used from other flows, the `sample_offset` and `sample_count` MAY be used to
