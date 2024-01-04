@@ -506,10 +506,20 @@ paths:
       description: |
         Returns the flow segments.
 
-        The media store type, which is indicated in the /service resource, determines the information that
-        is provided in the response for downloading the flow segment's media object. The examples provided
-        here are for the "http_object_store" media store type. The flow segment includes a "get_url"
-        property which contains a HTTP URL for downloading the media object.
+        The flow segment provides information about the media object. The media store type, which is
+        indicated in the /service resource, determines the information that is included to allow the
+        flow segment's media object to be downloaded. The examples provided here are for the
+        "http_object_store" media store type which will include a "get_url" property that contains a
+        HTTP URL for downloading the media object.
+
+        The flow segment may include timing and range adjustment information that the client needs to
+        apply when extracting the samples from the media object.
+        - The range of samples must be limited to `sample_offset` to `sample_offset + sample_count`
+          (exclusive) if `sample_count` is set, or from `sample_offset` until the end if `sample_count`
+          is not set.
+        - The sample timestamp in the flow segment (`segment_ts`) is the timestamp in the media object
+          (`media_unit_ts`) adjusted by `ts_offset`: `segment_ts = media_unit_ts + ts_offset`. The
+          `segment_ts` should equal the `first_ts` for the sample at `sample_offset`.
 
         Use the pagination options to limit the results to a time range and/or count. The list of flow
         segments can be empty. A request for segments from a non-existent flow will return an empty
