@@ -9,6 +9,7 @@
     "label": "capture_1",
     "format": "urn:x-nmos:format:video",
     "created_by": "tams-dev",
+    "modified_by": "tams-dev",
     "tags": {
         "quality": "full",
         "_tams_segmentation_rate": "25"
