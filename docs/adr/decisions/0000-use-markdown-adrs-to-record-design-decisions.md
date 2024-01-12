@@ -19,7 +19,7 @@ It's also beneficial to anyone involved in the collaborative development of the 
 
 * Use Github Issues
 * Use Github Discussions
-* Use (M)ADR documents, one per decision, version controlled using GitHub
+* Use [(M)ADR documents](https://adr.github.io/madr/), one per decision, version controlled using GitHub
 * Use a combination of the above
 
 ## Decision Outcome
