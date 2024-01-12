@@ -68,5 +68,8 @@ When it becomes necessary to mutate content, for example reversioning content or
 ### API Versioning
 The API is versioned using a major and minor version number. A breaking change results in a major version increment and the minor version is reset to 0. Features such new endpoints or new (optional) data properties result in a minor version increment. Other changes such as bug fixes and documentation changes do not result in version updates. Note that the version may change frequently whilst the API is still under development!
 
+## Proposals, Decisions and Architecture Changes
+This repository uses [(M)ADR documents](https://adr.github.io/madr/) to propose significant changes, facilitate discussions and decision making, and to store a record of options that were considered. These documents may be found in the [docs/adr/decisions](./docs/adr/decisions/) directory, and are managed as described by the [ADR Readme](./docs/adr/decisions/README.md).
+
 ## Get in touch
-If you'd like to know more about our work on TAMS, talk about our implementations or start a collaboration, contact us on <cloudfit-opensource@rd.bbc.co.uk>.
+If you'd like to know more about our work on TAMS, talk about our implementations or start a collaboration, contact us on <cloudfit-opensource@rd.bbc.co.uk>. Also see [CONTRIBUTING.md](./CONTRIBUTING.md) for more about how to make contributions.
