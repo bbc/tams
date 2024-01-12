@@ -30,9 +30,11 @@ jobs:
         with:
           fetch-depth: 0 # check out the entire repo history for SHA verification in lastSuccessful step
 
+      - name: Lint Markdown docs
+        run: make lint-markdown
+
       - name: Lint specification
-        run: make lint
-        working-directory: ./api
+        run: make lint-apispec
 
       - name: Render API docs
         run: make render

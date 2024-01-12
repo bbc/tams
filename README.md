@@ -66,10 +66,15 @@ Flows in the store are assumed to be immutable: once a grain has been written to
 When it becomes necessary to mutate content, for example reversioning content or performing production operations, the Flow ID (and potentially Source ID) will change. Various scenarios are explored in the [Practical Guidance for Media](https://specs.amwa.tv/ms-04/releases/v1.0.0/docs/3.0._Practical_Guidance_for_Media.html) section of AMWA MS-04.
 
 ### API Versioning
-The API is versioned using a major and minor version number. A breaking change results in a major version increment and the minor version is reset to 0. Features such new endpoints or new (optional) data properties result in a minor version increment. Other changes such as bug fixes and documentation changes do not result in version updates. Note that the version may change frequently whilst the API is still under development!
+
+The API is versioned using a major and minor version number.
+A breaking change results in a major version increment and the minor version is reset to 0.
+Features such new endpoints or new (optional) data properties result in a minor version increment.
+Other changes such as bug fixes and documentation changes do not result in version updates.
+Note that the version may change frequently whilst the API is still under development!
 
 ## Proposals, Decisions and Architecture Changes
-This repository uses [(M)ADR documents](https://adr.github.io/madr/) to propose significant changes, facilitate discussions and decision making, and to store a record of options that were considered. 
+This repository uses [(M)ADR documents](https://adr.github.io/madr/) to propose significant changes, facilitate discussions and decision making, and to store a record of options that were considered.
 These documents may be found in the [docs/adr/decisions](./docs/adr/decisions/) directory, and are managed as described by the [ADR Readme](./docs/adr/decisions/README.md).
 
 ## Get in touch
