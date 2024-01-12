@@ -1,5 +1,4 @@
 ---
-# These are optional elements. Feel free to remove any of them.
 status: "{proposed | rejected | accepted | deprecated | … | superseded by [ADR-0005](0005-example.md)}"
 ---
 # {short title of solved problem and solution}
@@ -36,10 +35,9 @@ Chosen option: "{title of option 1}", because
 * … <!-- numbers of consequences can vary -->
 
 <!-- This is an optional element. Feel free to remove. -->
-### Confirmation
+### Implementation
 
-{Describe how the implementation of/compliance with the ADR is confirmed. E.g., by a review or an ArchUnit test.
- Although we classify this element as optional, it is included in most ADRs.}
+{Once the proposal has been implemented, add a link to the relevant PRs here}
 
 <!-- This is an optional element. Feel free to remove. -->
 ## Pros and Cons of the Options

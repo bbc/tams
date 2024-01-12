@@ -33,11 +33,9 @@ Meets all of the requirements. Could be supplemented with use of Issues and/or D
 * Good, because centralises the storage of these records alongside the API definition itself
 * Good, because supports collaborative working in the open
 
-### Confirmation
+### Implementation
 
-ADRs will be submitted using GitHub PRs, which provides necessary tooling for community review and approval.
-Not all changes to the API definition will warrant an ADR.
-One of the tests that will need to be applied on review of PRs containing ADR docs, and PRs that don't, is that of architectural significance.
+Implemented by https://github.com/bbc/tams/pull/15/
 
 ## Pros and Cons of the Alternative Options
 
