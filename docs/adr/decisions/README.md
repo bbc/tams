@@ -19,7 +19,8 @@ One of the tests that will need to be applied on review of PRs containing ADR do
 5. Open a PR with your MADR document and any other changes
 
 ## Reviewing the proposal
-During the review process, use PR comments to ask questions, make suggestions or generally discuss the proposal. Alternatively, if a synchronous discussion takes place (e.g. an in-person or online meeting), add a description of what was discussed and the outcome into the ADR document itself.
+During the review process, use PR comments to ask questions, make suggestions or generally discuss the proposal. 
+Alternatively, if a synchronous discussion takes place (e.g. an in-person or online meeting), add a description of what was discussed and the outcome into the ADR document itself.
 
 Generally PRs should remain open for review for a period of time to invite comments from the wider TAMS community, and if necessary PRs should be circulated to interested individuals.
 
