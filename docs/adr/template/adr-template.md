@@ -11,8 +11,8 @@ status: "{proposed | rejected | accepted | deprecated | … | superseded by [ADR
 <!-- This is an optional element. Feel free to remove. -->
 ## Decision Drivers
 
-* {decision driver 1, e.g., a force, facing concern, …}
-* {decision driver 2, e.g., a force, facing concern, …}
+* {decision driver 1, e.g., a requirement …}
+* {decision driver 2, e.g., a requirement …}
 * … <!-- numbers of drivers can vary -->
 
 ## Considered Options
