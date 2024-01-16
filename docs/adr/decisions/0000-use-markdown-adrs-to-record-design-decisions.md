@@ -1,5 +1,5 @@
 ---
-status: "proposed" # | rejected | accepted | deprecated | … | superseded by [ADR-0005](0005-example.md)}"
+status: "accepted"
 ---
 # Use Markdown ADRs to record design decisions
 
