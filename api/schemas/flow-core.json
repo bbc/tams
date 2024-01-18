@@ -28,7 +28,11 @@
       "type": "string"
     },
     "created_by": {
-      "description": "A string identifier for the entity that created the flow",
+      "description": "A string identifier for the entity that created the flow. Implementations SHOULD set suitable default values for `created_by` based on the principal accessing the system, and MAY permit clients to edit the value, subject to suitable permissions-based limitations.",
+      "type": "string"
+    },
+    "modified_by": {
+      "description": "A string identifier for the entity that modified the flow metadata most recently. Implementations SHOULD set suitable default values for `modified_by` based on the principal accessing the system, and MAY permit clients to edit the value, subject to suitable permissions-based limitations.",
       "type": "string"
     },
     "tags": {

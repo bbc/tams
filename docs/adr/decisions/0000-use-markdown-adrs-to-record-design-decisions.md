@@ -25,7 +25,8 @@ It's also beneficial to anyone involved in the collaborative development of the 
 ## Decision Outcome
 
 Chosen option: "Use (M)ADR documents, one per decision", because
-Meets all of the requirements. Could be supplemented with use of Issues and/or Discussions if/when the need arises, but these serve slightly different purposes.
+Meets all of the requirements.
+Could be supplemented with use of Issues and/or Discussions if/when the need arises, but these serve slightly different purposes.
 
 ### Consequences
 
@@ -35,7 +36,7 @@ Meets all of the requirements. Could be supplemented with use of Issues and/or D
 
 ### Implementation
 
-Implemented by https://github.com/bbc/tams/pull/15/
+Implemented by <https://github.com/bbc/tams/pull/15/>
 
 ## Pros and Cons of the Alternative Options
 
@@ -50,4 +51,3 @@ It was felt that GitHub Discussions, whilst a potentially useful adjunct to ADRs
 ### Use some combination of the considered options
 
 This will be kept under review, and other mechanisms may be introduced to support the use of ADRs
-

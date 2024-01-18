@@ -1,0 +1,22 @@
+---
+globs:
+  - '**/*.md'
+
+ignores:
+  - 'LICENCE.md'
+  - 'ICLA.md'
+  - '.github/'
+
+default: true
+
+config:
+  default: true
+
+  # Allow arbitrary line length
+  MD013: false
+
+  # Allow duplicate headings
+  MD024: false
+
+customRules:
+  - markdownlint-rule-max-one-sentence-per-line  # Enforce one-sentence-per-line using custom rule
