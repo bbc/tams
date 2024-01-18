@@ -28,13 +28,13 @@ This has been identified as a highly useful capability which should be available
 
 ### Implementation
 
-Implemented by https://github.com/bbc/tams/pull/17
+Implemented by [https://github.com/bbc/tams/pull/17](https://github.com/bbc/tams/pull/17)
 
 ## Pros and Cons of the Options
 
 ### Provide additional metadata fields within the TAMS API
 
-* Good, because it reduces the barrier to deploying a minimal TAMS service Vs. the alternative
+* Good, because it reduces the barrier to deploying a minimal TAMS service Vs the alternative
 * Neutral, because it doesn't prevent the use of AAA systems
 * Bad, because it may result in duplication of metadata in AAA systems
 
