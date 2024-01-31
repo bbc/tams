@@ -214,6 +214,10 @@ paths:
             application/json:
               example:
                 $ref: examples/flows-get-200.json
+              schema:
+                type: array
+                items:
+                  $ref: "schemas/flow.json"
   /flows/{flowId}:
     parameters:
       - name: flowId
