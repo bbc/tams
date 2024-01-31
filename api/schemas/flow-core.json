@@ -47,17 +47,17 @@
       "type": "integer"
     },
     "created": {
-      "description": "The date-time the flow was created in a given context, e.g. in a store",
+      "description": "The date-time the flow was created in a given context, e.g. in a store. Implementations SHOULD ignore this if given in a PUT request, and instead manage it internally",
       "type": "string",
       "format": "date-time"
     },
     "metadata_updated": {
-      "description": "The date-time the flow metadata was updated in a given context, e.g. in a store",
+      "description": "The date-time the flow metadata was updated in a given context, e.g. in a store. Implementations SHOULD ignore this if given in a PUT request, and instead manage it internally",
       "type": "string",
       "format": "date-time"
     },
     "segments_updated": {
-      "description": "The date-time the flow segments were updated in a given context, e.g. in a store",
+      "description": "The date-time the flow segments were updated in a given context, e.g. in a store. Implementations SHOULD ignore this if given in a PUT request, and instead manage it internally",
       "type": "string",
       "format": "date-time"
     },

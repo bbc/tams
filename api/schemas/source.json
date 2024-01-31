@@ -40,12 +40,12 @@
             "type": "string"
         },
         "created": {
-            "description": "The date-time the Source was created in a given context, e.g. in a store",
+            "description": "The date-time the Source was created in a given context, e.g. in a store. Implementations SHOULD ignore this if given in a PUT request, and instead manage it internally",
             "type": "string",
             "format": "date-time"
         },
         "updated": {
-            "description": "The date-time the Source metadata was last updated in a given context, e.g. in a store",
+            "description": "The date-time the Source metadata was last updated in a given context, e.g. in a store. Implementations SHOULD ignore this if given in a PUT request, and instead manage it internally",
             "type": "string",
             "format": "date-time"
         },
