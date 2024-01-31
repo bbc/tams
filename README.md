@@ -76,7 +76,22 @@ The process of writing to the store is:
 5. Client breaks content into segments as instructed and uploads it
 6. Client makes requests to [`POST flows/<flow_id>/segments`](https://bbc.github.io/tams/#/operations/POST_flows-flowId-segments) with details of each new segment created, to register them on the timeline
 
-### Flows, Sources and Mutation
+### Sources
+
+Sources represent the abstract concept of a piece of content, which can be represented by a (or a number of) Flows, as described in <https://specs.amwa.tv/ms-04/releases/v1.0.0/docs/2.1._Summary_and_Definitions.html>.
+For example a video Source might be represented by a Flow for the original content, and another Flow containing a lower-bitrate proxy.
+Sources can also be collected into other Sources - for example a video Source and an audio Source contribute to another Source representing the muxed content.
+Conventionally the store contains elemental Flows, represented by elemental Sources, which are collected into muxed Sources, although the model also makes it possible to represent a muxed Source with a Flow (e.g. representing a muxed file).
+
+Media workflows and applications are likely to use Sources as their references to media, for example a MAM might reference an asset using the ID of a muxed Source (in lieu of a filename).
+Then some logic can be applied to identify a suitable Flow representing that Source at the point when operations need to be performed on the media, for example choosing between proxy-quality for an offline edit and full-quality for a render.
+
+The TAMS API stores both Flows and Sources, where the latter can be assigned a label, description and some tags.
+In addition Sources on the API can be collected into other Sources (with a `slot` and `role` parameter to ascribe meaning to the relationship).
+However this implementation is deliberately made very simple, and lacks efficient mechansisms to query the graph of Sources.
+Instead management of metadata should take place in other systems (e.g. a MAM), which could contain a more advanced content graph capability for exploring the Source graph.
+
+### Mutation
 
 Flows in the store are assumed to be immutable: once a grain has been written to a point on the timeline on a specific Flow, it cannot be changed.
 However Flows can always be extended, with empty spaces on the timeline filled in, and areas of the timeline can be permanently erased.
