@@ -117,9 +117,12 @@ paths:
           description: Success. The service info has been updated.
         "400":
           description: Bad request. Invalid service JSON.
+
+
   /sources:
     head:
-      description: Return sources path headers
+      summary: List Sources
+      description: Return Sources path headers
       operationId: HEAD_sources
       tags:
         - Sources
@@ -127,8 +130,169 @@ paths:
         "200":
           $ref: '#/components/responses/trait_resource_listing_head_200'
     get:
-      description: List the sources registered in the store.
+      summary: List Sources
+      description: List the Sources registered in the store and their details.
       operationId: GET_sources
+      tags:
+        - Sources
+      parameters:
+        - name: label
+          in: query
+          description: Filter on Sources that have the given label.
+          schema:
+            type: string
+        - name: tag.{name}
+          in: query
+          description: |
+            Filter on Sources that have a tag named {name} and with the given value.
+            The {name} could contain escaped characters to allow it to be used in a
+            URL.
+          schema:
+            type: string
+        - name: tag_exists.{name}
+          in: query
+          description: |
+            Filter on Sources that have a tag named {name} regardless of value. The
+            {name} could contain escaped characters to allow it to be used in a
+            URL. If set to true then the presence of the tag is filtered for. If set
+            to false then its absence is. If left out then no filtering on tag presence
+            is performed.
+          schema:
+            type: boolean
+        - name: is_root_node
+          in: query
+          description: |
+            Filter on Sources that have no parent Sources (specifically, no Collects relationship)
+            and form the root node of part of the hierarchy.
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              example:
+                  $ref: examples/sources-get-200.json
+              schema:
+                type: array
+                items:
+                  $ref: "schemas/source.json"
+
+
+  /sources/{sourceId}:
+    parameters:
+      - name: sourceId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/uuid'
+        description: The Source identifier.
+    head:
+      summary: Source Details
+      description: Return Source headers
+      operationId: HEAD_sources-sourceId
+      tags:
+        - Sources
+      responses:
+        "200":
+          $ref: '#/components/responses/trait_resource_info_head_200'
+        "400":
+          $ref: '#/components/responses/trait_resource_info_head_400'
+        "404":
+          $ref: '#/components/responses/trait_resource_info_head_404'
+    get:
+      summary: Source Details
+      description: Returns Source metadata.
+      operationId: GET_sources-sourceId
+      tags:
+        - Sources
+      parameters:
+        - name: include_hierarchy
+          in: query
+          description: Whether to include the Sources this Source contributes to and consists of in the response.
+          schema:
+            default: false
+            type: boolean
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: schemas/source.json
+              examples:
+                basic:
+                  summary: Source containing elemental video
+                  value:
+                    $ref: "examples/source-get-200-basic.json"
+                muxed:
+                  summary: Source representing multiplexed video and audio
+                  value:
+                    $ref: "examples/source-get-200-muxed.json"
+        "404":
+          description: The requested Source does not exist.
+        "400":
+          description: Bad request. Invalid query options.
+    put:
+      summary: Create or Update Source
+      description: |
+        Creates or updates the specified Source.
+
+        Note that the `id` in the JSON object must match the ID in the path, and implementations should enforce this.
+      operationId: PUT_sources-sourceId
+      tags:
+        - Sources
+      requestBody:
+        content:
+          application/json:
+            example:
+              id: c562ae2d-5c37-47d4-a8b5-6bf08f217c4b
+              label: ingest_a
+              description: SDI ingest from Camera A
+
+            schema:
+              $ref: schemas/source.json
+        required: true
+      responses:
+        "201":
+          description: The Source has been created.
+          content:
+            application/json:
+              example:
+                id: c562ae2d-5c37-47d4-a8b5-6bf08f217c4b
+                label: ingest_a
+                description: SDI ingest from Camera A
+                created: "2024-01-31T11:03:00Z"
+                modified: "2024-01-31T11:03:00Z"
+              schema:
+                $ref: schemas/source.json
+        "204":
+          description: No content. The Source has been updated.
+        "400":
+          description: Bad request. Invalid Source JSON.
+
+
+  /sources/{sourceId}/tags:
+    parameters:
+      - name: sourceId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/uuid'
+        description: The Source identifier.
+    head:
+      summary: Source Tags
+      description: Return Source tags path headers
+      operationId: HEAD_sources-sourceId-tags
+      tags:
+        - Sources
+      responses:
+        "200":
+          $ref: '#/components/responses/trait_resource_listing_head_200'
+    get:
+      summary: Source Tags
+      description: Returns the Source tags.
+      operationId: GET_sources-sourceId-tags
       tags:
         - Sources
       responses:
@@ -137,7 +301,155 @@ paths:
           content:
             application/json:
               example:
-                  $ref: examples/sources-get-200.json
+                ingested_by: ingest_service_api
+              schema:
+                $ref: "schemas/tags.json"
+        "404":
+          description: The requested Source does not exist.
+
+
+  /sources/{sourceId}/tags/{name}:
+    parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The tag name.
+      - name: sourceId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/uuid'
+        description: The Source identifier.
+    head:
+      summary: Source Tag Value
+      description: Return Source tag path headers
+      operationId: HEAD_sources-sourceId-tags-name
+      tags:
+        - Sources
+      responses:
+        "200":
+          $ref: '#/components/responses/trait_resource_info_head_200'
+        "400":
+          $ref: '#/components/responses/trait_resource_info_head_400'
+        "404":
+          $ref: '#/components/responses/trait_resource_info_head_404'
+    get:
+      summary: Source Tag Value
+      description: Return the tag value associated with the tag name.
+      operationId: GET_sources-sourceId-tags-name
+      tags:
+        - Sources
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              example: |
+                "ingest_service_api"
+              schema:
+                type: string
+        "404":
+          description: The requested Source or tag does not exist.
+    put:
+      summary: Update Source Tag Value
+      description: Update the value of a specific tag on a Source
+      operationId: PUT_sources-sourceId-tags-name
+      tags:
+        - Sources
+      requestBody:
+        content:
+          application/json:
+            example: |
+              "new_value"
+            schema:
+              type: string
+        required: true
+      responses:
+        "204":
+          description: No content. The tag has been updated.
+        "400":
+          description: Bad request. Invalid Source tag JSON array.
+    delete:
+      summary: Delete Source tag
+      description: Delete a specific tag on a Source
+      operationId: DELETE_sources-sourceId-tags-name
+      tags:
+        - Sources
+      responses:
+        "204":
+          description: No content. The Source segment has been deleted.
+
+
+  /sources/{sourceId}/description:
+    parameters:
+      - name: sourceId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/uuid'
+        description: The Source identifier.
+    head:
+      summary: Source Description
+      description: Return Source description path headers
+      operationId: HEAD_sources-sourceId-description
+      tags:
+        - Sources
+      responses:
+        "200":
+          $ref: '#/components/responses/trait_resource_info_head_200'
+        "400":
+          $ref: '#/components/responses/trait_resource_info_head_400'
+        "404":
+          $ref: '#/components/responses/trait_resource_info_head_404'
+    get:
+      summary: Source Description
+      description: Returns the Source description property.
+      operationId: GET_sources-sourceId-description
+      tags:
+        - Sources
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              example: |
+                "Big Buck Bunny"
+              schema:
+                type: string
+        "404":
+          description: The requested Source does not exist.
+    put:
+      summary: Update Source Description
+      description: Create or modify the description property.
+      operationId: PUT_sources-sourceId-description
+      tags:
+        - Sources
+      requestBody:
+        content:
+          application/json:
+            example: |
+              "Big Buck Bunny Movie"
+            schema:
+              type: string
+        required: true
+      responses:
+        "204":
+          description: No content. The description has been updated.
+        "400":
+          description: Bad request. Invalid Source description.
+    delete:
+      summary: Delete Source Description
+      description: Delete the description property.
+      operationId: DELETE_sources-sourceId-description
+      tags:
+        - Sources
+      responses:
+        "204":
+          description: No content. The Source description property has been deleted.
+
+
   /flows:
     head:
       description: Return flows path headers

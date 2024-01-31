@@ -1,0 +1,12 @@
+{
+    "id": "2aa143ac-0ab7-4d75-bc32-5c00c13d186f",
+    "label": "bbb",
+    "description": "Big Buck Bunny video",
+    "created_by": "tams-dev",
+    "modified_by": "tams-dev",
+    "created": "2008-05-27T18:51:00Z",
+    "updated": "2008-05-27T18:51:00Z",
+    "tags": {
+        "ingested_by": "ingest_service_api"
+    }
+}

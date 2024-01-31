@@ -1,4 +1,32 @@
 [
-  "41d7f7eb-c48d-4513-9b37-17b418d26d7f",
-  "703141c8-0398-4a27-b207-c847c495bcb0"
+  {
+    "id": "2aa143ac-0ab7-4d75-bc32-5c00c13d186f",
+    "label": "bbb",
+    "description": "Big Buck Bunny video",
+    "created_by": "tams-dev",
+    "modified_by": "tams-dev",
+    "created": "2008-05-27T18:51:00Z",
+    "updated": "2008-05-27T18:51:00Z",
+    "tags": {
+        "ingested_by": "ingest_service_api"
+    }
+  },
+  {
+    "id": "86761f3a-5998-4cfe-9a89-8459bcb8ea52",
+    "label": "bbb",
+    "description": "Big Buck Bunny",
+    "created_by": "tams-dev",
+    "modified_by": "tams-dev",
+    "created": "2008-05-27T18:51:00Z",
+    "updated": "2008-05-27T18:51:00Z",
+    "tags": {
+        "ingested_by": "ingest_service_api"
+    }
+  },
+  {
+    "id": "7ba3fed1-3fd3-4f0e-8488-92c4ffe13838",
+    "description": "Big Buck Bunny audio",
+    "created": "2008-05-27T18:51:00Z",
+    "updated": "2008-05-27T18:51:00Z"
+  }
 ]

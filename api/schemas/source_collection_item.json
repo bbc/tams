@@ -1,0 +1,25 @@
+{
+    "type": "object",
+    "description": "Describes how a Source is collected (i.e muxed) into another Source",
+    "title": "Source Collection Item",
+    "required": [
+        "id",
+        "slot",
+        "role"
+    ],
+    "properties": {
+        "id": {
+            "description": "Identifier of the Source that is collected (child Source)",
+            "type": "string",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "slot": {
+            "description": "The logical ordering of contributing Sources. Must be unique among the collection",
+            "type": "number"
+        },
+        "role": {
+            "description": "A human-readable role of the Source in the Process (e.g. 'R' to denote a right audio channel in a mux of mono audio Sources)",
+            "type": "string"
+        }
+    }
+}
