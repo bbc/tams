@@ -10,7 +10,6 @@ _Where appropriate. Indicate order to be merged._
 # Submitter PR Checks
 _(tick as appropriate)_
 
-- [ ] Added bbc/rd-apmm-cloudfit team as a reviewer
 - [ ] PR completes task/fixes bug
 - [ ] API version has been incremented if necessary
 - [ ] ADR status has been updated, and ADR implementation has been recorded
