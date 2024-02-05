@@ -19,8 +19,6 @@ They exist primarily to make it easier to find items of interest in the API and 
 
 Chosen option: Option 2 - Ignore the date-time values in client requests, because it allows users to trust the behaviour of the date-time values, which is important given their primary purpose is to support development and debugging.
 
-This limits the use of the `created` field to refer to when the Flow was originally captured, but that information should ideally live elsewhere in a MAM system, or in the basic case, could be represented using tags.
-
 ### Implementation
 
 Implemented by <https://github.com/bbc/tams/pull/19>
@@ -30,11 +28,10 @@ Implemented by <https://github.com/bbc/tams/pull/19>
 ### Option 1: Allow clients to change the dates when making a PUT request
 
 When making a PUT request, e.g. to `PUT /flows/<flowId>` a client should include a value for each of the `created`, `metadata_updated` and `segments_updated` date-time fields.
-The `created` field may correspond to when the Flow was actually created (e.g. the time of capture of the original media) rather than when it was added to the store.
+The `created` field may correspond to something other than when the Flow was created in this store, for example if it was copied from elsewhere.
 The `metadata_updated` field must be the current time if the request modifies the metadata, and `segments_updated` should correspond to when the segments were last updated (which may differ from the time currently in the API, if the client knows better.)
 
 * Good, because it allows multiple stores to hold the same Flow and keep the fields in sync
-* Good, because it enables the Flow creation time to be captured, although actual use cases for that are unclear
 * Bad, because the date-time values can no longer be trusted for their original purpose if a client can accidentally modify them
 * Bad, because it creates additional complexity for the client to provide valid values
 * Bad, because it is difficult for the server to validate that values supplied by the client are permissible
@@ -47,4 +44,3 @@ Instead, the server sets the `created` time when the Flow is first created on th
 * Good, because the date-time values can be trusted to accurately represent the last time things changed on this particular store
 * Good, because the implementation is fairly simple
 * Bad, because it slightly breaks the expectations of a RESTful PUT, that a resource will be replaced
-* Bad, because if a Flow is copied from another store, the `created` date may not match across stores
