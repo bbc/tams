@@ -13,8 +13,8 @@ _Note: The [NMOS Timing and Identity Model](https://specs.amwa.tv/ms-04/releases
 ## Decision Drivers
 
 * Systems need to bridge workflow assets (e.g. a recording, or a programme) with the relevant content in TAMS, which should be linked to the Source ID.
-* Existing demos and uses of TAMS operate based on Flow IDs, which is at odds with how the model is supposed to work and leads to inflexibility.
-* Sources naturally for a hierarchy (Flows do not), which should be used to traverse relationships between content.
+* Existing demos and uses of TAMS operate based on Flow IDs, however this doesn't take advantage of the model's flexibility in decoupling content from specific renditions.
+* Sources naturally form a hierarchy (Flows do not), which should be used to traverse relationships between content.
 * It is necessary to have some way to attach business metadata to Sources and then find them in order to build demos.
   While in principle this should be another system that stores the Source ID, in practice no such system will be built imminently.
 
