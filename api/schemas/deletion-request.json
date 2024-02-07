@@ -21,11 +21,11 @@
             "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
         },
         "timerange_to_delete": {
-            "description": "The time range of FlowSegments to be deleted in this request, as described by the [TimeRange](../schemas/timerange#top) type",
+            "description": "The timerange of FlowSegments to be deleted in this request, as described by the [TimeRange](../schemas/timerange#top) type",
             "$ref": "timerange.json"
         },
         "timerange_remaining": {
-            "description": "The time range of FlowSegments not yet deleted by this request, as described by the [TimeRange](../schemas/timerange#top) type",
+            "description": "The timerange of FlowSegments not yet deleted by this request, as described by the [TimeRange](../schemas/timerange#top) type",
             "$ref": "timerange.json"
         },
         "delete_flow": {

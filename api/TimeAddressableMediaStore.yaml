@@ -160,7 +160,7 @@ paths:
             $ref: '#/components/schemas/uuid'
         - name: timerange
           in: query
-          description: Filter on flows that overlap the given time range.
+          description: Filter on flows that overlap the given timerange.
           schema:
             default: _
             $ref: 'schemas/timerange.json'
@@ -242,13 +242,13 @@ paths:
       parameters:
         - name: include_timerange
           in: query
-          description: Include the available segment time range in the response.
+          description: Include the available segment timerange in the response.
           schema:
             default: false
             type: boolean
         - name: timerange
           in: query
-          description: Limit the returned available segment time range to this time range.
+          description: Limit the returned available segment timerange to this timerange.
           schema:
             default: _
             $ref: 'schemas/timerange.json'
@@ -512,16 +512,16 @@ paths:
         "http_object_store" media store type which will include a "get_url" property that contains a
         HTTP URL for downloading the media object.
 
-        The flow segment may include timing and range adjustment information that the client needs to
+        The flow segment may include timing and timerange adjustment information that the client needs to
         apply when extracting the samples from the media object.
-        - The range of samples must be limited to the range from `sample_offset` to `sample_offset + sample_count`
-          (exclusive) if `sample_count` is set, or from `sample_offset` until the end if `sample_count`
-          is not set.
+        - The timerange of samples must be limited to `sample_offset` to
+          `sample_offset + sample_count` (exclusive) if `sample_count` is set, or from `sample_offset`
+          until the end if `sample_count` is not set.
         - The sample timestamp in the flow segment (`segment_ts`) is the timestamp in the media object
           (`media_object_ts`) adjusted by `ts_offset`: `segment_ts = media_object_ts + ts_offset`. The
-          `segment_ts` should equal the start of the `range` for the sample at `sample_offset`.
+          `segment_ts` should equal the start of the `timerange` for the sample at `sample_offset`.
 
-        Use the pagination options to limit the results to a time range and/or count. The list of flow
+        Use the pagination options to limit the results to a timerange and/or count. The list of flow
         segments can be empty. A request for segments from a non-existent flow will return an empty
         list, not a 404.
       operationId: GET_flows-flowId-segments
@@ -554,7 +554,7 @@ paths:
               schema:
                 type: integer
             X-Paging-Timerange:
-              description: Identifies the time range for the returned data set.
+              description: Identifies the timerange for the returned data set.
               schema:
                 $ref: 'schemas/timerange.json'
             X-Paging-Count:
@@ -591,7 +591,7 @@ paths:
 
         For newly-written objects, the client is responsible for ensuring that the segment written to the store obeys the following restrictions:
         - The object id provided for a segment MUST be one which was received in a POST from /storage for this flow.
-        - The timestamp of the first sample written to the object MUST be located inside the time range
+        - The timestamp of the first sample written to the object MUST be located inside the timerange
           that was associated with this object id in the response from the POST request to /storage for this flow.
         - All samples in the object SHOULD be used by the segment.
         - The timestamps of each sample in the media object MUST equal its position on the Flow timeline, OR `ts_offset` MUST
@@ -600,10 +600,10 @@ paths:
 
         For objects that have been re-used from other flows, the `sample_offset` and `sample_count` MAY be used to
         specify part of the object to use:
-        - The `range` field indicates the new segment's position in the flow
-        - The sample associated with the start of the `range` MUST be the one selected by `sample_offset`
-        - Likewise, the sample associated with the end of the `range` MUST be the one selected by
-          `sample_offset + sample_count - 1`, unless `range` has an exclusive end, in which case it will be
+        - The `timerange` field indicates the new segment's position in the flow
+        - The sample associated with the start of the `timerange` MUST be the one selected by `sample_offset`
+        - Likewise, the sample associated with the end of the `timerange` MUST be the one selected by
+          `sample_offset + sample_count - 1`, unless `timerange` has an exclusive end, in which case it will be
           `sample_offset + sample_count`.
 
       operationId: POST_flows-flowId-segments
@@ -634,7 +634,7 @@ paths:
       parameters:
         - name: timerange
           in: query
-          description: Only delete flow segments that are completely covered by the given time range.
+          description: Only delete flow segments that are completely covered by the given timerange.
           schema:
             default: _
             $ref: 'schemas/timerange.json'
@@ -711,7 +711,7 @@ paths:
               schema:
                 type: integer
             X-Paging-Timerange:
-              description: Identifies the time range for the returned data set.
+              description: Identifies the timerange for the returned data set.
               schema:
                 $ref: 'schemas/timerange.json'
             X-Paging-Count:
@@ -777,9 +777,9 @@ paths:
           $ref: '#/components/responses/trait_resource_info_head_404'
     get:
       description: |
-        Get information about a range of FlowSegments that are being deleted.
+        Get information about a timerange of FlowSegments that are being deleted.
 
-        A deletion request is created when a client DELETEs a long ranges of segments, which takes longer than
+        A deletion request is created when a client DELETEs a long timeranges of segments, which takes longer than
         a single HTTP request. Clients will be redirected here to monitor the request's progress.
       operationId: GET_flow-delete-requests-request-id
       tags:
@@ -833,7 +833,7 @@ components:
     trait_timerange_paged_timerange:
       name: timerange
       in: query
-      description: Return only the results in the time range specified.
+      description: Return only the results in the timerange specified.
       schema:
         $ref: 'schemas/timerange.json'
     trait_timerange_paged_limit:
@@ -868,7 +868,7 @@ tags:
       url: 'https://specs.amwa.tv/ms-04/releases/v1.0.0/docs/2.3._Explanation_-_Flow.html'
   - name: FlowSegments
     description: |
-      A time range segment of a Flow that references a media object in the object store.
+      A timerange segment of a Flow that references a media object in the object store.
   - name: MediaStorage
     description: The system that stores the media objects referenced by flow segments.
   - name: FlowDeleteRequests

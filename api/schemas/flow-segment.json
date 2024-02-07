@@ -1,10 +1,10 @@
 {
   "type": "object",
-  "description": "Provides the location and metadata of the media files corresponding to time range segments of a Flow.",
+  "description": "Provides the location and metadata of the media files corresponding to timerange segments of a Flow.",
   "title": "Flow Segment",
   "required": [
     "object_id",
-    "range"
+    "timerange"
   ],
   "properties": {
     "object_id" : {
@@ -15,7 +15,7 @@
       "description": "The timestamp offset between the sample timestamps stored in the media file and the corresponding timestamp in the segment, ie. ts_offset = segment ts - media object ts. Assumed to be 0:0 if not set. Format as described by the [Timestamp](../schemas/timestamp#top) type, but cannot be negative",
       "$ref": "timestamp.json"
     },
-    "range": {
+    "timerange": {
       "description": "The timerange from the first sample in the segment to the last, with an inclusive start and inclusive or exclusive end, as described by the [TimeRange](../schemas/timerange#top) type",
       "$ref": "timerange.json"
     },
