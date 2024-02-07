@@ -519,7 +519,7 @@ paths:
           is not set.
         - The sample timestamp in the flow segment (`segment_ts`) is the timestamp in the media object
           (`media_object_ts`) adjusted by `ts_offset`: `segment_ts = media_object_ts + ts_offset`. The
-          `segment_ts` should equal the `first_ts` for the sample at `sample_offset`.
+          `segment_ts` should equal the start of the `range` for the sample at `sample_offset`.
 
         Use the pagination options to limit the results to a time range and/or count. The list of flow
         segments can be empty. A request for segments from a non-existent flow will return an empty
@@ -600,10 +600,10 @@ paths:
 
         For objects that have been re-used from other flows, the `sample_offset` and `sample_count` MAY be used to
         specify part of the object to use:
-        - The `range` (or `first_ts` and `last_ts`) fields indicate the new segment's position in the flow
-        - The sample associated with the start of the range (or `first_ts`) MUST be the one selected by `sample_offset`
-        - Likewise, the sample associated with the end of the range (or `last_ts`) MUST be the one selected by
-          `sample_offset + sample_count - 1`, unless `exclusive_last_ts == true`, in which case it will be
+        - The `range` field indicates the new segment's position in the flow
+        - The sample associated with the start of the `range` MUST be the one selected by `sample_offset`
+        - Likewise, the sample associated with the end of the `range` MUST be the one selected by
+          `sample_offset + sample_count - 1`, unless `range` has an exclusive end, in which case it will be
           `sample_offset + sample_count`.
 
       operationId: POST_flows-flowId-segments

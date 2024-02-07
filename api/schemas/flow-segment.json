@@ -3,20 +3,8 @@
   "description": "Provides the location and metadata of the media files corresponding to time range segments of a Flow.",
   "title": "Flow Segment",
   "required": [
-    "object_id"
-  ],
-  "oneOf": [
-    {
-      "required": [
-        "first_ts",
-        "last_ts"
-      ]
-    },
-    {
-      "required": [
-        "range"
-      ]
-    }
+    "object_id",
+    "range"
   ],
   "properties": {
     "object_id" : {
@@ -28,25 +16,12 @@
       "$ref": "timestamp.json"
     },
     "range": {
-      "description": "The timerange from the first sample in the segment to the last (exclusive end if exclusive_last_ts is true), as described by the [TimeRange](../schemas/timerange#top) type",
+      "description": "The timerange from the first sample in the segment to the last, with an inclusive start and inclusive or exclusive end, as described by the [TimeRange](../schemas/timerange#top) type",
       "$ref": "timerange.json"
-    },
-    "first_ts" : {
-      "description": "The timestamp of the first sample in the segment (which may not be the first sample in the object). Format as described by the [Timestamp](../schemas/timestamp#top) type",
-      "$ref": "timestamp.json"
     },
     "last_duration": {
       "description": "The duration of the last sample in the segment (which may differ from that of the object). Defaults to 1/rate if a fixed media rate is set. Format as described by the [Timestamp](../schemas/timestamp#top) type, but cannot be negative",
       "$ref": "timestamp.json"
-    },
-    "last_ts" : {
-      "description": "The timestamp of the start of the last sample in the segment, or end of the last sample in the segment if exclusive_last_ts is true. Format as described by the [Timestamp](../schemas/timestamp#top) type",
-      "$ref": "timestamp.json"
-    },
-    "exclusive_last_ts" : {
-      "description": "A true value indicates that the last_ts timestamp is the exclusive end of the last sample in the segment.",
-      "type": "boolean",
-      "default": false
     },
     "sample_offset": {
       "description": "The start of the segment represented as a count of samples from the start of the object.",
