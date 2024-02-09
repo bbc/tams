@@ -26,7 +26,7 @@ jobs:
       shouldUpload: ${{ steps.shouldUpload.outputs.upload }}
     steps:
       - name: Check out repository code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0 # check out the entire repo history for SHA verification in lastSuccessful step
 
@@ -63,11 +63,11 @@ jobs:
 
       - name: Setup pages
         if: ${{ inputs.forceDocsUpload || ( steps.shouldUpload.outputs.upload == 'true' ) }}
-        uses: actions/configure-pages@v3
+        uses: actions/configure-pages@v4
 
       - name: Upload documentation artifact
         if: ${{ inputs.forceDocsUpload || ( steps.shouldUpload.outputs.upload == 'true' ) }}
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v3
         with:
           path: './api/docs'
 
@@ -84,7 +84,7 @@ jobs:
     steps:
       - name: Deploy documentation to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
       - name: Adding summary
         run: |
           echo "Documentation URL: ${{ steps.deployment.outputs.page_url }}" >> $GITHUB_STEP_SUMMARY

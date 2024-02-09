@@ -1,0 +1,66 @@
+name: Release Workflow
+run-name: ${{ format('{0} triggered {1} on {2}', (github.event_name == 'workflow_dispatch' && format('User {0}', github.actor) || format('{0} event', github.event_name) ), github.workflow, github.ref) }}
+on:
+  workflow_dispatch:
+
+jobs:
+  Release:
+    permissions:
+      contents: write
+    runs-on: ubuntu-22.04
+    environment:
+      name: releases
+      url: ${{ steps.release.outputs.url }}
+    outputs:
+      releaseRef: refs/tags/${{ steps.nextVersion.outputs.version }}
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # check out entire repo for version calculation
+
+      - name: Get next version number
+        id: nextVersion
+        run: echo "version=$(make next-version)" >> $GITHUB_OUTPUT
+
+      - name: Update version in OpenAPI document
+        run: make update-api-version
+
+      # NOTE: `git tag` will fail if the version hasn't moved and the changes (if any) won't be committed. The release job will also fail
+      - name: Commit changes and create tag
+        id: commit
+        run: |
+          git config --global user.email "cloudfit-opensource@rd.bbc.co.uk"
+          git config --global user.name "BBC RD"
+          git add api/TimeAddressableMediaStore.yaml
+          git commit -m "Bump version"
+          git tag -a ${{ steps.nextVersion.outputs.version }} -m "v.${{ steps.nextVersion.outputs.version }}"
+          git push origin --tags :
+
+      - name: Create release
+        id: release
+        uses: actions/github-script@v7
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+          script: |
+            try {
+              const response = await github.rest.repos.createRelease({
+                generate_release_notes: true,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                tag_name: '${{ steps.nextVersion.outputs.version }}'
+              });
+
+              core.setOutput('url', response.data.html_url);
+            } catch (error) {
+              core.setFailed(error.message);
+            }
+
+      - name: Adding summary
+        run: |
+          echo "Release Version: ${{ steps.nextVersion.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+          echo "Release URL: ${{ steps.release.outputs.url }}" >> $GITHUB_STEP_SUMMARY
+
+      - name: Report errors
+        if: ${{ always() && (steps.commit.outcome != 'success') }}
+        run: echo "::error title=Nothing to release::No changes that will trigger a version bump. You may need to set an appropriate sem-ver magic string in a commit message."

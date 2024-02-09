@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Check out PR code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: ${{github.event.pull_request.commits}} # only checkout commits from this PR
           ref: ${{ github.ref }}

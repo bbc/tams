@@ -92,15 +92,33 @@ Various scenarios are explored in the [Practical Guidance for Media](https://spe
 ### API Versioning
 
 The API is versioned using a major and minor version number.
-A breaking change results in a major version increment and the minor version is reset to 0.
+A breaking change - such as removal of a feature, or renaming of properties in such a way that would break compatibility (including fixing a typo) - results in a major version increment and the minor version is reset to 0.
 Features such new endpoints or new (optional) data properties result in a minor version increment.
-Other changes such as bug fixes and documentation changes do not result in version updates.
+Other changes such as documentation changes do not result in version updates.
 Note that the version may change frequently whilst the API is still under development!
+
+Versions are calculated automatically upon release using 'magic' strings included in commit messages:
+    - `sem-ver: api-break` - where a breaking change is made (results in a major version bump)
+    - `sem-ver: feature` - where a new feature has been added (results in a minor version bump)
+    - `sem-ver: deprecation` - where an existing feature has been marked as deprecated, but not yet removed (results in a minor version bump)
+Commits without one of these magic strings are assumed to be unsubstantial and will not result in a version bump.
+Versions will only be incremented once when a release is made.
+If there are multiple commits since the last release, the major version number will be incremented by 1, and minor version set to 0 if at least one of the commits contains an `api-break`.
+If there are no `api-break` changes since the last release, the minor version will be incremented by 1 if at least one commit contains a `feature` or `deprecation` change.
+Otherwise, the version will not change.
+
+It is possible to see what the version would be if a release was made at the current commit by running `make next-version` in the top directory of this repository.
 
 ## Proposals, Decisions and Architecture Changes
 
 This repository uses [(M)ADR documents](https://adr.github.io/madr/) to propose significant changes, facilitate discussions and decision making, and to store a record of options that were considered.
 These documents may be found in the [docs/adr/decisions](./docs/adr/decisions/) directory, and are managed as described by the [ADR Readme](./docs/adr/decisions/README.md).
+
+## Making a release
+
+Run the `release` workflow under the `Actions` tab on this repository on GitHub against the `main` branch.
+This workflow requires approval.
+This workflow will fail if it does not identify any commits that would result in a version bump (see [API Versioning](#api-versioning)).
 
 ## Get in touch
 
