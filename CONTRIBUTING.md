@@ -15,7 +15,12 @@ The process is:
 
 1. Fork the repository
 2. For more significant changes, consider starting with writing an ADR document: see [the ADR readme](./docs/adr/decisions/README.md) for more
-3. Make, commit and push changes to a branch on your fork (make sure the commit message contains your email address)
+3. Make, commit and push changes to a branch on your fork
+   - Make sure the commit message contains your email address
+   - Where appropriate, make sure your commit messages includes a line with one of the following:
+      - `sem-ver: api-break` - where a breaking change is made
+      - `sem-ver: feature` - where a new feature has been added
+      - `sem-ver: deprecation` - where an existing feature has been marked as deprecated, but not yet removed
 4. If you haven't already done so, sign the CLA (see below)
 5. Open a Pull Request with your changes.
    Don't worry about leaving empty spaces on the PR template (it's aimed at internal contributions), just fill in the description
