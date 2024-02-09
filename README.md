@@ -49,11 +49,16 @@ At any time the unique address can be exchanged for the media data by an API cal
 But if that is not needed, media work can be done purely by reference.
 
 Grains are grouped into Flow Segments, containing for example one second of content, wrapped in a container format such as MPEG-TS.
-The store provides a mechanism to upload and register new segments, and an interface to request all the segments covering a particular timerange and their download URLs; an approach inspired by chunked streaming protocols like HTTP Live Streaming.
+The store provides a mechanism to upload and register new Flow Segments, and an interface to request all the Flow Segments covering a particular timerange and their download URLs; an approach inspired by chunked streaming protocols like HTTP Live Streaming.
 
-Segments may be stored separately from the metadata linking them to a position on the timeline, separating the metadata and data planes.
-For example our implementation uses an object store (_e.g._ AWS S3) for the segments, passing S3 URLs to the client to upload directly and taking advantage of the scalability of cloud object storage.
-Segments are also de-coupled from their point in the timeline by a link between their `<flow_id, timestamp>` tuple and the underlying object ID, so a single segment can appear at multiple points in multiple flows.
+The media data contained within Flow Segments may be stored separately from the metadata linking them to a position on the timeline, separating the media data and metadata planes.
+For example our implementation uses a database (_e.g._ Amazon DynamoDB) to store Flow Segment metadata and an object store (_e.g._ AWS S3) to store the media data for Flow Segments.
+We refer to media data stored in the object store as 'media objects'.
+The Flow Segment has a single S3 download url which is the location of the media object that contains the stored media data for the Flow Segment.
+When writing to the store, the S3 URLs can be passed to a client permitting them to upload media data directly.
+
+Another advantage of separating the media data and metadata planes in this way is that a particular Flow Segment can be referenced by multiple flows.
+On the metadata side, the Flow Segment is just a URL, so any number of flows can record that same URL against other `<flow_id, timestamp>` tuples.
 This allows for copy-on-write semantics: immutability means a new Flow must be created to make changes to existing parts of the timeline, but for unmodified portions of the timeline the new `<flow_id, timestamp>` tuple points to the existing object ID.
 
 The Flow model is aligned with the principles and schemas of [AMWA NMOS IS-04](https://specs.amwa.tv/is-04/releases/v1.3.2/APIs/schemas/) to facilitate easy integration of NMOS-compliant media devices.
@@ -63,18 +68,18 @@ The Flow model is aligned with the principles and schemas of [AMWA NMOS IS-04](h
 The process of reading from the store is:
 
 1. Client identifies the Flow ID and timerange of interest
-2. Client makes a request to [`GET flows/<flow_id>/segments?timerange=<timerange>`](https://bbc.github.io/tams/#/operations/GET_flows-flowId-segments) and receives a list of segments, timeranges and download URLs
-3. Client downloads each URL, concatenates the segments together and unwraps the grains within
+2. Client makes a request to [`GET flows/<flow_id>/segments?timerange=<timerange>`](https://bbc.github.io/tams/#/operations/GET_flows-flowId-segments) and receives a list of Flow Segments, including their timeranges and download URLs
+3. Client downloads each URL, concatenates the Flow Segments together and unwraps the grains within
 4. The first and last Flow Segment may contain more grains than requested, so the client should skip any received not in the requested timerange
 
 The process of writing to the store is:
 
 1. Client creates a Flow if necessary by making a request to [`PUT flows/<flow_id>`](https://bbc.github.io/tams/#/operations/PUT_flows-flowId)
 2. Client makes a request to [`POST flows/<flow_id>/storage`](https://bbc.github.io/tams/#/operations/POST_flows-flowId-storage) with the timerange to be written
-3. Store responds with a list of segment timeranges and URLs to PUT segments to, along with an optional `pre` URL to call before writing
+3. Store responds with a list of Flow Segment timeranges and URLs to PUT media data into, along with an optional `pre` URL to call before writing
 4. If a `pre` URL was given, client calls it
-5. Client breaks content into segments as instructed and uploads it
-6. Client makes requests to [`POST flows/<flow_id>/segments`](https://bbc.github.io/tams/#/operations/POST_flows-flowId-segments) with details of each new segment created, to register them on the timeline
+5. Client breaks content into Flow Segments as instructed and uploads it
+6. Client makes requests to [`POST flows/<flow_id>/segments`](https://bbc.github.io/tams/#/operations/POST_flows-flowId-segments) with details of each new Flow Segment created, to register them on the timeline
 
 ### Flows, Sources and Mutation
 
