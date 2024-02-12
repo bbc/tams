@@ -1,6 +1,6 @@
 {
   "type": "object",
-  "description": "Describes a Flow",
+  "description": "Describes a Flow (common properties to all Flows, imported by type-specific specifications)",
   "title": "Flow Core",
   "required": [
     "id",

@@ -18,30 +18,34 @@
     "codec": "video/h264",
     "container": "video/mp2t",
     "avg_bit_rate": 2479,
-    "frame_rate": {
-      "numerator": 24,
-      "denominator": 1
-    },
-    "frame_width": 1280,
-    "frame_height": 720,
-    "bit_depth": 8,
-    "interlace_mode": "progressive",
-    "colorspace": "BT709",
-    "transfer_characteristic": "SDR",
-    "aspect_ratio": {
-      "numerator": 16,
-      "denominator": 9
-    },
-    "pixel_aspect_ratio": {
-      "numerator": 1,
-      "denominator": 1
-    },
-    "component_type": "YCbCr",
-    "vert_chroma_subs": 2,
-    "horiz_chroma_subs": 2,
-    "avc_profile": 100,
-    "avc_level": 31,
-    "avc_flags": 0
+    "essence_parameters": {
+      "frame_rate": {
+        "numerator": 24,
+        "denominator": 1
+      },
+      "frame_width": 1280,
+      "frame_height": 720,
+      "bit_depth": 8,
+      "interlace_mode": "progressive",
+      "colorspace": "BT709",
+      "transfer_characteristic": "SDR",
+      "aspect_ratio": {
+        "numerator": 16,
+        "denominator": 9
+      },
+      "pixel_aspect_ratio": {
+        "numerator": 1,
+        "denominator": 1
+      },
+      "component_type": "YCbCr",
+      "vert_chroma_subs": 2,
+      "horiz_chroma_subs": 2,
+      "avc_parameters": {
+        "profile": 100,
+        "level": 31,
+        "flags": 0
+      }
+    }
   },
   {
     "id": "6101df05-06bb-41b8-8af4-cf7cd33df209",
@@ -62,11 +66,15 @@
     "codec": "audio/aac",
     "container": "video/mp2t",
     "avg_bit_rate": 128,
-    "sample_rate": 48000,
-    "channels": 2,
-    "bit_depth": 24,
-    "coded_frame_size": 1024,
-    "mp4_oti": 2
+    "essence_parameters": {
+      "sample_rate": 48000,
+      "channels": 2,
+      "bit_depth": 24,
+      "codec_parameters": {
+        "coded_frame_size": 1024,
+        "mp4_oti": 2
+      }
+    }
   },
   {
     "id": "0fde9c11-da9d-434a-a113-d3b20a2cf251",
@@ -87,27 +95,31 @@
     "codec": "video/raw",
     "container": "video/quicktime",
     "avg_bit_rate": 1658880,
-    "frame_rate": {
-      "numerator": 50,
-      "denominator": 1
-    },
-    "frame_width": 1920,
-    "frame_height": 1080,
-    "bit_depth": 8,
-    "interlace_mode": "progressive",
-    "colorspace": "BT709",
-    "transfer_characteristic": "SDR",
-    "aspect_ratio": {
-      "numerator": 16,
-      "denominator": 9
-    },
-    "pixel_aspect_ratio": {
-      "numerator": 1,
-      "denominator": 1
-    },
-    "component_type": "YCbCr",
-    "unc_type": "UYVY",
-    "vert_chroma_subs": 1,
-    "horiz_chroma_subs": 2
+    "essence_parameters": {
+      "frame_rate": {
+        "numerator": 50,
+        "denominator": 1
+      },
+      "frame_width": 1920,
+      "frame_height": 1080,
+      "bit_depth": 8,
+      "interlace_mode": "progressive",
+      "colorspace": "BT709",
+      "transfer_characteristic": "SDR",
+      "aspect_ratio": {
+        "numerator": 16,
+        "denominator": 9
+      },
+      "pixel_aspect_ratio": {
+        "numerator": 1,
+        "denominator": 1
+      },
+      "component_type": "YCbCr",
+      "unc_parameters": {
+        "unc_type": "UYVY"
+      },
+      "vert_chroma_subs": 1,
+      "horiz_chroma_subs": 2
+    }
   }
 ]

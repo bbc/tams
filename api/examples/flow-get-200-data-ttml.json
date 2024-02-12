@@ -9,5 +9,7 @@
     },
     "codec": "application/ttml+xml",
     "container": "application/ttml+xml",
-    "data_type": "urn:x-tams:data:subtitle"
+    "essence_parameters": {
+        "data_type": "urn:x-tams:data:subtitle"
+    }
 }
