@@ -1,5 +1,5 @@
 ---
-status: "proposed"
+status: "accepted"
 ---
 # Created and Modified Timestamps should be managed internally
 
@@ -44,3 +44,15 @@ Instead, the server sets the `created` time when the Flow is first created on th
 * Good, because the date-time values can be trusted to accurately represent the last time things changed on this particular store
 * Good, because the implementation is fairly simple
 * Bad, because it slightly breaks the expectations of a RESTful PUT, that a resource will be replaced
+
+## More Information
+
+### TAMS Team Discussion - 12th February 2024
+
+A discussion about this proposal took place on 12th February 2024, with the BBC R&D TAMS team.
+
+There was some discussion as to whether it was OK to have properties that appear in a GET request that cannot be set in a PUT request, and whether that breaks RESTful principles.
+The consensus was that the PUT request is to the Flow resource, and a GET also includes related metadata, in a similar way to how a filesystem will return created and modified attributes.
+In addition, separating the schemas for PUT and GET would make the already complex Flow schema even more cumbersome.
+
+A minor wording change was proposed and accepted, and the consensus was to accept Option 2 of this proposal.
