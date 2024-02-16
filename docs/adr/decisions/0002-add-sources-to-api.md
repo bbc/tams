@@ -1,5 +1,5 @@
 ---
-status: proposed
+status: accepted
 ---
 # Add Sources as objects in the API
 
@@ -21,15 +21,16 @@ _Note: The [NMOS Timing and Identity Model](https://specs.amwa.tv/ms-04/releases
 ## Considered Options
 
 * Option 1: Add a lightweight Source representation to the TAMS API
+* Option 1a: As above, without a hierarchy model
 * Option 2: Specify and build another system to store Source <-> Source relationships
 * Option 3: Assume other systems will work exclusively in Flow IDs
 
 ## Decision Outcome
 
-Chosen option: Option 1: Add a lightweight Source representation to the TAMS API.
+Chosen option: Option 1a: Add a lightweight Source representation to the TAMS API, without a hierarchy model.
 
 This option balances the need to avoid overloading the API (by adding parts of a MAM into scope) with the need for something that works out-of-the-box.
-It should be possible to approach the proposed API using Sources, and to traverse the Source hierarchy, however the latter will only be efficient enough for proof-of-concept: anything more advanced indicates the need for another system.
+It should be possible to approach the proposed API using Sources, however (as noted in the [More Information](#tamsaws-workshop-discussion---13th-february-2024) section) grouping of Sources and traversal of the hierarchical graph will be the subject of a future proposal.
 
 ### Implementation
 
@@ -48,6 +49,10 @@ Sources can also have tags, providing a very basic way to query them.
 * Good, because a lot of use cases can be built to a proof-of-concept level by using Source tags to store business metadata and then query it later
 * Neutral, because it adds additional complexity to the API and implementations, but that complexity has to go somewhere
 * Bad, because Source data are potentially duplicated between this API and other systems (e.g. external MAM/PAM systems)
+
+### Option 1a: Add a Source representation. Defer Source <-> Source relationships for a future ADR
+
+As above, but removing the ability to assemble a basic hierarchy pending further consideration of how that should work.
 
 ### Option 2: Specify and build another system to store Source <-> Source relationships
 
@@ -69,3 +74,16 @@ Reduce the importance of Sources in the model by assuming that other systems and
 * Bad, because matching equivalent content (e.g. proxy edit workflows) becomes difficult or brittle
 * Bad, because finding other content in the hierarchy (e.g. matching audio and video together) becomes impossible
 * Bad, because it loses alignment with the NMOS model
+
+## More Information
+
+### TAMS/AWS Workshop Discussion - 13th February 2024
+
+A discussion about this proposal took place during the TAMS/AWS workshop on 13th February 2024, with the BBC R&D TAMS team, BBC B&EUT architects and AWS Solution Architects
+
+The consensus was that adding Sources as objects in the API is useful, and the fields seem broadly correct.
+However the approach to representing a hierarchy or graph of Sources requires more thought.
+There are open questions as to whether the `contains` and `contributes_to` properties are a sensible approach, and whether other types of relationship (e.g. Flow <-> Flow) are necessary.
+This was agreed to be moved to the topic of a future ADR.
+
+As a result, this ADR was accepted with those properties removed.
