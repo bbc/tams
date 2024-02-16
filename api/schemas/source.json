@@ -3,13 +3,25 @@
     "description": "Describes a Source: an abstract representation of a piece of media as defined in <https://specs.amwa.tv/ms-04/releases/v1.0.0/docs/2.2._Explanation_-_Source.html>\n\nSources may be elemental (and represented directly by a Flow), or may represent a collection of other Sources, e.g. a Source collecting video and audio together.",
     "title": "Source",
     "required": [
-        "id"
+        "id",
+        "format"
     ],
     "properties": {
         "id": {
             "description": "Source identifier",
             "type": "string",
             "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "format" : {
+            "description": "The primary content type URN for the Source.",
+            "type": "string",
+            "enum": [
+                "urn:x-nmos:format:video",
+                "urn:x-nmos:format:audio",
+                "urn:x-nmos:format:data",
+                "urn:x-nmos:format:mux"
+            ],
+            "format": "uri"
         },
         "label": {
             "description": "Freeform string label for the Source",

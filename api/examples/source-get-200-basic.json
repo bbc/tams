@@ -1,5 +1,6 @@
 {
     "id": "2aa143ac-0ab7-4d75-bc32-5c00c13d186f",
+    "format": "urn:x-nmos:format:video",
     "label": "bbb",
     "description": "Big Buck Bunny video",
     "created_by": "tams-dev",

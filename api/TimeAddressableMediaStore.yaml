@@ -229,6 +229,7 @@ paths:
           application/json:
             example:
               id: c562ae2d-5c37-47d4-a8b5-6bf08f217c4b
+              format: urn:x-nmos:format:video
               label: ingest_a
               description: SDI ingest from Camera A
 
@@ -242,6 +243,7 @@ paths:
             application/json:
               example:
                 id: c562ae2d-5c37-47d4-a8b5-6bf08f217c4b
+                format: urn:x-nmos:format:video
                 label: ingest_a
                 description: SDI ingest from Camera A
                 created: "2024-01-31T11:03:00Z"
