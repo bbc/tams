@@ -159,13 +159,6 @@ paths:
             is performed.
           schema:
             type: boolean
-        - name: is_root_node
-          in: query
-          description: |
-            Filter on Sources that have no parent Sources (specifically, no Collects relationship)
-            and form the root node of part of the hierarchy.
-          schema:
-            type: boolean
       responses:
         "200":
           description: ""
@@ -206,13 +199,6 @@ paths:
       operationId: GET_sources-sourceId
       tags:
         - Sources
-      parameters:
-        - name: include_hierarchy
-          in: query
-          description: Whether to include the Sources this Source contributes to and consists of in the response.
-          schema:
-            default: false
-            type: boolean
       responses:
         "200":
           description: ""
@@ -225,10 +211,6 @@ paths:
                   summary: Source containing elemental video
                   value:
                     $ref: "examples/source-get-200-basic.json"
-                muxed:
-                  summary: Source representing multiplexed video and audio
-                  value:
-                    $ref: "examples/source-get-200-muxed.json"
         "404":
           description: The requested Source does not exist.
         "400":

@@ -39,21 +39,6 @@
         },
         "tags": {
             "$ref": "tags.json"
-        },
-        "contributes_to": {
-            "type": "array",
-            "description": "Sources which collect this Source to form part of them, i.e parents of this Source. Only present if `include_hierarchy` is set.",
-            "items": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
-            }
-        },
-        "contains": {
-            "type": "array",
-            "description": "Sources which this Source collects together, i.e. children of this Source. Only present if `include_hierarchy` is set.",
-            "items": {
-                "$ref": "source_collection_item.json"
-            }
         }
     }
 }

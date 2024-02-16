@@ -87,9 +87,6 @@ Media workflows and applications are likely to use Sources as their references t
 Then some logic can be applied to identify a suitable Flow representing that Source at the point when operations need to be performed on the media, for example choosing between proxy-quality for an offline edit and full-quality for a render.
 
 The TAMS API stores both Flows and Sources, each of which can be assigned a label, description and some tags alongside relevant technical metadata.
-In addition Sources on the API can be collected into other Sources (with a `slot` and `role` parameter to ascribe meaning to the relationship).
-However this implementation is deliberately made very simple, and lacks efficient mechansisms to query the graph of Sources.
-Instead management of metadata should take place in other systems (e.g. a MAM), which could contain a more advanced content graph capability for exploring the Source graph.
 
 ### Mutation
 
