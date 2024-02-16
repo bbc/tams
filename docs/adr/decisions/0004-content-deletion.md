@@ -1,5 +1,5 @@
 ---
-status: "proposed"
+status: "rejected"
 ---
 # Deletion of Content and IDs
 
@@ -21,21 +21,12 @@ The TAMS approach should recognise and provide a way to avoid all reference to a
 
 ## Decision Outcome
 
-TBD
+Option 1 (rejecting the proposed change), because the conceptual existence of content should be stored elsewhere (e.g. in a MAM), and an event stream provides a better approach for audit logging (see [More Information](#tamsaws-workshop-discussion---13th-february-2024), below).
 
-<!-- This is an optional element. Feel free to remove. -->
-### Consequences
-
-* Good, because {positive consequence, e.g., improvement of one or more desired qualities, …}
-* Bad, because {negative consequence, e.g., compromising one or more desired qualities, …}
-* … <!-- numbers of consequences can vary -->
-
-<!-- This is an optional element. Feel free to remove. -->
 ### Implementation
 
-{Once the proposal has been implemented, add a link to the relevant PRs here}
+N/A
 
-<!-- This is an optional element. Feel free to remove. -->
 ## Pros and Cons of the Options
 
 ### Option 1: Assume DELETE requests will be mediated by other systems, accept all requests
@@ -88,3 +79,17 @@ However a Source cannot be deleted, because the _concept_ of the content still e
 * Good, because it still allows FlowSegments (and their attached essence) to be deleted to manage storage space
 * Good, because it also avoids proliferation of Flow records, since they can be deleted
 * Bad, because it encourages proliferation of Source records (although they are a small piece of metadata with no essence attached directly), which can never be removed from a TAMS instance
+
+## More Information
+
+### TAMS/AWS Workshop Discussion - 13th February 2024
+
+A discussion about this proposal took place during the TAMS/AWS workshop on 13th February 2024, with the BBC R&D TAMS team, BBC B&EUT architects and AWS Solution Architects
+
+The discussion concluded that there might be uses for some delayed deletion functionality, eg for audit purposes.
+However it was clear that in any non-trivial system, there will be capabilities alongside the store, for example a Media Asset Management (MAM) system and/or a separate archive to which content is replicated, with a different set of access rules.
+As a concrete example, the BBC B&EUT MAM architect in the room (Mark H) believed records of what content once existed didn't need to live in the store.
+
+As a result, it makes sense to make the store less complicated, rather than more, and select Option 1.
+In addition, there is a separate proposal (yet to be drafted) that stores should have an "event stream" mechanism, allowing interested parties to subscribe to store events.
+One such party could be an audit log.
