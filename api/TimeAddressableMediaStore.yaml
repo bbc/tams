@@ -486,6 +486,58 @@ paths:
       responses:
         "204":
           description: No content. The flow description property has been deleted.
+  /flows/{flowId}/read_only:
+    parameters:
+      - name: flowId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/uuid'
+        description: The flow identifier.
+    head:
+      description: Return flow read_only path headers
+      operationId: HEAD_flows-flowId-read-only
+      tags:
+        - Flows
+      responses:
+        "200":
+          $ref: '#/components/responses/trait_resource_info_head_200'
+        "400":
+          $ref: '#/components/responses/trait_resource_info_head_400'
+        "404":
+          $ref: '#/components/responses/trait_resource_info_head_404'
+    get:
+      description: Returns the flow read_only property.
+      operationId: GET_flows-flowId-read-only
+      tags:
+        - Flows
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              example:
+                $ref: examples/flow-read-only-get-200.json
+        "404":
+          description: The requested flow does not exist.
+    put:
+      description: Set the read-only property.
+      operationId: PUT_flows-flowId-read-only
+      tags:
+        - Flows
+      requestBody:
+        content:
+          application/json:
+            example:
+              $ref: examples/flow-read-only-put.json
+            schema:
+              type: boolean
+        required: true
+      responses:
+        "204":
+          description: No content. The read_only property has been updated.
+        "400":
+          description: Bad request. Invalid flow description.
   /flows/{flowId}/segments:
     parameters:
       - name: flowId
