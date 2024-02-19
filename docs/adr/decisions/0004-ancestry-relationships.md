@@ -1,5 +1,5 @@
 ---
-status: "proposed"
+status: "rejected"
 ---
 # Flow and Source References
 
@@ -37,14 +37,6 @@ It is useful to be able to retrace the ancestry of a Flow to allow
 * Option 2: Annotate Flow Segments to indicate the ancestry relationship with other Flow Segments that reference the same media object.
 * Option 3: Annotate Flow Segments to indicate the ancestry relationship with other Flows or Sources.
 * Option 4: Define a Flow Reference and Source Reference that indicate the ancestry relationship to other Flows or Sources.
-
-## Decision Outcome
-
-TBD
-
-### Implementation
-
-{Once the proposal has been implemented, add a link to the relevant PRs here}
 
 ## Pros and Cons of the Options
 
@@ -85,3 +77,22 @@ The Flow and Source References includes properties and tags to define the specif
 * Good, because the relationships can be defined even when media samples are not (yet) present in the store
 * Good, because it allows the relationships to be set and processed independently of the Flow Segments
 * Neutral, because the Flow and Source References are not required to manage storage of the media, but these relationships need to be held somewhere
+
+## More Information
+
+### TAMS/AWS Workshop Discussion - 13th February 2024
+
+A discussion about this proposal took place during the TAMS/AWS workshop on 13th February 2024, with the BBC R&D TAMS team, BBC B&EUT architects and AWS Solution Architects.
+
+The discussion concluded that in the general case, this type of ancestry should be represented using Source<->Source relationships and/or some sort of EDL format such as OpenTimelineIO or AAF and/or should be handled inside a MAM.
+
+Management of complex Source<->Source relationships isn't made possible in an effective way by any of the proposals in this ADR, which only really improves the "lightweight copies" use case.
+For the simple case where you want to make a subclip without modification, it probably makes more sense to store a Source (or Flow) ID and a timerange, e.g. inside a MAM.
+Further to [Deletion of Content and IDs](https://github.com/bbc/tams/blob/main/docs/adr/decisions/0004-content-deletion.md) it is assumed such a MAM would also arbitrate deletion requests to avoid removing content needed by a subclip.
+
+In a proof-of-concept setting where no MAM is used, it may be useful to be able to create a separate Flow (pointing at the same media objects).
+In this case it is still possible to do so (and re-time the Flow if needed), however no reference is preserved to the original Flow.
+In such a case, tags could be used to identify the original Source (e.g. an `originating_id` and `originating_timerange` tag).
+In general it was proposed that the TAMS team monitor how tags are used in practice, and revisit this proposal if that usage is common.
+A future Application Note will describe commonly used tags and their meaning.
+For these reasons, this ADR proposal is rejected.
