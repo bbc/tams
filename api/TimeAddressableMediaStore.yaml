@@ -28,7 +28,7 @@ info:
     could for example be implemented using an AWS S3 compatible store using presigned URLs or by
     a simple file system storage with an HTTP frontend. Clients should parse the /service endpoint
     and handle the media store type in use appropriately.
-  version: "2.0"
+  version: "3.0"
   contact:
     name: 'BBC R&D - Cloud-Fit Production Team'
     email: 'cloudfit-opensource@rd.bbc.co.uk'
@@ -44,12 +44,11 @@ servers:
     variables:
       version:
         description: API version
-        default: v2.0
+        default: v3.0
 security:
   - {}
   - basic_auth: []
   - bearer_token_auth: []
-
 paths:
   /:
     head:
@@ -117,8 +116,6 @@ paths:
           description: Success. The service info has been updated.
         "400":
           description: Bad request. Invalid service JSON.
-
-
   /sources:
     head:
       summary: List Sources
@@ -165,13 +162,11 @@ paths:
           content:
             application/json:
               example:
-                  $ref: examples/sources-get-200.json
+                $ref: examples/sources-get-200.json
               schema:
                 type: array
                 items:
                   $ref: "schemas/source.json"
-
-
   /sources/{sourceId}:
     parameters:
       - name: sourceId
@@ -232,7 +227,6 @@ paths:
               format: urn:x-nmos:format:video
               label: ingest_a
               description: SDI ingest from Camera A
-
             schema:
               $ref: schemas/source.json
         required: true
@@ -254,8 +248,6 @@ paths:
           description: No content. The Source has been updated.
         "400":
           description: Bad request. Invalid Source JSON.
-
-
   /sources/{sourceId}/tags:
     parameters:
       - name: sourceId
@@ -290,8 +282,6 @@ paths:
                 $ref: "schemas/tags.json"
         "404":
           description: The requested Source does not exist.
-
-
   /sources/{sourceId}/tags/{name}:
     parameters:
       - name: name
@@ -364,8 +354,6 @@ paths:
       responses:
         "204":
           description: No content. The Source segment has been deleted.
-
-
   /sources/{sourceId}/description:
     parameters:
       - name: sourceId
@@ -432,8 +420,6 @@ paths:
       responses:
         "204":
           description: No content. The Source description property has been deleted.
-
-
   /flows:
     head:
       description: Return flows path headers
@@ -957,7 +943,6 @@ paths:
         - Likewise, the sample associated with the end of the `timerange` MUST be the one selected by
           `sample_offset + sample_count - 1`, unless `timerange` has an exclusive end, in which case it will be
           `sample_offset + sample_count`.
-
       operationId: POST_flows-flowId-segments
       tags:
         - FlowSegments
@@ -1194,7 +1179,6 @@ components:
       description: Restrict the response to the specified number of results. Implementations may specify their own default and maximum for the limit
       schema:
         type: integer
-
   securitySchemes:
     basic_auth:
       type: http
@@ -1204,7 +1188,6 @@ components:
       type: http
       scheme: bearer
       description: HTTP bearer token authentication
-
 tags:
   - name: Service
     description: The service root and documentation about the service itself
