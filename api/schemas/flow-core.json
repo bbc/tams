@@ -61,6 +61,10 @@
       "type": "string",
       "format": "date-time"
     },
+    "read_only": {
+      "description": "If set to 'true', implementations SHOULD reject client requests to update Flow metadata (other than the read_only property), Flow Segments and media objects",
+      "type": "boolean"
+    },
     "codec": {
       "description": "A MIME type identification of the (lossy or lossless) coding used for the flow content.",
       "type": "string",
