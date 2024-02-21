@@ -17,9 +17,13 @@
     "codec": "audio/aac",
     "container": "video/mp2t",
     "avg_bit_rate": 128,
-    "sample_rate": 48000,
-    "channels": 2,
-    "bit_depth": 24,
-    "coded_frame_size": 1024,
-    "mp4_oti": 2
+    "essence_parameters": {
+        "sample_rate": 48000,
+        "channels": 2,
+        "bit_depth": 24,
+        "codec_parameters": {
+            "coded_frame_size": 1024,
+            "mp4_oti": 2
+        }
+    }
 }

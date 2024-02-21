@@ -3,21 +3,34 @@
   "description": "Describes a data Flow",
   "title": "Data Flow",
   "allOf": [
-    { "$ref": "flow-core.json" },
+    {
+      "$ref": "flow-core.json"
+    },
     {
       "type": "object",
       "required": [
-        "format"
+        "format",
+        "essence_parameters"
       ],
       "properties": {
-        "format" : {
+        "format": {
           "description": "The primary content type URN for the flow.",
           "type": "string",
-          "enum": ["urn:x-nmos:format:data"]
+          "enum": [
+            "urn:x-nmos:format:data"
+          ]
         },
-        "data_type" : {
-          "description": "The type of information encoded in the flow, identified using a URN.",
-          "type": "string"
+        "essence_parameters": {
+          "type": "object",
+          "description": "Describes the parameters of the essence inside this data Flow",
+          "title": "Data Flow Essence Parameters",
+          "additionalProperties": false,
+          "properties": {
+            "data_type": {
+              "description": "The type of information encoded in the flow, identified using a URN.",
+              "type": "string"
+            }
+          }
         }
       }
     }
