@@ -59,7 +59,8 @@ When writing to the store, the S3 URLs can be passed to a client permitting them
 
 Another advantage of separating the media data and metadata planes in this way is that a particular Flow Segment can be referenced by multiple flows.
 On the metadata side, the Flow Segment is just a URL, so any number of flows can record that same URL against other `<flow_id, timestamp>` tuples.
-This allows for copy-on-write semantics: immutability means a new Flow must be created to make changes to existing parts of the timeline, but for unmodified portions of the timeline the new `<flow_id, timestamp>` tuple points to the existing object ID.
+This allows for copy-on-write semantics: immutability means a new Flow must be created to make changes to existing parts of the timeline, but for unmodified portions of the timeline the new `<flow_id, timestamp>` tuple points to the existing object ID or a part of it.
+See [Flow And Media Timelines](#flow-and-media-timelines) for a description of how that works in practice.
 
 The Flow model is aligned with the principles and schemas of [AMWA NMOS IS-04](https://specs.amwa.tv/is-04/releases/v1.3.2/APIs/schemas/) to facilitate easy integration of NMOS-compliant media devices.
 
@@ -100,6 +101,32 @@ However Flows can always be extended, with empty spaces on the timeline filled i
 
 When it becomes necessary to mutate content, for example reversioning content or performing production operations, the Flow ID (and potentially Source ID) will change.
 Various scenarios are explored in the [Practical Guidance for Media](https://specs.amwa.tv/ms-04/releases/v1.0.0/docs/3.0._Practical_Guidance_for_Media.html) section of AMWA MS-04.
+
+### Flow and Media Timelines
+
+Flows exist on an infinite timeline (the "Flow timeline"), and the position of content on this timeline is defined by the `timerange` attribute in each Flow Segment of that Flow.
+Separately the media objects have a timeline (the "media timeline") defined by the container format itself: the timestamps recorded inside the media object for each grain.
+The Flow Segment attributes describe how to map the media timeline onto the Flow timeline.
+Note that no explicit relationship is defined between the Flow timelines of different Flows, although a mechanism to define that may be added in future.
+For brevity these diagrams start at `0:0`, however it is likely a practical system would stick closer to wall-clock time or TAI, such as starting at `1709634568:0`.
+
+![Graphic showing the Flow timeline and 3 Flow Segments in Flow A, with a media timeline showing 10 samples in each object](./docs/images/Flow%20and%20Media%20Timelines-Flow%20A.drawio.png)
+
+In the case of Flow A in the diagram above, this is a 1:1 mapping.
+However, in the diagram below the media timeline and Flow timeline differ, because the objects in Flow B have been re-used from Flow A (note the use of the same object ID).
+These re-used objects have their original media timeline, and each grain's position on the Flow timeline can be calculated as `media_timeline + ts_offset`.
+
+![Graphic showing the Flow timeline and 2 Flow Segments in Flow B, where the objects have been re-used from Flow A and the ts_offset set to -1:0](./docs/images/Flow%20and%20Media%20Timelines-Flow%20B.drawio.png)
+
+Flow Segments can also re-use parts of a media object, as in Flow C in the diagram below.
+Notice that the `timerange` still refers to the Flow timeline (and `0:50...` etc. is used as shorthand for `0:500000000), however a reduced number of grains have been selected, taking only part of the first object and part of the last object.
+
+![Graphic showing the Flow timeline and 3 Flow Segments in Flow C, where the objects have been re-used from Flow A however only half of the first and last object has been used](./docs/images/Flow%20and%20Media%20Timelines-Flow%20C.drawio.png)
+
+In this way a simple copy-on-write mechanic can be applied to the store, for example when taking "clips" from multiple Flows and assembling them, the original media objects (and therefore essence) can be referenced, and new media objects are only required to handle changes, for example transitions.
+In the diagram below, portions of Flow X and Flow Y are combined to form Flow Z, along with some rendered transitions which are "new" media, and new objects accordingly.
+
+![Graphic showing the Flow timeline and Flow Segments of Flows X, Y and Z, where Z is composed of a mix of re-used segments and new media](./docs/images/Flow%20and%20Media%20Timelines-Flow%20XYZ.drawio.png)
 
 ### API Versioning
 
