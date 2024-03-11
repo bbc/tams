@@ -105,10 +105,12 @@ Various scenarios are explored in the [Practical Guidance for Media](https://spe
 ### Flow and Media Timelines
 
 Flows exist on an infinite timeline (the "Flow timeline"), and the position of content on this timeline is defined by the `timerange` attribute in each Flow Segment of that Flow.
+A timerange is represented in JSON and text using the [TimeRange string pattern](https://bbc.github.io/tams/#/schemas/timerange).
 Separately the media objects have a timeline (the "media timeline") defined by the container format itself: the timestamps recorded inside the media object for each grain.
 The Flow Segment attributes describe how to map the media timeline onto the Flow timeline.
 Note that no explicit relationship is defined between the Flow timelines of different Flows, although a mechanism to define that may be added in future.
 For brevity these diagrams start at `0:0`, however it is likely a practical system would stick closer to wall-clock time or TAI, such as starting at `1709634568:0`.
+A timestamp is represented in JSON and text using the [Timestamp string pattern](https://bbc.github.io/tams/#/schemas/timestamp).
 
 ![Graphic showing the Flow timeline and 3 Flow Segments in Flow A, with a media timeline showing 10 samples in each object](./docs/images/Flow%20and%20Media%20Timelines-Flow%20A.drawio.png)
 
@@ -119,7 +121,7 @@ These re-used objects have their original media timeline, and each grain's posit
 ![Graphic showing the Flow timeline and 2 Flow Segments in Flow B, where the objects have been re-used from Flow A and the ts_offset set to -1:0](./docs/images/Flow%20and%20Media%20Timelines-Flow%20B.drawio.png)
 
 Flow Segments can also re-use parts of a media object, as in Flow C in the diagram below.
-Notice that the `timerange` still refers to the Flow timeline (and `0:50...` etc. is used as shorthand for `0:500000000), however a reduced number of grains have been selected, taking only part of the first object and part of the last object.
+Notice that the `timerange` still refers to the Flow timeline (and `0:50...` etc. is used as shorthand for `0:500000000`), however a reduced number of grains have been selected, taking only part of the first object and part of the last object.
 
 ![Graphic showing the Flow timeline and 3 Flow Segments in Flow C, where the objects have been re-used from Flow A however only half of the first and last object has been used](./docs/images/Flow%20and%20Media%20Timelines-Flow%20C.drawio.png)
 
