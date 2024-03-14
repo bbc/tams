@@ -934,6 +934,7 @@ paths:
         - All samples in the object SHOULD be used by the segment.
         - The timestamps of each sample in the media object MUST equal its position on the Flow timeline, OR `ts_offset` MUST
           be set such that `media_object_ts + ts_offset = segment_ts`
+        - The timerange of the segment MUST NOT overlap any other segment in the same Flow.
         - The `sample_offset` SHOULD be zero.
 
         For objects that have been re-used from other flows, the `sample_offset` and `sample_count` MAY be used to
@@ -943,6 +944,7 @@ paths:
         - Likewise, the sample associated with the end of the `timerange` MUST be the one selected by
           `sample_offset + sample_count - 1`, unless `timerange` has an exclusive end, in which case it will be
           `sample_offset + sample_count`.
+        - The timerange of the segment MUST NOT overlap any other segment in the same Flow.
       operationId: POST_flows-flowId-segments
       tags:
         - FlowSegments
