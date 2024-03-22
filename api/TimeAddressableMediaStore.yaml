@@ -889,8 +889,8 @@ paths:
         The flow segment provides information about the media object. The media store type, which is
         indicated in the /service resource, determines the information that is included to allow the
         flow segment's media object to be downloaded. The examples provided here are for the
-        "http_object_store" media store type which MUST include a "get_url" property that contains a
-        HTTP URL for downloading the media object.
+        "http_object_store" media store type which MUST include a `get_urls` property that contains the
+        HTTP URLs for downloading the media object - server implementations should generate this internally.
 
         The flow segment may include timing and timerange adjustment information that the client needs to
         apply when extracting the samples from the media object.
@@ -910,7 +910,7 @@ paths:
         from the start of the requested timerange to retrieve enough reference material to start
         decoding.
 
-        When making requests to the provided `get_url`, clients should include credentials if the provided
+        When making requests to the provided `get_urls`, clients should include credentials if the provided
         URL is on the same origin as the API itself, akin to the `same-origin` mode in the
         [WhatWG Fetch Standard](https://fetch.spec.whatwg.org/#concept-request-credentials-mode).
       operationId: GET_flows-flowId-segments
@@ -972,6 +972,14 @@ paths:
                     subset of the samples within using `ts_offset` for the second segment in the sequence.
                   value:
                     $ref: examples/flow-segments-get-200-sample-offset.json
+                multiple_urls:
+                  summary: Multiple URLs
+                  description: |
+                    This example shows how the media object for a Flow Segment could be accessed using multiple URLs.
+                    Clients are free to choose any of the URLs given (which are all identical), however the server has
+                    expressed a preference for the "pipeline-a" URLs by putting them first in the list.
+                  value:
+                    $ref: examples/flow-segments-get-200-multiple-urls.json
     post:
       description: |
         Register a new flow segment, attaching the object id given to a point in the flow timeline.
