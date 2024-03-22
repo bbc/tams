@@ -1,7 +1,7 @@
 {
   "type": "object",
   "title": "Media Bucket Segment Store",
-  "description": "Gives information on storage for particular flow segments. This example is for a media store that provided URLs for storing media objects in bucket. Different backends may add additional/different fields",
+  "description": "Gives information on storage for particular flow segments. This schema is for the `http_object_store` media store type which provides URLs for storing media objects in bucket, and is the only store type currently implemented.",
   "properties": {
     "pre": {
       "type": "array",
@@ -35,7 +35,8 @@
         "^[\\[\\(]?([0-9]+:[0-9]+)?_([0-9]+:[0-9]+)?[\\]\\)]?$": {
           "type": "object",
           "required": [
-            "object_id"
+            "object_id",
+            "put_url"
           ],
           "properties": {
             "object_id": {
