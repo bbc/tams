@@ -54,7 +54,8 @@ The store provides a mechanism to upload and register new Flow Segments, and an 
 The media data contained within Flow Segments may be stored separately from the metadata linking them to a position on the timeline, separating the media data and metadata planes.
 For example our implementation uses a database (_e.g._ Amazon DynamoDB) to store Flow Segment metadata and an object store (_e.g._ AWS S3) to store the media data for Flow Segments.
 We refer to media data stored in the object store as 'media objects'.
-The Flow Segment has a single S3 download url which is the location of the media object that contains the stored media data for the Flow Segment.
+The Flow Segment has a list of S3 download urls which are the location of the media object(s) that contains the stored media data for the Flow Segment.
+If multiple URLs are returned in the list, they are assumed to be identical.
 When writing to the store, the S3 URLs can be passed to a client permitting them to upload media data directly.
 
 Another advantage of separating the media data and metadata planes in this way is that a particular Flow Segment can be referenced by multiple flows.
