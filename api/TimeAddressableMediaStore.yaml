@@ -909,6 +909,10 @@ paths:
         timeline, and clients may need to check the `key_frame_count` property and/or read backwards
         from the start of the requested timerange to retrieve enough reference material to start
         decoding.
+
+        When making requests to the provided `get_url`, clients should include credentials if the provided
+        URL is on the same origin as the API itself, akin to the `same-origin` mode in the
+        [WhatWG Fetch Standard](https://fetch.spec.whatwg.org/#concept-request-credentials-mode).
       operationId: GET_flows-flowId-segments
       tags:
         - FlowSegments
@@ -1073,6 +1077,10 @@ paths:
         bucket name as its prefix.
 
         The response may include PUT URLs for setting the CORS properties for the buckets and media objects.
+
+        When making requests to the provided `put_url`, clients should include credentials if the provided
+        URL is on the same origin as the API itself, akin to the `same-origin` mode in the
+        [WhatWG Fetch Standard](https://fetch.spec.whatwg.org/#concept-request-credentials-mode).
       operationId: POST_flows-flowId-storage
       tags:
         - MediaStorage

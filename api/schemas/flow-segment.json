@@ -33,7 +33,7 @@
       "type": "integer"
     },
     "get_url": {
-      "description": "A URL to which a GET request can be made to directly retrieve the contents of the segment. This is required by the `http_object_store` media store type, which is the only one currently described",
+      "description": "A URL to which a GET request can be made to directly retrieve the contents of the segment. This is required by the `http_object_store` media store type, which is the only one currently described. Clients should include credentials if the provide URL is on the same origin as the API endpoint",
       "type": "string"
     },
     "key_frame_count": {
