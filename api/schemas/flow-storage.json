@@ -1,7 +1,7 @@
 {
   "type": "object",
   "title": "Media Bucket Object Store",
-  "description": "Gives information on storage for media objects. This example is for a media store that provided URLs for storing media objects in bucket. Different backends may add additional/different fields",
+  "description": "Gives information on storage for media objects. This schema is for the `http_object_store` media store type which provides URLs for storing media objects in bucket, and is the only store type currently implemented.",
   "properties": {
     "pre": {
       "type": "array",
@@ -35,7 +35,8 @@
         "type": "object",
         "description": "Information for a media object",
         "required": [
-          "object_id"
+          "object_id",
+          "put_url"
         ],
         "properties": {
           "object_id": {
