@@ -39,7 +39,8 @@ A client is required to store a media object such that the earliest media timest
 the timerange.
 
 * Good, because the logic for segmenting media is simple to follow
-* Good, because the media object is overwritten if writing the same media again to a storage segment timerange. However, clients would need to ensure that immutability of stored content is respected
+* Good, because the media object is overwritten if writing the same media again to a storage segment timerange.
+However, clients would need to ensure that immutability of stored content is respected
 * Bad, because only a single media object can be written for each storage segment timerange
 * Bad, because media is not always be ideally segmented at a fixed rate, e.g. variable size GOPs
 * Bad, because the clients and applications are likely better placed to decide on segment lengths to balance throughput and latency
@@ -50,15 +51,15 @@ This option modifies option 1 to provide unique object IDs for each request to t
 This allows gaps to be filled because the object IDs change with each request and existing media objects that start in the storage segment timerange are not overwritten.
 
 * Good, because gaps can be filled
-* Good, because only storage segments with no or mising media is returns
+* Bad, because storage segments that shouldn't be written to are also returned
 * Bad, because media is not always be ideally segmented at a fixed rate, e.g. variable size GOPs
 * Bad, because the clients and applications are likely better placed to decide on segment lengths to balance throughput and latency
 
 ### Option 2b: Each request only returns storage segments with media unavailable
 
-This option extends option 2a to only return storage segments that has media unavailable.
+This option extends option 2a to only return storage segments that can be written to, i.e. storage segments with no or missing media.
 
-* Good, because clients are only presented with storage segments that have no or missing media
+* Good, because only storage segments that can be written to are returned
 * Good, because clients don't accidentally overlap / duplicate media in storage segments
 * Bad, because TAMS needs to check (e.g. query a database) media availability
 * Bad, because media is not always be ideally segmented at a fixed rate, e.g. variable size GOPs
