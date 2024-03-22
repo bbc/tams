@@ -7,7 +7,7 @@
     "modified_by": "tams-dev",
     "created": "2008-05-27T18:51:00Z",
     "updated": "2008-05-27T18:51:00Z",
-    "tags": {
-        "ingested_by": "ingest_service_api"
-    }
+    "collected_by": [
+        "86761f3a-5998-4cfe-9a89-8459bcb8ea52"
+    ]
 }

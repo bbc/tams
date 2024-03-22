@@ -19,7 +19,7 @@
                 "urn:x-nmos:format:video",
                 "urn:x-nmos:format:audio",
                 "urn:x-nmos:format:data",
-                "urn:x-nmos:format:mux"
+                "urn:x-nmos:format:multi"
             ],
             "format": "uri"
         },
@@ -51,6 +51,21 @@
         },
         "tags": {
             "$ref": "tags.json"
+        },
+        "source_collection": {
+            "type": "array",
+            "description": "List of Sources that are collected together by this Source. This attribute is intended to be read-only. Implementations SHOULD ignore this if given in a PUT request, and instead manage it internally. Source collections can be inferred from Flow collection definitions.",
+            "items": {
+                "$ref": "collection-item.json"
+            }
+        },
+        "collected_by": {
+          "type": "array",
+          "description": "Sources that reference this Source to include it in a collection. This attribute is intended to be read-only. Implementations SHOULD ignore this if given in a PUT request, and instead manage it internally. Source collections can be inferred from Flow collection definitions.",
+          "items": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+           }
         }
     }
 }

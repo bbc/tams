@@ -10,7 +10,9 @@
       "type": "object",
       "required": [
         "format",
-        "essence_parameters"
+        "essence_parameters",
+        "codec",
+        "container"
       ],
       "properties": {
         "format": {

@@ -1,0 +1,24 @@
+{
+    "id": "e85efab4-993b-4ad6-9af3-4cd8d0d38860",
+    "source_id": "a77d0061-0878-4e8a-a114-772d03f952c1",
+    "format": "urn:x-nmos:format:multi",
+    "generation": 0,
+    "created": "2023-12-14T16:34:58.131620",
+    "tags": {
+        "ingested_by": "ingest_service_api"
+    },
+    "flow_collection": [
+        {
+            "id": "4f79cfd1-c057-47f4-8e4d-1b126ca7bf34",
+            "role": "video"
+        },
+        {
+            "id": "6101df05-06bb-41b8-8af4-cf7cd33df209",
+            "role": "audio"
+        },
+        {
+            "id": "e85efab4-993b-4ad6-9af3-4cd8d0d38860",
+            "role": "subtitles"
+        }
+    ]
+}
