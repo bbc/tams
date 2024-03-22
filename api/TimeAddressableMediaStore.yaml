@@ -862,6 +862,10 @@ paths:
         Use the pagination options to limit the results to a timerange and/or count. The list of flow
         segments can be empty. A request for segments from a non-existent flow will return an empty
         list, not a 404.
+
+        When making requests to the provided `get_url`, clients should include credentials if the provided
+        URL is on the same origin as the API itself, akin to the `same-origin` mode in the
+        [WhatWG Fetch Standard](https://fetch.spec.whatwg.org/#concept-request-credentials-mode).
       operationId: GET_flows-flowId-segments
       tags:
         - FlowSegments
@@ -1027,6 +1031,10 @@ paths:
         bucket name as its prefix.
 
         The response may include PUT URLs for setting the CORS properties for the buckets and flow segment objects.
+
+        When making requests to the provided `put_url`, clients should include credentials if the provided
+        URL is on the same origin as the API itself, akin to the `same-origin` mode in the
+        [WhatWG Fetch Standard](https://fetch.spec.whatwg.org/#concept-request-credentials-mode).
       operationId: POST_flows-flowId-storage
       tags:
         - MediaStorage
