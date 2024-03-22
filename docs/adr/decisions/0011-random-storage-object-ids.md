@@ -16,7 +16,7 @@ Should the TAMS store prescribe how the media is segmented by applications?
 * Option 1: Use the current segmentation strategy
 * Option 2a: Each request returns new object IDs
 * Option 2b: Each request only returns storage segments with media unavailable
-* Option 3: Each request returns new object IDs and doesn't prescribed storage segments
+* Option 3: Each request returns new object IDs and doesn't prescribe storage segments
 * Option 4: TAMS provides segmentation hints
 
 ## Decision Outcome
@@ -64,7 +64,7 @@ This option extends option 2a to only return storage segments that has media una
 * Bad, because media is not always be ideally segmented at a fixed rate, e.g. variable size GOPs
 * Bad, because the clients and applications are likely better placed to decide on segment lengths to balance throughput and latency
 
-### Option 3: Each request returns new object IDs and doesn't prescribed storage segments
+### Option 3: Each request returns new object IDs and doesn't prescribe storage segments
 
 This option removes the segmentation layout and essentially just provides a list of unique object IDs and PUT URLs on each request to the storage endpoint.
 
