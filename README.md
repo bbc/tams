@@ -59,7 +59,7 @@ If multiple URLs are returned in the list, they are assumed to be identical.
 When writing to the store, the S3 URLs can be passed to a client permitting them to upload media data directly.
 
 Another advantage of separating the media data and metadata planes in this way is that a particular Flow Segment can be referenced by multiple flows.
-On the metadata side, the Flow Segment is just a URL, so any number of flows can record that same URL against other `<flow_id, timestamp>` tuples.
+On the metadata side, the Flow Segment is just an object ID, so any number of flows can record that same ID against other `<flow_id, timestamp>` tuples.
 This allows for copy-on-write semantics: immutability means a new Flow must be created to make changes to existing parts of the timeline, but for unmodified portions of the timeline the new `<flow_id, timestamp>` tuple points to the existing object ID or a part of it.
 See [Flow And Media Timelines](#flow-and-media-timelines) for a description of how that works in practice.
 
