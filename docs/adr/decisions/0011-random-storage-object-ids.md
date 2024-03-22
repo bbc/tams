@@ -39,7 +39,7 @@ A client is required to store a media object such that the earliest media timest
 the timerange.
 
 * Good, because the logic for segmenting media is simple to follow
-* Good, because the media object is overwritten if writing again to a storage segment timerange
+* Good, because the media object is overwritten if writing the same media again to a storage segment timerange. However, clients would need to ensure that immutability of stored content is respected
 * Bad, because only a single media object can be written for each storage segment timerange
 * Bad, because media is not always be ideally segmented at a fixed rate, e.g. variable size GOPs
 * Bad, because the clients and applications are likely better placed to decide on segment lengths to balance throughput and latency
