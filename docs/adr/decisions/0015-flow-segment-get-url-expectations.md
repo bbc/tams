@@ -38,9 +38,6 @@ Implemented in <https://github.com/bbc/tams/pull/36>
 Make the `get_url` property mandatory in the response to Flow Segment GET requests when using the "http_object_store" type (the only type currently described).
 Similarly, make the `put_url` mandatory in the response to a request to the storage endpoint.
 
-<!-- This is an optional element. Feel free to remove. -->
-{example | description | pointer to more information | …}
-
 * Good, because it ensures clients are able to read and write media essence without needing additional protocols
 * Good, because as a result it improves interoperability between client types
 * Bad, because the spec will have to change to allow other backends, however relaxing restrictions in the spec is relatively easy to achieve

@@ -889,7 +889,7 @@ paths:
         The flow segment provides information about the media object. The media store type, which is
         indicated in the /service resource, determines the information that is included to allow the
         flow segment's media object to be downloaded. The examples provided here are for the
-        "http_object_store" media store type which will include a "get_url" property that contains a
+        "http_object_store" media store type which MUST include a "get_url" property that contains a
         HTTP URL for downloading the media object.
 
         The flow segment may include timing and timerange adjustment information that the client needs to
