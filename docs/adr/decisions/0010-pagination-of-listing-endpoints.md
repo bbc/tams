@@ -1,5 +1,5 @@
 ---
-status: "proposed"
+status: "accepted"
 ---
 # Add pagination to Flow/Source listing endpoints
 
