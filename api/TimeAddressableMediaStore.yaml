@@ -156,9 +156,24 @@ paths:
             is performed.
           schema:
             type: boolean
+        - $ref: '#/components/parameters/trait_resource_paged_key'
+        - $ref: '#/components/parameters/trait_paged_limit'
       responses:
         "200":
           description: ""
+          headers:
+            Link:
+              description: Provides references to cursors for paging. Only the 'rel' attribute with value 'next' and a link to the next page is currently supported. If 'next' is not present then it is the last page.
+              schema:
+                type: string
+            X-Paging-Limit:
+              description: Identifies the current limit being used for paging. This may not match the requested value if the requested value was too high for the implementation
+              schema:
+                type: integer
+            X-Paging-NextKey:
+              description: Opaque string that can be supplied to the `page` query parameter to get the next page of results.
+              schema:
+                type: string
           content:
             application/json:
               example:
@@ -489,9 +504,24 @@ paths:
           description: Filter on video flows that have the given frame height.
           schema:
             type: integer
+        - $ref: '#/components/parameters/trait_resource_paged_key'
+        - $ref: '#/components/parameters/trait_paged_limit'
       responses:
         "200":
           description: ""
+          headers:
+            Link:
+              description: Provides references to cursors for paging. Only the 'rel' attribute with value 'next' and a link to the next page is currently supported. If 'next' is not present then it is the last page.
+              schema:
+                type: string
+            X-Paging-Limit:
+              description: Identifies the current limit being used for paging. This may not match the requested value if the requested value was too high for the implementation
+              schema:
+                type: integer
+            X-Paging-NextKey:
+              description: Opaque string that can be supplied to the `page` query parameter to get the next page of results.
+              schema:
+                type: string
           content:
             application/json:
               example:
@@ -878,7 +908,7 @@ paths:
             default: false
             type: boolean
         - $ref: '#/components/parameters/trait_timerange_paged_timerange'
-        - $ref: '#/components/parameters/trait_timerange_paged_limit'
+        - $ref: '#/components/parameters/trait_paged_limit'
       responses:
         "200":
           description: ""
@@ -1175,12 +1205,18 @@ components:
       description: Return only the results in the timerange specified.
       schema:
         $ref: 'schemas/timerange.json'
-    trait_timerange_paged_limit:
+    trait_paged_limit:
       name: limit
       in: query
       description: Restrict the response to the specified number of results. Implementations may specify their own default and maximum for the limit
       schema:
         type: integer
+    trait_resource_paged_key:
+      name: page
+      in: query
+      description: Opaque string used by backend to access a specific page of results. Clients should read the next URL from the `Link` header returned with responses, or use value of the returned X-Paging-NextKey header. If not supplied, the first page is accessed. Implementations should ensure a consistent sort order is applied to pages of results.
+      schema:
+        type: string
   securitySchemes:
     basic_auth:
       type: http
