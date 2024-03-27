@@ -976,7 +976,7 @@ paths:
                   summary: Multiple URLs
                   description: |
                     This example shows how the media object for a Flow Segment could be accessed using multiple URLs.
-                    Clients are free to choose any of the URLs given (which are all identical), however the server has
+                    Clients are free to choose any of the URLs given (which return identical media objects), however the server has
                     expressed a preference for the "pipeline-a" URLs by putting them first in the list.
                   value:
                     $ref: examples/flow-segments-get-200-multiple-urls.json
