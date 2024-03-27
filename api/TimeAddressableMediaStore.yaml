@@ -593,6 +593,11 @@ paths:
                   description: TAMS can also be used for storing non-AV content such as subtitles or event data
                   value:
                     $ref: examples/flow-get-200-data-ttml.json
+                multi:
+                  summary: Multi-essence Flow
+                  description: Multi-essence Flows are used to collect multiple Flows of different formats under one Flow ID
+                  value:
+                    $ref: examples/flow-get-200-multi.json
         "404":
           description: The requested flow does not exist.
         "400":
@@ -605,8 +610,15 @@ paths:
       requestBody:
         content:
           application/json:
-            example:
-              $ref: examples/flow-put.json
+            examples:
+              audio:
+                summary: Stereo audio Flow
+                value:
+                  $ref: examples/flow-put.json
+              multi:
+                summary: Multi-essence Flow
+                value:
+                  $ref: examples/flow-put-multi.json
             schema:
               $ref: schemas/flow.json
         required: true

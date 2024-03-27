@@ -93,6 +93,10 @@ Media workflows and applications are likely to use Sources as their references t
 Then some logic can be applied to identify a suitable Flow representing that Source at the point when operations need to be performed on the media, for example choosing between proxy-quality for an offline edit and full-quality for a render.
 
 The TAMS API stores both Flows and Sources, each of which can be assigned a label, description and some tags alongside relevant technical metadata.
+Flows can be collected into other Flows (with a `role` parameter to ascribe meaning to the relationship).
+Sources can collect together other Sources, by inference from the relationships defined by their Flows.
+This implementation is deliberately kept very simple, and lacks efficient mechansisms to query the graph of Sources and Flows.
+More sophisticated mechanisms for recording and querying relationships between model entities is out of scope for this API, but could in principle be provided by a separate complementary service dedicated to that purpose in the future.
 
 ### Mutation
 
