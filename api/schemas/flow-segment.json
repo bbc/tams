@@ -37,7 +37,7 @@
       "type": "string"
     },
     "key_frame_count": {
-      "description": "The number of key frames in the segment",
+      "description": "The number of key frames in the segment. This should be set greater than zero when the segment contains key frames that serve as a stream access point",
       "type": "integer"
     }
   }

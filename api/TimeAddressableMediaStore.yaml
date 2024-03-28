@@ -862,6 +862,11 @@ paths:
         Use the pagination options to limit the results to a timerange and/or count. The list of flow
         segments can be empty. A request for segments from a non-existent flow will return an empty
         list, not a 404.
+
+        Note that for codecs with temporal re-ordering, the timerange representes the _presentation_
+        timeline, and clients may need to check the `key_frame_count` property and/or read backwards
+        from the start of the requested timerange to retrieve enough reference material to start
+        decoding.
       operationId: GET_flows-flowId-segments
       tags:
         - FlowSegments
@@ -934,6 +939,10 @@ paths:
           be set such that `media_object_ts + ts_offset = segment_ts`
         - The timerange of the segment MUST NOT overlap any other segment in the same Flow.
         - The `sample_offset` SHOULD be zero.
+
+        Clients are expected to decide how to break content into media objects, however those objects SHOULD be large
+        enough to avoid excessive round trip overheads in the underlying store (_e.g._ of the order of several megabytes)
+        and where codecs with temporal re-ordering are used, object SHOULD contain complete GOPs or decodable units.
 
         For objects that have been re-used from other flows, the `sample_offset` and `sample_count` MAY be used to
         specify part of the object to use:
