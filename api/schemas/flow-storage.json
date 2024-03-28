@@ -1,11 +1,11 @@
 {
   "type": "object",
-  "title": "Media Bucket Segment Store",
-  "description": "Gives information on storage for particular flow segments. This example is for a media store that provided URLs for storing media objects in bucket. Different backends may add additional/different fields",
+  "title": "Media Bucket Object Store",
+  "description": "Gives information on storage for media objects. This schema is for the `http_object_store` media store type which provides URLs for storing media objects in bucket, and is the only store type currently implemented.",
   "properties": {
     "pre": {
       "type": "array",
-      "description": "Actions that need to be taken before the segments can be written to",
+      "description": "Actions that need to be taken before the media object can be written",
       "items": {
         "type": "object",
         "description": "An action",
@@ -28,23 +28,23 @@
         }
       }
     },
-    "segments": {
-      "type": "object",
-      "description": "Mapping of timeranges (validated by regex) to segment storage locations. Format as described by the [TimeRange](../schemas/timerange#top) type",
-      "patternProperties": {
-        "^[\\[\\(]?([0-9]+:[0-9]+)?_([0-9]+:[0-9]+)?[\\]\\)]?$": {
-          "type": "object",
-          "required": [
-            "object_id"
-          ],
-          "properties": {
-            "object_id": {
-              "description": "The object store identifier for the media object covering this timerange.",
-              "type": "string"
-            },
-            "put_url": { "$ref": "http-request.json" },
-            "put_cors_url": { "$ref": "http-request.json" }
-          }
+    "media_objects": {
+      "type": "array",
+      "description": "List of information for identifying and uploading media objects",
+      "items": {
+        "type": "object",
+        "description": "Information for a media object",
+        "required": [
+          "object_id",
+          "put_url"
+        ],
+        "properties": {
+          "object_id": {
+            "description": "The object store identifier for the media object.",
+            "type": "string"
+          },
+          "put_url": { "$ref": "http-request.json" },
+          "put_cors_url": { "$ref": "http-request.json" }
         }
       }
     }

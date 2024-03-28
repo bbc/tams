@@ -971,8 +971,6 @@ paths:
 
         For newly-written objects, the client is responsible for ensuring that the segment written to the store obeys the following restrictions:
         - The object id provided for a segment MUST be one which was received in a POST from /storage for this flow.
-        - The timestamp of the first sample written to the object MUST be located inside the timerange
-          that was associated with this object id in the response from the POST request to /storage for this flow.
         - All samples in the object SHOULD be used by the segment.
         - The timestamps of each sample in the media object MUST equal its position on the Flow timeline, OR `ts_offset` MUST
           be set such that `media_object_ts + ts_offset = segment_ts`
@@ -1050,25 +1048,22 @@ paths:
         description: The flow identifier.
     post:
       description: |
-        Allocate storage locations for writing flow segment objects that would fall within the specified timerange.
-        The returned storage locations will be arranged according to the rate stored in the flow.
+        Allocate storage locations for writing media objects.
 
         The media store type, which is indicated in the /service resource, determines the information provided
         in the response. The examples and description below are for the "http_object_store" media store type.
         This media store type provides HTTP URLs for uploading and downloading media objects in buckets.
 
-        The response will include a PUT URL for each storage location that a client uses to upload the flow segment
-        object. The client is expected to register the flow segment using the /flows/{flowId}/segments endpoint
-        once the upload is complete. Implementations need to handle situations where objects were uploaded but no
-        flow segment was registered successfully. The only requirement on the client writing data into these segments
-        is that the first timestamp of the data in that object MUST lie within the timerange that was indicated for
-        that storage location.
+        The response will include a PUT URL that a client uses to upload the media object. The client is expected
+        to register the flow segment using the /flows/{flowId}/segments endpoint once the upload is complete.
+        Implementations need to handle situations where objects were uploaded but no flow segment was registered
+        successfully.
 
-        The response may include PUT URLs for creating buckets for the flow segment objects. These PUT URLs should
-        be used before uploading flow segment objects. The object_id associated with each storage location has the
+        The response may include PUT URLs for creating buckets for the media objects. These PUT URLs should
+        be used before uploading media objects. The object_id associated with each storage location has the
         bucket name as its prefix.
 
-        The response may include PUT URLs for setting the CORS properties for the buckets and flow segment objects.
+        The response may include PUT URLs for setting the CORS properties for the buckets and media objects.
       operationId: POST_flows-flowId-storage
       tags:
         - MediaStorage
@@ -1081,24 +1076,7 @@ paths:
               $ref: examples/flow-storage-post.json
       responses:
         "201":
-          description: "Paging headers with information about the current and next page"
-          headers:
-            X-Paging-Next-Timerange:
-              description: The 'timerange' to use in the Post data to get the next page. If 'X-Paging-Next-Timerange' is not present then it is the last page.
-              schema:
-                $ref: 'schemas/timerange.json'
-            X-Paging-Limit:
-              description: Identifies the current limit being used for paging. This may not match the requested value if the requested value was too high for the implementation.
-              schema:
-                type: integer
-            X-Paging-Timerange:
-              description: Identifies the timerange for the returned data set.
-              schema:
-                $ref: 'schemas/timerange.json'
-            X-Paging-Count:
-              description: The number of items in the returned data set.
-              schema:
-                type: integer
+          description: Storage locations for writing media objects.
           content:
             application/json:
               schema:
