@@ -16,7 +16,7 @@
       "$ref": "timestamp.json"
     },
     "timerange": {
-      "description": "The timerange from the first sample in the segment to the last, with an inclusive start and inclusive or exclusive end, as described by the [TimeRange](../schemas/timerange#top) type",
+      "description": "The timerange from the first sample in the segment to the last, with an inclusive start and inclusive or exclusive end, as described by the [TimeRange](../schemas/timerange#top) type. Note that where temporal re-ordering is used, this refers to the presentation timeline.",
       "$ref": "timerange.json"
     },
     "last_duration": {

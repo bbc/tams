@@ -108,6 +108,8 @@ A timerange is represented in JSON and text using the [TimeRange string pattern]
 Separately the media objects have a timeline (the "media timeline") defined by the container format itself: the timestamps recorded inside the media object for each grain.
 The Flow Segment attributes describe how to map the media timeline onto the Flow timeline.
 Note that no explicit relationship is defined between the Flow timelines of different Flows, although a mechanism to define that may be added in future.
+For Flows using codecs with temporal re-ordering, both of these timelines represent the presentation timeline of the media.
+
 For brevity these diagrams start at `0:0`, however it is likely a practical system would stick closer to wall-clock time or TAI, such as starting at `1709634568:0`.
 A timestamp is represented in JSON and text using the [Timestamp string pattern](https://bbc.github.io/tams/#/schemas/timestamp).
 
