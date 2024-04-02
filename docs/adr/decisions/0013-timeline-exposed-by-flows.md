@@ -40,7 +40,7 @@ This is how the BBC R&D proof-of-concept implementation works at time of writing
 * Good, because regardless of Flow Segment size, the ["media timeline"](https://github.com/bbc/tams/blob/16ea401/README.md#flow-and-media-timelines) inside the segment contains monotonically increasing timestamps.
 * Good, because it aligns with how the existing proof-of-concept implementation works.
 * Bad, because it's the opposite of how chunked streaming formats like MPEG-DASH and HLS work, which refer to the presentation timeline.
-* Bad, because transcoding may introduce or adjust decoding delay, so for example multiple Flows of the same Source may have frames with the same decode timestamp, but different presentation timestamps.
+* Bad, because a timestamp on a Source should point to the same content in all Flows of that Source, but the same time on the decode timeline may reference different frames on the presentation timeline, for example if one Flow is intra-coded and another uses a temporally re-ordered inter-coding scheme..
 * Bad, because a client may need to read and inspect additional media in order to locate the point of interest.
 
 ### Option 2: Make the Flow timeline represent the _presentation_ timeline
@@ -61,6 +61,6 @@ Use the _presentation_ timeline as in Option 2, with the addition of recommendin
 This is akin to the MPEG-DASH requirement that each segment start with a Stream Access Point (SAP).
 
 * Good, because a client should not need to re-order coded media units across multiple Flow Segments before feeding them into the decoder.
-* Good, because it is likely each Flow Segment will become indepedently decodable.
+* Good, because it is likely each Flow Segment will become independently decodable.
   However for some coding schemes such as open GOP, it may still be necessary to seek further back and clients should implement the functionality.
 * Bad, because it increase latency to the size of a GOP, however applications can tune that by reducing the GOP length of their encoder, or for example using an intra-frame codec.
