@@ -133,6 +133,14 @@ In the diagram below, portions of Flow X and Flow Y are combined to form Flow Z,
 
 ![Graphic showing the Flow timeline and Flow Segments of Flows X, Y and Z, where Z is composed of a mix of re-used segments and new media](./docs/images/Flow%20and%20Media%20Timelines-Flow%20XYZ.drawio.png)
 
+### Events from the API
+
+The TAMS API specifies a list of event messages that should be generated and sent to interested clients in response to certain events, such as the creation of a new Flow.
+This is intended to reduce the amount of polling required by clients to keep up with activity on a store by providing a way to push updates about content they have access to instead.
+
+However the specification is deliberately left open-ended; only the message bodies are specified, but not the protocol by which they are carried nor the method by which clients subscribe.
+It is assumed that implementations will provide a suitable mechanism, such as a call to allow clients to subscribe to webhooks, or details of an event bus to connect to and receive the messages.
+
 ### API Versioning
 
 The API is versioned using a major and minor version number.
