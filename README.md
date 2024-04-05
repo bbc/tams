@@ -78,7 +78,7 @@ The process of writing to the store is:
 1. Client creates a Flow if necessary by making a request to [`PUT flows/<flow_id>`](https://bbc.github.io/tams/#/operations/PUT_flows-flowId)
 2. Client makes a request to [`POST flows/<flow_id>/storage`](https://bbc.github.io/tams/#/operations/POST_flows-flowId-storage) and receives a list of URLs to PUT media data into, along with an optional `pre` URL to call before writing
 3. If a `pre` URL was given, client calls it
-4. Client breaks content into Flow Segments and uploads the corresponding media data
+4. Client breaks content into Flow Segments (each of which should contain complete decodable units, _e.g._ a number of complete GOPs for video) and uploads the corresponding media data
 5. Client makes requests to [`POST flows/<flow_id>/segments`](https://bbc.github.io/tams/#/operations/POST_flows-flowId-segments) with details of each new Flow Segment created, to register them on the timeline
 
 ### Sources
@@ -111,7 +111,9 @@ Flows exist on an infinite timeline (the "Flow timeline"), and the position of c
 A timerange is represented in JSON and text using the [TimeRange string pattern](https://bbc.github.io/tams/#/schemas/timerange).
 Separately the media objects have a timeline (the "media timeline") defined by the container format itself: the timestamps recorded inside the media object for each grain.
 The Flow Segment attributes describe how to map the media timeline onto the Flow timeline.
+For Flows using codecs with temporal re-ordering, both of these timelines represent the presentation timeline of the media.
 Note that no explicit relationship is defined between the Flow timelines of different Flows, although a mechanism to define that may be added in future.
+
 For brevity these diagrams start at `0:0`, however it is likely a practical system would stick closer to wall-clock time or TAI, such as starting at `1709634568:0`.
 A timestamp is represented in JSON and text using the [Timestamp string pattern](https://bbc.github.io/tams/#/schemas/timestamp).
 
