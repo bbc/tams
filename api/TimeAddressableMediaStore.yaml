@@ -1293,11 +1293,32 @@ webhooks:
                 timerange:
                   $ref: 'schemas/timerange.json'
 
-  # TODO: Should Sources get created/deleted events too? If creation and deletion is a side effect of the same operation
-  # on Flows then it's strictly un-necessary, but if you're a client that only really deals in Sources, maybe you'd
-  # want that too?
+  sources/created:
+    post:
+      security:
+        - {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: Source Created Notification
+              description: Information about a Source which has been newly created in this store instance
+              required:
+                - event_timestamp
+                - event_type
+                - source
+              properties:
+                event_timestamp:
+                  description: Timestamp at which the new Source was created
+                  type: string
+                  format: date-time
+                event_type:
+                  type: string
+                  const: sources/created
+                source:
+                  $ref: "schemas/source.json"
 
-  source/updated:
+  sources/updated:
     post:
       security:
         - {}
@@ -1318,10 +1339,34 @@ webhooks:
                   format: date-time
                 event_type:
                   type: string
-                  const: source/updated
-                flow:
+                  const: sources/updated
+                source:
                   $ref: "schemas/source.json"
 
+  sources/deleted:
+    post:
+      security:
+        - {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: Source Deleted Notification
+              description: Notification that a Source has been deleted.
+              required:
+                - event_timestamp
+                - event_type
+                - source_id
+              properties:
+                event_timestamp:
+                  description: Timestamp at which the Source was modified
+                  type: string
+                  format: date-time
+                event_type:
+                  type: string
+                  const: sources/deleted
+                source_id:
+                  $ref: "#/components/schemas/uuid"
 
 components:
   schemas:
