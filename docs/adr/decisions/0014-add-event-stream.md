@@ -12,27 +12,18 @@ A push based notification approach would both allow clients to respond to notifi
 ## Considered Options
 
 * Option 1: Specify a/a number of supported notification mechanisms that clients can subscribe to
-* Option 2: Specify only the content of notifications messages
+* Option 2: Specify only the content of notification messages
+* Option 2a: Specify the content of notification messages, plus some example implementations
 * Option 3: Provide a telemetry output which can also be used to trigger other actions
 
 ## Decision Outcome
 
-Chosen option: "{title of option 1}", because
-{Justification, e.g., only option which resolves requirements, or comes out best (see below)}.
+Chosen option: Option 2a: Specify the content of notification messages, plus some example implementations, because it allows flexibility in the notification mechanism, while providing a framework to document known mechanisms.
 
-<!-- This is an optional element. Feel free to remove. -->
-### Consequences
-
-* Good, because {positive consequence, e.g., improvement of one or more desired qualities, …}
-* Bad, because {negative consequence, e.g., compromising one or more desired qualities, …}
-* … <!-- numbers of consequences can vary -->
-
-<!-- This is an optional element. Feel free to remove. -->
 ### Implementation
 
-{Once the proposal has been implemented, add a link to the relevant PRs here}
+Implemented by <https://github.com/bbc/tams/pull/39>
 
-<!-- This is an optional element. Feel free to remove. -->
 ## Pros and Cons of the Options
 
 ### Option 1: Specify a/a number of supported notification mechanisms that clients can subscribe to
@@ -54,6 +45,16 @@ Document the messages that will be sent in response to certain events, without s
 * Bad, because additional implementation-specific documentation is required.
 * Bad, because a client may not know in advance which mechanisms a server implements.
   However it may be possible to use polling as a fallback, and responding to notifications is likely to be a separate implementation to a regular TAMS client anyway.
+
+### Option 2a: Specify the content of notification messages, plus some example implementations
+
+As with Option 2, but also specify at least one example mechanism.
+In addition, add a space to the `service` endpoint that signals which notification mechanisms this implementation supports, with an option to define new mechanisms not originally present.
+
+* Good, because it retains the flexibility of Option 2 if implementations aren't required to use one of the examples.
+* Good, because it helps build consensus, especially if other implementations use the example.
+* Good, because it provides a way to signal what an API implementation supports.
+* Neutral, because further example implementations need to be managed and added to the API documentation in due course.
 
 ### Option 3: Provide a telemetry output which can also be used to trigger other actions
 
