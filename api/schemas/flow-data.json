@@ -29,7 +29,7 @@
           "additionalProperties": false,
           "properties": {
             "data_type": {
-              "description": "The type of information encoded in the flow, identified using a URN.",
+              "description": "The type of information encoded in the flow, identified using a URN. e.g. The data_type may be urn:x-tams:data:bounding-box, and the codec `application/json`.",
               "type": "string"
             }
           }
