@@ -1,0 +1,26 @@
+{
+    "title": "Register Webhook",
+    "description": "Register to receive updates via webhook",
+    "type": "object",
+    "required": [
+        "url",
+        "events"
+    ],
+    "properties": {
+        "url": {
+            "description": "The URL to which the API should make HTTP POST requests with event data",
+            "type": "string"
+        },
+        "secret": {
+            "description": "A shared secret, used to sign deliveries to clients so they can validate the source",
+            "type": "string"
+        },
+        "events": {
+            "description": "List of event types to receive",
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        }
+    }
+}

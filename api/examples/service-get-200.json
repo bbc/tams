@@ -5,5 +5,11 @@
   "version": "1.0+tams.1.10.0-da88b8b",
   "media_store": {
     "type": "http_object_store"
-  }
+  },
+  "event_stream_mechanisms": [
+    {
+      "name": "webhook",
+      "docs": "https://bbc.github.io/tams/#/operations/POST_webhooks"
+    }
+  ]
 }

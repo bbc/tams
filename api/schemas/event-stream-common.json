@@ -1,0 +1,22 @@
+{
+    "type": "object",
+    "description": "Describes an event stream mechanism available in this implementation of TAMS",
+    "title": "Event Stream Mechanism",
+    "required": [
+        "name"
+    ],
+    "properties": {
+        "name": {
+            "description": "Name of this type of event stream mechanism. Must be unique. Any name defined in this specification is reserved",
+            "type": "string"
+        },
+        "docs": {
+            "description": "Location (e.g. a URL) at which documentation for this event stream mechanism may be found",
+            "type": "string"
+        },
+        "config": {
+            "type": "object",
+            "description": "Configuration options required to make use of this mechanism"
+        }
+    }
+}

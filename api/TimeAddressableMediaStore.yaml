@@ -116,6 +116,85 @@ paths:
           description: Success. The service info has been updated.
         "400":
           description: Bad request. Invalid service JSON.
+  /service/webhooks:
+    head:
+      description: Return webhooks path headers
+      operationId: HEAD_webhooks
+      tags:
+        - Webhooks
+      responses:
+        "200":
+          $ref: '#/components/responses/trait_resource_listing_head_200'
+        "404":
+          description: "Webhooks are not supported by this API implementation"
+
+    get:
+      summary: List registered webhook URLs
+      description: |
+        Get the list of registered webhook URLs. Implementations SHOULD take steps to avoid displaying URLs to users
+        other than those who have suitable permissions (e.g. the owning user).
+        Availability of this endpoint is indicated by the name "webhooks" appearing in the `event_stream_mechanisms`
+        list on the service endpoint.
+
+      operationId: GET_webhooks
+      tags:
+        - Webhooks
+      responses:
+        "200":
+          description: Return the list of known webhook URLs. Note that the `secret` will be omitted.
+          content:
+            application/json:
+              example:
+                - url: https://hook.example.com
+                  events:
+                    - flows/created
+                    - flows/updated
+                    - flows/deleted
+              schema:
+                type: array
+                items:
+                  $ref: "schemas/webhook.json"
+        "404":
+          description: "Webhooks are not supported by this API implementation"
+
+    post:
+      summary: Register a webhook URL
+      description: |
+        Register to receive event notifications as webhooks on a specified URL. Webhook messages will conform to the
+        format in the `webhooks` section of the API docs, depending on the event type (as defined in the same section).
+        Availability of this endpoint is indicated by the name "webhooks" appearing in the `event_stream_mechanisms`
+        list on the service endpoint.
+
+        Making a POST request to this endpoint with the same URL and secret but a different list of `events` SHOULD
+        update the existing registration. POSTing an empty list of events SHOULD remove the registration.
+
+        HTTP requests from the service SHOULD include a `X-Hook-Signature` header containing the HMAC hex digest of the
+        webhook body, hashed using SHA-256 using the shared secret as the key. Clients SHOULD verify each message using
+        the shared secret.
+
+        API implementations SHOULD consider the security implementations of providing webhooks, and include appropriate
+        mitigations against Server Side Request Forgery (SSRF) attacks and similar.
+      operationId: POST_webhooks
+      tags:
+        - Webhooks
+      requestBody:
+        content:
+          application/json:
+            example:
+              url: https://hook.example.com
+              secret: super-secret-string
+              events:
+                - flows/created
+                - flows/updated
+            schema:
+              $ref: schemas/webhook.json
+        required: true
+      responses:
+        "200":
+          description: Success. The webhook has been registered
+        "404":
+          description: "Webhooks are not supported by this API implementation"
+
   /sources:
     head:
       summary: List Sources
@@ -1452,3 +1531,5 @@ tags:
     description: The system that stores the media objects referenced by flow segments.
   - name: FlowDeleteRequests
     description: Resource for monitoring long running deletion of flows and flow segments.
+  - name: Webhooks
+    description: Configures webhooks to deliver notifications externally. Optional, and may not be implemented
