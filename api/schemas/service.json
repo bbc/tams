@@ -37,6 +37,13 @@
           "enum": ["http_object_store"]
         }
       }
+    },
+    "event_stream_mechanisms": {
+      "type": "array",
+      "description": "List the types of event stream that this implementation supports",
+      "items": {
+        "$ref": "event-stream-common.json"
+      }
     }
   }
 }

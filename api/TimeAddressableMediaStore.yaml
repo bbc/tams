@@ -116,6 +116,85 @@ paths:
           description: Success. The service info has been updated.
         "400":
           description: Bad request. Invalid service JSON.
+  /service/webhooks:
+    head:
+      description: Return webhooks path headers
+      operationId: HEAD_webhooks
+      tags:
+        - Webhooks
+      responses:
+        "200":
+          $ref: '#/components/responses/trait_resource_listing_head_200'
+        "404":
+          description: "Webhooks are not supported by this API implementation"
+
+    get:
+      summary: List registered webhook URLs
+      description: |
+        Get the list of registered webhook URLs. Implementations SHOULD take steps to avoid displaying URLs to users
+        other than those who have suitable permissions (e.g. the owning user).
+        Availability of this endpoint is indicated by the name "webhooks" appearing in the `event_stream_mechanisms`
+        list on the service endpoint.
+
+      operationId: GET_webhooks
+      tags:
+        - Webhooks
+      responses:
+        "200":
+          description: Return the list of known webhook URLs. Note that the `secret` will be omitted.
+          content:
+            application/json:
+              example:
+                - url: https://hook.example.com
+                  events:
+                    - flows/created
+                    - flows/updated
+                    - flows/deleted
+              schema:
+                type: array
+                items:
+                  $ref: "schemas/webhook.json"
+        "404":
+          description: "Webhooks are not supported by this API implementation"
+
+    post:
+      summary: Register a webhook URL
+      description: |
+        Register to receive event notifications as webhooks on a specified URL. Webhook messages will conform to the
+        format in the `webhooks` section of the API docs, depending on the event type (as defined in the same section).
+        Availability of this endpoint is indicated by the name "webhooks" appearing in the `event_stream_mechanisms`
+        list on the service endpoint.
+
+        Making a POST request to this endpoint with the same URL and secret but a different list of `events` SHOULD
+        update the existing registration. POSTing an empty list of events SHOULD remove the registration.
+
+        HTTP requests from the service SHOULD include a `X-Hook-Signature` header containing the HMAC hex digest of the
+        webhook body, hashed using SHA-256 using the shared secret as the key. Clients SHOULD verify each message using
+        the shared secret.
+
+        API implementations SHOULD consider the security implementations of providing webhooks, and include appropriate
+        mitigations against Server Side Request Forgery (SSRF) attacks and similar.
+      operationId: POST_webhooks
+      tags:
+        - Webhooks
+      requestBody:
+        content:
+          application/json:
+            example:
+              url: https://hook.example.com
+              secret: super-secret-string
+              events:
+                - flows/created
+                - flows/updated
+            schema:
+              $ref: schemas/webhook.json
+        required: true
+      responses:
+        "200":
+          description: Success. The webhook has been registered
+        "404":
+          description: "Webhooks are not supported by this API implementation"
+
   /sources:
     head:
       summary: List Sources
@@ -1177,6 +1256,222 @@ paths:
                 $ref: schemas/deletion-request.json
               example:
                 $ref: examples/deletion-request-get-200.json
+
+webhooks:
+  flows/created:
+    post:
+      security:
+        - {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: Flow Created Notification
+              description: Information about a Flow which has been newly created in this store instance
+              required:
+                - event_timestamp
+                - event_type
+                - flow
+              properties:
+                event_timestamp:
+                  description: Timestamp at which the new Flow was created
+                  type: string
+                  format: date-time
+                event_type:
+                  type: string
+                  const: flows/created
+                flow:
+                  $ref: "schemas/flow-core.json"
+
+  flows/updated:
+    post:
+      security:
+        - {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: Flow Updated Notification
+              description: Information about a Flow for which the metadata has been modified.
+              required:
+                - event_timestamp
+                - event_type
+                - flow
+              properties:
+                event_timestamp:
+                  description: Timestamp at which the Flow was modified
+                  type: string
+                  format: date-time
+                event_type:
+                  type: string
+                  const: flows/updated
+                flow:
+                  $ref: "schemas/flow-core.json"
+
+  flows/deleted:
+    post:
+      security:
+        - {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: Flow Deleted Notification
+              description: Notification that a Flow has been deleted (or scheduled for deletion).
+              required:
+                - event_timestamp
+                - event_type
+                - flow_id
+              properties:
+                event_timestamp:
+                  description: Timestamp at which the Flow was modified
+                  type: string
+                  format: date-time
+                event_type:
+                  type: string
+                  const: flows/deleted
+                flow_id:
+                  $ref: "#/components/schemas/uuid"
+
+  flows/segments_added:
+    post:
+      security:
+        - {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: Flow Segments Added
+              description: |
+                Notification that new segments have been added to a Flow. The message body contains the timerange
+                covered by the new segments, however implementations MAY rate limit these messages and provide a single
+                message covering multiple segments. The timerange in the message MUST intersect with a segment at both
+                start and end (e.g. it cannot start or end in empty space).
+              required:
+                - event_timestamp
+                - event_type
+                - flow_id
+                - timerange
+              properties:
+                event_timestamp:
+                  description: Timestamp at which the most recent segment in the timerange was added (and the message generated)
+                  type: string
+                  format: date-time
+                event_type:
+                  type: string
+                  const: flows/segments_added
+                flow_id:
+                  $ref: "#/components/schemas/uuid"
+                timerange:
+                  $ref: 'schemas/timerange.json'
+
+  flows/segments_deleted:
+    post:
+      security:
+        - {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: Flow Segments Deleted
+              description: |
+                Notification that segments have been deleted from a Flow. The message body contains the timerange over
+                which segments have been deleted, however implementations MAY rate limit these messages and provide a
+                single message covering multiple segments. The timerange in the message MUST intersect with a segment
+                which has been deleted at both start and end (e.g. it cannot start or end in empty space).
+              required:
+                - event_timestamp
+                - event_type
+                - flow_id
+                - timerange
+              properties:
+                event_timestamp:
+                  description: Timestamp at which the most recent segment in the timerange was added (and the message generated)
+                  type: string
+                  format: date-time
+                event_type:
+                  type: string
+                  const: flows/segments_added
+                flow_id:
+                  $ref: "#/components/schemas/uuid"
+                timerange:
+                  $ref: 'schemas/timerange.json'
+
+  sources/created:
+    post:
+      security:
+        - {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: Source Created Notification
+              description: Information about a Source which has been newly created in this store instance
+              required:
+                - event_timestamp
+                - event_type
+                - source
+              properties:
+                event_timestamp:
+                  description: Timestamp at which the new Source was created
+                  type: string
+                  format: date-time
+                event_type:
+                  type: string
+                  const: sources/created
+                source:
+                  $ref: "schemas/source.json"
+
+  sources/updated:
+    post:
+      security:
+        - {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: Source Updated Notification
+              description: Information about a Source for which the metadata has been modified.
+              required:
+                - event_timestamp
+                - event_type
+                - source
+              properties:
+                event_timestamp:
+                  description: Timestamp at which the Source was modified
+                  type: string
+                  format: date-time
+                event_type:
+                  type: string
+                  const: sources/updated
+                source:
+                  $ref: "schemas/source.json"
+
+  sources/deleted:
+    post:
+      security:
+        - {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: Source Deleted Notification
+              description: Notification that a Source has been deleted.
+              required:
+                - event_timestamp
+                - event_type
+                - source_id
+              properties:
+                event_timestamp:
+                  description: Timestamp at which the Source was modified
+                  type: string
+                  format: date-time
+                event_type:
+                  type: string
+                  const: sources/deleted
+                source_id:
+                  $ref: "#/components/schemas/uuid"
+
 components:
   schemas:
     uuid:
@@ -1261,3 +1556,5 @@ tags:
     description: The system that stores the media objects referenced by flow segments.
   - name: FlowDeleteRequests
     description: Resource for monitoring long running deletion of flows and flow segments.
+  - name: Webhooks
+    description: Configures webhooks to deliver notifications externally. Optional, and may not be implemented
