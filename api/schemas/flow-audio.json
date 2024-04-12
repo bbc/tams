@@ -41,7 +41,7 @@
               "type": "integer"
             },
             "bit_depth": {
-              "description": "The number of significant bits used to represent the audio sample. The minumum number of bytes then equals (bit_depth + 7) / 8.",
+              "description": "The number of significant bits used to represent the audio sample. The minumum number of bytes then equals `round_up(bit_depth / 8)`.",
               "type": "integer"
             },
             "codec_parameters": {
@@ -54,7 +54,7 @@
                   "type": "integer"
                 },
                 "mp4_oti": {
-                  "description": "The MPEG-4 Object Type Identification.",
+                  "description": "The MPEG-4 Object Type Identification. For more information on the use of this property in codec strings, see https://developer.mozilla.org/en-US/docs/Web/Media/Formats/codecs_parameter#mpeg-4_audio",
                   "type": "integer"
                 }
               }

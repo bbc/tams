@@ -94,7 +94,7 @@
                             ]
                         },
                         "aspect_ratio": {
-                            "description": "The display aspect ratio.",
+                            "description": "The display aspect ratio. i.e. display_width / display_height",
                             "type": "object",
                             "required": [
                                 "numerator",
@@ -112,7 +112,7 @@
                             }
                         },
                         "pixel_aspect_ratio": {
-                            "description": "The pixel aspect ratio.",
+                            "description": "The pixel aspect ratio. This is usually 1:1 (i.e. square pixels) for modern video. Older Standard Definition widescreen video often used non-square pixels. This is where that may be indicated.",
                             "type": "object",
                             "required": [
                                 "numerator",
@@ -186,15 +186,15 @@
                             ],
                             "properties": {
                                 "profile": {
-                                    "description": "AVC / H.264 profile byte.",
+                                    "description": "AVC / H.264 profile byte. For more information on the use of this property in codec strings, see https://developer.mozilla.org/en-US/docs/Web/Media/Formats/codecs_parameter#using_the_codecs_parameter",
                                     "type": "integer"
                                 },
                                 "level": {
-                                    "description": "AVC / H.264 level byte.",
+                                    "description": "AVC / H.264 level byte. For more information on the use of this property in codec strings, see https://developer.mozilla.org/en-US/docs/Web/Media/Formats/codecs_parameter#using_the_codecs_parameter",
                                     "type": "integer"
                                 },
                                 "flags": {
-                                    "description": "AVC / H.264 flags byte.",
+                                    "description": "AVC / H.264 flags byte. For more information on the use of this property in codec strings, see https://developer.mozilla.org/en-US/docs/Web/Media/Formats/codecs_parameter#using_the_codecs_parameter",
                                     "type": "integer"
                                 }
                             }

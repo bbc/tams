@@ -13,7 +13,7 @@
             "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
         },
         "role": {
-            "description": "A human-readable role of the element in this collection (e.g. 'R' to denote a right audio channel in a collection of mono audio Sources, or )",
+            "description": "A human-readable role of the element in this collection (e.g. 'R' to denote a right audio channel in a collection of mono audio Sources)",
             "type": "string"
         }
     }
