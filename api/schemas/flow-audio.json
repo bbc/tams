@@ -54,7 +54,7 @@
                   "type": "integer"
                 },
                 "mp4_oti": {
-                  "description": "The MPEG-4 Object Type Identification.",
+                  "description": "The MPEG-4 Object Type Identification. For more information on the use of this property in codec strings, see https://developer.mozilla.org/en-US/docs/Web/Media/Formats/codecs_parameter#mpeg-4_audio",
                   "type": "integer"
                 }
               }
