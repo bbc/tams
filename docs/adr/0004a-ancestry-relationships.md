@@ -88,7 +88,7 @@ The discussion concluded that in the general case, this type of ancestry should 
 
 Management of complex Source<->Source relationships isn't made possible in an effective way by any of the proposals in this ADR, which only really improves the "lightweight copies" use case.
 For the simple case where you want to make a subclip without modification, it probably makes more sense to store a Source (or Flow) ID and a timerange, e.g. inside a MAM.
-Further to [Deletion of Content and IDs](https://github.com/bbc/tams/blob/main/docs/adr/decisions/0004-content-deletion.md) it is assumed such a MAM would also arbitrate deletion requests to avoid removing content needed by a subclip.
+Further to [Deletion of Content and IDs](./0004-content-deletion.md) it is assumed such a MAM would also arbitrate deletion requests to avoid removing content needed by a subclip.
 
 In a proof-of-concept setting where no MAM is used, it may be useful to be able to create a separate Flow (pointing at the same media objects).
 In this case it is still possible to do so (and re-time the Flow if needed), however no reference is preserved to the original Flow.

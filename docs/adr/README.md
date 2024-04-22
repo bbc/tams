@@ -13,7 +13,7 @@ One of the tests that will need to be applied on review of PRs containing ADR do
 ## Creating a new ADR
 
 0. Look at the existing list of ADRs, and see if this has been considered before, or whether it would supersede any of them
-1. Copy the [adr-template.md](../template/adr-template.md) into this directory
+1. Copy the [adr-template.md](../templates/adr-template.md) into this directory
 2. Name it with the next number in sequence, and a sensible title (e.g. `00023-improve-source-hierarchy.md`)
 3. Fill in the template: at least the "Context", "Considered Options" and "Pros and Cons..." sections.
    Feel free to choose a preferred option and add it to the "Decision Outcome" section as well.
@@ -35,7 +35,7 @@ Once the review process has completed and a consensus has been reached:
 1. Amend the ADR document with relevant points from the review discussion, and changes to the decision if necessary
 2. Try to make these changes with new commits, so it's possible to see the original version in the Git history
 3. If you added an implementation at the same time, make the required changes there too.
-   Rememeber to bump the API version in accordance with [the README](../../../README.md#api-versioning)
+   Remember to bump the API version in accordance with [the README](../../README.md#api-versioning)
 4. Amend the ADR status to "accepted"
 5. Consider whether your rework would benefit from someone else looking over it
 6. Merge the PR

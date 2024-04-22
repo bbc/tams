@@ -167,7 +167,7 @@ It is possible to see what the version would be if a release was made at the cur
 ## Proposals, Decisions and Architecture Changes
 
 This repository uses [(M)ADR documents](https://adr.github.io/madr/) to propose significant changes, facilitate discussions and decision making, and to store a record of options that were considered.
-These documents may be found in the [docs/adr/decisions](./docs/adr/decisions/) directory, and are managed as described by the [ADR Readme](./docs/adr/decisions/README.md).
+These documents may be found in the [docs/adr](./docs/adr/) directory, and are managed as described by the [ADR Readme](./docs/adr/README.md).
 
 ## Making a release
 

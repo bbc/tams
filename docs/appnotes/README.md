@@ -1,10 +1,10 @@
 # Application Notes
 
-This folder contains applciation notes in markdown format.
+This folder contains application notes in markdown format.
 These documents provide ancillary information about the concepts in the TAMS API, and their application to real-world problems.
 No part of these documents are considered part of the API specification, although including specification-type language as examples, or "opt-in" extensions is allowed.
 
-There is a simple template `appnote-template.md` which describes the few restrictions there are on Application Notes.
+There is a simple template [appnote-template.md](../templates/appnote-template.md) which describes the few restrictions there are on Application Notes.
 Select a unique number for your Applcation Note, and try to keep them at least somewhat close together.
 
 ## Versioning

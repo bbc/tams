@@ -5,7 +5,7 @@ status: "proposed"
 
 ## Context and Problem Statement
 
-The TAMS API specification and associated README do not explicitly indicate how the timings relate to timestamps inside media object files: the [README](https://github.com/bbc/tams/blob/16ea401/README.md#flow-and-media-timelines) simply calls it the "media timeline".
+The TAMS API specification and associated README do not explicitly indicate how the timings relate to timestamps inside media object files: the [README](../../README.md#flow-and-media-timelines) simply calls it the "media timeline".
 A number of common codecs support temporal re-ordering which creates multiple timelines, for example the decode and presentation order of frames of video.
 To avoid confusion between clients and when moving between codecs, the TAMS API should define the relationship between these timelines.
 
@@ -37,7 +37,7 @@ Clients are expected to start reading either from the position of interest on th
 In either case, a client may need to read an earlier segment in order to locate the timestamp of interest due to temporal re-ordering.
 This is how the BBC R&D proof-of-concept implementation works at time of writing, largely for historical reasons.
 
-* Good, because regardless of Flow Segment size, the ["media timeline"](https://github.com/bbc/tams/blob/16ea401/README.md#flow-and-media-timelines) inside the segment contains monotonically increasing timestamps.
+* Good, because regardless of Flow Segment size, the ["media timeline"](../../README.md#flow-and-media-timelines) inside the segment contains monotonically increasing timestamps.
 * Good, because it aligns with how the existing proof-of-concept implementation works.
 * Bad, because it's the opposite of how chunked streaming formats like MPEG-DASH and HLS work, which refer to the presentation timeline.
 * Bad, because a timestamp on a Source should point to the same content in all Flows of that Source, but the same time on the decode timeline may reference different frames on the presentation timeline, for example if one Flow is intra-coded and another uses a temporally re-ordered inter-coding scheme..
