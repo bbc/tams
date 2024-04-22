@@ -67,4 +67,4 @@ For this reason, Option 1 (checking the last update time) was chosen, and assume
 In addition, there are other states a Flow could be in, for example existing as a placeholder for future content, or awaiting replication from another store.
 This can be signalled with a tag, for example `flow_status`, which could be one of `awaiting_content`, `ingesting`, `replication_in_progress` or `closed_complete`, providing a non-authoritative hint to clients.
 This will be added to a future Application Note describing known tags.
-As in [Flow and Source References](https://github.com/bbc/tams/blob/main/docs/adr/0004-ancestry-relationships.md), the TAMS team will monitor the use of tags, and revisit this proposal as needed.
+As in [Flow and Source References](https://github.com/bbc/tams/blob/main/docs/adr/0004a-ancestry-relationships.md), the TAMS team will monitor the use of tags, and revisit this proposal as needed.
