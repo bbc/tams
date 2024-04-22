@@ -14,7 +14,7 @@ If you've fixed a problem or thought of an improvement, feel free to fork the re
 The process is:
 
 1. Fork the repository
-2. For more significant changes, consider starting with writing an ADR document: see [the ADR readme](./docs/adr/decisions/README.md) for more
+2. For more significant changes, consider starting with writing an ADR document: see [the ADR readme](./docs/adr/README.md) for more
 3. Make, commit and push changes to a branch on your fork
    - Make sure the commit message contains your email address
    - Where appropriate, make sure your commit messages includes a line with one of the following:
