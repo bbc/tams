@@ -15,6 +15,10 @@
         "role": {
             "description": "A human-readable role of the element in this collection (e.g. 'R' to denote a right audio channel in a collection of mono audio Sources)",
             "type": "string"
+        },
+        "container_mapping": {
+            "description": "Describes the mapping of the Flow essence from this Flow collection's container",
+            "$ref": "container-mapping.json"
         }
     }
 }
