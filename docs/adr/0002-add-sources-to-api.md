@@ -1,5 +1,5 @@
 ---
-status: accepted
+status: "superseded by [ADR-0018](./0018-restrict-direct-source-modification.md)"
 ---
 # Add Sources as objects in the API
 
