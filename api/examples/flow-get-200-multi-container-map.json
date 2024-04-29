@@ -1,0 +1,39 @@
+{
+    "id": "8159b781-6033-42e8-b3a1-8a879af5e1aa",
+    "source_id": "3a24e39d-c6cf-4632-8c9e-36a8d305f007",
+    "format": "urn:x-nmos:format:multi",
+    "generation": 0,
+    "created": "2024-04-25T15:56:00.0Z",
+    "tags": {
+        "ingested_by": "ingest_service_api"
+    },
+    "container": "video/mp2t",
+    "flow_collection": [
+        {
+            "id": "32b75860-83e5-48c9-8d6b-de46bdbc7f80",
+            "role": "video"
+        },
+        {
+            "id": "94996f2e-0cb5-43d3-ab6c-db5a9cf667aa",
+            "role": "L",
+            "container_mapping": {
+                "track_index": 1,
+                "format_track_index": 0,
+                "mp2ts_container": {
+                    "pid": 257
+                }
+            }
+        },
+        {
+            "id": "9ba0523e-22a0-4c69-a598-baf4be244a79",
+            "role": "R",
+            "container_mapping": {
+                "track_index": 2,
+                "format_track_index": 1,
+                "mp2ts_container": {
+                    "pid": 258
+                }
+            }
+        }
+    ]
+}

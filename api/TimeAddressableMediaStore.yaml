@@ -709,6 +709,19 @@ paths:
                   description: Multi-essence Flows are used to collect multiple Flows of different formats under one Flow ID
                   value:
                     $ref: examples/flow-get-200-multi.json
+                multi-container-map:
+                  summary: Multi-essence Flow with a container map
+                  description: |
+                    Multi-essence Flows are used to collect multiple Flows of different formats under one Flow ID.
+                    The collection has container maps for the audio Flows as there are 2 audio tracks in the container.
+                  value:
+                    $ref: examples/flow-get-200-multi-container-map.json
+                audio-multi:
+                  summary: Audio Flow in a multi-essence Flow
+                  description: |
+                    The audio Flow does not have a container property as the media is accessed via the multi-essence Flow
+                  value:
+                    $ref: examples/flow-get-200-audio-aac-multi.json
         "404":
           description: The requested flow does not exist.
         "400":
