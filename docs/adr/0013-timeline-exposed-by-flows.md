@@ -1,5 +1,5 @@
 ---
-status: "proposed"
+status: "accepted"
 ---
 # Timeline exposed by Flows
 
