@@ -2,9 +2,9 @@
 
 ## Abstract
 
-Flows reference media content held in media objects in TAMS.
-The media objects containers may wrap media content from multiple Flows.
-This application note will describe how the `container` and `container_mapping` properties are used to reference the media content in containers to Flows and multi-essence Flows.
+Flows reference media content stored in media object containers in TAMS.
+The containers may have content for multiple Flows.
+This application note will describe how the `container` and `container_mapping` properties are used to reference the Flow content in containers.
 
 ## Content
 
