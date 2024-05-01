@@ -25,10 +25,16 @@ The presence of the `container` property indicates that the Flow has Flow Segmen
 ![Diagram showing a Flow referencing media objects containing a video track only](./images/0002-containers-and-mappings-fig1.png)
 
 The diagram below shows a sequence of MPEG-TS media objects that contains a multplex of audio and video.
-The multi-essence Flow references the media objects via a sequence of Flow Segments.
-The multi-essence Flow has a `container` property that indicates that this Flow has Flow Segments.
-The video and audio Flows are referenced by a Collection Item in the `flow_collection` list.
-The video and audio Flows don't themselves have a sequence of Flow Segments and therefore the `container` property is not set.
+The multi-essence Flow:
+
+- has a `container` property that indicates that this Flow has Flow Segments.
+- uses its sequence of Flow Segments to reference the media objects.
+
+The video and audio Flows:
+
+- are referenced by a Collection Item in the `flow_collection` list.
+- don't themselves have a sequence of Flow Segments and therefore the `container` property is not set.
+
 The media content for these Flows are accessed using the multi-essence Flow's Flow Segments.
 
 ![Diagram showing a multi-essence Flow referencing media objects, video and audio collection items](./images/0002-containers-and-mappings-fig2.png)
