@@ -299,7 +299,12 @@ paths:
                 basic:
                   summary: Source containing elemental video
                   value:
-                    $ref: "examples/source-get-200-basic.json"
+                    $ref: examples/source-get-200-basic.json
+                multi:
+                  summary: Multi-essence Source
+                  description: Multi-essence Sources collect multiple Sources of different formats under one Source ID.
+                  value:
+                    $ref: examples/source-get-200-multi.json
         "404":
           description: The requested Source does not exist.
         "400":
