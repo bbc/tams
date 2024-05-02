@@ -1322,7 +1322,7 @@ webhooks:
                     - flow
                   properties:
                     flow:
-                      $ref: "schemas/flow-core.json"
+                      $ref: "schemas/flow.json"
 
   flows/updated:
     post:
@@ -1352,7 +1352,7 @@ webhooks:
                     - flow
                   properties:
                     flow:
-                      $ref: "schemas/flow-core.json"
+                      $ref: "schemas/flow.json"
 
   flows/deleted:
     post:
