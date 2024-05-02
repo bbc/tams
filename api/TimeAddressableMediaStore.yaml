@@ -309,44 +309,6 @@ paths:
           description: The requested Source does not exist.
         "400":
           description: Bad request. Invalid query options.
-    put:
-      summary: Create or Update Source
-      description: |
-        Creates or updates the specified Source.
-
-        Note that the `id` in the JSON object must match the ID in the path, and implementations should enforce this.
-      operationId: PUT_sources-sourceId
-      tags:
-        - Sources
-      requestBody:
-        content:
-          application/json:
-            example:
-              id: c562ae2d-5c37-47d4-a8b5-6bf08f217c4b
-              format: urn:x-nmos:format:video
-              label: ingest_a
-              description: SDI ingest from Camera A
-            schema:
-              $ref: schemas/source.json
-        required: true
-      responses:
-        "201":
-          description: The Source has been created.
-          content:
-            application/json:
-              example:
-                id: c562ae2d-5c37-47d4-a8b5-6bf08f217c4b
-                format: urn:x-nmos:format:video
-                label: ingest_a
-                description: SDI ingest from Camera A
-                created: "2024-01-31T11:03:00Z"
-                modified: "2024-01-31T11:03:00Z"
-              schema:
-                $ref: schemas/source.json
-        "204":
-          description: No content. The Source has been updated.
-        "400":
-          description: Bad request. Invalid Source JSON.
   /sources/{sourceId}/tags:
     parameters:
       - name: sourceId
@@ -519,6 +481,72 @@ paths:
       responses:
         "204":
           description: No content. The Source description property has been deleted.
+  /sources/{sourceId}/label:
+    parameters:
+      - name: sourceId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/uuid'
+        description: The Source identifier.
+    head:
+      summary: Source Label
+      description: Return Source label path headers
+      operationId: HEAD_sources-sourceId-label
+      tags:
+        - Sources
+      responses:
+        "200":
+          $ref: '#/components/responses/trait_resource_info_head_200'
+        "400":
+          $ref: '#/components/responses/trait_resource_info_head_400'
+        "404":
+          $ref: '#/components/responses/trait_resource_info_head_404'
+    get:
+      summary: Source Label
+      description: Returns the Source label property.
+      operationId: GET_sources-sourceId-label
+      tags:
+        - Sources
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              example: |
+                "Big Buck Bunny"
+              schema:
+                type: string
+        "404":
+          description: The requested Source does not exist.
+    put:
+      summary: Update Source Label
+      description: Create or modify the label property.
+      operationId: PUT_sources-sourceId-label
+      tags:
+        - Sources
+      requestBody:
+        content:
+          application/json:
+            example: |
+              "Big Buck Bunny Movie"
+            schema:
+              type: string
+        required: true
+      responses:
+        "204":
+          description: No content. The label has been updated.
+        "400":
+          description: Bad request. Invalid Source label.
+    delete:
+      summary: Delete Source Label
+      description: Delete the label property.
+      operationId: DELETE_sources-sourceId-label
+      tags:
+        - Sources
+      responses:
+        "204":
+          description: No content. The Source label property has been deleted.
   /flows:
     head:
       description: Return flows path headers
