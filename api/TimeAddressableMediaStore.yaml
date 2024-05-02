@@ -1305,7 +1305,7 @@ webhooks:
               required:
                 - event_timestamp
                 - event_type
-                - flow
+                - event
               properties:
                 event_timestamp:
                   description: Timestamp at which the new Flow was created
@@ -1314,8 +1314,13 @@ webhooks:
                 event_type:
                   type: string
                   const: flows/created
-                flow:
-                  $ref: "schemas/flow-core.json"
+                event:
+                  type: object
+                  required:
+                    - flow
+                  properties:
+                    flow:
+                      $ref: "schemas/flow-core.json"
 
   flows/updated:
     post:
@@ -1330,7 +1335,7 @@ webhooks:
               required:
                 - event_timestamp
                 - event_type
-                - flow
+                - event
               properties:
                 event_timestamp:
                   description: Timestamp at which the Flow was modified
@@ -1339,8 +1344,13 @@ webhooks:
                 event_type:
                   type: string
                   const: flows/updated
-                flow:
-                  $ref: "schemas/flow-core.json"
+                event:
+                  type: object
+                  required:
+                    - flow
+                  properties:
+                    flow:
+                      $ref: "schemas/flow-core.json"
 
   flows/deleted:
     post:
@@ -1355,7 +1365,7 @@ webhooks:
               required:
                 - event_timestamp
                 - event_type
-                - flow_id
+                - event
               properties:
                 event_timestamp:
                   description: Timestamp at which the Flow was modified
@@ -1364,8 +1374,13 @@ webhooks:
                 event_type:
                   type: string
                   const: flows/deleted
-                flow_id:
-                  $ref: "#/components/schemas/uuid"
+                event:
+                  type: object
+                  required:
+                    - flow_id
+                  properties:
+                    flow_id:
+                      $ref: "#/components/schemas/uuid"
 
   flows/segments_added:
     post:
@@ -1384,8 +1399,7 @@ webhooks:
               required:
                 - event_timestamp
                 - event_type
-                - flow_id
-                - timerange
+                - event
               properties:
                 event_timestamp:
                   description: Timestamp at which the most recent segment in the timerange was added (and the message generated)
@@ -1394,10 +1408,16 @@ webhooks:
                 event_type:
                   type: string
                   const: flows/segments_added
-                flow_id:
-                  $ref: "#/components/schemas/uuid"
-                timerange:
-                  $ref: 'schemas/timerange.json'
+                event:
+                  type: object
+                  required:
+                    - flow_id
+                    - timerange
+                  properties:
+                    flow_id:
+                      $ref: "#/components/schemas/uuid"
+                    timerange:
+                      $ref: 'schemas/timerange.json'
 
   flows/segments_deleted:
     post:
@@ -1416,8 +1436,7 @@ webhooks:
               required:
                 - event_timestamp
                 - event_type
-                - flow_id
-                - timerange
+                - event
               properties:
                 event_timestamp:
                   description: Timestamp at which the most recent segment in the timerange was added (and the message generated)
@@ -1426,10 +1445,16 @@ webhooks:
                 event_type:
                   type: string
                   const: flows/segments_added
-                flow_id:
-                  $ref: "#/components/schemas/uuid"
-                timerange:
-                  $ref: 'schemas/timerange.json'
+                event:
+                  type: object
+                  required:
+                    - flow_id
+                    - timerange
+                  properties:
+                    flow_id:
+                      $ref: "#/components/schemas/uuid"
+                    timerange:
+                      $ref: 'schemas/timerange.json'
 
   sources/created:
     post:
@@ -1444,7 +1469,7 @@ webhooks:
               required:
                 - event_timestamp
                 - event_type
-                - source
+                - event
               properties:
                 event_timestamp:
                   description: Timestamp at which the new Source was created
@@ -1453,8 +1478,13 @@ webhooks:
                 event_type:
                   type: string
                   const: sources/created
-                source:
-                  $ref: "schemas/source.json"
+                event:
+                  type: object
+                  required:
+                    - source
+                  properties:
+                    source:
+                      $ref: "schemas/source.json"
 
   sources/updated:
     post:
@@ -1469,7 +1499,7 @@ webhooks:
               required:
                 - event_timestamp
                 - event_type
-                - source
+                - event
               properties:
                 event_timestamp:
                   description: Timestamp at which the Source was modified
@@ -1478,8 +1508,13 @@ webhooks:
                 event_type:
                   type: string
                   const: sources/updated
-                source:
-                  $ref: "schemas/source.json"
+                event:
+                  type: object
+                  required:
+                    - source
+                  properties:
+                    source:
+                      $ref: "schemas/source.json"
 
   sources/deleted:
     post:
@@ -1494,7 +1529,7 @@ webhooks:
               required:
                 - event_timestamp
                 - event_type
-                - source_id
+                - event
               properties:
                 event_timestamp:
                   description: Timestamp at which the Source was modified
@@ -1503,8 +1538,13 @@ webhooks:
                 event_type:
                   type: string
                   const: sources/deleted
-                source_id:
-                  $ref: "#/components/schemas/uuid"
+                event:
+                  type: object
+                  required:
+                    - source_id
+                  properties:
+                    source_id:
+                      $ref: "#/components/schemas/uuid"
 
 components:
   schemas:
