@@ -98,3 +98,9 @@ And it makes expected behaviour around creation/deletion of Sources, and modific
 
 * Good, because it results in one possible route to the deletion of Sources (implied, once all related Flows are deleted)
 * Neutral, because if Options A2 and B2 are chosen, the Sources endpoints become consistently read-only
+
+## More Information
+
+Outcome of discussion involving James Sandford, Sam Mesterton-Gibbons, Robert Wadge, Mark Himsley, and John Biltcliffe.
+
+It is possible that we will want to expand out on this functionality in future. As things stand, this proposal brings consistency to the API ahead of the v4.0 release which will be used by Cloud-Native Agile Production (CNAP) partners for initial integration. A minor revision in future to add functionality is considered less disruptive than a major revision to remove/otherwise break functionality.
