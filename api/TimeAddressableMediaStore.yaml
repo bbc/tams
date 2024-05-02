@@ -170,7 +170,7 @@ paths:
         of `events` SHOULD update the existing registration. POSTing an empty list of events SHOULD remove the
         registration.
 
-        HTTP requests from the service SHOULD include a `api_key_name` header with the 'api_key_value' value.
+        HTTP requests from the service SHOULD include a `api_key_name` header with the 'api_key_value' value. Clients SHOULD verify this against the value they provided when registering the webhook.
 
         API implementations SHOULD consider the security implementations of providing webhooks, and include appropriate
         mitigations against Server Side Request Forgery (SSRF) attacks and similar.
