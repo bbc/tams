@@ -191,8 +191,10 @@ paths:
               $ref: schemas/webhook-post.json
         required: true
       responses:
-        "200":
-          description: Success. The webhook has been registered
+        "201":
+          description: Success. The webhook has been registered or updated
+        "204":
+          description: Success. The webhook has been removed
         "404":
           description: "Webhooks are not supported by this API implementation"
 
