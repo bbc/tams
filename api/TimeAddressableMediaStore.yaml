@@ -141,11 +141,12 @@ paths:
         - Webhooks
       responses:
         "200":
-          description: Return the list of known webhook URLs. Note that the `secret` will be omitted.
+          description: Return the list of known webhook URLs. Note that the `api_key_value` will be omitted.
           content:
             application/json:
               example:
                 - url: https://hook.example.com
+                  api_key_name: Authorization
                   events:
                     - flows/created
                     - flows/updated
@@ -165,12 +166,11 @@ paths:
         Availability of this endpoint is indicated by the name "webhooks" appearing in the `event_stream_mechanisms`
         list on the service endpoint.
 
-        Making a POST request to this endpoint with the same URL and secret but a different list of `events` SHOULD
-        update the existing registration. POSTing an empty list of events SHOULD remove the registration.
+        Making a POST request to this endpoint with the same URL, API key name and value but a different list
+        of `events` SHOULD update the existing registration. POSTing an empty list of events SHOULD remove the
+        registration.
 
-        HTTP requests from the service SHOULD include a `X-Hook-Signature` header containing the HMAC hex digest of the
-        webhook body, hashed using SHA-256 using the shared secret as the key. Clients SHOULD verify each message using
-        the shared secret.
+        HTTP requests from the service SHOULD include a `api_key_name` header with the 'api_key_value' value.
 
         API implementations SHOULD consider the security implementations of providing webhooks, and include appropriate
         mitigations against Server Side Request Forgery (SSRF) attacks and similar.
@@ -182,12 +182,13 @@ paths:
           application/json:
             example:
               url: https://hook.example.com
-              secret: super-secret-string
+              api_key_name: Authorization
+              api_key_value: Bearer 21238dksdjqwpqscj9
               events:
                 - flows/created
                 - flows/updated
             schema:
-              $ref: schemas/webhook.json
+              $ref: schemas/webhook-post.json
         required: true
       responses:
         "200":

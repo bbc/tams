@@ -12,7 +12,7 @@
             "type": "string"
         },
         "api_key_name": {
-            "description": "The HTTP header name that is added to the event POST",
+            "description": "The HTTP header name that is added to the event POST with value 'api_key_value'",
             "type": "string"
         },
         "api_key_value": {
