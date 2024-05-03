@@ -28,7 +28,7 @@ info:
     could for example be implemented using an AWS S3 compatible store using presigned URLs or by
     a simple file system storage with an HTTP frontend. Clients should parse the /service endpoint
     and handle the media store type in use appropriately.
-  version: "3.0"
+  version: "4.0"
   contact:
     name: 'BBC R&D - Cloud-Fit Production Team'
     email: 'cloudfit-opensource@rd.bbc.co.uk'
@@ -44,7 +44,7 @@ servers:
     variables:
       version:
         description: API version
-        default: v3.0
+        default: v4.0
 security:
   - {}
   - basic_auth: []
@@ -127,7 +127,6 @@ paths:
           $ref: '#/components/responses/trait_resource_listing_head_200'
         "404":
           description: "Webhooks are not supported by this API implementation"
-
     get:
       summary: List registered webhook URLs
       description: |
@@ -135,7 +134,6 @@ paths:
         other than those who have suitable permissions (e.g. the owning user).
         Availability of this endpoint is indicated by the name "webhooks" appearing in the `event_stream_mechanisms`
         list on the service endpoint.
-
       operationId: GET_webhooks
       tags:
         - Webhooks
@@ -157,7 +155,6 @@ paths:
                   $ref: "schemas/webhook.json"
         "404":
           description: "Webhooks are not supported by this API implementation"
-
     post:
       summary: Register a webhook URL
       description: |
@@ -197,7 +194,6 @@ paths:
           description: Success. The webhook has been removed
         "404":
           description: "Webhooks are not supported by this API implementation"
-
   /sources:
     head:
       summary: List Sources
@@ -1292,7 +1288,6 @@ paths:
                 $ref: schemas/deletion-request.json
               example:
                 $ref: examples/deletion-request-get-200.json
-
 webhooks:
   flows/created:
     post:
@@ -1323,7 +1318,6 @@ webhooks:
                   properties:
                     flow:
                       $ref: "schemas/flow.json"
-
   flows/updated:
     post:
       security:
@@ -1353,7 +1347,6 @@ webhooks:
                   properties:
                     flow:
                       $ref: "schemas/flow.json"
-
   flows/deleted:
     post:
       security:
@@ -1383,7 +1376,6 @@ webhooks:
                   properties:
                     flow_id:
                       $ref: "#/components/schemas/uuid"
-
   flows/segments_added:
     post:
       security:
@@ -1420,7 +1412,6 @@ webhooks:
                       $ref: "#/components/schemas/uuid"
                     timerange:
                       $ref: 'schemas/timerange.json'
-
   flows/segments_deleted:
     post:
       security:
@@ -1457,7 +1448,6 @@ webhooks:
                       $ref: "#/components/schemas/uuid"
                     timerange:
                       $ref: 'schemas/timerange.json'
-
   sources/created:
     post:
       security:
@@ -1487,7 +1477,6 @@ webhooks:
                   properties:
                     source:
                       $ref: "schemas/source.json"
-
   sources/updated:
     post:
       security:
@@ -1517,7 +1506,6 @@ webhooks:
                   properties:
                     source:
                       $ref: "schemas/source.json"
-
   sources/deleted:
     post:
       security:
@@ -1547,7 +1535,6 @@ webhooks:
                   properties:
                     source_id:
                       $ref: "#/components/schemas/uuid"
-
 components:
   schemas:
     uuid:
