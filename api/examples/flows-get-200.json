@@ -12,7 +12,7 @@
     "created_by": "tams-dev",
     "modified_by": "tams-dev",
     "tags": {
-      "quality": "full",
+      "input_quality": "full",
       "_tams_segmentation_rate": "10"
     },
     "codec": "video/h264",
@@ -60,7 +60,7 @@
     "created_by": "tams-dev",
     "modified_by": "tams-dev",
     "tags": {
-      "quality": "web",
+      "input_quality": "web",
       "_tams_segmentation_rate": "375/8"
     },
     "codec": "audio/aac",
@@ -89,7 +89,7 @@
     "created_by": "tams-dev",
     "modified_by": "tams-dev",
     "tags": {
-      "quality": "full",
+      "input_quality": "full",
       "_tams_segmentation_rate": "25"
     },
     "codec": "video/raw",

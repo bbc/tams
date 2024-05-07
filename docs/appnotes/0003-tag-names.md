@@ -31,6 +31,9 @@ The tags below are marked with the following statuses:
 * **In use**:
   * In common usage
   * ADR where this tag was proposed is stated where available
+* **Proposed**:
+  * Not yet in common usage, but use should be considered
+  * ADR where this tag was proposed is stated where available
 * **Deprecated**:
   * Tag is deprecated and should no longer be used
   * Tag *may* still appear e.g. in old Flow/Source entries
@@ -57,7 +60,7 @@ Contains the ISO formatted date-time when a Flow was created.
 
 ### flow_status
 
-Status: **In use**
+Status: **Proposed**
 
 Proposed in [ADR0006 - Flow Update Status](../adr/0006-flow-status.md).
 
@@ -76,7 +79,7 @@ Known values:
 
 ### originating_id
 
-Status: **In use**
+Status: **Proposed**
 
 Proposed in [ADR0004a - Flow and Source References](../adr/0004a-ancestry-relationships.md).
 
@@ -85,14 +88,22 @@ Contains the ID of the originating Flow.
 
 ### originating_timerange
 
-Status: **In use**
+Status: **Proposed**
 
 Proposed in [ADR0004a - Flow and Source References](../adr/0004a-ancestry-relationships.md).
 
 Used when this Flow was created by reference (i.e. this Flow is composed of pre-existing Segments in another Flow).
 Contains the timerange in the originating Flow that corresponds to this flow.
 
-### quality
+### proxy_of_flow
+
+Status: **Deprecated**
+
+Used where this Flow is a proxy of another Flow.
+Contains the ID of the Flow this is a proxy of.
+Deprecated in favour of discovery via Flows of the same Source with appropriate metadata (e.g. lower generation, appropriate resolution, etc).
+
+### input_quality
 
 Status: **In use**
 
@@ -100,8 +111,9 @@ A human readable string identifying the quality of the media.
 
 Known values:
 
-* `web`
-* `full`
+* `intermediate` - i-frame only
+* `contribution` - long-GOP
+* `web` - long-GOP, low bit-rate
 
 ### salmon_created_by_job
 
@@ -110,11 +122,26 @@ Status: **Implementation specific**
 Used by BBC R&D's experimental internal stream ingest service named "Salmon".
 Records the Salmon job ID which created the Flow.
 
+### writing_flow_timing_temi_timestamps
+
+Status: **Implementation specific**
+
+A boolean signalling that this Flow includes TEMI timing in MPEG-TS.
+The media's timestamp is stored in the ptp_timestamp property in the TEMI Timeline Descriptor.
+
 ### \_cloudfit_squirrel_segmentation_rate
 
 Status: **Implementation specific**
 
 Used in BBC R&D's experimental internal TAMS implementation named "Squirrel".
+A string representation of a Fraction, used to set the segment rate (segments per second) of the Flow.
+This is an average rate.
+Actual segment rates/durations may vary.
+
+### \_tams_segmentation_rate
+
+Status: **Implementation specific**
+
 A string representation of a Fraction, used to set the segment rate (segments per second) of the Flow.
 This is an average rate.
 Actual segment rates/durations may vary.

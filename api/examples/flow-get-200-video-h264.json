@@ -11,7 +11,7 @@
   "created_by": "tams-dev",
   "modified_by": "tams-dev",
   "tags": {
-    "quality": "full",
+    "input_quality": "full",
     "_tams_segmentation_rate": "10"
   },
   "codec": "video/h264",
