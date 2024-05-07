@@ -18,7 +18,7 @@ Implementers should make use of existing tags where possible.
 Where functionality of an existing tag needs to be extended/modified, follow the ADR process to propose an update to this list.
 
 New tags should be added via a Pull Request.
-Where tags are intended to implementation specific, prepend the tag with an underscore and the service name (e.g. `_service_name_tag_name`).
+Where tags are intended to implementation specific, prepend the tag with an underscore and the service name (e.g. `_<service_name>_tag_name`).
 Where tags are intended to be interoperable, you should usually include an ADR in your PR explaining the decision to add the tag, and the decisions made regarding it's use.
 
 Where a tag gains widespread use, we should consider elevating it to the core API metadata via an ADR.
