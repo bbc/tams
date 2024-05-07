@@ -5,7 +5,7 @@
 In MPEG2-TS, the data 'quantum' is the Packetised Elementary Stream (PES) packet, whose structure is described in [ISO/IEC 13818-1](https://www.iso.org/obp/ui/en/#iso:std:iso-iec:13818:-1:ed-9:v1:en).
 The fields of interest in this application note are the `PTS` and `DTS` timestamps.
 
-To support bidirectional video coding, PES packets support both a Presentation Timestamp (PTS) and Decode Timestamp (DTS): the `pts_dts_flags` field in the PES header indicates which are present in any given packet.
+To support bidirectional inter-frame video coding, PES packets support both a Presentation Timestamp (PTS) and Decode Timestamp (DTS): the `pts_dts_flags` field in the PES header indicates which are present in any given packet.
 
 ### Timing Within an MPEG2-TS PES
 
@@ -41,7 +41,7 @@ $$ C_{offset} = C_{PTS_{0}} - (C_{PTS_{0}} \cdot \text{0x1 FFFF FFFF}) $$
 
 Where $C_{PTS_{0}}$ is the PTS sample count of the first PES packet in the Flow Segment, and $\cdot$ is the bitwise AND operator.
 
-The $C_{offset}$ is then converted into a TAMS Timestamp utilising the `.from_count` method provided in the public `mediatimestamp` repository: effectively this represents $T_{offset}$, the time since the epoch:
+The $C_{offset}$ is then converted into a TAMS Timestamp utilising the `.from_count` [method provided in the public `mediatimestamp` repository](https://bbc.github.io/rd-apmm-python-lib-mediatimestamp/mediatimestamp/mediatimestamp.html#Timestamp.from_count): effectively this represents $T_{offset}$, the time since the epoch:
 
 $$ T_{offset} = \frac{C_{offset}}{B_s} $$
 
