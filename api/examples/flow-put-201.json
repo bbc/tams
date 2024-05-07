@@ -7,7 +7,7 @@
   "label": "capture_1",
   "format": "urn:x-nmos:format:audio",
   "tags": {
-    "quality": "web",
+    "input_quality": "web",
     "_tams_segmentation_rate": "375/8"
   },
   "codec": "audio/aac",
