@@ -11,11 +11,10 @@ When is it appropriate to store these other types of content in TAMS?
 
 ### Indexing of content
 
-TAMS indexes content based on a small number of specific types of metadata.
-Content may be queried based on these types of metadata (e.g. Flow/Source ID, tags, time-ranges etc).
-These metadata apply to the Source/Flow as a whole.
-It is not possible to query the data itself, or metadata as it applies to a portion of the Source/Flow.
+TAMS indexes Flows as a whole using a small number of pieces of metadata (Flow/Source ID, tags, etc.), however the only index that can be used inside a specific Flow is time.
+It is not possible to query the data/content or metadata as it applies to a portion of the Source/Flow, which would be needed to query timeline-based metadata (e.g. it's not possible to query a transcript for occurrences of a specific word using TAMS).
 As such, TAMS is usually not appropriate for the storing of timeline-based metadata.
+However some examples of where it may be appropriate are given below.
 
 ### Segment size
 
@@ -29,8 +28,8 @@ Typically, the content being stored should be larger than the metadata stored al
 
 Timed text, such as closed captions, is relatively low data rate.
 But it is often used alongside audio and video, using similar workflows.
-Existing live workflows in television broadcast facilities may make use of [SMPTE 2110-43](https://ieeexplore.ieee.org/document/9521125)/[RFC8759](https://www.rfc-editor.org/rfc/rfc8759.html) to carry small independently XML documents containing the captions.
-The usage patterns, recommended frequency, and likely size of these documents lend themselves well to storage in a TAMS store.
+Existing live workflows in television broadcast facilities may make use of [SMPTE 2110-43](https://ieeexplore.ieee.org/document/9521125)/[RFC8759](https://www.rfc-editor.org/rfc/rfc8759.html) to carry small independently decodable XML documents containing the captions.
+The usage patterns, recommended frequency, and likely size of these documents lend themselves well to storage in a TAMS store, however care should be taken to balance the flexibility of shorter segments (and smaller XML documents) against the increased metadata storage overhead.
 
 ### Time-based metadata
 
@@ -38,7 +37,7 @@ Consider a workflow that records who appears on screen at particular times.
 This type of data likely wouldn't be appropriate to store in TAMS, as you would not be able to efficiently perform basic queries such as what times an individual appeared on screen.
 
 Time Addressable Metadata is an important complimentary concept to Time Addressable Media.
-But it is not within the scope of TAMS.
+But it is not within the scope of this repository or specification.
 
 ### Logging/metering
 
