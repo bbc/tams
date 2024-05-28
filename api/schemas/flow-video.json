@@ -11,8 +11,7 @@
             "required": [
                 "format",
                 "essence_parameters",
-                "codec",
-                "container"
+                "codec"
             ],
             "properties": {
                 "format": {

@@ -1,0 +1,72 @@
+{
+    "type": "object",
+    "description": "Defines the location of Flow essence data in a container track",
+    "title": "Container Mapping",
+    "properties": {
+        "track_index": {
+            "description": "A zero-based and sequential track index in the container. This assumes a reliable ordering of tracks",
+            "type": "integer",
+            "minimum": 0
+        },
+        "format_track_index": {
+            "description": "A zero-based and sequential track index in the container for a particular Flow format. A container with a video and 2 audio tracks would have a format_track_index 0 for the video Flow and format_track_index 0 and 1 for the audio Flows. This assumes a reliable ordering of tracks for each Flow format",
+            "type": "integer",
+            "minimum": 0
+        },
+        "audio_track": {
+            "description": "Mapping for channels in audio tracks to the Flow channels",
+            "type": "object",
+            "properties": {
+                "channel_numbers": {
+                    "description": "Array of (zero-based) container channel numbers in Flow order",
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                        "type": "integer",
+                        "minimum": 0
+                    }
+                },
+                "channel_range": {
+                    "description": "Inclusive range of (zero-based) container channel numbers",
+                    "type": "string",
+                    "pattern": "^[0-9]+_[0-9]+$"
+                }
+            }
+        },
+        "mp2ts_container": {
+            "description": "Mapping to MPEG-2 Transport Stream containers, ISO/IEC 13818-1 or ITU-T Recommendation H.222.0",
+            "type": "object",
+            "properties": {
+                "pid": {
+                    "description": "The packet ID for the elementary stream packets",
+                    "type": "integer"
+                }
+            }
+        },
+        "mxf_container": {
+            "description": "Mapping to Material Exchange Format containers, SMPTE ST 377-1",
+            "type": "object",
+            "properties": {
+                "package_uid": {
+                    "description": "The package UID. Either a UMID URN or UUID URN",
+                    "type": "string",
+                    "pattern": "^urn:smpte:umid:[0-9a-fA-F]{8}-[0-9a-fA-F]{8}-[0-9a-fA-F]{8}-[0-9a-fA-F]{8}$|^urn:uuid:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+                },
+                "track_id": {
+                    "description": "The track ID in the package",
+                    "type": "integer"
+                }
+            }
+        },
+        "isobmff_container": {
+            "description": "Mapping to ISO Base Media File Format (e.g. MP4 and MOV) containers, ISO/IEC 14496-12",
+            "type": "object",
+            "properties": {
+                "track_id": {
+                    "description": "The track ID",
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}
