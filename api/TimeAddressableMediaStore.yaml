@@ -762,7 +762,8 @@ paths:
     delete:
       description: |
         Deletes the flow and associated segments. If flow segment deletion
-        takes too long then this request will redirect to a Flow Delete Request via a "Location" header
+        takes too long then this request will return 202 Accepted and the `Location` header will point to a
+        Flow Delete Request to monitor deletion progress
       operationId: DELETE_flows-flowId
       tags:
         - Flows
@@ -1151,7 +1152,8 @@ paths:
     delete:
       description: |
         Deletes the flow segments. If the deletion takes too long then this
-        request will redirect to a Flow Delete Request via a "Location" header.
+        takes too long then this request will return 202 Accepted and the `Location` header will point to a
+        Flow Delete Request to monitor deletion progress
       operationId: DELETE_flows-flowId-segments
       tags:
         - FlowSegments
