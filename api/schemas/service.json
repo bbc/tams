@@ -4,7 +4,7 @@
   "title": "Service",
   "required": [
     "type",
-    "version",
+    "api_version",
     "media_store"
   ],
   "properties": {
@@ -20,8 +20,13 @@
       "description": "The type identifier for the service. The value must start with 'urn:x-tams:service'",
       "type": "string"
     },
-    "version": {
-      "description": "The API and implementation version",
+    "api_version": {
+      "description": "The version of the TAMS API specification this deployment implements",
+      "type": "string",
+      "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)$"
+    },
+    "service_version": {
+      "description": "The version of software providing this service. Note: Different implementations and software houses may use different conventions for their version identification. As such, this field is intentionally permissive and intended to be informative only. Implementations should avoid using this field to determine compatibility.",
       "type": "string"
     },
     "media_store": {
