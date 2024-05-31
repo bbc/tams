@@ -2,7 +2,8 @@
   "name": "Example TAMS",
   "description": "An example Time Addressable Media Store",
   "type": "urn:x-tams:service.example",
-  "version": "1.0+tams.1.10.0-da88b8b",
+  "api_version": "1.0",
+  "service_version": "tams.1.10.0-da88b8b",
   "media_store": {
     "type": "http_object_store"
   },
