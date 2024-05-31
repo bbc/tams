@@ -759,6 +759,8 @@ paths:
           description: No content. The flow has been updated.
         "400":
           description: Bad request. Invalid flow JSON.
+        "403":
+          description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
     delete:
       description: |
         Deletes the flow and associated segments. If flow segment deletion
@@ -783,6 +785,8 @@ paths:
                 $ref: examples/deletion-request-get-200.json
         "204":
           description: No content. The flow has been deleted and the flow segments have been or will be deleted.
+        "403":
+          description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
   /flows/{flowId}/tags:
     parameters:
       - name: flowId
@@ -871,6 +875,8 @@ paths:
           description: No content. The tag has been updated.
         "400":
           description: Bad request. Invalid flow tag JSON array.
+        "403":
+          description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
     delete:
       description: Delete the tag.
       operationId: DELETE_flows-flowId-tags-name
@@ -879,6 +885,8 @@ paths:
       responses:
         "204":
           description: No content. The flow segment has been deleted.
+        "403":
+          description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
   /flows/{flowId}/description:
     parameters:
       - name: flowId
@@ -931,6 +939,8 @@ paths:
           description: No content. The description has been updated.
         "400":
           description: Bad request. Invalid flow description.
+        "403":
+          description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
     delete:
       description: Delete the description property.
       operationId: DELETE_flows-flowId-description
@@ -939,6 +949,8 @@ paths:
       responses:
         "204":
           description: No content. The flow description property has been deleted.
+        "403":
+          description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
   /flows/{flowId}/read_only:
     parameters:
       - name: flowId
@@ -1147,6 +1159,8 @@ paths:
           description: created. The flow segment has been created.
         "400":
           description: Bad request. Invalid flow segment JSON or the flow 'container' is not set.
+        "403":
+          description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
         "404":
           description: The flow does not exist.
     delete:
@@ -1184,6 +1198,8 @@ paths:
                 $ref: examples/deletion-request-get-200.json
         "204":
           description: No content. The flow segments have been or will be deleted.
+        "403":
+          description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
   /flows/{flowId}/storage:
     parameters:
       - name: flowId
@@ -1235,6 +1251,8 @@ paths:
                 $ref: examples/flow-storage-post-201.json
         "400":
           description: Bad request. Invalid flow storage request JSON or the flow 'container' is not set.
+        "403":
+          description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
         "404":
           description: The requested flow does not exist
   /flow-delete-requests:
