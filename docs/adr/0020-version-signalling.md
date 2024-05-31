@@ -32,7 +32,6 @@ It removes the overhead on the client of processing the `version` string to extr
 * Bad, because it is a breaking change
 * Neutral, because it is a breaking change in a part of the API which isn't currently frequently used
 
-<!-- This is an optional element. Feel free to remove. -->
 ### Implementation
 
-{Once the proposal has been implemented, add a link to the relevant PRs here}
+Implemented in [https://github.com/bbc/tams/pull/62](https://github.com/bbc/tams/pull/62)
