@@ -27,7 +27,7 @@ Option 2 was agreed to be a sensible stopgap, to provide some protection against
 ### Implementation
 
 Implemented by [https://github.com/bbc/tams/pull/24](https://github.com/bbc/tams/pull/24).
-Response codes for edit attempts on read-only flows implemented by https://github.com/bbc/tams/pull/61 .
+Response codes for edit attempts on read-only flows implemented by [https://github.com/bbc/tams/pull/61](https://github.com/bbc/tams/pull/61).
 
 ## Pros and Cons of the Options
 
