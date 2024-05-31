@@ -1,196 +1,177 @@
 {
     "type": "object",
-    "description": "Describes a video Flow",
-    "title": "Video Flow",
+    "description": "Describes the parameters of the essence inside this video Flow",
+    "title": "Video Flow Essence Parameters",
     "required": [
-        "format",
-        "essence_parameters",
-        "codec"
+        "frame_width",
+        "frame_height"
     ],
+    "additionalProperties": false,
     "properties": {
-        "format": {
-            "description": "The primary content type URN for the flow.",
+        "frame_rate": {
+            "description": "The fixed number of frames per second.",
+            "type": "object",
+            "required": [
+                "numerator"
+            ],
+            "properties": {
+                "numerator": {
+                    "description": "numerator",
+                    "type": "integer"
+                },
+                "denominator": {
+                    "description": "denominator",
+                    "type": "integer",
+                    "default": 1
+                }
+            }
+        },
+        "frame_width": {
+            "description": "The width of the picture in pixels.",
+            "type": "integer"
+        },
+        "frame_height": {
+            "description": "The height of the picture in pixels.",
+            "type": "integer"
+        },
+        "bit_depth": {
+            "description": "The number of significant bits used to represent the video component sample.",
+            "type": "integer"
+        },
+        "interlace_mode": {
+            "description": "Interlaced video mode for frames in this Flow",
             "type": "string",
+            "default": "progressive",
             "enum": [
-                "urn:x-nmos:format:video"
+                "progressive",
+                "interlaced_tff",
+                "interlaced_bff",
+                "interlaced_psf"
             ]
         },
-        "essence_parameters": {
+        "colorspace": {
+            "description": "Colorspace used for the video",
+            "type": "string",
+            "enum": [
+                "BT601",
+                "BT709",
+                "BT2020",
+                "BT2100"
+            ]
+        },
+        "transfer_characteristic": {
+            "description": "Transfer characteristic",
+            "type": "string",
+            "default": "SDR",
+            "enum": [
+                "SDR",
+                "HLG",
+                "PQ"
+            ]
+        },
+        "aspect_ratio": {
+            "description": "The display aspect ratio. i.e. display_width / display_height",
             "type": "object",
-            "description": "Describes the parameters of the essence inside this video Flow",
-            "title": "Video Flow Essence Parameters",
             "required": [
-                "frame_width",
-                "frame_height"
+                "numerator",
+                "denominator"
             ],
-            "additionalProperties": false,
             "properties": {
-                "frame_rate": {
-                    "description": "The fixed number of frames per second.",
-                    "type": "object",
-                    "required": [
-                        "numerator"
-                    ],
-                    "properties": {
-                        "numerator": {
-                            "description": "numerator",
-                            "type": "integer"
-                        },
-                        "denominator": {
-                            "description": "denominator",
-                            "type": "integer",
-                            "default": 1
-                        }
-                    }
-                },
-                "frame_width": {
-                    "description": "The width of the picture in pixels.",
+                "numerator": {
+                    "description": "numerator",
                     "type": "integer"
                 },
-                "frame_height": {
-                    "description": "The height of the picture in pixels.",
+                "denominator": {
+                    "description": "denominator",
+                    "type": "integer"
+                }
+            }
+        },
+        "pixel_aspect_ratio": {
+            "description": "The pixel aspect ratio. This is usually 1:1 (i.e. square pixels) for modern video. Some, usually older, video formats use non-square pixels e.g. some Standard Definition video. This is where that may be indicated.",
+            "type": "object",
+            "required": [
+                "numerator",
+                "denominator"
+            ],
+            "properties": {
+                "numerator": {
+                    "description": "numerator",
                     "type": "integer"
                 },
-                "bit_depth": {
-                    "description": "The number of significant bits used to represent the video component sample.",
+                "denominator": {
+                    "description": "denominator",
                     "type": "integer"
-                },
-                "interlace_mode": {
-                    "description": "Interlaced video mode for frames in this Flow",
-                    "type": "string",
-                    "default": "progressive",
-                    "enum": [
-                        "progressive",
-                        "interlaced_tff",
-                        "interlaced_bff",
-                        "interlaced_psf"
-                    ]
-                },
-                "colorspace": {
-                    "description": "Colorspace used for the video",
-                    "type": "string",
-                    "enum": [
-                        "BT601",
-                        "BT709",
-                        "BT2020",
-                        "BT2100"
-                    ]
-                },
-                "transfer_characteristic": {
-                    "description": "Transfer characteristic",
-                    "type": "string",
-                    "default": "SDR",
-                    "enum": [
-                        "SDR",
-                        "HLG",
-                        "PQ"
-                    ]
-                },
-                "aspect_ratio": {
-                    "description": "The display aspect ratio. i.e. display_width / display_height",
-                    "type": "object",
-                    "required": [
-                        "numerator",
-                        "denominator"
-                    ],
-                    "properties": {
-                        "numerator": {
-                            "description": "numerator",
-                            "type": "integer"
-                        },
-                        "denominator": {
-                            "description": "denominator",
-                            "type": "integer"
-                        }
-                    }
-                },
-                "pixel_aspect_ratio": {
-                    "description": "The pixel aspect ratio. This is usually 1:1 (i.e. square pixels) for modern video. Some, usually older, video formats use non-square pixels e.g. some Standard Definition video. This is where that may be indicated.",
-                    "type": "object",
-                    "required": [
-                        "numerator",
-                        "denominator"
-                    ],
-                    "properties": {
-                        "numerator": {
-                            "description": "numerator",
-                            "type": "integer"
-                        },
-                        "denominator": {
-                            "description": "denominator",
-                            "type": "integer"
-                        }
-                    }
-                },
-                "component_type": {
-                    "description": "Picture component representation.",
+                }
+            }
+        },
+        "component_type": {
+            "description": "Picture component representation.",
+            "type": "string",
+            "enum": [
+                "YCbCr",
+                "RGB"
+            ]
+        },
+        "horiz_chroma_subs": {
+            "description": "Horizontal chroma component sub-sampling.",
+            "type": "integer"
+        },
+        "vert_chroma_subs": {
+            "description": "Vertical chroma component sub-sampling.",
+            "type": "integer"
+        },
+        "unc_parameters": {
+            "type": "object",
+            "title": "Uncompressed Video Parameters",
+            "required": [
+                "unc_type"
+            ],
+            "properties": {
+                "unc_type": {
+                    "description": "Uncompressed picture packing type.",
                     "type": "string",
                     "enum": [
-                        "YCbCr",
-                        "RGB"
+                        "planar",
+                        "YUYV",
+                        "UYVY",
+                        "AYUV",
+                        "v210",
+                        "v216",
+                        "RGB",
+                        "RGBx",
+                        "xRGB",
+                        "BGRx",
+                        "xBGR",
+                        "RGBA",
+                        "ARGB",
+                        "BGRA",
+                        "ABGR",
+                        "alpha"
                     ]
-                },
-                "horiz_chroma_subs": {
-                    "description": "Horizontal chroma component sub-sampling.",
+                }
+            }
+        },
+        "avc_parameters": {
+            "type": "object",
+            "title": "AVC Codec Parameters",
+            "required": [
+                "profile",
+                "level",
+                "flags"
+            ],
+            "properties": {
+                "profile": {
+                    "description": "AVC / H.264 profile byte. For more information on the use of this property in codec strings, see https://developer.mozilla.org/en-US/docs/Web/Media/Formats/codecs_parameter#using_the_codecs_parameter",
                     "type": "integer"
                 },
-                "vert_chroma_subs": {
-                    "description": "Vertical chroma component sub-sampling.",
+                "level": {
+                    "description": "AVC / H.264 level byte. For more information on the use of this property in codec strings, see https://developer.mozilla.org/en-US/docs/Web/Media/Formats/codecs_parameter#using_the_codecs_parameter",
                     "type": "integer"
                 },
-                "unc_parameters": {
-                    "type": "object",
-                    "title": "Uncompressed Video Parameters",
-                    "required": [
-                        "unc_type"
-                    ],
-                    "properties": {
-                        "unc_type": {
-                            "description": "Uncompressed picture packing type.",
-                            "type": "string",
-                            "enum": [
-                                "planar",
-                                "YUYV",
-                                "UYVY",
-                                "AYUV",
-                                "v210",
-                                "v216",
-                                "RGB",
-                                "RGBx",
-                                "xRGB",
-                                "BGRx",
-                                "xBGR",
-                                "RGBA",
-                                "ARGB",
-                                "BGRA",
-                                "ABGR",
-                                "alpha"
-                            ]
-                        }
-                    }
-                },
-                "avc_parameters": {
-                    "type": "object",
-                    "title": "AVC Codec Parameters",
-                    "required": [
-                        "profile",
-                        "level",
-                        "flags"
-                    ],
-                    "properties": {
-                        "profile": {
-                            "description": "AVC / H.264 profile byte. For more information on the use of this property in codec strings, see https://developer.mozilla.org/en-US/docs/Web/Media/Formats/codecs_parameter#using_the_codecs_parameter",
-                            "type": "integer"
-                        },
-                        "level": {
-                            "description": "AVC / H.264 level byte. For more information on the use of this property in codec strings, see https://developer.mozilla.org/en-US/docs/Web/Media/Formats/codecs_parameter#using_the_codecs_parameter",
-                            "type": "integer"
-                        },
-                        "flags": {
-                            "description": "AVC / H.264 flags byte. For more information on the use of this property in codec strings, see https://developer.mozilla.org/en-US/docs/Web/Media/Formats/codecs_parameter#using_the_codecs_parameter",
-                            "type": "integer"
-                        }
-                    }
+                "flags": {
+                    "description": "AVC / H.264 flags byte. For more information on the use of this property in codec strings, see https://developer.mozilla.org/en-US/docs/Web/Media/Formats/codecs_parameter#using_the_codecs_parameter",
+                    "type": "integer"
                 }
             }
         }

@@ -1,16 +1,123 @@
 {
   "type": "object",
-  "description": "Describes a Flow",
+  "description": "Describes a Flow (common properties to all Flows, imported by type-specific specifications)",
   "title": "Flow",
-  "allOf": [
-    { "$ref": "flow-core.json" },
-    {
+  "required": [
+    "id",
+    "source_id",
+    "format"
+  ],
+  "properties": {
+    "id": {
+      "description": "Flow identifier",
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    },
+    "source_id": {
+      "description": "Source identifier",
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    },
+    "format": {
+      "description": "The primary content type URN for the flow.",
+      "type": "string",
+      "enum": [
+          "urn:x-nmos:format:video",
+          "urn:x-nmos:format:audio"
+      ]
+    },
+    "label": {
+      "description": "Freeform string label for the flow",
+      "type": "string"
+    },
+    "description": {
+      "description": "Freeform text describing the flow",
+      "type": "string"
+    },
+    "created_by": {
+      "description": "A string identifier for the entity that created the flow. Implementations SHOULD set suitable default values for `created_by` based on the principal accessing the system, and MAY permit clients to edit the value, subject to suitable permissions-based limitations.",
+      "type": "string"
+    },
+    "modified_by": {
+      "description": "A string identifier for the entity that modified the flow metadata most recently. Implementations SHOULD set suitable default values for `modified_by` based on the principal accessing the system, and MAY permit clients to edit the value, subject to suitable permissions-based limitations.",
+      "type": "string"
+    },
+    "tags": {
+      "$ref": "tags.json"
+    },
+    "metadata_version": {
+      "description": "A change to the flow metadata, not including metadata_version, last_update or segments, results in a new version. If the metadata_version for flow instances is identical then the metadata is identical. (Unclear whether there is a strict ordering requirement, ie. if version a > version b then version b is newer or more correct than version a.)",
+      "type": "string"
+    },
+    "generation": {
+      "description": "An indication of how many lossy encodings the flow content has been through. A flow with a higher generation may contain less of the original information than a flow with a lower generation.",
+      "type": "integer"
+    },
+    "created": {
+      "description": "The date-time the flow was created in a given context, e.g. in the store. Implementations SHOULD ignore this if given in a PUT request, and instead manage it internally",
+      "type": "string",
+      "format": "date-time"
+    },
+    "metadata_updated": {
+      "description": "The date-time the flow metadata was updated in a given context, e.g. in the store. Implementations SHOULD ignore this if given in a PUT request, and instead manage it internally",
+      "type": "string",
+      "format": "date-time"
+    },
+    "segments_updated": {
+      "description": "The date-time the flow segments were updated in a given context, e.g. in the store. Implementations SHOULD ignore this if given in a PUT request, and instead manage it internally",
+      "type": "string",
+      "format": "date-time"
+    },
+    "read_only": {
+      "description": "If set to 'true', implementations SHOULD reject client requests to update Flow metadata (other than the read_only property), Flow Segments and media objects",
+      "type": "boolean"
+    },
+    "codec": {
+      "description": "A MIME type identification of the (lossy or lossless) coding used for the flow content.",
+      "type": "string",
+      "pattern": "^[^\\s\/]+/[^\\s\/]+$"
+    },
+    "container": {
+      "description": "The container MIME type for flow segments.",
+      "type": "string",
+      "pattern": "^[^\\s\/]+/[^\\s\/]+$"
+    },
+    "avg_bit_rate": {
+      "description": "The average bit rate of the flow content in 1000 bits/second. A precise definition of how the bit rate is calculated is not provided here.",
+      "type": "integer"
+    },
+    "max_bit_rate": {
+      "description": "The maximum bit rate of the flow content in 1000 bits/second. A precise definition of how the bit rate is calculated is not provided here.",
+      "type": "integer"
+    },
+    "timerange": {
+      "description": "The timerange of samples available in the flow, as described by the [TimeRange](../schemas/timerange#top) type",
+      "$ref": "timerange.json"
+    },
+    "flow_collection": {
+        "type": "array",
+        "description": "List of Flows that are collected together by this Flow.",
+        "items": {
+            "$ref": "collection-item.json"
+        }
+    },
+    "collected_by": {
+      "type": "array",
+      "description": "Flows that reference this Flow to include it in a collection. This attribute is intended to be read-only. Implementations SHOULD ignore this if given in a PUT request, and instead manage it internally",
+      "items": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+      }
+    },
+    "container_mapping": {
+        "description": "Describes the mapping of the Flow essence from the this Flow's container",
+        "$ref": "container-mapping.json"
+    },
+    "essence_parameters": {
       "oneOf": [
         { "$ref": "flow-video.json" },
-        { "$ref": "flow-audio.json" },
-        { "$ref": "flow-data.json" },
-        { "$ref": "flow-multi.json" }
+        { "$ref": "flow-audio.json" }
       ]
     }
-  ]
+  }
 }
