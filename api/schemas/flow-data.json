@@ -2,38 +2,30 @@
   "type": "object",
   "description": "Describes a data Flow",
   "title": "Data Flow",
-  "allOf": [
-    {
-      "$ref": "flow-core.json"
+  "required": [
+    "format",
+    "essence_parameters",
+    "codec"
+  ],
+  "properties": {
+    "format": {
+      "description": "The primary content type URN for the flow.",
+      "type": "string",
+      "enum": [
+        "urn:x-nmos:format:data"
+      ]
     },
-    {
+    "essence_parameters": {
       "type": "object",
-      "required": [
-        "format",
-        "essence_parameters",
-        "codec"
-      ],
+      "description": "Describes the parameters of the essence inside this data Flow",
+      "title": "Data Flow Essence Parameters",
+      "additionalProperties": false,
       "properties": {
-        "format": {
-          "description": "The primary content type URN for the flow.",
-          "type": "string",
-          "enum": [
-            "urn:x-nmos:format:data"
-          ]
-        },
-        "essence_parameters": {
-          "type": "object",
-          "description": "Describes the parameters of the essence inside this data Flow",
-          "title": "Data Flow Essence Parameters",
-          "additionalProperties": false,
-          "properties": {
-            "data_type": {
-              "description": "The type of information encoded in the flow, identified using a URN. e.g. The data_type may be urn:x-tams:data:bounding-box, and the codec `application/json`.",
-              "type": "string"
-            }
-          }
+        "data_type": {
+          "description": "The type of information encoded in the flow, identified using a URN. e.g. The data_type may be urn:x-tams:data:bounding-box, and the codec `application/json`.",
+          "type": "string"
         }
       }
     }
-  ]
+  }
 }
