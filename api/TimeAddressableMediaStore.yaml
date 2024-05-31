@@ -1146,7 +1146,7 @@ paths:
         "201":
           description: created. The flow segment has been created.
         "400":
-          description: Bad request. Invalid flow segment JSON.
+          description: Bad request. Invalid flow segment JSON or the flow 'container' is not set.
         "404":
           description: The flow does not exist.
     delete:
@@ -1234,7 +1234,7 @@ paths:
               example:
                 $ref: examples/flow-storage-post-201.json
         "400":
-          description: Bad request. Invalid flow storage request JSON.
+          description: Bad request. Invalid flow storage request JSON or the flow 'container' is not set.
         "404":
           description: The requested flow does not exist
   /flow-delete-requests:
