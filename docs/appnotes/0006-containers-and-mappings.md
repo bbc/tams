@@ -6,6 +6,11 @@ Flows reference media content stored in media object containers in TAMS.
 The containers may have content for multiple Flows.
 This application note will describe how the `container` and `container_mapping` properties are used to reference the Flow content in containers.
 
+## Compatibility
+
+Container functionality changed in TAMS v5.0.
+This Application Note applies to TAMS v5.0+.
+
 ## Content
 
 ### Flow `container` Property
