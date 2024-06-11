@@ -192,6 +192,8 @@ paths:
           description: Success. The webhook has been registered or updated
         "204":
           description: Success. The webhook has been removed
+        "400":
+          description: Bad request. Invalid parameters.
         "404":
           description: "Webhooks are not supported by this API implementation"
   /sources:
@@ -635,6 +637,8 @@ paths:
                 type: array
                 items:
                   $ref: "schemas/flow.json"
+        "400":
+          description: Bad request. Invalid query options.
   /flows/{flowId}:
     parameters:
       - name: flowId
@@ -1103,6 +1107,8 @@ paths:
                     expressed a preference for the "pipeline-a" URLs by putting them first in the list.
                   value:
                     $ref: examples/flow-segments-get-200-multiple-urls.json
+        "400":
+          description: Bad request. Invalid query options.
     post:
       description: |
         Register a new flow segment, attaching the object id given to a point in the flow timeline.
@@ -1184,6 +1190,8 @@ paths:
                 $ref: examples/deletion-request-get-200.json
         "204":
           description: No content. The flow segments have been or will be deleted.
+        "400":
+          description: Bad request. Invalid query options.
         "403":
           description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
   /flows/{flowId}/storage:
