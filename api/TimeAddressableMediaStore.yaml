@@ -368,7 +368,7 @@ paths:
         "200":
           $ref: '#/components/responses/trait_resource_info_head_200'
         "404":
-          $ref: '#/components/responses/trait_resource_info_head_404'
+          description: The requested Source or tag does not exist.
     get:
       summary: Source Tag Value
       description: Return the tag value associated with the tag name.
