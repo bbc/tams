@@ -404,7 +404,7 @@ paths:
         "204":
           description: No content. The tag has been updated.
         "400":
-          description: Bad request. Invalid Source tag JSON array.
+          description: Bad request. Invalid Source tag value.
     delete:
       summary: Delete Source tag
       description: Delete a specific tag on a Source
@@ -868,7 +868,7 @@ paths:
         "204":
           description: No content. The tag has been updated.
         "400":
-          description: Bad request. Invalid flow tag JSON array.
+          description: Bad request. Invalid flow tag value.
         "403":
           description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
     delete:
