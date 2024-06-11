@@ -37,7 +37,7 @@
       "$ref": "tags.json"
     },
     "metadata_version": {
-      "description": "A change to the flow metadata, not including metadata_version, last_update or segments, results in a new version. If the metadata_version for flow instances is identical then the metadata is identical. (Unclear whether there is a strict ordering requirement, ie. if version a > version b then version b is newer or more correct than version a.)",
+      "description": "A change to the flow metadata, not including metadata_version, last_update or segments, results in a new version. If the metadata_version for flow instances is identical then the metadata is identical.",
       "type": "string"
     },
     "generation": {
