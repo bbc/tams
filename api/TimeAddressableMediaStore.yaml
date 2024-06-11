@@ -327,6 +327,8 @@ paths:
       responses:
         "200":
           $ref: '#/components/responses/trait_resource_listing_head_200'
+        "404":
+          description: The requested Source does not exist.
     get:
       summary: Source Tags
       description: Returns the Source tags.
@@ -405,6 +407,8 @@ paths:
           description: No content. The tag has been updated.
         "400":
           description: Bad request. Invalid Source tag value.
+        "404":
+          description: The requested Source does not exist, or the tag name in the path is invalid.
     delete:
       summary: Delete Source tag
       description: Delete a specific tag on a Source
@@ -414,6 +418,8 @@ paths:
       responses:
         "204":
           description: No content. The Source segment has been deleted.
+        "404":
+          description: The requested Source ID or tag in the path is invalid.
   /sources/{sourceId}/description:
     parameters:
       - name: sourceId
@@ -469,6 +475,8 @@ paths:
           description: No content. The description has been updated.
         "400":
           description: Bad request. Invalid Source description.
+        "404":
+          description: The requested Source does not exist.
     delete:
       summary: Delete Source Description
       description: Delete the description property.
@@ -478,6 +486,8 @@ paths:
       responses:
         "204":
           description: No content. The Source description property has been deleted.
+        "404":
+          description: The Source ID in the path is invalid.
   /sources/{sourceId}/label:
     parameters:
       - name: sourceId
@@ -533,6 +543,8 @@ paths:
           description: No content. The label has been updated.
         "400":
           description: Bad request. Invalid Source label.
+        "404":
+          description: The requested Source does not exist.
     delete:
       summary: Delete Source Label
       description: Delete the label property.
@@ -542,6 +554,8 @@ paths:
       responses:
         "204":
           description: No content. The Source label property has been deleted.
+        "404":
+          description: The requested Source ID in the path is invalid.
   /flows:
     head:
       description: Return flows path headers
@@ -757,6 +771,8 @@ paths:
           description: Bad request. Invalid flow JSON.
         "403":
           description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
+        "404":
+          description: The requested Flow ID in the path is invalid.
     delete:
       description: |
         Deletes the flow and associated segments. If flow segment deletion
@@ -783,6 +799,8 @@ paths:
           description: No content. The flow has been deleted and the flow segments have been or will be deleted.
         "403":
           description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
+        "404":
+          description: The requested Flow ID in the path is invalid.
   /flows/{flowId}/tags:
     parameters:
       - name: flowId
@@ -799,6 +817,8 @@ paths:
       responses:
         "200":
           $ref: '#/components/responses/trait_resource_listing_head_200'
+        "404":
+          description: The requested flow does not exist.
     get:
       description: Returns the flow tags.
       operationId: GET_flows-flowId-tags
@@ -871,6 +891,8 @@ paths:
           description: Bad request. Invalid flow tag value.
         "403":
           description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
+        "404":
+          description: The requested flow does not exist.
     delete:
       description: Delete the tag.
       operationId: DELETE_flows-flowId-tags-name
@@ -881,6 +903,8 @@ paths:
           description: No content. The flow segment has been deleted.
         "403":
           description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
+        "404":
+          description: The requested flow ID in the path is invalid.
   /flows/{flowId}/description:
     parameters:
       - name: flowId
@@ -933,6 +957,8 @@ paths:
           description: Bad request. Invalid flow description.
         "403":
           description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
+        "404":
+          description: The requested flow does not exist.
     delete:
       description: Delete the description property.
       operationId: DELETE_flows-flowId-description
@@ -943,6 +969,8 @@ paths:
           description: No content. The flow description property has been deleted.
         "403":
           description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
+        "404":
+          description: The requested flow ID in the path is invalid.
   /flows/{flowId}/read_only:
     parameters:
       - name: flowId
@@ -993,6 +1021,8 @@ paths:
           description: No content. The read_only property has been updated.
         "400":
           description: Bad request. Invalid flow description.
+        "404":
+          description: The requested flow does not exist.
   /flows/{flowId}/segments:
     parameters:
       - name: flowId
@@ -1009,6 +1039,8 @@ paths:
       responses:
         "200":
           $ref: '#/components/responses/trait_resource_listing_head_200'
+        "404":
+          description: The requested flow does not exist.
     get:
       description: |
         Returns the flow segments.
@@ -1109,6 +1141,8 @@ paths:
                     $ref: examples/flow-segments-get-200-multiple-urls.json
         "400":
           description: Bad request. Invalid query options.
+        "404":
+          description: The requested flow does not exist.
     post:
       description: |
         Register a new flow segment, attaching the object id given to a point in the flow timeline.
@@ -1194,6 +1228,8 @@ paths:
           description: Bad request. Invalid query options.
         "403":
           description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
+        "404":
+          description: The requested flow ID in the path is invalid.
   /flows/{flowId}/storage:
     parameters:
       - name: flowId
@@ -1312,6 +1348,8 @@ paths:
                 $ref: schemas/deletion-request.json
               example:
                 $ref: examples/deletion-request-get-200.json
+        "404":
+          description: The requested flow delete request does not exist.
 webhooks:
   flows/created:
     post:
