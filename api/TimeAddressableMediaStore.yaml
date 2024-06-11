@@ -365,8 +365,6 @@ paths:
       responses:
         "200":
           $ref: '#/components/responses/trait_resource_info_head_200'
-        "400":
-          $ref: '#/components/responses/trait_resource_info_head_400'
         "404":
           $ref: '#/components/responses/trait_resource_info_head_404'
     get:
@@ -431,8 +429,6 @@ paths:
       responses:
         "200":
           $ref: '#/components/responses/trait_resource_info_head_200'
-        "400":
-          $ref: '#/components/responses/trait_resource_info_head_400'
         "404":
           $ref: '#/components/responses/trait_resource_info_head_404'
     get:
@@ -497,8 +493,6 @@ paths:
       responses:
         "200":
           $ref: '#/components/responses/trait_resource_info_head_200'
-        "400":
-          $ref: '#/components/responses/trait_resource_info_head_400'
         "404":
           $ref: '#/components/responses/trait_resource_info_head_404'
     get:
@@ -657,8 +651,6 @@ paths:
       responses:
         "200":
           $ref: '#/components/responses/trait_resource_info_head_200'
-        "400":
-          $ref: '#/components/responses/trait_resource_info_head_400'
         "404":
           $ref: '#/components/responses/trait_resource_info_head_404'
     get:
@@ -839,8 +831,6 @@ paths:
       responses:
         "200":
           $ref: '#/components/responses/trait_resource_info_head_200'
-        "400":
-          $ref: '#/components/responses/trait_resource_info_head_400'
         "404":
           $ref: '#/components/responses/trait_resource_info_head_404'
     get:
@@ -903,8 +893,6 @@ paths:
       responses:
         "200":
           $ref: '#/components/responses/trait_resource_info_head_200'
-        "400":
-          $ref: '#/components/responses/trait_resource_info_head_400'
         "404":
           $ref: '#/components/responses/trait_resource_info_head_404'
     get:
@@ -967,8 +955,6 @@ paths:
       responses:
         "200":
           $ref: '#/components/responses/trait_resource_info_head_200'
-        "400":
-          $ref: '#/components/responses/trait_resource_info_head_400'
         "404":
           $ref: '#/components/responses/trait_resource_info_head_404'
     get:
@@ -1298,8 +1284,6 @@ paths:
       responses:
         "200":
           $ref: '#/components/responses/trait_resource_info_head_200'
-        "400":
-          $ref: '#/components/responses/trait_resource_info_head_400'
         "404":
           $ref: '#/components/responses/trait_resource_info_head_404'
     get:
