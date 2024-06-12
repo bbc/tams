@@ -831,6 +831,8 @@ paths:
             application/json:
               example:
                 $ref: examples/flow-tags-get-200.json
+              schema:
+                $ref: schemas/tags.json
         "404":
           description: The requested flow does not exist.
   /flows/{flowId}/tags/{name}:
@@ -869,6 +871,8 @@ paths:
             application/json:
               example:
                 $ref: examples/flow-tag-get-200.json
+              schema:
+                type: string
         "404":
           description: The requested flow or tag does not exist.
     put:
