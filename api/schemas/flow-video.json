@@ -61,7 +61,7 @@
                             "exclusiveMinimum": 0
                         },
                         "bit_depth": {
-                            "description": "The number of significant bits used to represent the video component sample.",
+                            "description": "The number of significant bits used to represent the video component sample. If codec is `video/raw`, bit_depth must be set.",
                             "type": "integer",
                             "exclusiveMinimum": 0
                         },
@@ -145,13 +145,13 @@
                             ]
                         },
                         "horiz_chroma_subs": {
-                            "description": "Horizontal chroma component sub-sampling.",
+                            "description": "Horizontal chroma component sub-sampling. When unc_type is set to a YUV type, horiz_chroma_subs must be set.",
                             "type": "integer",
                             "exclusiveMinimum": 0,
                             "maximum": 2
                         },
                         "vert_chroma_subs": {
-                            "description": "Vertical chroma component sub-sampling.",
+                            "description": "Vertical chroma component sub-sampling. When unc_type is set to a YUV type, vert_chroma_subs must be set.",
                             "type": "integer",
                             "exclusiveMinimum": 0,
                             "maximum": 2
@@ -164,7 +164,7 @@
                             ],
                             "properties": {
                                 "unc_type": {
-                                    "description": "Uncompressed picture packing type.",
+                                    "description": "Uncompressed picture packing type. If codec is `video/raw`, unc_type must be set.",
                                     "type": "string",
                                     "enum": [
                                         "planar",
