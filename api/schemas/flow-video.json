@@ -40,7 +40,8 @@
                             "properties": {
                                 "numerator": {
                                     "description": "numerator",
-                                    "type": "integer"
+                                    "type": "integer",
+                                    "exclusiveMinimum": 0
                                 },
                                 "denominator": {
                                     "description": "denominator",
@@ -51,15 +52,18 @@
                         },
                         "frame_width": {
                             "description": "The width of the picture in pixels.",
-                            "type": "integer"
+                            "type": "integer",
+                            "exclusiveMinimum": 0
                         },
                         "frame_height": {
                             "description": "The height of the picture in pixels.",
-                            "type": "integer"
+                            "type": "integer",
+                            "exclusiveMinimum": 0
                         },
                         "bit_depth": {
                             "description": "The number of significant bits used to represent the video component sample.",
-                            "type": "integer"
+                            "type": "integer",
+                            "exclusiveMinimum": 0
                         },
                         "interlace_mode": {
                             "description": "Interlaced video mode for frames in this Flow",
@@ -102,11 +106,13 @@
                             "properties": {
                                 "numerator": {
                                     "description": "numerator",
-                                    "type": "integer"
+                                    "type": "integer",
+                                    "exclusiveMinimum": 0
                                 },
                                 "denominator": {
                                     "description": "denominator",
-                                    "type": "integer"
+                                    "type": "integer",
+                                    "exclusiveMinimum": 0
                                 }
                             }
                         },
@@ -120,11 +126,13 @@
                             "properties": {
                                 "numerator": {
                                     "description": "numerator",
-                                    "type": "integer"
+                                    "type": "integer",
+                                    "exclusiveMinimum": 0
                                 },
                                 "denominator": {
                                     "description": "denominator",
-                                    "type": "integer"
+                                    "type": "integer",
+                                    "exclusiveMinimum": 0
                                 }
                             }
                         },
@@ -138,11 +146,15 @@
                         },
                         "horiz_chroma_subs": {
                             "description": "Horizontal chroma component sub-sampling.",
-                            "type": "integer"
+                            "type": "integer",
+                            "exclusiveMinimum": 0,
+                            "maximum": 2
                         },
                         "vert_chroma_subs": {
                             "description": "Vertical chroma component sub-sampling.",
-                            "type": "integer"
+                            "type": "integer",
+                            "exclusiveMinimum": 0,
+                            "maximum": 2
                         },
                         "unc_parameters": {
                             "type": "object",

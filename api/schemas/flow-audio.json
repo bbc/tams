@@ -33,15 +33,18 @@
           "properties": {
             "sample_rate": {
               "description": "The fixed number of samples per second.",
-              "type": "integer"
+              "type": "integer",
+              "exclusiveMinimum": 0
             },
             "channels": {
               "description": "The channel count.",
-              "type": "integer"
+              "type": "integer",
+              "exclusiveMinimum": 0
             },
             "bit_depth": {
               "description": "The number of significant bits used to represent the audio sample. The minumum number of bytes then equals `round_up(bit_depth / 8)`.",
-              "type": "integer"
+              "type": "integer",
+              "exclusiveMinimum": 0
             },
             "codec_parameters": {
               "title": "Audio Codec Parameters",

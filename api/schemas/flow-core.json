@@ -42,7 +42,8 @@
     },
     "generation": {
       "description": "An indication of how many lossy encodings the flow content has been through. A flow with a higher generation may contain less of the original information than a flow with a lower generation.",
-      "type": "integer"
+      "type": "integer",
+      "minimum": 0
     },
     "created": {
       "description": "The date-time the flow was created in a given context, e.g. in the store. Implementations SHOULD ignore this if given in a PUT request, and instead manage it internally",
@@ -75,11 +76,13 @@
     },
     "avg_bit_rate": {
       "description": "The average bit rate of the flow content in 1000 bits/second. A precise definition of how the bit rate is calculated is not provided here.",
-      "type": "integer"
+      "type": "integer",
+      "exclusiveMinimum": 0
     },
     "max_bit_rate": {
       "description": "The maximum bit rate of the flow content in 1000 bits/second. A precise definition of how the bit rate is calculated is not provided here.",
-      "type": "integer"
+      "type": "integer",
+      "exclusiveMinimum": 0
     },
     "timerange": {
       "description": "The timerange of samples available in the flow, as described by the [TimeRange](../schemas/timerange#top) type",
