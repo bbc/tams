@@ -68,7 +68,6 @@
                         "interlace_mode": {
                             "description": "Interlaced video mode for frames in this Flow",
                             "type": "string",
-                            "default": "progressive",
                             "enum": [
                                 "progressive",
                                 "interlaced_tff",
@@ -89,7 +88,6 @@
                         "transfer_characteristic": {
                             "description": "Transfer characteristic",
                             "type": "string",
-                            "default": "SDR",
                             "enum": [
                                 "SDR",
                                 "HLG",
