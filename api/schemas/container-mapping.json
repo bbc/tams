@@ -48,9 +48,9 @@
             "type": "object",
             "properties": {
                 "package_uid": {
-                    "description": "The package UID. Either a UMID URN or UUID URN",
+                    "description": "The package UID. Either a SMPTE UMID URN or UUID URN",
                     "type": "string",
-                    "pattern": "^urn:smpte:umid:[0-9a-fA-F]{8}-[0-9a-fA-F]{8}-[0-9a-fA-F]{8}-[0-9a-fA-F]{8}$|^urn:uuid:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+                    "pattern": "^urn:smpte:umid:[0-9a-fA-F]{8}(.[0-9a-fA-F]{8}){7}$|^urn:uuid:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
                 },
                 "track_id": {
                     "description": "The track ID in the package",
