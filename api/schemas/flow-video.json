@@ -32,7 +32,7 @@
                     "additionalProperties": false,
                     "properties": {
                         "frame_rate": {
-                            "description": "The fixed number of frames per second.",
+                            "description": "The fixed number of frames per second. If this parameter is unset, the frame_rate is either unknown or variable.",
                             "type": "object",
                             "required": [
                                 "numerator"
@@ -40,31 +40,35 @@
                             "properties": {
                                 "numerator": {
                                     "description": "numerator",
-                                    "type": "integer"
+                                    "type": "integer",
+                                    "exclusiveMinimum": 0
                                 },
                                 "denominator": {
                                     "description": "denominator",
                                     "type": "integer",
-                                    "default": 1
+                                    "default": 1,
+                                    "exclusiveMinimum": 0
                                 }
                             }
                         },
                         "frame_width": {
                             "description": "The width of the picture in pixels.",
-                            "type": "integer"
+                            "type": "integer",
+                            "exclusiveMinimum": 0
                         },
                         "frame_height": {
                             "description": "The height of the picture in pixels.",
-                            "type": "integer"
+                            "type": "integer",
+                            "exclusiveMinimum": 0
                         },
                         "bit_depth": {
-                            "description": "The number of significant bits used to represent the video component sample.",
-                            "type": "integer"
+                            "description": "The number of significant bits used to represent the video component sample. If codec is `video/raw`, bit_depth must be set.",
+                            "type": "integer",
+                            "exclusiveMinimum": 0
                         },
                         "interlace_mode": {
                             "description": "Interlaced video mode for frames in this Flow",
                             "type": "string",
-                            "default": "progressive",
                             "enum": [
                                 "progressive",
                                 "interlaced_tff",
@@ -85,7 +89,6 @@
                         "transfer_characteristic": {
                             "description": "Transfer characteristic",
                             "type": "string",
-                            "default": "SDR",
                             "enum": [
                                 "SDR",
                                 "HLG",
@@ -102,11 +105,13 @@
                             "properties": {
                                 "numerator": {
                                     "description": "numerator",
-                                    "type": "integer"
+                                    "type": "integer",
+                                    "exclusiveMinimum": 0
                                 },
                                 "denominator": {
                                     "description": "denominator",
-                                    "type": "integer"
+                                    "type": "integer",
+                                    "exclusiveMinimum": 0
                                 }
                             }
                         },
@@ -120,11 +125,13 @@
                             "properties": {
                                 "numerator": {
                                     "description": "numerator",
-                                    "type": "integer"
+                                    "type": "integer",
+                                    "exclusiveMinimum": 0
                                 },
                                 "denominator": {
                                     "description": "denominator",
-                                    "type": "integer"
+                                    "type": "integer",
+                                    "exclusiveMinimum": 0
                                 }
                             }
                         },
@@ -137,12 +144,14 @@
                             ]
                         },
                         "horiz_chroma_subs": {
-                            "description": "Horizontal chroma component sub-sampling.",
-                            "type": "integer"
+                            "description": "Horizontal chroma component sub-sampling. When unc_type is set to a YUV type, horiz_chroma_subs must be set.",
+                            "type": "integer",
+                            "exclusiveMinimum": 0
                         },
                         "vert_chroma_subs": {
-                            "description": "Vertical chroma component sub-sampling.",
-                            "type": "integer"
+                            "description": "Vertical chroma component sub-sampling. When unc_type is set to a YUV type, vert_chroma_subs must be set.",
+                            "type": "integer",
+                            "exclusiveMinimum": 0
                         },
                         "unc_parameters": {
                             "type": "object",
@@ -152,7 +161,7 @@
                             ],
                             "properties": {
                                 "unc_type": {
-                                    "description": "Uncompressed picture packing type.",
+                                    "description": "Uncompressed picture packing type. If codec is `video/raw`, unc_type must be set.",
                                     "type": "string",
                                     "enum": [
                                         "planar",

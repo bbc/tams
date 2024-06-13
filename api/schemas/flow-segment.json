@@ -25,8 +25,7 @@
     },
     "sample_offset": {
       "description": "The start of the segment represented as a count of samples from the start of the object. Note that a sample is a video frame or audio sample. A (coded) audio frame has multiple audio samples",
-      "type": "integer",
-      "default": 0
+      "type": "integer"
     },
     "sample_count": {
       "description": "The count of samples in the segment (which may be fewer than in the object). The count could be less than expected given the segment duration and rate if there are gaps. If not set, every sample from sample_offset onwards is used. Note that a sample is a video frame or audio sample. A (coded) audio frame has multiple audio samples",
