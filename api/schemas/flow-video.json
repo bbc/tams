@@ -146,12 +146,12 @@
                         "horiz_chroma_subs": {
                             "description": "Horizontal chroma component sub-sampling. When unc_type is set to a YUV type, horiz_chroma_subs must be set.",
                             "type": "integer",
-                            "minimum": 0
+                            "exclusiveMinimum": 0
                         },
                         "vert_chroma_subs": {
                             "description": "Vertical chroma component sub-sampling. When unc_type is set to a YUV type, vert_chroma_subs must be set.",
                             "type": "integer",
-                            "minimum": 0
+                            "exclusiveMinimum": 0
                         },
                         "unc_parameters": {
                             "type": "object",
