@@ -32,7 +32,7 @@
                     "additionalProperties": false,
                     "properties": {
                         "frame_rate": {
-                            "description": "The fixed number of frames per second.",
+                            "description": "The fixed number of frames per second. If this parameter is unset, the frame_rate is either unknown or variable.",
                             "type": "object",
                             "required": [
                                 "numerator"
@@ -46,7 +46,8 @@
                                 "denominator": {
                                     "description": "denominator",
                                     "type": "integer",
-                                    "default": 1
+                                    "default": 1,
+                                    "exclusiveMinimum": 0
                                 }
                             }
                         },
@@ -145,14 +146,12 @@
                         "horiz_chroma_subs": {
                             "description": "Horizontal chroma component sub-sampling. When unc_type is set to a YUV type, horiz_chroma_subs must be set.",
                             "type": "integer",
-                            "exclusiveMinimum": 0,
-                            "maximum": 2
+                            "minimum": 0
                         },
                         "vert_chroma_subs": {
                             "description": "Vertical chroma component sub-sampling. When unc_type is set to a YUV type, vert_chroma_subs must be set.",
                             "type": "integer",
-                            "exclusiveMinimum": 0,
-                            "maximum": 2
+                            "minimum": 0
                         },
                         "unc_parameters": {
                             "type": "object",

@@ -1044,7 +1044,7 @@ paths:
         "200":
           $ref: '#/components/responses/trait_resource_listing_head_200'
         "404":
-          description: The requested flow does not exist.
+          description: The flow ID in the path is invalid.
     get:
       description: |
         Returns the flow segments.
@@ -1146,7 +1146,7 @@ paths:
         "400":
           description: Bad request. Invalid query options.
         "404":
-          description: The requested flow does not exist.
+          description: The flow ID in the path is invalid.
     post:
       description: |
         Register a new flow segment, attaching the object id given to a point in the flow timeline.
