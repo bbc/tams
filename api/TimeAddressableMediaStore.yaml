@@ -203,9 +203,37 @@ paths:
       operationId: HEAD_sources
       tags:
         - Sources
+      parameters:
+        - name: label
+          in: query
+          description: Filter on Sources that have the given label.
+          schema:
+            type: string
+        - name: tag.{name}
+          in: query
+          description: |
+            Filter on Sources that have a tag named {name} and with the given value.
+            The {name} could contain escaped characters to allow it to be used in a
+            URL.
+          schema:
+            type: string
+        - name: tag_exists.{name}
+          in: query
+          description: |
+            Filter on Sources that have a tag named {name} regardless of value. The
+            {name} could contain escaped characters to allow it to be used in a
+            URL. If set to true then the presence of the tag is filtered for. If set
+            to false then its absence is. If left out then no filtering on tag presence
+            is performed.
+          schema:
+            type: boolean
+        - $ref: '#/components/parameters/trait_resource_paged_key'
+        - $ref: '#/components/parameters/trait_paged_limit'
       responses:
         "200":
           $ref: '#/components/responses/trait_resource_listing_head_200'
+        "400":
+          $ref: '#/components/responses/trait_resource_info_head_400'
     get:
       summary: List Sources
       description: List the Sources registered in the store and their details.
@@ -262,6 +290,8 @@ paths:
                 type: array
                 items:
                   $ref: "schemas/source.json"
+        "400":
+          description: Bad request. Invalid query options.
   /sources/{sourceId}:
     parameters:
       - name: sourceId
@@ -279,8 +309,6 @@ paths:
       responses:
         "200":
           $ref: '#/components/responses/trait_resource_info_head_200'
-        "400":
-          $ref: '#/components/responses/trait_resource_info_head_400'
         "404":
           $ref: '#/components/responses/trait_resource_info_head_404'
     get:
@@ -562,9 +590,68 @@ paths:
       operationId: HEAD_flows
       tags:
         - Flows
+      parameters:
+        - name: source_id
+          in: query
+          description: Filter on source identifier.
+          schema:
+            $ref: '#/components/schemas/uuid'
+        - name: timerange
+          in: query
+          description: Filter on flows that overlap the given timerange.
+          schema:
+            default: _
+            $ref: 'schemas/timerange.json'
+        - name: format
+          in: query
+          description: Filter on flow format.
+          schema:
+            $ref: '#/components/schemas/flowformat'
+        - name: codec
+          in: query
+          description: Filter on flow codec.
+          schema:
+            $ref: '#/components/schemas/mimetype'
+        - name: label
+          in: query
+          description: Filter on flows that have the given label.
+          schema:
+            type: string
+        - name: tag.{name}
+          in: query
+          description: |
+            Filter on flows that have a tag named {name} and with the given value.
+            The {name} could contain escaped characters to allow it to be used in a
+            URL.
+          schema:
+            type: string
+        - name: tag_exists.{name}
+          in: query
+          description: |
+            Filter on flows that have a tag named {name} regardless of value. The
+            {name} could contain escaped characters to allow it to be used in a
+            URL. If set to true then the presence of the tag is filtered for. If set
+            to false then its absence is. If left out then no filtering on tag presence
+            is performed.
+          schema:
+            type: boolean
+        - name: frame_width
+          in: query
+          description: Filter on video flows that have the given frame width.
+          schema:
+            type: integer
+        - name: frame_height
+          in: query
+          description: Filter on video flows that have the given frame height.
+          schema:
+            type: integer
+        - $ref: '#/components/parameters/trait_resource_paged_key'
+        - $ref: '#/components/parameters/trait_paged_limit'
       responses:
         "200":
           $ref: '#/components/responses/trait_resource_listing_head_200'
+        "400":
+          description: Bad request. Invalid query options.
     get:
       description: List the flows registered in the store.
       operationId: GET_flows
@@ -666,9 +753,24 @@ paths:
       operationId: HEAD_flows-flowId
       tags:
         - Flows
+      parameters:
+        - name: include_timerange
+          in: query
+          description: Include the available segment timerange in the response.
+          schema:
+            default: false
+            type: boolean
+        - name: timerange
+          in: query
+          description: Limit the returned available segment timerange to this timerange.
+          schema:
+            default: _
+            $ref: 'schemas/timerange.json'
       responses:
         "200":
           $ref: '#/components/responses/trait_resource_info_head_200'
+        "400":
+          description: Bad request. Invalid query options.
         "404":
           $ref: '#/components/responses/trait_resource_info_head_404'
     get:
@@ -1040,9 +1142,25 @@ paths:
       operationId: HEAD_flows-flowId-segments
       tags:
         - FlowSegments
+      parameters:
+        - name: object_id
+          in: query
+          description: Filter on object identifier.
+          schema:
+            type: string
+        - name: reverse_order
+          in: query
+          description: Return segments in reverse time order.
+          schema:
+            default: false
+            type: boolean
+        - $ref: '#/components/parameters/trait_timerange_paged_timerange'
+        - $ref: '#/components/parameters/trait_paged_limit'
       responses:
         "200":
           $ref: '#/components/responses/trait_resource_listing_head_200'
+        "400":
+          description: Bad request. Invalid query options.
         "404":
           description: The flow ID in the path is invalid.
     get:
