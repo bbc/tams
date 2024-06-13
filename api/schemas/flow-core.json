@@ -77,12 +77,12 @@
     "avg_bit_rate": {
       "description": "The average bit rate of the flow content in 1000 bits/second. A precise definition of how the bit rate is calculated is not provided here.",
       "type": "integer",
-      "exclusiveMinimum": 0
+      "minimum": 0
     },
     "max_bit_rate": {
       "description": "The maximum bit rate of the flow content in 1000 bits/second. A precise definition of how the bit rate is calculated is not provided here.",
       "type": "integer",
-      "exclusiveMinimum": 0
+      "minimum": 0
     },
     "timerange": {
       "description": "The timerange of samples available in the flow, as described by the [TimeRange](../schemas/timerange#top) type",
