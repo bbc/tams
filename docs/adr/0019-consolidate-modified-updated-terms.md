@@ -1,5 +1,5 @@
 ---
-status: "proposed"
+status: "accepted"
 ---
 # Rename `modified_by` properties in Source and Flow schemas to `updated_by`
 
