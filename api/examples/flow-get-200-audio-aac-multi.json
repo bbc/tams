@@ -9,7 +9,7 @@
     "label": "capture_1",
     "format": "urn:x-nmos:format:audio",
     "created_by": "tams-dev",
-    "modified_by": "tams-dev",
+    "updated_by": "tams-dev",
     "tags": {
         "quality": "web",
         "_tams_segmentation_rate": "375/8"
