@@ -23,11 +23,14 @@ Adding metadata to Sources may provide an easier way to discover Flows and it al
 Systems and applications can then use the Source as the primary media content entity, abstracting out the specific and possibly ephemeral Flow rendition that may be used in a particular exchange or process.
 
 ### Initial Source Metadata
-An application may decide to populate the Source metadata from the initial Flow.
+
+A client application using the TAMS or the TAMS itself may decide to populate the Source metadata from the initial Flow.
 The Flow is created in TAMS which then automatically creates a minimal Source with `id` and `format` properties from the Flow's `source_id` and `format` properties.
-The application can decide to copy the Flow's `label`, `descriptions` and `tags` to the Source.
+A client or TAMS may then decide to copy the Flow's `label`, `descriptions` and `tags` to the Source.
 However, a direct copy may not always be appropriate because some metadata may be specific to the Flow.
 E.g. a `tag` that identifies the Flow to be a low bit rate proxy rendition.
+
+The behaviour of the TAMS with respect to copying metadata from Flows to Sources may be undefined and it is therefore the client application's responsibility to always set Source metadata to ensure it is correct and complete.
 
 Creating more Flows for a Source may bring more metadata that an application needs to decide whether it should be copied to the Source.
 If the metadata applies to all Flows and is not tied to a specific rendition then it should probably be added to the Source.
