@@ -9,7 +9,7 @@ This Application Note provides some guidance on what to consider when populating
 ## Content
 
 A Flow is a representation of a Source, where the (required) `source_id` Flow property identifies the Source.
-Creating a Flow in TAMS will result in a minimal Source that has `id` and `format` properties matching the Flow's `source_id` and `format` properties..
+Creating a Flow in TAMS will result in a minimal Source that has `id` and `format` properties matching the Flow's `source_id` and `format` properties.
 A Source and Flow both have `label`, `description` and `tags` properties that may contain metadata about the entity.
 An application needs to consider whether a metadata value should be set in the Source, Flow or both.
 
