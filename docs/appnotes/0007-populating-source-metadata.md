@@ -22,6 +22,7 @@ Ideally these two queries should return the same group of Sources and Flows.
 Adding metadata to Sources may provide an easier way to discover Flows and it also promotes the view of content as Sources that group Flows.
 Systems and applications can then use the Source as the primary media content entity, abstracting out the specific and possibly ephemeral Flow rendition that may be used in a particular exchange or process.
 
+### Initial Source Metadata
 An application may decide to populate the Source metadata from the initial Flow.
 The Flow is created in TAMS which then automatically creates a minimal Source with `id` and `format` properties from the Flow's `source_id` and `format` properties.
 The application can decide to copy the Flow's `label`, `descriptions` and `tags` to the Source.
