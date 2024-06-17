@@ -10,7 +10,7 @@
     "label": "bbb",
     "format": "urn:x-nmos:format:video",
     "created_by": "tams-dev",
-    "modified_by": "tams-dev",
+    "updated_by": "tams-dev",
     "tags": {
       "input_quality": "full",
       "_tams_segmentation_rate": "10"
@@ -58,7 +58,7 @@
     "label": "capture_1",
     "format": "urn:x-nmos:format:audio",
     "created_by": "tams-dev",
-    "modified_by": "tams-dev",
+    "updated_by": "tams-dev",
     "tags": {
       "input_quality": "web",
       "_tams_segmentation_rate": "375/8"
@@ -87,7 +87,7 @@
     "label": "capture_1",
     "format": "urn:x-nmos:format:video",
     "created_by": "tams-dev",
-    "modified_by": "tams-dev",
+    "updated_by": "tams-dev",
     "tags": {
       "input_quality": "full",
       "_tams_segmentation_rate": "25"
