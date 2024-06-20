@@ -28,7 +28,7 @@ info:
     could for example be implemented using an AWS S3 compatible store using presigned URLs or by
     a simple file system storage with an HTTP frontend. Clients should parse the /service endpoint
     and handle the media store type in use appropriately.
-  version: "4.0"
+  version: "5.0"
   contact:
     name: 'BBC R&D - Cloud-Fit Production Team'
     email: 'cloudfit-opensource@rd.bbc.co.uk'
@@ -44,7 +44,7 @@ servers:
     variables:
       version:
         description: API version
-        default: v4.0
+        default: v5.0
 security:
   - {}
   - basic_auth: []
