@@ -17,7 +17,7 @@ Future work may extend the specification to allow more explicit signalling of ti
 ### Timestamps
 
 A timerange is associated with each media segment written, in the body of the POST request to register the segment.
-See the API documentation for [FlowSegments](https://bbc.github.io/tams/4.0/index.html#/operations/POST_flows-flowId-segments) for more details.
+See the API documentation for [FlowSegments](https://bbc.github.io/tams/5.0/index.html#/operations/POST_flows-flowId-segments) for more details.
 
 ### Resolution
 
