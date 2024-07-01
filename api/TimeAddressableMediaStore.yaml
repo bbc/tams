@@ -52,6 +52,7 @@ security:
 paths:
   /:
     head:
+      summary: List Root Endpoints
       description: Return root path headers
       operationId: HEAD_root
       tags:
@@ -60,6 +61,7 @@ paths:
         "200":
           $ref: '#/components/responses/trait_resource_listing_head_200'
     get:
+      summary: List Root Endpoints
       description: List of paths available from this API.
       operationId: GET_root
       tags:
@@ -77,6 +79,7 @@ paths:
                   - flow-delete-requests
   /service:
     head:
+      summary: Service Information
       description: Return service path headers
       operationId: HEAD_service
       tags:
@@ -85,6 +88,7 @@ paths:
         "200":
           $ref: '#/components/responses/trait_resource_listing_head_200'
     get:
+      summary: Service Information
       description: Provide information about the service, including the media store in use.
       operationId: GET_service
       tags:
@@ -99,6 +103,7 @@ paths:
               example:
                 $ref: examples/service-get-200.json
     post:
+      summary: Update Service Information
       description: Update the service info.
       operationId: POST_service
       tags:
@@ -118,6 +123,7 @@ paths:
           description: Bad request. Invalid service JSON.
   /service/webhooks:
     head:
+      summary: List Webhook URLs
       description: Return webhooks path headers
       operationId: HEAD_webhooks
       tags:
@@ -128,7 +134,7 @@ paths:
         "404":
           description: "Webhooks are not supported by this API implementation"
     get:
-      summary: List registered webhook URLs
+      summary: List Webhook URLs
       description: |
         Get the list of registered webhook URLs. Implementations SHOULD take steps to avoid displaying URLs to users
         other than those who have suitable permissions (e.g. the owning user).
@@ -156,7 +162,7 @@ paths:
         "404":
           description: "Webhooks are not supported by this API implementation"
     post:
-      summary: Register a webhook URL
+      summary: Register Webhook URL
       description: |
         Register to receive event notifications as webhooks on a specified URL. Webhook messages will conform to the
         format in the `webhooks` section of the API docs, depending on the event type (as defined in the same section).
@@ -347,7 +353,7 @@ paths:
           $ref: '#/components/schemas/uuid'
         description: The Source identifier.
     head:
-      summary: Source Tags
+      summary: List Source Tags
       description: Return Source tags path headers
       operationId: HEAD_sources-sourceId-tags
       tags:
@@ -358,7 +364,7 @@ paths:
         "404":
           description: The requested Source does not exist.
     get:
-      summary: Source Tags
+      summary: List Source Tags
       description: Returns the Source tags.
       operationId: GET_sources-sourceId-tags
       tags:
@@ -417,8 +423,8 @@ paths:
         "404":
           description: The requested Source or tag does not exist.
     put:
-      summary: Update Source Tag Value
-      description: Update the value of a specific tag on a Source
+      summary: Set Source Tag
+      description: Set the Source tag
       operationId: PUT_sources-sourceId-tags-name
       tags:
         - Sources
@@ -438,7 +444,7 @@ paths:
         "404":
           description: The requested Source does not exist, or the tag name in the path is invalid.
     delete:
-      summary: Delete Source tag
+      summary: Delete Source Tag
       description: Delete a specific tag on a Source
       operationId: DELETE_sources-sourceId-tags-name
       tags:
@@ -485,7 +491,7 @@ paths:
         "404":
           description: The requested Source does not exist.
     put:
-      summary: Update Source Description
+      summary: Set Source Description
       description: Create or modify the description property.
       operationId: PUT_sources-sourceId-description
       tags:
@@ -553,7 +559,7 @@ paths:
         "404":
           description: The requested Source does not exist, or does not have a label set.
     put:
-      summary: Update Source Label
+      summary: Set Source Label
       description: Create or modify the label property.
       operationId: PUT_sources-sourceId-label
       tags:
@@ -586,6 +592,7 @@ paths:
           description: The requested Source ID in the path is invalid.
   /flows:
     head:
+      summary: List Flows
       description: Return flows path headers
       operationId: HEAD_flows
       tags:
@@ -653,6 +660,7 @@ paths:
         "400":
           description: Bad request. Invalid query options.
     get:
+      summary: List Flows
       description: List the flows registered in the store.
       operationId: GET_flows
       tags:
@@ -749,6 +757,7 @@ paths:
           $ref: '#/components/schemas/uuid'
         description: The flow identifier.
     head:
+      summary: Flow Details
       description: Return flow path headers
       operationId: HEAD_flows-flowId
       tags:
@@ -774,6 +783,7 @@ paths:
         "404":
           $ref: '#/components/responses/trait_resource_info_head_404'
     get:
+      summary: Flow Details
       description: Returns flow metadata.
       operationId: GET_flows-flowId
       tags:
@@ -839,6 +849,7 @@ paths:
         "400":
           description: Bad request. Invalid query options.
     put:
+      summary: Create or Replace Flow
       description: Create or replace the flow metadata.
       operationId: PUT_flows-flowId
       tags:
@@ -876,6 +887,7 @@ paths:
         "404":
           description: The requested Flow ID in the path is invalid.
     delete:
+      summary: Delete Flow
       description: |
         Deletes the flow and associated segments. If flow segment deletion
         takes too long then this request will return 202 Accepted and the `Location` header will point to a
@@ -912,6 +924,7 @@ paths:
           $ref: '#/components/schemas/uuid'
         description: The flow identifier.
     head:
+      summary: List Flow Tags
       description: Return flow tags path headers
       operationId: HEAD_flows-flowId-tags
       tags:
@@ -922,6 +935,7 @@ paths:
         "404":
           description: The requested flow does not exist.
     get:
+      summary: List Flow Tags
       description: Returns the flow tags.
       operationId: GET_flows-flowId-tags
       tags:
@@ -952,6 +966,7 @@ paths:
           $ref: '#/components/schemas/uuid'
         description: The flow identifier.
     head:
+      summary: Flow Tag Value
       description: Return flow tag path headers
       operationId: HEAD_flows-flowId-tags-name
       tags:
@@ -962,6 +977,7 @@ paths:
         "404":
           description: The requested flow or tag does not exist.
     get:
+      summary: Flow Tag Value
       description: Return the tag value associated with the tag name.
       operationId: GET_flows-flowId-tags-name
       tags:
@@ -978,7 +994,8 @@ paths:
         "404":
           description: The requested flow or tag does not exist.
     put:
-      description: Create or modify the tag values.
+      summary: Set Flow Tag
+      description: Create or modify the tag.
       operationId: PUT_flows-flowId-tags-name
       tags:
         - Flows
@@ -1000,6 +1017,7 @@ paths:
         "404":
           description: The requested flow does not exist.
     delete:
+      summary: Delete Flow Tag
       description: Delete the tag.
       operationId: DELETE_flows-flowId-tags-name
       tags:
@@ -1020,6 +1038,7 @@ paths:
           $ref: '#/components/schemas/uuid'
         description: The flow identifier.
     head:
+      summary: Flow Description
       description: Return flow description path headers
       operationId: HEAD_flows-flowId-description
       tags:
@@ -1030,6 +1049,7 @@ paths:
         "404":
           $ref: '#/components/responses/trait_resource_info_head_404'
     get:
+      summary: Flow Description
       description: Returns the flow description property.
       operationId: GET_flows-flowId-description
       tags:
@@ -1044,6 +1064,7 @@ paths:
         "404":
           description: The requested flow does not exist.
     put:
+      summary: Set Flow Description
       description: Create or modify the description property.
       operationId: PUT_flows-flowId-description
       tags:
@@ -1066,6 +1087,7 @@ paths:
         "404":
           description: The requested flow does not exist.
     delete:
+      summary: Delete Flow Description
       description: Delete the description property.
       operationId: DELETE_flows-flowId-description
       tags:
@@ -1086,6 +1108,7 @@ paths:
           $ref: '#/components/schemas/uuid'
         description: The flow identifier.
     head:
+      summary: Flow Read-Only
       description: Return flow read_only path headers
       operationId: HEAD_flows-flowId-read-only
       tags:
@@ -1096,6 +1119,7 @@ paths:
         "404":
           $ref: '#/components/responses/trait_resource_info_head_404'
     get:
+      summary: Flow Read-Only
       description: Returns the flow read_only property.
       operationId: GET_flows-flowId-read-only
       tags:
@@ -1110,6 +1134,7 @@ paths:
         "404":
           description: The requested flow does not exist.
     put:
+      summary: Set Flow Read-Only
       description: Set the read-only property.
       operationId: PUT_flows-flowId-read-only
       tags:
@@ -1138,6 +1163,7 @@ paths:
           $ref: '#/components/schemas/uuid'
         description: The flow identifier.
     head:
+      summary: List Flow Segments
       description: Return flow segments path headers
       operationId: HEAD_flows-flowId-segments
       tags:
@@ -1164,6 +1190,7 @@ paths:
         "404":
           description: The flow ID in the path is invalid.
     get:
+      summary: List Flow Segments
       description: |
         Returns the flow segments.
 
@@ -1266,6 +1293,7 @@ paths:
         "404":
           description: The flow ID in the path is invalid.
     post:
+      summary: Create Flow Segment
       description: |
         Register a new flow segment, attaching the object id given to a point in the flow timeline.
 
@@ -1312,6 +1340,7 @@ paths:
         "404":
           description: The flow does not exist.
     delete:
+      summary: Delete Flow Segment
       description: |
         Deletes the flow segments. If the deletion takes too long then this request will return 202 Accepted and the `Location` header will point to a
         Flow Delete Request to monitor deletion progress
@@ -1361,6 +1390,7 @@ paths:
           $ref: '#/components/schemas/uuid'
         description: The flow identifier.
     post:
+      summary: Allocate Flow Storage
       description: |
         Allocate storage locations for writing media objects.
 
@@ -1409,6 +1439,7 @@ paths:
           description: The requested flow does not exist
   /flow-delete-requests:
     head:
+      summary: List Flow Delete Requests
       description: Return flow-delete-requests path headers
       operationId: HEAD_flow-delete-requests
       tags:
@@ -1417,6 +1448,7 @@ paths:
         "200":
           $ref: '#/components/responses/trait_resource_listing_head_200'
     get:
+      summary: List Flow Delete Requests
       description: |
         List deletion requests currently being worked on, for monitoring in development.
 
@@ -1443,6 +1475,7 @@ paths:
         schema:
           type: string
     head:
+      summary: Flow Delete Request Details
       description: Return flow delete request path headers
       operationId: HEAD_flow-delete-requests-request-id
       tags:
@@ -1453,6 +1486,7 @@ paths:
         "404":
           $ref: '#/components/responses/trait_resource_info_head_404'
     get:
+      summary: Flow Delete Request Details
       description: |
         Get information about a timerange of FlowSegments that are being deleted.
 
