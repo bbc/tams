@@ -21,7 +21,7 @@ Chosen option: "Specify a schema in an application note", because while specifyi
 
 ### Implementation
 
-Application note included in this PR.
+Application note 0009 included in [PR #72](https://github.com/bbc/tams/pull/72).
 
 ## Pros and Cons of the Options
 
