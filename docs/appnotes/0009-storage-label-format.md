@@ -63,4 +63,21 @@ The intention of this approach is to allow consistent values to be used without 
 As this is an application note, this usage is a recommendation.
 Not required.
 This is intentional while the proposal is validated in the real world.
-Once the approach has been validated, we will re-visit the posibility of moving this specification into the core API specification.
+Once the approach has been validated, we will re-visit the possibility of moving this specification into the core API specification.
+
+## Alternatives Considered
+
+### URN
+
+The [URN](https://datatracker.ietf.org/doc/html/rfc2141) format is commonly used for identifying resources.
+This serves a slightly different purpose to the format described above.
+The intention is to provide useful information by which available `get_urls` may be filtered.
+The proposed format currently contains hierarchical location information and a human readable name.
+This maps well to URNs.
+As we gain more experience with this capability, we may choose to add further metadata which is not as well suited to URNs.
+As such, the URN standard has not been followed.
+
+### ARN
+
+The [ARN](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference-arns.html) format is similar to the URN format but is used exclusively by Amazon Web Services for their products.
+As TAMS is intended to be agnostic to cloud providers, or indeed weather it is hosted in the cloud or not, ARNs are not a suitable option.
