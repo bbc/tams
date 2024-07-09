@@ -18,7 +18,7 @@ COPY ./TimeAddressableMediaStore.yaml .
 ###############################################################################
 # Stage: bundle - Bundles specification and schemas into a single file
 ###############################################################################
-FROM redocly/cli as bundle
+FROM redocly/cli AS bundle
 
 COPY ./bundle-api.sh /bundle-api.sh
 
@@ -30,7 +30,7 @@ ENTRYPOINT [ "/bundle-api.sh" ]
 ###############################################################################
 # Stage: oaslint - Validates OpenAPI specifications
 ###############################################################################
-FROM stoplight/spectral:6.10 as oaslint
+FROM stoplight/spectral:6.10 AS oaslint
 
 WORKDIR /data/
 
