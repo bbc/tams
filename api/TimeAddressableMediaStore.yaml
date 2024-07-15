@@ -274,7 +274,7 @@ paths:
           in: query
           description: Filter on source format.
           schema:
-            $ref: '#/components/schemas/flowformat'
+            $ref: '#/components/schemas/contentformat'
         - $ref: '#/components/parameters/trait_resource_paged_key'
         - $ref: '#/components/parameters/trait_paged_limit'
       responses:
@@ -618,7 +618,7 @@ paths:
           in: query
           description: Filter on flow format.
           schema:
-            $ref: '#/components/schemas/flowformat'
+            $ref: '#/components/schemas/contentformat'
         - name: codec
           in: query
           description: Filter on flow codec.
@@ -686,7 +686,7 @@ paths:
           in: query
           description: Filter on flow format.
           schema:
-            $ref: '#/components/schemas/flowformat'
+            $ref: '#/components/schemas/contentformat'
         - name: codec
           in: query
           description: Filter on flow codec.
@@ -1764,9 +1764,9 @@ components:
       title: UUID
       pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
       type: string
-    flowformat:
-      title: Flow Format
-      description: identifies the flow format using a URN string.
+    contentformat:
+      title: Content Format
+      description: Identifies the content format for a flow or source using a URN string.
       enum:
         - urn:x-nmos:format:video
         - urn:x-nmos:format:audio
