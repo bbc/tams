@@ -270,6 +270,11 @@ paths:
             is performed.
           schema:
             type: boolean
+        - name: format
+          in: query
+          description: Filter on source format.
+          schema:
+            $ref: '#/components/schemas/flowformat'
         - $ref: '#/components/parameters/trait_resource_paged_key'
         - $ref: '#/components/parameters/trait_paged_limit'
       responses:
