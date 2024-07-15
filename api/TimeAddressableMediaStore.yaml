@@ -1766,6 +1766,7 @@ components:
         - urn:x-nmos:format:video
         - urn:x-nmos:format:audio
         - urn:x-nmos:format:data
+        - urn:x-nmos:format:multi
       type: string
     mimetype:
       title: MIME Type
