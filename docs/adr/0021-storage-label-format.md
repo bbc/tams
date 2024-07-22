@@ -5,8 +5,8 @@ status: "proposed"
 
 ## Context and Problem Statement
 
-At our previous in-person event, we had a number of requests to put together some guidance on the use of `get_urls` labels on flow segments.
-People wanted these to provide information to aid the selection of URLs where multiple are available.
+At an in-person discussion session in May 2024, there was discussion around putting together some guidance on the use of `get_urls` labels on flow segments.
+This would provide information to aid the selection of URLs where multiple are available.
 This ADR explores options for where to specify a means to signal this information.
 
 ## Considered Options
@@ -28,13 +28,13 @@ Application note 0009 included in [PR #72](https://github.com/bbc/tams/pull/72).
 ### Specify a schema against the `get_urls` label parameter of Segments within the API specification
 
 * Good, because implementers can rely on the format of the information
-* Good, because implementers are provided enough information to make informed decissions on which URL to use
+* Good, because implementers are provided enough information to make informed decisions on which URL to use
 * Bad, because it will be a breaking change to the API
 * Bad, because the approach hasn't been validated in real world implementations and may need to be modified in future
 
 ### Specify a schema in an application note
 
-* Good, because implementers are provided enough information to make informed decissions on which URL to use
+* Good, because implementers are provided enough information to make informed decisions on which URL to use
 * Good, because it is not a change to the API itself
 * Good, because it allows the approach to be validated in real world implementations
 * Bad, because implementers cannot initially assume others will be using the specified format
@@ -42,7 +42,7 @@ Application note 0009 included in [PR #72](https://github.com/bbc/tams/pull/72).
 ### Make no specifications/recommendations
 
 * Good, because it is not a change to the API or its use
-* Bad, because implementers cannot make informed decissions on which URLs to use beyond matching specific labels
+* Bad, because implementers cannot make informed decisions on which URLs to use beyond matching specific labels
 
 ## More Information
 
