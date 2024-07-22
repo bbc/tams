@@ -42,19 +42,34 @@ But we can specify a schema which allows a client to consistently decide which p
 ## Content
 
 Given all of the above, this Application Note recommends the following naming convention for the `get_urls` `label` parameter on flow segments:
-`<provider>.<region[optional]>.<availabilityZone[optional]>:<storeType>:<storeName>`
+
+```text
+<provider>.<region[optional]>.<availabilityZone[optional]>:<storeType>:<storeName>
+```
 
 This can be represented more formally with the following Python-compatible regex:
-`^(?P<provider>[A-Za-z0-9\-\_]+)(.(?P<region>[A-Za-z0-9\-\_]+)(.(?P<availabilityZone>[A-Za-z0-9\-\_]+))?)?:(?P<storeType>[A-Za-z0-9\-\_]+):(?P<storeName>[A-Za-z0-9\-\_]+)$`
+
+```regex
+^(?P<provider>[A-Za-z0-9\-\_]+)(.(?P<region>[A-Za-z0-9\-\_]+)(.(?P<availabilityZone>[A-Za-z0-9\-\_]+))?)?:(?P<storeType>[A-Za-z0-9\-\_]+):(?P<storeName>[A-Za-z0-9\-\_]+)$
+```
 
 An example use of this would be:
-`example-cloud-provider.eu-west-1.a:example-storage-product:example-store-name`
+
+```text
+example-cloud-provider.eu-west-1.a:example-storage-product:example-store-name
+```
 
 An example use of this without an availability zone would be:
-`example-cloud-provider.eu-west-1:example-storage-product:example-store-name`￼￼
+
+```text
+example-cloud-provider.eu-west-1:example-storage-product:example-store-name
+```
 
 An example use of this without a region would be:
-`example-cloud-provider:example-storage-product:example-store-name`
+
+```text
+example-cloud-provider:example-storage-product:example-store-name
+```
 
 The parameters `provider`, `region`, `availabilityZone`, and `storeType` should use the machine readable values as provided by the cloud/storage vendor.
 The intention of this approach is to allow consistent values to be used without enumerating common/possible values in TAMS.
