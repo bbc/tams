@@ -1309,8 +1309,13 @@ paths:
         - All samples in the object SHOULD be used by the segment.
         - The timestamps of each sample in the media object MUST equal its position on the Flow timeline, OR `ts_offset` MUST
           be set such that `media_object_ts + ts_offset = segment_ts`
-        - The timerange of the segment MUST NOT overlap any other segment in the same Flow.
+        - The timerange of the segment MUST NOT overlap any other segment in the same Flow. The behaviour is
+          undefined if there is an overlap with existing segments and a store may return a 400 error response.
         - The `sample_offset` SHOULD be zero.
+
+        If a client needs to modify a Flow segment, e.g. to correct metadata such as the `key_frame_count` or add additional
+        URLs to `get_urls`, then the client SHOULD first delete the existing segment and then write a new one. The behaviour is
+        undefined if the segment exists and a store may return a 400 error response.
 
         Clients are expected to decide how to break content into media objects, however those objects SHOULD be large
         enough to avoid excessive round trip overheads in the underlying store (_e.g._ of the order of several megabytes)
