@@ -1179,13 +1179,18 @@ paths:
           description: Filter on object identifier.
           schema:
             type: string
+        - name: timerange
+          in: query
+          description: Return only the results in the timerange specified.
+          schema:
+            $ref: 'schemas/timerange.json'
         - name: reverse_order
           in: query
           description: Return segments in reverse time order.
           schema:
             default: false
             type: boolean
-        - $ref: '#/components/parameters/trait_timerange_paged_timerange'
+        - $ref: '#/components/parameters/trait_resource_paged_key'
         - $ref: '#/components/parameters/trait_paged_limit'
       responses:
         "200":
@@ -1235,13 +1240,18 @@ paths:
           description: Filter on object identifier.
           schema:
             type: string
+        - name: timerange
+          in: query
+          description: Return only the results in the timerange specified.
+          schema:
+            $ref: 'schemas/timerange.json'
         - name: reverse_order
           in: query
           description: Return segments in reverse time order.
           schema:
             default: false
             type: boolean
-        - $ref: '#/components/parameters/trait_timerange_paged_timerange'
+        - $ref: '#/components/parameters/trait_resource_paged_key'
         - $ref: '#/components/parameters/trait_paged_limit'
       responses:
         "200":
@@ -1267,6 +1277,10 @@ paths:
               description: The items are returned in reverse order.
               schema:
                 type: boolean
+            X-Paging-NextKey:
+              description: Opaque string that can be supplied to the `page` query parameter to get the next page of results.
+              schema:
+                type: string
           content:
             application/json:
               schema:
@@ -1801,12 +1815,6 @@ components:
     trait_resource_info_head_404:
       description: Resource was not found.
   parameters:
-    trait_timerange_paged_timerange:
-      name: timerange
-      in: query
-      description: Return only the results in the timerange specified.
-      schema:
-        $ref: 'schemas/timerange.json'
     trait_paged_limit:
       name: limit
       in: query
