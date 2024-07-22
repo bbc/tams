@@ -35,8 +35,7 @@ So while we need to signal this, we are not able to provide universal naming con
 
 Finally, a more generic "store name" parameter is useful for human identification of stores, and for distinguishing stores which are otherwise identical.
 
-In summary.
-We must signal storage provider, region, availability zone, storage type, and store name.
+In summary; we must signal storage provider, region, availability zone, storage type, and store name.
 We cannot, unfortunately, signal any of these in consistently named and universally comparable ways.
 But we can specify a schema which allows a client to consistently decide which pieces of information are important to it.
 
