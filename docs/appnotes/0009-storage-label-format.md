@@ -15,7 +15,7 @@ This may be done by providing information about the location, and the type of st
 
 Unfortunately there is no one shared naming convention for resource locations across cloud providers.
 There are shared properties (regions, and availability zones), but these aren't universally available.
-Some cloud providers don't provide availability zones.
+Some cloud providers don't provide availability zones, or have services that run at a regional level so don't need the availability zone to be specified.
 And a local installation, or one behind a CDN might not even provide regions.
 So the signalling of these properties must be optional.
 Availability zones may also be semi-randomised in their naming to aid in evenly distributing load across cloud infrastructure.
@@ -35,7 +35,8 @@ So while we need to signal this, we are not able to provide universal naming con
 
 Finally, a more generic "store name" parameter is useful for human identification of stores, and for distinguishing stores which are otherwise identical.
 
-In summary; we must signal storage provider, region, availability zone, storage type, and store name.
+In summary; we must signal storage provider, storage time, and store name.
+However we may also need to add the optional parameters of region, and availability zone.
 We cannot, unfortunately, signal any of these in consistently named and universally comparable ways.
 But we can specify a schema which allows a client to consistently decide which pieces of information are important to it.
 
