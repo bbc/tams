@@ -1154,7 +1154,7 @@ paths:
         required: true
       responses:
         "204":
-          description: No content. The read_only property has been updated.
+          description: No content. The read_only property has been set.
         "400":
           description: Bad request. Invalid flow description.
         "404":
