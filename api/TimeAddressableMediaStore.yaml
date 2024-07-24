@@ -496,8 +496,8 @@ paths:
         "404":
           description: The requested Source does not exist.
     put:
-      summary: Set Source Description
-      description: Create or modify the description property.
+      summary: Create or Update Source Description
+      description: Create or update the description property.
       operationId: PUT_sources-sourceId-description
       tags:
         - Sources
@@ -511,7 +511,7 @@ paths:
         required: true
       responses:
         "204":
-          description: No content. The description has been updated.
+          description: No content. The description has been created or updated.
         "400":
           description: Bad request. Invalid Source description.
         "404":
@@ -564,8 +564,8 @@ paths:
         "404":
           description: The requested Source does not exist, or does not have a label set.
     put:
-      summary: Set Source Label
-      description: Create or modify the label property.
+      summary: Create or Update Source Label
+      description: Create or update the label property.
       operationId: PUT_sources-sourceId-label
       tags:
         - Sources
@@ -579,7 +579,7 @@ paths:
         required: true
       responses:
         "204":
-          description: No content. The label has been updated.
+          description: No content. The label has been created or updated.
         "400":
           description: Bad request. Invalid Source label.
         "404":
@@ -1069,8 +1069,8 @@ paths:
         "404":
           description: The requested flow does not exist.
     put:
-      summary: Set Flow Description
-      description: Create or modify the description property.
+      summary: Create or Update Flow Description
+      description: Create or update the description property.
       operationId: PUT_flows-flowId-description
       tags:
         - Flows
@@ -1084,7 +1084,7 @@ paths:
         required: true
       responses:
         "204":
-          description: No content. The description has been updated.
+          description: No content. The description has been created or updated.
         "400":
           description: Bad request. Invalid flow description.
         "403":
