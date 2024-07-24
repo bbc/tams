@@ -428,8 +428,8 @@ paths:
         "404":
           description: The requested Source or tag does not exist.
     put:
-      summary: Set Source Tag
-      description: Set the Source tag
+      summary: Create or Update Source Tag
+      description: Create or update the Source tag
       operationId: PUT_sources-sourceId-tags-name
       tags:
         - Sources
@@ -443,7 +443,7 @@ paths:
         required: true
       responses:
         "204":
-          description: No content. The tag has been updated.
+          description: No content. The tag has been created or updated.
         "400":
           description: Bad request. Invalid Source tag value.
         "404":
@@ -999,8 +999,8 @@ paths:
         "404":
           description: The requested flow or tag does not exist.
     put:
-      summary: Set Flow Tag
-      description: Create or modify the tag.
+      summary: Create or Update Flow Tag
+      description: Create or update the tag.
       operationId: PUT_flows-flowId-tags-name
       tags:
         - Flows
@@ -1014,7 +1014,7 @@ paths:
         required: true
       responses:
         "204":
-          description: No content. The tag has been updated.
+          description: No content. The tag has been created or updated.
         "400":
           description: Bad request. Invalid flow tag value.
         "403":
