@@ -20,9 +20,10 @@ And a local installation, or one behind a CDN might not even provide regions.
 So the signalling of these properties must be optional.
 Availability zones may also be semi-randomised in their naming to aid in evenly distributing load across cloud infrastructure.
 Zone naming is consistent within cloud accounts, though.
+Cloud providers may also provide zone IDs which are consistent between accounts as an alternative.
 Co-locating within a zone can be beneficial to performance.
-But this is only possible if a client knows it is within the same account as the server.
-It must, then, be possible for a client to either use or ignore availability zone based on whether it is within the same cloud account.
+But this is only possible if a client knows it is within the same physical zone as the server.
+It must, then, be possible for a client to either use or ignore availability zone based on whether it can be certain it is co-located physically.
 This gives us provider, region, and availability zone as the important information that can be used to signal the location of storage.
 
 In addition to location, storage type is important for inferring the properties of the storage.
@@ -34,6 +35,9 @@ And there is often no universal naming conventions to describe these products in
 So while we need to signal this, we are not able to provide universal naming conventions.
 
 Finally, a more generic "store name" parameter is useful for human identification of stores, and for distinguishing stores which are otherwise identical.
+It should be noted that the logical concept of a named "store" in this case is distinct from a bucket (or equivalent concept).
+A "store" may make use of multiple buckets for performance reasons, for example.
+But the properties of buckets of a named store should be otherwise identical.
 
 In summary; we must signal storage provider, storage time, and store name.
 However we may also need to add the optional parameters of region, and availability zone.
@@ -73,12 +77,92 @@ example-cloud-provider:example-storage-product:example-store-name
 ```
 
 The parameters `provider`, `region`, `availabilityZone`, and `storeType` should use the machine readable values as provided by the cloud/storage vendor.
+Where multiple case variants exist for parameters (i.e. upper/lower/mixed case), lower case should be preferred.
 The intention of this approach is to allow consistent values to be used without enumerating common/possible values in TAMS.
+
+For `availabilityZone` - where a cloud provider provides an identifier which is consistent between accounts, this should be favoured over semi-randomised identifiers (e.g. prefer availability zone IDs over availability zone Names on AWS).
 
 As this is an application note, this usage is a recommendation.
 Not required.
 This is intentional while the proposal is validated in the real world.
 Once the approach has been validated, we will re-visit the possibility of moving this specification into the core API specification.
+
+### Example mappings
+
+#### AWS S3
+
+For this AWS S3 ARN:
+
+```text
+arn:aws:s3:::example-bucket-name
+```
+
+You may use the following label:
+
+```text
+aws.eu-west-1:s3:example-store-name
+```
+
+Note: S3 **is** region specific, but does not include the region in the ARN.
+Standard S3 is NOT availability zone specific.
+The `storeName` does not need to match the bucket name, but you may decide it would be sensible for a given implementation to do so.
+
+#### AWS S3 Express One Zone
+
+For this AWS S3 Express One Zone ARN:
+
+```text
+arn:aws:s3express:us-west-2:123456789012:bucket/example-bucket-name-express--usw2-az1--x-s3
+```
+
+You may use the following label:
+
+```text
+aws.us-west-2.usw2-az1:s3express:example-store-name
+```
+
+Note: S3 Express One Zone buckets are attached to a single availability zone.
+ARNs, and other machine readable/configuration locations in AWS commonly identify availability zones with a Name, which is consistent within an account but not between accounts.
+AWS also provide availability zone IDs that are consistent between accounts, but are less commonly used.
+Use of the availability zone ID is recommended due to this cross-account consistency.
+The availability zone ID is always embedded in the bucket name in the ARN for S3 Express.
+The `storeName` does not need to match the bucket name, but you may decide it would be sensible for a given implementation to do so.
+
+#### Azure Blobs
+
+For this Azure Blob URN:
+
+```text
+https://myaccount.blob.core.windows.net/example-container-name
+```
+
+You may use the following label:
+
+```text
+windows.uksouth:blob:example-store-name
+```
+
+Note: Blobs **is** region specific, but does not include the region in the URN (some other services do include the ARN).
+The `storeName` does not need to match the container name, but you may decide it would be sensible for a given implementation to do so.
+
+#### Google Cloud Storage
+
+For this Google Cloud full resource name:
+
+```text
+//storage.googleapis.com/projects/_/buckets/example-bucker-name
+```
+
+You may use the following label:
+
+```text
+google.europe-west2:storage:example-store-name
+```
+
+Note: Google Cloud Storage **is** region specific, but does not include the region in the URN (some other services do include the ARN).
+The `storeName` does not need to match the container name, but you may decide it would be sensible for a given implementation to do so.
+In this case, the URL is a long form `googleapis`.
+This has been shortened in this example to just the company name.
 
 ## Alternatives Considered
 
