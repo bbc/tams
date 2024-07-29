@@ -428,8 +428,8 @@ paths:
         "404":
           description: The requested Source or tag does not exist.
     put:
-      summary: Set Source Tag
-      description: Set the Source tag
+      summary: Create or Update Source Tag
+      description: Create or update the Source tag
       operationId: PUT_sources-sourceId-tags-name
       tags:
         - Sources
@@ -443,7 +443,7 @@ paths:
         required: true
       responses:
         "204":
-          description: No content. The tag has been updated.
+          description: No content. The tag has been created or updated.
         "400":
           description: Bad request. Invalid Source tag value.
         "404":
@@ -496,8 +496,8 @@ paths:
         "404":
           description: The requested Source does not exist.
     put:
-      summary: Set Source Description
-      description: Create or modify the description property.
+      summary: Create or Update Source Description
+      description: Create or update the description property.
       operationId: PUT_sources-sourceId-description
       tags:
         - Sources
@@ -511,7 +511,7 @@ paths:
         required: true
       responses:
         "204":
-          description: No content. The description has been updated.
+          description: No content. The description has been created or updated.
         "400":
           description: Bad request. Invalid Source description.
         "404":
@@ -564,8 +564,8 @@ paths:
         "404":
           description: The requested Source does not exist, or does not have a label set.
     put:
-      summary: Set Source Label
-      description: Create or modify the label property.
+      summary: Create or Update Source Label
+      description: Create or update the label property.
       operationId: PUT_sources-sourceId-label
       tags:
         - Sources
@@ -579,7 +579,7 @@ paths:
         required: true
       responses:
         "204":
-          description: No content. The label has been updated.
+          description: No content. The label has been created or updated.
         "400":
           description: Bad request. Invalid Source label.
         "404":
@@ -999,8 +999,8 @@ paths:
         "404":
           description: The requested flow or tag does not exist.
     put:
-      summary: Set Flow Tag
-      description: Create or modify the tag.
+      summary: Create or Update Flow Tag
+      description: Create or update the tag.
       operationId: PUT_flows-flowId-tags-name
       tags:
         - Flows
@@ -1014,7 +1014,7 @@ paths:
         required: true
       responses:
         "204":
-          description: No content. The tag has been updated.
+          description: No content. The tag has been created or updated.
         "400":
           description: Bad request. Invalid flow tag value.
         "403":
@@ -1069,8 +1069,8 @@ paths:
         "404":
           description: The requested flow does not exist.
     put:
-      summary: Set Flow Description
-      description: Create or modify the description property.
+      summary: Create or Update Flow Description
+      description: Create or update the description property.
       operationId: PUT_flows-flowId-description
       tags:
         - Flows
@@ -1084,7 +1084,7 @@ paths:
         required: true
       responses:
         "204":
-          description: No content. The description has been updated.
+          description: No content. The description has been created or updated.
         "400":
           description: Bad request. Invalid flow description.
         "403":
@@ -1154,7 +1154,7 @@ paths:
         required: true
       responses:
         "204":
-          description: No content. The read_only property has been updated.
+          description: No content. The read_only property has been set to the given value.
         "400":
           description: Bad request. Invalid flow description.
         "404":
@@ -1323,8 +1323,13 @@ paths:
         - All samples in the object SHOULD be used by the segment.
         - The timestamps of each sample in the media object MUST equal its position on the Flow timeline, OR `ts_offset` MUST
           be set such that `media_object_ts + ts_offset = segment_ts`
-        - The timerange of the segment MUST NOT overlap any other segment in the same Flow.
+        - The timerange of the segment MUST NOT overlap any other segment in the same Flow. The behaviour is
+          undefined if there is an overlap with existing segments and a store may return a 400 error response.
         - The `sample_offset` SHOULD be zero.
+
+        If a client needs to modify a Flow segment, e.g. to correct metadata such as the `key_frame_count` or add additional
+        URLs to `get_urls`, then the client SHOULD first delete the existing segment and then write a new one. The behaviour is
+        undefined if the segment exists and a store may return a 400 error response.
 
         Clients are expected to decide how to break content into media objects, however those objects SHOULD be large
         enough to avoid excessive round trip overheads in the underlying store (_e.g._ of the order of several megabytes)
