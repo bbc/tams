@@ -1136,6 +1136,74 @@ paths:
           description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
         "404":
           description: The requested flow ID in the path is invalid.
+  /flows/{flowId}/label:
+    parameters:
+      - name: flowId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/uuid'
+        description: The flow identifier.
+    head:
+      summary: Flow Label
+      description: Return Flow label path headers
+      operationId: HEAD_flows-flowId-label
+      tags:
+        - Flows
+      responses:
+        "200":
+          $ref: '#/components/responses/trait_resource_info_head_200'
+        "404":
+          description: The requested Flow does not exist, or does not have a label set.
+    get:
+      summary: Flow Label
+      description: Returns the Flow label property.
+      operationId: GET_flows-flowId-label
+      tags:
+        - Flows
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              example: |
+                "Big Buck Bunny"
+              schema:
+                type: string
+        "404":
+          description: The requested Flow does not exist, or does not have a label set.
+    put:
+      summary: Create or Update Flow Label
+      description: Create or update the label property.
+      operationId: PUT_flows-flowId-label
+      tags:
+        - Flows
+      requestBody:
+        content:
+          application/json:
+            example: |
+              "Big Buck Bunny Movie"
+            schema:
+              type: string
+        required: true
+      responses:
+        "204":
+          description: No content. The label has been created or updated.
+        "400":
+          description: Bad request. Invalid Flow label.
+        "404":
+          description: The requested Flow does not exist.
+    delete:
+      summary: Delete Flow Label
+      description: Delete the label property.
+      operationId: DELETE_flows-flowId-label
+      tags:
+        - Flows
+      responses:
+        "204":
+          description: No content. The Flow label property has been deleted.
+        "404":
+          description: The requested Flow ID in the path is invalid.
   /flows/{flowId}/read_only:
     parameters:
       - name: flowId
