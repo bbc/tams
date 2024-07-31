@@ -150,7 +150,7 @@ The `storeName` does not need to match the container name, but you may decide it
 For this Google Cloud full resource name:
 
 ```text
-//storage.googleapis.com/projects/_/buckets/example-bucker-name
+//storage.googleapis.com/projects/_/buckets/example-bucket-name
 ```
 
 You may use the following label:
