@@ -347,8 +347,6 @@ paths:
                     $ref: examples/source-get-200-multi.json
         "404":
           description: The requested Source does not exist.
-        "400":
-          description: Bad request. Invalid query options.
   /sources/{sourceId}/tags:
     parameters:
       - name: sourceId
