@@ -237,7 +237,24 @@ paths:
         - $ref: '#/components/parameters/trait_paged_limit'
       responses:
         "200":
-          $ref: '#/components/responses/trait_resource_listing_head_200'
+          description: ""
+          headers:
+            Link:
+              description: Provides references to cursors for paging. Only the 'rel' attribute with value 'next' and a link to the next page is currently supported. If 'next' is not present then it is the last page.
+              schema:
+                type: string
+            X-Paging-Limit:
+              description: Identifies the current limit being used for paging. This may not match the requested value if the requested value was too high for the implementation
+              schema:
+                type: integer
+            X-Paging-NextKey:
+              description: Opaque string that can be supplied to the `page` query parameter to get the next page of results.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: string
         "400":
           $ref: '#/components/responses/trait_resource_info_head_400'
     get:
@@ -347,8 +364,6 @@ paths:
                     $ref: examples/source-get-200-multi.json
         "404":
           description: The requested Source does not exist.
-        "400":
-          description: Bad request. Invalid query options.
   /sources/{sourceId}/tags:
     parameters:
       - name: sourceId
@@ -661,7 +676,24 @@ paths:
         - $ref: '#/components/parameters/trait_paged_limit'
       responses:
         "200":
-          $ref: '#/components/responses/trait_resource_listing_head_200'
+          description: ""
+          headers:
+            Link:
+              description: Provides references to cursors for paging. Only the 'rel' attribute with value 'next' and a link to the next page is currently supported. If 'next' is not present then it is the last page.
+              schema:
+                type: string
+            X-Paging-Limit:
+              description: Identifies the current limit being used for paging. This may not match the requested value if the requested value was too high for the implementation
+              schema:
+                type: integer
+            X-Paging-NextKey:
+              description: Opaque string that can be supplied to the `page` query parameter to get the next page of results.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: string
         "400":
           description: Bad request. Invalid query options.
     get:
@@ -1224,7 +1256,7 @@ paths:
         "204":
           description: No content. The read_only property has been set to the given value.
         "400":
-          description: Bad request. Invalid flow description.
+          description: Bad request. Invalid flow read_only value. Value must be boolean.
         "404":
           description: The requested flow does not exist.
   /flows/{flowId}/segments:
@@ -1262,7 +1294,36 @@ paths:
         - $ref: '#/components/parameters/trait_paged_limit'
       responses:
         "200":
-          $ref: '#/components/responses/trait_resource_listing_head_200'
+          description: ""
+          headers:
+            Link:
+              description: Provides references to cursors for paging. Only the 'rel' attribute with value 'next' is currently supported. If 'next' is not present then it is the last page.
+              schema:
+                type: string
+            X-Paging-Limit:
+              description: Identifies the current limit being used for paging. This may not match the requested value if the requested value was too high for the implementation
+              schema:
+                type: integer
+            X-Paging-Timerange:
+              description: Identifies the timerange for the returned data set.
+              schema:
+                $ref: 'schemas/timerange.json'
+            X-Paging-Count:
+              description: The number of items in the returned data set.
+              schema:
+                type: integer
+            X-Paging-Reverse-Order:
+              description: The items are returned in reverse order.
+              schema:
+                type: boolean
+            X-Paging-NextKey:
+              description: Opaque string that can be supplied to the `page` query parameter to get the next page of results.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: string
         "400":
           description: Bad request. Invalid query options.
         "404":
