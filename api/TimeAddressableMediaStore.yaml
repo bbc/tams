@@ -1154,7 +1154,7 @@ paths:
         "204":
           description: No content. The read_only property has been set to the given value.
         "400":
-          description: Bad request. Invalid flow description.
+          description: Bad request. Invalid flow read_only value. Value must be boolean.
         "404":
           description: The requested flow does not exist.
   /flows/{flowId}/segments:
