@@ -471,7 +471,7 @@ paths:
         - Sources
       responses:
         "204":
-          description: No content. The Source segment has been deleted.
+          description: No content. The Source tag has been deleted.
         "404":
           description: The requested Source ID or tag in the path is invalid.
   /sources/{sourceId}/description:
@@ -1061,7 +1061,7 @@ paths:
         - Flows
       responses:
         "204":
-          description: No content. The flow segment has been deleted.
+          description: No content. The flow tag has been deleted.
         "403":
           description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
         "404":
