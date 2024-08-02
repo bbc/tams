@@ -10,7 +10,7 @@
   "event_stream_mechanisms": [
     {
       "name": "webhooks",
-      "docs": "https://bbc.github.io/tams/5.0/index.html#/operations/POST_webhooks"
+      "docs": "https://bbc.github.io/tams/5.1/index.html#/operations/POST_webhooks"
     }
   ]
 }
