@@ -237,7 +237,24 @@ paths:
         - $ref: '#/components/parameters/trait_paged_limit'
       responses:
         "200":
-          $ref: '#/components/responses/trait_resource_listing_head_200'
+          description: ""
+          headers:
+            Link:
+              description: Provides references to cursors for paging. Only the 'rel' attribute with value 'next' and a link to the next page is currently supported. If 'next' is not present then it is the last page.
+              schema:
+                type: string
+            X-Paging-Limit:
+              description: Identifies the current limit being used for paging. This may not match the requested value if the requested value was too high for the implementation
+              schema:
+                type: integer
+            X-Paging-NextKey:
+              description: Opaque string that can be supplied to the `page` query parameter to get the next page of results.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: string
         "400":
           $ref: '#/components/responses/trait_resource_info_head_400'
     get:
@@ -270,6 +287,11 @@ paths:
             is performed.
           schema:
             type: boolean
+        - name: format
+          in: query
+          description: Filter on source format.
+          schema:
+            $ref: '#/components/schemas/contentformat'
         - $ref: '#/components/parameters/trait_resource_paged_key'
         - $ref: '#/components/parameters/trait_paged_limit'
       responses:
@@ -342,8 +364,6 @@ paths:
                     $ref: examples/source-get-200-multi.json
         "404":
           description: The requested Source does not exist.
-        "400":
-          description: Bad request. Invalid query options.
   /sources/{sourceId}/tags:
     parameters:
       - name: sourceId
@@ -423,8 +443,8 @@ paths:
         "404":
           description: The requested Source or tag does not exist.
     put:
-      summary: Set Source Tag
-      description: Set the Source tag
+      summary: Create or Update Source Tag
+      description: Create or update the Source tag
       operationId: PUT_sources-sourceId-tags-name
       tags:
         - Sources
@@ -438,7 +458,7 @@ paths:
         required: true
       responses:
         "204":
-          description: No content. The tag has been updated.
+          description: No content. The tag has been created or updated.
         "400":
           description: Bad request. Invalid Source tag value.
         "404":
@@ -491,8 +511,8 @@ paths:
         "404":
           description: The requested Source does not exist.
     put:
-      summary: Set Source Description
-      description: Create or modify the description property.
+      summary: Create or Update Source Description
+      description: Create or update the description property.
       operationId: PUT_sources-sourceId-description
       tags:
         - Sources
@@ -506,7 +526,7 @@ paths:
         required: true
       responses:
         "204":
-          description: No content. The description has been updated.
+          description: No content. The description has been created or updated.
         "400":
           description: Bad request. Invalid Source description.
         "404":
@@ -559,8 +579,8 @@ paths:
         "404":
           description: The requested Source does not exist, or does not have a label set.
     put:
-      summary: Set Source Label
-      description: Create or modify the label property.
+      summary: Create or Update Source Label
+      description: Create or update the label property.
       operationId: PUT_sources-sourceId-label
       tags:
         - Sources
@@ -574,7 +594,7 @@ paths:
         required: true
       responses:
         "204":
-          description: No content. The label has been updated.
+          description: No content. The label has been created or updated.
         "400":
           description: Bad request. Invalid Source label.
         "404":
@@ -613,7 +633,7 @@ paths:
           in: query
           description: Filter on flow format.
           schema:
-            $ref: '#/components/schemas/flowformat'
+            $ref: '#/components/schemas/contentformat'
         - name: codec
           in: query
           description: Filter on flow codec.
@@ -656,7 +676,24 @@ paths:
         - $ref: '#/components/parameters/trait_paged_limit'
       responses:
         "200":
-          $ref: '#/components/responses/trait_resource_listing_head_200'
+          description: ""
+          headers:
+            Link:
+              description: Provides references to cursors for paging. Only the 'rel' attribute with value 'next' and a link to the next page is currently supported. If 'next' is not present then it is the last page.
+              schema:
+                type: string
+            X-Paging-Limit:
+              description: Identifies the current limit being used for paging. This may not match the requested value if the requested value was too high for the implementation
+              schema:
+                type: integer
+            X-Paging-NextKey:
+              description: Opaque string that can be supplied to the `page` query parameter to get the next page of results.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: string
         "400":
           description: Bad request. Invalid query options.
     get:
@@ -681,7 +718,7 @@ paths:
           in: query
           description: Filter on flow format.
           schema:
-            $ref: '#/components/schemas/flowformat'
+            $ref: '#/components/schemas/contentformat'
         - name: codec
           in: query
           description: Filter on flow codec.
@@ -994,8 +1031,8 @@ paths:
         "404":
           description: The requested flow or tag does not exist.
     put:
-      summary: Set Flow Tag
-      description: Create or modify the tag.
+      summary: Create or Update Flow Tag
+      description: Create or update the tag.
       operationId: PUT_flows-flowId-tags-name
       tags:
         - Flows
@@ -1009,7 +1046,7 @@ paths:
         required: true
       responses:
         "204":
-          description: No content. The tag has been updated.
+          description: No content. The tag has been created or updated.
         "400":
           description: Bad request. Invalid flow tag value.
         "403":
@@ -1064,8 +1101,8 @@ paths:
         "404":
           description: The requested flow does not exist.
     put:
-      summary: Set Flow Description
-      description: Create or modify the description property.
+      summary: Create or Update Flow Description
+      description: Create or update the description property.
       operationId: PUT_flows-flowId-description
       tags:
         - Flows
@@ -1079,7 +1116,7 @@ paths:
         required: true
       responses:
         "204":
-          description: No content. The description has been updated.
+          description: No content. The description has been created or updated.
         "400":
           description: Bad request. Invalid flow description.
         "403":
@@ -1099,6 +1136,74 @@ paths:
           description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
         "404":
           description: The requested flow ID in the path is invalid.
+  /flows/{flowId}/label:
+    parameters:
+      - name: flowId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/uuid'
+        description: The flow identifier.
+    head:
+      summary: Flow Label
+      description: Return Flow label path headers
+      operationId: HEAD_flows-flowId-label
+      tags:
+        - Flows
+      responses:
+        "200":
+          $ref: '#/components/responses/trait_resource_info_head_200'
+        "404":
+          description: The requested Flow does not exist, or does not have a label set.
+    get:
+      summary: Flow Label
+      description: Returns the Flow label property.
+      operationId: GET_flows-flowId-label
+      tags:
+        - Flows
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              example: |
+                "Big Buck Bunny"
+              schema:
+                type: string
+        "404":
+          description: The requested Flow does not exist, or does not have a label set.
+    put:
+      summary: Create or Update Flow Label
+      description: Create or update the label property.
+      operationId: PUT_flows-flowId-label
+      tags:
+        - Flows
+      requestBody:
+        content:
+          application/json:
+            example: |
+              "Big Buck Bunny Movie"
+            schema:
+              type: string
+        required: true
+      responses:
+        "204":
+          description: No content. The label has been created or updated.
+        "400":
+          description: Bad request. Invalid Flow label.
+        "404":
+          description: The requested Flow does not exist.
+    delete:
+      summary: Delete Flow Label
+      description: Delete the label property.
+      operationId: DELETE_flows-flowId-label
+      tags:
+        - Flows
+      responses:
+        "204":
+          description: No content. The Flow label property has been deleted.
+        "404":
+          description: The requested Flow ID in the path is invalid.
   /flows/{flowId}/read_only:
     parameters:
       - name: flowId
@@ -1149,9 +1254,9 @@ paths:
         required: true
       responses:
         "204":
-          description: No content. The read_only property has been updated.
+          description: No content. The read_only property has been set to the given value.
         "400":
-          description: Bad request. Invalid flow description.
+          description: Bad request. Invalid flow read_only value. Value must be boolean.
         "404":
           description: The requested flow does not exist.
   /flows/{flowId}/segments:
@@ -1174,17 +1279,51 @@ paths:
           description: Filter on object identifier.
           schema:
             type: string
+        - name: timerange
+          in: query
+          description: Return only the results in the timerange specified.
+          schema:
+            $ref: 'schemas/timerange.json'
         - name: reverse_order
           in: query
           description: Return segments in reverse time order.
           schema:
             default: false
             type: boolean
-        - $ref: '#/components/parameters/trait_timerange_paged_timerange'
+        - $ref: '#/components/parameters/trait_resource_paged_key'
         - $ref: '#/components/parameters/trait_paged_limit'
       responses:
         "200":
-          $ref: '#/components/responses/trait_resource_listing_head_200'
+          description: ""
+          headers:
+            Link:
+              description: Provides references to cursors for paging. Only the 'rel' attribute with value 'next' is currently supported. If 'next' is not present then it is the last page.
+              schema:
+                type: string
+            X-Paging-Limit:
+              description: Identifies the current limit being used for paging. This may not match the requested value if the requested value was too high for the implementation
+              schema:
+                type: integer
+            X-Paging-Timerange:
+              description: Identifies the timerange for the returned data set.
+              schema:
+                $ref: 'schemas/timerange.json'
+            X-Paging-Count:
+              description: The number of items in the returned data set.
+              schema:
+                type: integer
+            X-Paging-Reverse-Order:
+              description: The items are returned in reverse order.
+              schema:
+                type: boolean
+            X-Paging-NextKey:
+              description: Opaque string that can be supplied to the `page` query parameter to get the next page of results.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: string
         "400":
           description: Bad request. Invalid query options.
         "404":
@@ -1230,13 +1369,18 @@ paths:
           description: Filter on object identifier.
           schema:
             type: string
+        - name: timerange
+          in: query
+          description: Return only the results in the timerange specified.
+          schema:
+            $ref: 'schemas/timerange.json'
         - name: reverse_order
           in: query
           description: Return segments in reverse time order.
           schema:
             default: false
             type: boolean
-        - $ref: '#/components/parameters/trait_timerange_paged_timerange'
+        - $ref: '#/components/parameters/trait_resource_paged_key'
         - $ref: '#/components/parameters/trait_paged_limit'
       responses:
         "200":
@@ -1262,6 +1406,10 @@ paths:
               description: The items are returned in reverse order.
               schema:
                 type: boolean
+            X-Paging-NextKey:
+              description: Opaque string that can be supplied to the `page` query parameter to get the next page of results.
+              schema:
+                type: string
           content:
             application/json:
               schema:
@@ -1304,8 +1452,13 @@ paths:
         - All samples in the object SHOULD be used by the segment.
         - The timestamps of each sample in the media object MUST equal its position on the Flow timeline, OR `ts_offset` MUST
           be set such that `media_object_ts + ts_offset = segment_ts`
-        - The timerange of the segment MUST NOT overlap any other segment in the same Flow.
+        - The timerange of the segment MUST NOT overlap any other segment in the same Flow. The behaviour is
+          undefined if there is an overlap with existing segments and a store may return a 400 error response.
         - The `sample_offset` SHOULD be zero.
+
+        If a client needs to modify a Flow segment, e.g. to correct metadata such as the `key_frame_count` or add additional
+        URLs to `get_urls`, then the client SHOULD first delete the existing segment and then write a new one. The behaviour is
+        undefined if the segment exists and a store may return a 400 error response.
 
         Clients are expected to decide how to break content into media objects, however those objects SHOULD be large
         enough to avoid excessive round trip overheads in the underlying store (_e.g._ of the order of several megabytes)
@@ -1759,13 +1912,14 @@ components:
       title: UUID
       pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
       type: string
-    flowformat:
-      title: Flow Format
-      description: identifies the flow format using a URN string.
+    contentformat:
+      title: Content Format
+      description: Identifies the content format for a flow or source using a URN string.
       enum:
         - urn:x-nmos:format:video
         - urn:x-nmos:format:audio
         - urn:x-nmos:format:data
+        - urn:x-nmos:format:multi
       type: string
     mimetype:
       title: MIME Type
@@ -1790,12 +1944,6 @@ components:
     trait_resource_info_head_404:
       description: Resource was not found.
   parameters:
-    trait_timerange_paged_timerange:
-      name: timerange
-      in: query
-      description: Return only the results in the timerange specified.
-      schema:
-        $ref: 'schemas/timerange.json'
     trait_paged_limit:
       name: limit
       in: query
