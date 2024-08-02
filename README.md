@@ -71,17 +71,17 @@ The Flow model is aligned with the principles and schemas of [AMWA NMOS IS-04](h
 The process of reading from the store is:
 
 1. Client identifies the Flow ID and timerange of interest
-2. Client makes a request to [`GET flows/<flow_id>/segments?timerange=<timerange>`](https://bbc.github.io/tams/5.0/index.html#/operations/GET_flows-flowId-segments) and receives a list of Flow Segments, including their timeranges and download URLs
+2. Client makes a request to [`GET flows/<flow_id>/segments?timerange=<timerange>`](https://bbc.github.io/tams/5.1/index.html#/operations/GET_flows-flowId-segments) and receives a list of Flow Segments, including their timeranges and download URLs
 3. Client downloads each URL, concatenates the Flow Segments together and unwraps the grains within
 4. The first and last Flow Segment may contain more grains than requested, so the client should skip any received not in the requested timerange
 
 The process of writing to the store is:
 
-1. Client creates a Flow if necessary by making a request to [`PUT flows/<flow_id>`](https://bbc.github.io/tams/5.0/index.html#/operations/PUT_flows-flowId)
-2. Client makes a request to [`POST flows/<flow_id>/storage`](https://bbc.github.io/tams/5.0/index.html#/operations/POST_flows-flowId-storage) and receives a list of URLs to PUT media data into, along with an optional `pre` URL to call before writing
+1. Client creates a Flow if necessary by making a request to [`PUT flows/<flow_id>`](https://bbc.github.io/tams/5.1/index.html#/operations/PUT_flows-flowId)
+2. Client makes a request to [`POST flows/<flow_id>/storage`](https://bbc.github.io/tams/5.1/index.html#/operations/POST_flows-flowId-storage) and receives a list of URLs to PUT media data into, along with an optional `pre` URL to call before writing
 3. If a `pre` URL was given, client calls it
 4. Client breaks content into Flow Segments (each of which should contain complete decodable units, _e.g._ a number of complete GOPs for video) and uploads the corresponding media data
-5. Client makes requests to [`POST flows/<flow_id>/segments`](https://bbc.github.io/tams/5.0/index.html#/operations/POST_flows-flowId-segments) with details of each new Flow Segment created, to register them on the timeline
+5. Client makes requests to [`POST flows/<flow_id>/segments`](https://bbc.github.io/tams/5.1/index.html#/operations/POST_flows-flowId-segments) with details of each new Flow Segment created, to register them on the timeline
 
 ### Sources
 
@@ -110,14 +110,14 @@ Various scenarios are explored in the [Practical Guidance for Media](https://spe
 ### Flow and Media Timelines
 
 Flows exist on an infinite timeline (the "Flow timeline"), and the position of content on this timeline is defined by the `timerange` attribute in each Flow Segment of that Flow.
-A timerange is represented in JSON and text using the [TimeRange string pattern](https://bbc.github.io/tams/5.0/index.html#/schemas/timerange).
+A timerange is represented in JSON and text using the [TimeRange string pattern](https://bbc.github.io/tams/5.1/index.html#/schemas/timerange).
 Separately the media objects have a timeline (the "media timeline") defined by the container format itself: the timestamps recorded inside the media object for each grain.
 The Flow Segment attributes describe how to map the media timeline onto the Flow timeline.
 For Flows using codecs with temporal re-ordering, both of these timelines represent the presentation timeline of the media.
 Note that no explicit relationship is defined between the Flow timelines of different Flows, although a mechanism to define that may be added in future.
 
 For brevity these diagrams start at `0:0`, however it is likely a practical system would stick closer to wall-clock time or TAI, such as starting at `1709634568:0`.
-A timestamp is represented in JSON and text using the [Timestamp string pattern](https://bbc.github.io/tams/5.0/index.html#/schemas/timestamp).
+A timestamp is represented in JSON and text using the [Timestamp string pattern](https://bbc.github.io/tams/5.1/index.html#/schemas/timestamp).
 
 ![Graphic showing the Flow timeline and 3 Flow Segments in Flow A, with a media timeline showing 10 samples in each object](./docs/images/Flow%20and%20Media%20Timelines-Flow%20A.drawio.png)
 
