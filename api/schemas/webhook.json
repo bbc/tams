@@ -20,7 +20,7 @@
             "type": "string"
         },
         "events": {
-            "description": "Filter events to those with event type in this list",
+            "description": "List of event types to receive",
             "type": "array",
             "items": {
                 "type": "string"
