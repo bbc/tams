@@ -48,3 +48,4 @@ For more information on how we use application notes, see [here](./appnotes/READ
 | [0006](./appnotes/0006-containers-and-mappings.md)               | Containers and Mappings                                       |
 | [0007](./appnotes/0007-populating-source-metadata.md)            | Populating Source Metadata                                    |
 | [0008](./appnotes/0008-timestamps-in-TAMS.md)                    | Timestamps in TAMS                                            |
+| [0009](./appnotes/0009-storage-label-format.md)                  | Storage label format specification                            |
