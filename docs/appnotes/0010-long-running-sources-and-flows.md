@@ -15,12 +15,12 @@ Assigning different Source and Flow IDs to each of those meanings allows those I
 
 In a suitably integrated solution, assigning different IDs for each editorial meaning could be very simple.
 
-For example, consider a "cloud MCR" solution that allows an organisation to receive input feeds in a variety of forms and "route" them to different systems (including TAMS-based recording), with a mechanism to place bookings for incoming content.
-In this case, automation creates the infrastructure for each booking (virtual routers and ingesters and similar), however different bookings may end up sharing resources such as IP addresses.
+For example, consider a "cloud MCR" solution that allows an organisation to receive input feeds in a variety of forms and "route" them to different systems (including TAMS-based recording), with a mechanism to plan events in advance for incoming content.
+In this case, automation creates the infrastructure for each event (virtual routers and ingesters and similar), however different events may end up sharing resources such as IP addresses.
 
-Here, the new ingester created for the booking could have a new Source ID/Flow ID pair created and assigned, either by itself, or from some production planning system linked with the booking system.
+Here, the new ingester created for the event could have a new Source ID/Flow ID pair created and assigned, either by itself, or from some production planning system linked with the event planning system.
 
-![Diagram showing a hypothetical Cloud MCR that receives Flows and routes them to a recorder, managed by a booking system](./images/0010-long-running-sources-and-flows-fig1-cloud-mcr.png)
+![Diagram showing a hypothetical Cloud MCR that receives Flows and routes them to a recorder, managed by an event planning system](./images/0010-long-running-sources-and-flows-fig1-cloud-mcr.png)
 
 ### On-premise Record Ports
 
