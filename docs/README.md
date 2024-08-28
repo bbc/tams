@@ -30,6 +30,8 @@ For more information on how we use ADRs, see [here](./adr/README.md).
 | [0018](./adr/0018-restrict-direct-source-modification.md)          | Restrict direct Source modification                                        |
 | [0019](./adr/0019-consolidate-modified-updated-terms.md)           | Rename `modified_by` properties in Source and Flow schemas to `updated_by` |
 | [0020](./adr/0020-version-signalling.md)                           | Improving the signalling of the supported API version in implementations   |
+| [0021](./adr/0021-storage-label-format.md)                         | Options for `get_urls` labels on Flow Segments                             |
+| [0022](./adr/0022-flow-bit-rate-properties)                        | Definitions for Flow bit rate properties and additional properties         |
 | [0025](./adr/0025-flow-property-updates.md)                        | Options for updating Flow properties                                       |
 
 \* Note: ADR 0004a was the unintended result of a number clash in the early development of TAMS which wasn't caught before publication
