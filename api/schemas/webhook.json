@@ -25,6 +25,22 @@
             "items": {
                 "type": "string"
             }
+        },
+        "flow_ids": {
+            "description": "Limit Flow related events to the given list of Flow IDs. Non-Flow related events are not affected",
+            "type": "array",
+            "items": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+        },
+        "source_ids": {
+            "description": "Limit Source related events to the given list of Source IDs. Non-Source related events are not affected",
+            "type": "array",
+            "items": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
         }
     }
 }
