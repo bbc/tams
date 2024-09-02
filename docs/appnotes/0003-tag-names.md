@@ -146,6 +146,21 @@ A string representation of a Fraction, used to set the segment rate (segments pe
 This is an average rate.
 Actual segment rates/durations may vary.
 
+### c2pa-provenance
+
+Status: **Proposed**
+
+Proposed in [APPNOTE0011 - C2PA provenance across related Sources and Flows](../appnotes/0011-c2pa.md).
+
+Signals the presence of C2PA provenance data (a "manifest store") in a Flow or child Flow.
+
+Known values:
+
+* No Tag: A C2PA manifest has not been identified in this Flow
+* `none`: A C2PA manifest is not present inside this Flow
+* `embedded`: A C2PA manifest is present inside this multi-essence Flow
+* `detached`: A C2PA manifest has been copied from this multi-essence Flow into a collected mono-essence data Flow. The Flow will have the role `c2pa` in the multi-essence Flow's `flow_collection` array.
+
 ## Known Source Tags
 
 There are currently no known Source Tags.
