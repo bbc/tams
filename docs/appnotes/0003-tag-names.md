@@ -159,7 +159,8 @@ Known values:
 * No Tag: A C2PA manifest has not been identified in this Flow
 * `none`: A C2PA manifest is not present inside this Flow
 * `embedded`: A C2PA manifest is present inside this multi-essence Flow
-* `detached`: A C2PA manifest has been copied from this multi-essence Flow into a collected mono-essence data Flow. The Flow will have the role `c2pa` in the multi-essence Flow's `flow_collection` array.
+* `detached`: A C2PA manifest has been copied from this multi-essence Flow into a collected mono-essence data Flow.
+  The Flow will have the role `c2pa` in the multi-essence Flow's `flow_collection` array.
 
 ## Known Source Tags
 
