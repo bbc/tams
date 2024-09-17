@@ -1508,6 +1508,15 @@ paths:
           schema:
             default: false
             type: boolean
+        - name: accept_get_urls
+          in: query
+          description: |
+            A comma separated list of labels of flow segment `get_urls` to include in the response.
+            A 'default' label selects URLs with a 'default' or no label.
+            An empty `accept_get_urls` results in an empty or no `get_urls` flow segment property in the response.
+          schema:
+            type: string
+            pattern: ^[^,]*(,[^,]*)*$
         - $ref: '#/components/parameters/trait_resource_paged_key'
         - $ref: '#/components/parameters/trait_paged_limit'
       responses:
@@ -1598,6 +1607,15 @@ paths:
           schema:
             default: false
             type: boolean
+        - name: accept_get_urls
+          in: query
+          description: |
+            A comma separated list of labels of flow segment `get_urls` to include in the response.
+            A 'default' label selects URLs with a 'default' or no label.
+            An empty `accept_get_urls` results in an empty or no `get_urls` flow segment property in the response.
+          schema:
+            type: string
+            pattern: ^[^,]*(,[^,]*)*$
         - $ref: '#/components/parameters/trait_resource_paged_key'
         - $ref: '#/components/parameters/trait_paged_limit'
       responses:
