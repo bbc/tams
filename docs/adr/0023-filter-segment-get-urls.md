@@ -5,7 +5,7 @@ status: "proposed"
 
 ## Context and Problem Statement
 
-Each Flow Segment returned by the `/flows/<flow id>/segment` endpoint includes a `get_urls` propery that may include (labelled) URLs for fetching media objects.
+Each Flow Segment returned by the `/flows/<flow id>/segment` endpoint includes a `get_urls` property that may include (labelled) URLs for fetching media objects.
 The calculation of pre-signed URLs for example can result in an not insignificant increased request time.
 Clients do not need the `get_urls` if they don't intend to fetch the media objects.
 This ADR proposes adding a query option to filter the URLs that need to be included by a TAMS.
