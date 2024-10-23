@@ -50,4 +50,4 @@ For more information on how we use application notes, see [here](./appnotes/READ
 | [0008](./appnotes/0008-timestamps-in-TAMS.md)                    | Timestamps in TAMS                                            |
 | [0009](./appnotes/0009-storage-label-format.md)                  | Storage label format specification                            |
 | [0010](./appnotes/0010-long-running-sources-and-flows.md)        | Long-running Sources and Flows                                |
-| [0010](./appnotes/0011-c2pa.md)        | C2PA provenance across related Sources and Flows |
+| [0011](./appnotes/0011-c2pa.md)                                  | C2PA provenance across related Sources and Flows |
