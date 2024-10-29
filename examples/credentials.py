@@ -43,11 +43,11 @@ class OAuth2ClientCredentials(RenewableCredentials):
     """OAuth2 Client Credentials Grant credentials"""
     def __init__(
         self,
-        url: str,
+        authorization_url: str,
         client_id: str,
         client_secret: str,
     ) -> None:
-        self.url = url
+        self.authorization_url = authorization_url
         self.client_id = client_id
         self.client_secret = client_secret
         self.access_token = ""
@@ -65,7 +65,7 @@ class OAuth2ClientCredentials(RenewableCredentials):
         headers = get_basic_auth_header(self.client_id, self.client_secret)
 
         async with aiohttp.ClientSession() as session:
-            async with session.post(self.url, data=form_data, headers=headers) as resp:
+            async with session.post(self.authorization_url, data=form_data, headers=headers) as resp:
                 resp.raise_for_status()
 
                 token_response = await resp.json()
