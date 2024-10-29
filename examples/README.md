@@ -20,7 +20,7 @@ The following is required to run the example scripts:
 
 ### Sample Content
 
-The [Big Buck Bunny](https://peach.blender.org/) is used as sample content for ingesting into TAMS.
+The [Big Buck Bunny](https://peach.blender.org/) short film is used as sample content for ingesting into TAMS.
 Run `make sample_content` to download a file containing 30 fps HD and convert it to a video-only HLS playlist using ffmpeg.
 The result can be found in the `sample_content/` folder.
 
