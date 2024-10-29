@@ -6,7 +6,7 @@ This directory contains a number of Python scripts that demonstrate some basic u
 
 The following is required to run the example scripts:
 
-* A TAMS store
+* A TAMS store (e.g. deploying the [AWS Labs Time-addressable Media Store](https://github.com/awslabs/time-addressable-media-store) or similar)
   * the API URL is passed to the scripts using the `--tams-url` arg
   * the scripts assume that media objects can be read and written using pre-signed URLs
 * API credentials, either
