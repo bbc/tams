@@ -151,7 +151,7 @@ Firstly, create the 2 input Flows from the sample content.
 Run the [ingest HLS](#ingest-hls-ingest_hlspy) script as follows (replace `<URL>`),
 
 ```bash
-./ingest_hls.py --tams-url <URL> --hls-filename sample_content/hls_output.m3u8 --hls-start-segment 0 --hls-segment-count 5`
+./ingest_hls.py --tams-url <URL> --hls-filename sample_content/hls_output.m3u8 --hls-start-segment 0 --hls-segment-count 5
 ```
 
 This will create Flow 1 that contains 5 segments of the sample content at the start.
@@ -159,7 +159,7 @@ This will create Flow 1 that contains 5 segments of the sample content at the st
 Run the [ingest HLS](#ingest-hls-ingest_hlspy) script again as follows (replace `<URL>`),
 
 ```bash
-./ingest_hls.py --tams-url <URL> --hls-filename sample_content/hls_output.m3u8 --hls-start-segment 5 --hls-segment-count 5`
+./ingest_hls.py --tams-url <URL> --hls-filename sample_content/hls_output.m3u8 --hls-start-segment 5 --hls-segment-count 5
 ```
 
 This will create Flow 2 that contains 5 segments of sample content starting from the 5th segment.
