@@ -166,7 +166,9 @@ This will create Flow 2 that contains 5 segments of sample content starting from
 
 Finally, run the simple edit script to create a Flow from the 2 Flows in reverse time order (replace `<URL>` and set `<FLOW ID 2>` and `<FLOW ID 1>` to the Flow IDs logged previously),
 
-`./simple_edit.py --tams-url https://squirrel.cfp.ch.bbc.co.uk/x-cloudfit/squirrelmediastore/v5.1 --input1-flow-id <FLOW ID 2> --input2-flow-id <FLOW ID 1>`.
+```bash
+./simple_edit.py --tams-url <URL> --input1-flow-id <FLOW ID 2> --input2-flow-id <FLOW ID 1>
+```
 
 Run the outgest file script as follows (replace `<URL>` and set `<FLOW ID>` to the Flow ID logged by the simple edit script),
 
