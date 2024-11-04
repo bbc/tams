@@ -610,6 +610,147 @@ paths:
           description: No content. The Source label property has been deleted.
         "404":
           description: The requested Source ID in the path is invalid.
+  /sources/{sourceId}/timeline:
+    parameters:
+      - name: sourceId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/uuid'
+        description: The Source identifier.
+    head:
+      summary: Source Timeline
+      description: Return Source Timeline path headers
+      operationId: HEAD_sources-sourceId-timeline
+      tags:
+        - Sources
+      responses:
+        "200":
+          $ref: '#/components/responses/trait_resource_info_head_200'
+        "404":
+          description: The requested Source does not exist, or does not have a label set.
+    get:
+      summary: Source Timeline
+      description: |
+        Returns the Source timeline
+
+        *Unsure: What happens if there's no timeline on file, because Flow lightweight copy was used instead? Should timeline be read-only?*
+      operationId: GET_sources-sourceId-timeline
+      tags:
+        - Sources
+      parameters:
+        - name: timerange
+          in: query
+          description: Return only the results in the timerange specified.
+          schema:
+            $ref: 'schemas/timerange.json'
+        - $ref: '#/components/parameters/trait_resource_paged_key'
+        - $ref: '#/components/parameters/trait_paged_limit'
+      responses:
+        "200":
+          description: ""
+          headers:
+            Link:
+              description: Provides references to cursors for paging. Only the 'rel' attribute with value 'next' is currently supported. If 'next' is not present then it is the last page.
+              schema:
+                type: string
+            X-Paging-Limit:
+              description: Identifies the current limit being used for paging. This may not match the requested value if the requested value was too high for the implementation
+              schema:
+                type: integer
+            X-Paging-Timerange:
+              description: Identifies the timerange for the returned data set.
+              schema:
+                $ref: 'schemas/timerange.json'
+            X-Paging-Count:
+              description: The number of items in the returned data set.
+              schema:
+                type: integer
+            X-Paging-Reverse-Order:
+              description: The items are returned in reverse order.
+              schema:
+                type: boolean
+            X-Paging-NextKey:
+              description: Opaque string that can be supplied to the `page` query parameter to get the next page of results.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: schemas/source-timeline.json
+              examples:
+                basic:
+                  summary: Basic Example
+                  value:
+                    - source_id: 44f2fc4b-b461-4f70-8341-c820a4be14a2
+                      timerange: "[0:0_9:0)"
+                    - source_id: 6c77ab9f-bdef-407a-9b35-796005dacc28
+                      timerange: "[11:0_20:0)"
+                      original_timerange: "[1:0_10:0)"
+        "400":
+          description: Bad request. Invalid query options.
+        "404":
+          description: The Source ID in the path is invalid.
+
+    post:
+      summary: Create Source Timeline element
+      description: |
+        Register a new Source Timeline element, describing part of the the timeline with reference to another
+        Source.
+
+        Where that other Source is, in turn, a reference, implementations should "look through" the reference
+        and store the underlying location to which it points.
+
+        Timeranges specified as Source Timeline MUST NOT overlap with those specified for Flow Segments, for any
+        Flow of the Source *(but see option 2a in the associated draft ADR for an alternative)*.
+      operationId: POST_sources-sourceId-timeline
+      tags:
+        - Sources
+      requestBody:
+        content:
+          application/json:
+            example:
+              source_id: 6c77ab9f-bdef-407a-9b35-796005dacc28
+              timerange: "[11:0_20:0)"
+              original_timerange: "[1:0_10:0)"
+            schema:
+              $ref: schemas/source-timeline.json
+        required: true
+      responses:
+        "201":
+          description: created. The element has been created.
+        "400":
+          description: Bad request. Invalid JSON, or the given timeline is already covered by a Flow Segment
+        "403":
+          description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
+        "404":
+          description: The Source does not exist.
+    delete:
+      summary: Delete Source timeline element
+      description: |
+        *Note: This should probably have a delete request mechanism like Flows, but is omitted in this draft*
+      operationId: DELETE_sources-sourceId-timeline
+      tags:
+        - Sources
+      parameters:
+        - name: timerange
+          in: query
+          description: Only delete timeline elements that are completely covered by the given timerange.
+          schema:
+            default: _
+            $ref: 'schemas/timerange.json'
+      responses:
+        "204":
+          description: No content. The elements have been or will be deleted.
+        "400":
+          description: Bad request. Invalid query options.
+        "403":
+          description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
+        "404":
+          description: The requested flow ID in the path is invalid.
+
   /flows:
     head:
       summary: List Flows
