@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "description": "Provides references to other Sources in a reference Source timeline",
+  "title": "Source Timeline",
+  "required": [
+    "source_id",
+    "timerange"
+  ],
+  "properties": {
+    "source_id" : {
+      "description": "The ID of the original Source being referenced.",
+      "type": "string"
+    },
+    "timerange": {
+      "description": "The timerange where this item should be placed on the current Source timeline, as described by the [TimeRange](../schemas/timerange#top) type. Note that where temporal re-ordering is used, this refers to the presentation timeline.",
+      "$ref": "timerange.json"
+    },
+    "original_timerange": {
+      "description": "The timerange from which the item should be drawn in the original Source, as described by the [TimeRange](../schemas/timerange#top) type. If omitted, assumed to match the `timerange`.",
+      "$ref": "timerange.json"
+    }
+  }
+}
