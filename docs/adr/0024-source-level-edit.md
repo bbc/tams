@@ -57,7 +57,7 @@ Stores implementations or their clients could then render that composition on-th
 
 Provide an API endpoint that allows Sources to use portions of the timerange of other Sources.
 This would be equivalent to the existing object-reuse mechanism for Flows, while mitigating the shortcomings listed above.
-The API would allow a client to specify that part of a Source timeline is drawn from another Source - see **TODO: LINKME** for a possible implementation and examples.
+The API would allow a client to specify that part of a Source timeline is drawn from another Source - see <https://github.com/bbc/tams/commit/82bd1be> for a possible implementation and examples.
 This would allow for a cuts-based edit without compositing, however the Flows that represent these Sources could have new segments added to cover transitions.
 
 For example, given Sources A and B, a new Source C could exist containing `SourceA@[0:0_9:0)`, then a 2 second gap, then `SourceB@[1:0_10:0)`.
