@@ -47,12 +47,15 @@ The SCTE 214-1 specification adds a DASH extension `maxSegmentRate` (note that `
 * Option 1: Leave the definition of bit rates to be provided externally.
 * Option 2: Define essence bit rates.
 * Option 3a: Define segment bit rates.
-* Option 3b: Define segment bit rates with additional properties.
+* Option 3b: Define segment bit rates with target segment duration.
+* Option 3c: Define segment bit rates with segment size.
+* Option 3d: Define segment bit rates with max segment duration.
 * Option 4: Define both essence and segment bit rate properties.
 
 ## Decision Outcome
 
-tbd
+Currently favouring "Option 3b", because it allows a receiver to estimate the buffer size using the maximum bit rate and target segment duration.
+Option 3c may be chosen if segment size is a requirement.
 
 ### Implementation
 
@@ -114,7 +117,7 @@ The value could change over time as segments become available or are removed fro
 * Bad, the information provided by the Flow is incomplete and doesn't allow the bit rate to be used to decide how much segment data needs to be buffered in the receiver for example
 * Bad, it doesn't directly provide essence bit rate information for users of TAMS where the essence in other contexts is not transmitted in the same segments as TAMS
 
-### Option 3b: Define segment bit rates and additional properties
+### Option 3b: Define segment bit rates with target segment duration
 
 In [Option 3a](#option-3a-define-segment-bit-rates) the `max_bit_rate` on it's own doesn't provide sufficient information to calculate the size or duration of the receiver buffer needed to allow for continuous playback (under ideal network conditions).
 The descriptions and calculations from SCTE 214-1 section 10.3 provides insights to what information could be provided.
@@ -129,31 +132,52 @@ The description in SCTE 214-1 section 10.3 includes a formula for calculating th
 The buffer size is defined as `1.1 * MSR[R] * SDmax`.
 `MSR[R]` in the TAMS context is `max_bit_rate`, `SDmax` is the maximum segment duration and `1.1` adds a 10% overhead for additional event data.
 The proposal is to add a `max_segment_duration` (floating point, seconds) property that provides the maximum segment duration (`SDmax`) for the Flow.
-The `SDmax` is approximately `min(segment_duration * 1.5, max_segment_duration)` and the minimum buffer size in bytes is then approximately `max_bit_rate * 1000 * SDmax * 8`.
-The calculations break down once segments exceed the 1.5 times the `segment_duration` as a segment won't fit into the buffer.
-SCTE 214-1 puts limits on the segment size so that they don't exceed the buffer size.
+The variation in segment duration is assumed to be between 0.5 and 1.5 the segment_duration.
+The `SDmax` is approximately `segment_duration * 1.5` and the minimum buffer size in bytes is then approximately `max_bit_rate * 1000 * SDmax * 8`.
 
 Would a property equivalent to `minBufferTime` in DASH be useful as well?
 
+In summary, this option extends [Option 3a](#option-3a-define-segment-bit-rates) with this property:
+
+* `segment_duration` (rational, seconds): the target segment duration for segmenting the Flow media
+
+* Good, provides information about the segments that allows the bit rate information to be used to estimate receiver buffer sizes required for continuous playback (not taking network conditions into account)
+* Bad, it doesn't directly provide essence bit rate information for users of TAMS where the essence is transmitted by other means
+
+### Option 3c: Define segment bit rates with segment size
+
+SCTE 214-1 puts limits on the segment size so that they don't exceed the buffer size.
 The TAMS doesn't require media to be segmented in a way that is compatible with the restrictions applied to HLS and DASH segments.
 Some applications my optimise segments for throughput rather than taking latency into account.
 E.g. a 10 MB segment size may be the optimal segment size for an object store for maximum throughput.
 The proposal is to add `segment_size` (integer, bytes) and `max_segment_size` (integer, bytes) properties for applications that segment based on size rather than duration.
 
-In summary, this option extends [Option 3a](#option-3a-define-segment-bit-rates) with these properties:
+In summary, this option extends [Option 3b](#option-3b-define-segment-bit-rates-with-target-segment-duration) with these properties:
 
-* `segment_duration` (rational, seconds): the target segment duration for segmenting the Flow media
-* `max_segment_duration` (floating point, seconds): the maximum segment duration in TAMS for the Flow
 * `segment_size` (integer, bytes): the target segment size for segmenting the Flow media
 * `max_segment_size` (integer, bytes): the maximim segment size in TAMS for the Flow
 
-* Good, provides information about the segments that allows the bit rate information to be used to estimate receiver buffer sizes required for continuous playback (not taking network conditions into account)
-* Bad, it doesn't directly provide essence bit rate information for users of TAMS where the essence is transmitted by other means
+* Good, provides information about the segments optimised for size rather than duration
+* Good, provides information about the minimum buffer size required to accommodate a single segment
+* Neutral, the properties may not be used
+
+### Option 3d: Define segment bit rates with max segment duration
+
+In this option the maximum segment duration is provided explicitly by the `max_segment_duration` property rather than assuming the maximum size variation being `segment_duration * 1.5`.
+The `SDmax` is then approximately `min(segment_duration * 1.5, max_segment_duration)`
+
+In summary, this option extends [Option 3b](#option-3b-define-segment-bit-rates-with-target-segment-duration) with this property:
+
+* `max_segment_duration` (floating point, seconds): the maximum segment duration in TAMS for the Flow
+
+* Good, provides information about the segments that allows a more accurate bit rate estimate
+* Good, the calculations would not break down once segments exceed the 1.5 times the `segment_duration`.
+* Neutral, the property may not be used
 
 ### Option 4: Define both essence and segment bit rate properties
 
 TAMS should support a wide range of applications as possible.
-This option combines [Option 2](#option-2-define-essence-bit-rates) with [Option 3b](#option-3b-define-segment-bit-rates-and-additional-properties) to allow bit rate information to be provided for both essence data and segments.
+This option combines [Option 2](#option-2-define-essence-bit-rates) with [Option 3b](#option-3b-define-segment-bit-rates-with-target-segment-duration) to allow bit rate information to be provided for both essence data and segments.
 
 The `avg_bit_rate` property is split into `avg_essence_bit_rate` and `avg_segment_bit_rate` properties.
 The `max_bit_rate` property is split into `max_essence_bit_rate` and `max_segment_bit_rate` properties.
