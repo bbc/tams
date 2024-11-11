@@ -61,6 +61,9 @@ Option 3c may be chosen if segment size is a requirement.
 
 tbd
 
+***Note: it was decided that maximum bit rate would be a required Flow property and average bit rate an optional property. Update the specfication changes made to the flow property update PR to remove the DELETE option on max_bit_rate***
+***Note: the description in the specification should reference this ADR for a complete definition of how the buffer size requirements can be estimated using the maximum bit rate and segment duration***
+
 ## Pros and Cons of the Options
 
 ### Option 1: Leave the definition of bit rates to be provided externally
