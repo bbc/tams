@@ -1512,8 +1512,9 @@ paths:
           in: query
           description: |
             A comma separated list of labels of flow segment `get_urls` to include in the response.
+            Omitting `accept_get_urls` will result in all `get_urls` returned.
             A 'default' label selects URLs with a 'default' or no label.
-            An empty `accept_get_urls` results in an empty or no `get_urls` flow segment property in the response.
+            An empty `accept_get_urls` results in an empty or no `get_urls` in the response.
             Without `get_urls`, the response from the service could be substantially faster if it is not required to
             generate a large number of pre-signed URLs for example.
           schema:
@@ -1613,8 +1614,9 @@ paths:
           in: query
           description: |
             A comma separated list of labels of flow segment `get_urls` to include in the response.
+            Omitting `accept_get_urls` will result in all `get_urls` returned.
             A 'default' label selects URLs with a 'default' or no label.
-            An empty `accept_get_urls` results in an empty or no `get_urls` flow segment property in the response.
+            An empty `accept_get_urls` results in an empty or no `get_urls` in the response.
             Without `get_urls`, the response from the service could be substantially faster if it is not required to
             generate a large number of pre-signed URLs for example.
           schema:
