@@ -135,9 +135,6 @@ The script follows these steps:
 * each segment media object is downloaded using a TAMS provided pre-signed URL
 * the media timing is adjusted using the segment `ts_offset`, `sample_offset` and `sample_count` properties as required as well as timestamp rollover within the segment time period
 * the media is re-wrapped to the local MPEG-TS file
-* each segment media file is read to extract the timerange
-* each segment media file is uploaded using pre-signed URLs provided by the TAMS
-* each segment is registered in TAMS
 
 > The script has not been optimised to download segments concurrently.
 
