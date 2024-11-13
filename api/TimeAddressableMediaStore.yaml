@@ -1261,6 +1261,78 @@ paths:
           description: Bad request. Invalid flow read_only value. Value must be boolean.
         "404":
           description: The requested flow does not exist.
+  /flows/{flowId}/flow_collection:
+    parameters:
+      - name: flowId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/uuid'
+        description: The flow identifier.
+    head:
+      summary: Flow Collection
+      description: Returns the flow collection path headers
+      operationId: HEAD_flows-flowId-flow-collection
+      tags:
+        - Flows
+      responses:
+        "200":
+          $ref: '#/components/responses/trait_resource_info_head_200'
+        "404":
+          $ref: '#/components/responses/trait_resource_info_head_404'
+    get:
+      summary: Flow Collection
+      description: Returns the flow collection property.
+      operationId: GET_flows-flowId-flow-collection
+      tags:
+        - Flows
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              example:
+                $ref: examples/flow-collection-get-200.json
+              schema:
+                $ref: schemas/flow-collection.json
+        "404":
+          description: The requested flow does not exist.
+    put:
+      summary: Create or Update Flow Collection
+      description: Create or update the flow collection property.
+      operationId: PUT_flows-flowId-flow-collection
+      tags:
+        - Flows
+      requestBody:
+        content:
+          application/json:
+            example:
+              $ref: examples/flow-collection-put.json
+            schema:
+              $ref: schemas/flow-collection.json
+        required: true
+      responses:
+        "204":
+          description: No content. The flow collection has been created or updated.
+        "400":
+          description: Bad request. Invalid flow collection.
+        "403":
+          description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
+        "404":
+          description: The requested flow does not exist.
+    delete:
+      summary: Delete Flow Collection
+      description: Delete the flow collection property.
+      operationId: DELETE_flows-flowId-flow-collection
+      tags:
+        - Flows
+      responses:
+        "204":
+          description: No content. The flow collection property has been deleted.
+        "403":
+          description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
+        "404":
+          description: The requested flow ID in the path is invalid.
   /flows/{flowId}/segments:
     parameters:
       - name: flowId
