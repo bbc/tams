@@ -1,0 +1,7 @@
+{
+    "title": "Flow Collection",
+    "type": "array",
+    "items": {
+        "$ref": "collection-item.json"
+    }
+}
