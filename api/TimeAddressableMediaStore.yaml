@@ -710,7 +710,7 @@ paths:
             $ref: '#/components/schemas/uuid'
         - name: timerange
           in: query
-          description: Filter on flows that overlap the given timerange.
+          description: Filter on flows that overlap the given timerange. An empty timerange returns flows with no content.
           schema:
             default: _
             $ref: 'schemas/timerange.json'
