@@ -34,6 +34,11 @@ The tags below are marked with the following statuses:
 * **Proposed**:
   * Not yet in common usage, but use should be considered
   * ADR where this tag was proposed is stated where available
+* **Experimental**:
+  * Created for an experimental implementation or application
+  * Tag may never be proposed
+  * Tag may be proposed in future, possibly with a different name or meaning
+  * Tag may appear in one or more implementations or versions
 * **Deprecated**:
   * Tag is deprecated and should no longer be used
   * Tag *may* still appear e.g. in old Flow/Source entries
@@ -161,6 +166,30 @@ Known values:
 * `embedded`: A C2PA manifest is present inside this multi-essence Flow
 * `detached`: A C2PA manifest has been copied from this multi-essence Flow into a collected mono-essence data Flow.
   The Flow will have the role `c2pa` in the multi-essence Flow's `flow_collection` array.
+
+### hls_segments
+
+Status: **Experimental**
+
+Used in the TAMS demonstration at IBC 2024.
+
+The type is a `number`.
+It is used to limit the number of segments presented in the HLS manifest.
+Defaults to `150` if the tag is not set.
+Use the value `inf` to list all segments.
+However, listing all segments may result in the generation of the HLS manifest timing out.
+
+### hls_segment_length
+
+Status: **Experimental**
+
+Used in the TAMS demonstration at IBC 2024.
+
+The type is a `number`.
+It is used to calculate the [MEDIA-SEQUENCE](https://datatracker.ietf.org/doc/html/rfc8216#section-4.3.3.2) value in the HLS manifest.
+This tag is only used if the [flow_status](#flow_status) tag value is `ingesting`.
+The value of this tag should be set to the duration of each segment in the flow (in seconds).
+Flows using this feature must therefore have segments of consistant length.
 
 ## Known Source Tags
 
