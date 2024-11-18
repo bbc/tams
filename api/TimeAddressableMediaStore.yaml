@@ -1024,8 +1024,8 @@ paths:
           description: ""
           content:
             application/json:
-              example:
-                $ref: examples/flow-tag-get-200.json
+              example: |
+                "full"
               schema:
                 type: string
         "404":
@@ -1039,8 +1039,8 @@ paths:
       requestBody:
         content:
           application/json:
-            example:
-              $ref: examples/flow-tag-put.json
+            example: |
+              "proxy"
             schema:
               type: string
         required: true
@@ -1096,8 +1096,10 @@ paths:
           description: ""
           content:
             application/json:
-              example:
-                $ref: examples/flow-description-get-200.json
+              example: |
+                "video capture"
+              schema:
+                type: string
         "404":
           description: The requested flow does not exist.
     put:
@@ -1109,8 +1111,8 @@ paths:
       requestBody:
         content:
           application/json:
-            example:
-              $ref: examples/flow-description-put.json
+            example: |
+              "Big Buck Bunny video-only capture"
             schema:
               type: string
         required: true
