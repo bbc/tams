@@ -135,6 +135,7 @@ The chosen options are: a2, b3 and c4.
 
 Option a2 is chosen to allow all properties (with some exceptions) to be corrected and not require a Flow to be complete on creation.
 It is expected that systems that sit in front of the TAMS API apply additional constraints on updates for a particular installation.
+Clients SHOULD NOT update properties in the "Properties that should be set once on creation and not updated" category listed in the [Context and Problem Statement](#context-and-problem-statement) section, however TAMS implementations MAY permit it to correct mistakes and simplify client implementations.
 
 Options b3 and c4 are chosen to keep the API simple at this stage until requirements for partial updates to Flows are clearer.
 
