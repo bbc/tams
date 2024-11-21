@@ -1236,8 +1236,9 @@ paths:
           description: ""
           content:
             application/json:
-              example:
-                $ref: examples/flow-read-only-get-200.json
+              example: true
+              schema:
+                type: boolean
         "404":
           description: The requested flow does not exist.
     put:
@@ -1249,8 +1250,7 @@ paths:
       requestBody:
         content:
           application/json:
-            example:
-              $ref: examples/flow-read-only-put.json
+            example: true
             schema:
               type: boolean
         required: true
