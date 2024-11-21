@@ -1363,8 +1363,10 @@ paths:
           description: ""
           content:
             application/json:
-              example:
-                $ref: examples/flow-max-bit-rate-get-200.json
+              example: 5000
+              schema:
+                type: integer
+                minimum: 0
         "404":
           description: The requested flow does not exist.
     put:
@@ -1376,10 +1378,10 @@ paths:
       requestBody:
         content:
           application/json:
-            example:
-              $ref: examples/flow-max-bit-rate-put.json
+            example: 5000
             schema:
               type: integer
+              minimum: 0
         required: true
       responses:
         "204":
@@ -1433,8 +1435,10 @@ paths:
           description: ""
           content:
             application/json:
-              example:
-                $ref: examples/flow-avg-bit-rate-get-200.json
+              example: 3246
+              schema:
+                type: integer
+                minimum: 0
         "404":
           description: The requested flow does not exist.
     put:
@@ -1446,10 +1450,10 @@ paths:
       requestBody:
         content:
           application/json:
-            example:
-              $ref: examples/flow-avg-bit-rate-put.json
+            example: 3246
             schema:
               type: integer
+              minimum: 0
         required: true
       responses:
         "204":
