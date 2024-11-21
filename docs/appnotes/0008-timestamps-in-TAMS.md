@@ -14,10 +14,19 @@ Future work may extend the specification to allow more explicit signalling of ti
 
 ## Content
 
-### Timestamps
+### Timestamps in the API
 
 A timerange is associated with each media segment written, in the body of the POST request to register the segment.
-See the API documentation for [FlowSegments](https://bbc.github.io/tams/5.0/index.html#/operations/POST_flows-flowId-segments) for more details.
+See the API documentation for [Flow Segments](https://bbc.github.io/tams/5.0/index.html#/operations/POST_flows-flowId-segments) for more details.
+
+The Flow `timerange` property provided in Flow GET responses is calculated from the available Flow Segments in the store.
+See the API documentation for [Flow core](https://bbc.github.io/tams/5.0/index.html#/schemas/flow-core).
+
+The Flow Segment has `ts_offset` and `last_duration` properties which use the Timestamp type.
+See the API documentation for [Flow Segment](https://bbc.github.io/tams/5.1/index.html#/schemas/flow-segment).
+
+The Flow and Flow Segments can be filtered using a `timerange` query parameter.
+See the API documentation for [Flow details](https://bbc.github.io/tams/5.1/index.html#/operations/GET_flows-flowId) and [listing Flow Segments](https://bbc.github.io/tams/5.1/index.html#/operations/GET_flows-flowId-segments).
 
 ### Resolution
 
@@ -25,7 +34,6 @@ The time-resolution of the clock or counter used to generate timestamps and time
 Since TAMS is designed to support any media unit rate, time values are recorded at nanosecond resolution.
 Timeranges are represented using a pair of timestamps separated by an underscore, with markers for inclusivity and exclusivity.
 A high-resolution timestamp is easily converted to/from a media unit count for display or other purposes.
-See [the open-source mediatimestamp library](https://github.com/bbc/rd-apmm-python-lib-mediatimestamp) for more details of formats and conversion routines.
 
 ### Uniqueness & linearity
 
@@ -94,3 +102,69 @@ For Flows with a constant media unit rate, timestamp calculations and comparison
 This has the effect of eliminating phase offsets and timing jitter.
 Once timestamps have been regularised in this way subsequent conversions between high-resolution time and media units are reversible.
 Of course, if tracking phase difference and/or jitter are important for your use case the timestamps should be stored unadulterated and they can be regularised locally where necessary.
+
+### Timestamp representation
+
+A Timestamp is represented in the TAMS API using a string with this structure: `{sign?}{seconds}:{nanoseconds}`.
+An optional sign followed by the number of seconds, colon and the number of nanoseconds.
+
+TAMS Implementations may choose to store Timestamps using different representations.
+For example:
+
+* Using the same string format as the TAMS API.
+* A C / C++ implementation may use a struct containing a `bool`, `uint64_t` and `uint32_t` to represent the components of the Timestamp with the 80-bit range supported by PTP.
+* A Python implementation may use an `int` to represent the full value in nanoseconds.
+* A Postgres database may use `NUMERIC` type to represent the full value in nanoseconds.
+* Using a different string format that allows lexical ordering, e.g. pad the `{seconds}` and `{nanoseconds}` in the string with zeros.
+* Using a floating point number.
+Implementations need to ensure that the number has sufficient resolution and doesn't introduce additional rounding errors in calculations.
+* Using a date-time representation.
+Implementations need to ensure that the date-time has sufficient (nanosecond) resolution and handle leap seconds if necessary to allow lossless conversion back to Timestamps.
+
+User interfaces for TAMS deployments and associated services may present Timestamps in different formats to the user.
+For example:
+
+* In the format specified for the TAMS API
+* As a ISO 8601 Timestamp
+* As a SMPTE timecode
+* As a rounded number of seconds or minutes
+
+The UI design would need to decide which representation is most appropriate for the user and ensure it has the necessary accuracy required for the application.
+
+### TimeRange representation
+
+A TimeRange is represented in the TAMS API using a string with this general structure: `{start inclusivity}{start timestamp}_{end timestamp}{end inclusivity}`.
+
+The components of the TimeRange representation are as follows:
+
+* A pair of start and end Timestamps, which can be omitted.
+Omitting the start Timestamp indicates that the TimeRange extends to negative infinity.
+Omitting the end Timestamp indicates that the TimeRange extends to positive infinity.
+* The start and end Timestamps can be negative.
+* Markers indicate whether the Timestamp in the TimeRange is inclusive or exclusive.
+A `[` or `]` indicates that the bound is inclusive, and a `(` or `)` indicates that the bound is exclusive.
+* The marker is ignored and should normally be omitted when omitting the Timestamp.
+An implementation needs to handle both cases where markers are and aren't omitted.
+* An empty TimeRange should be represented using `()` rather than an empty string.
+Adding the exclusive markers makes it clearer that it is a TimeRange.
+* An eternal TimeRange shoule be represented as `_`, omitting the markers.
+* A TimeRange may consist of a single Timestamp, either with inclusive markers or no markers.
+Markers should be included for a single Timestamp to makes it clear that it is a TimeRange.
+* A TimeRange should be treated as an empty TimeRange by implementations if the end is before the start, or the start and end are equal and either has an exclusive marker.
+
+Some examples:
+
+* `[0:0_10:0)` represents 10 seconds of media starting at Timestamp `0:0` and ending before `10:0`.
+* `(5:0_` represents a Timerange starting after `5:0` and to eternity.
+* `[1694429247:0_1694429248:0)` is a 1 second TAI timerange starting at 2023-09-11T10:46:50.0Z UTC.
+* `[10:0]` is a TimeRange consisting of a single Timestamp `10:0`.
+* `_` is an eternal TimeRange.
+* `()` is an empty TimeRange.
+
+The TimeRange representation broadly follows the same approach and considerations as the [Timestamp representation](#timestamp-representation).
+TAMS Implementations may choose to store TimeRanges using different representations.
+User interfaces may present TimeRanges in different formats to the user.
+
+### Python library
+
+An [open-source mediatimestamp Python library](https://github.com/bbc/rd-apmm-python-lib-mediatimestamp) is available for handling Timestamps and TimeRanges and conversion routines.
