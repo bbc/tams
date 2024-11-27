@@ -20,7 +20,7 @@
       "$ref": "timerange.json"
     },
     "last_duration": {
-      "description": "The duration of the last sample in the segment (which may differ from that of the object). Defaults to 1/rate if a fixed media rate is set. Format as described by the [Timestamp](../schemas/timestamp#top) type, but cannot be negative",
+      "description": "The difference between the exclusive end of the `timerange` and the last sample timestamp. Format as described by the [Timestamp](../schemas/timestamp#top) type, but cannot be negative",
       "$ref": "timestamp.json"
     },
     "sample_offset": {
