@@ -6,6 +6,7 @@ ignores:
   - 'LICENCE.md'
   - 'ICLA.md'
   - '.github/'
+  - 'examples/'
 
 default: true
 
