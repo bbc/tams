@@ -141,6 +141,7 @@ Instead of providing a more complete mechanism for lightweight edit in the TAMS 
 For example [OpenTimelineIO](https://github.com/AcademySoftwareFoundation/OpenTimelineIO) (or OTIO) is deliberately flexible to how the underlying media is referenced: intended to make relinking compositions as they move between systems easier, but the same approach could be applied to reference media in a TAMS store.
 
 This would likely take the form of an Application Note, suggesting how OTIO might be used with TAMS to reference content either as a URL to a store, or a `MissingReference` with the ID in metadata.
+An example is provided below as an illustration.
 
 Additional capabilities could be built on top of the combination of TAMS and OTIO, for example rendering an OTIO composition using lightweight Flow copies (and new objects for the transitions as in the examples above), or generating OTIO as part of a metadata-driven editorial workflow.
 
@@ -151,10 +152,98 @@ Additional capabilities could be built on top of the combination of TAMS and OTI
 * Neutral, because it requires incorporating an additional tech stack.
 * Bad, because OTIO might be overkill for simple operations such as basic clipping.
 
-<!-- This is an optional element. Feel free to remove. -->
-## More Information
+## Appendix: OpenTimelineIO TAMS References
 
-{You might want to provide additional evidence/confidence for the decision outcome here and/or
- document the team agreement on the decision and/or
- define when/how this decision the decision should be realized and if/when it should be re-visited.
-Links to other decisions and resources might appear here as well.}
+This appendix illustrates how TAMS references might work in OpenTimelineIO compositions.
+
+### URL Form
+
+This form uses an `ExternalReference` to a URL in a TAMS instance.
+
+Notice that the URL has a prefix `tamss://` (for "TAMS Secure" - `tams://` would also work for HTTP).
+In addition the `start_time` and `duration` in the `available_range` are Flow timestamps with nanosecond precision,
+referring to the timerange over which the Flow is available.
+The `source_range` also has a `start_time` as a nanosecond timestamp within the same Flow.
+
+```json
+{
+    "OTIO_SCHEMA": "Clip.2",
+    "metadata": {},
+    "name": "camera-one.ts",
+    "source_range": {
+        "OTIO_SCHEMA": "TimeRange.1",
+        "duration": {
+            "OTIO_SCHEMA": "RationalTime.1",
+            "rate": 50.0,
+            "value": 111.0
+        },
+        "start_time": {
+            "OTIO_SCHEMA": "RationalTime.1",
+            "rate": 1000000000.0,
+            "value": 1723124225400000000.0
+        }
+    },
+    "effects": [],
+    "markers": [],
+    "enabled": true,
+    "media_references": {
+        "DEFAULT_MEDIA": {
+            "OTIO_SCHEMA": "ExternalReference.1",
+            "metadata": {},
+            "name": "camera-one.ts",
+            "available_range": {
+                "OTIO_SCHEMA": "TimeRange.1",
+                "duration": {
+                    "OTIO_SCHEMA": "RationalTime.1",
+                    "rate": 1000000000.0,
+                    "value": 372100000000.0
+                },
+                "start_time": {
+                    "OTIO_SCHEMA": "RationalTime.1",
+                    "rate": 1000000000.0,
+                    "value": 1723124086620000000
+                }
+            },
+            "available_image_bounds": null,
+            "target_url": "tamss://tams.example.com/flows/9bb414a5-862c-494f-86ce-8e2720ecc315"
+        }
+    },
+    "active_media_reference_key": "DEFAULT_MEDIA"
+}
+```
+
+### Reference Form
+
+This form uses metadata to reference a Flow (or potentially Source) ID.
+
+```json
+"media_references": {
+    "DEFAULT_MEDIA": {
+        "OTIO_SCHEMA": "ExternalReference.1",
+        "metadata": {
+            "bbc.github.io/tams": {
+                "flow_id": "9bb414a5-862c-494f-86ce-8e2720ecc315",
+                "available_range_offset": "0:0"
+            }
+        },
+        "name": "camera-one.ts",
+        "available_range": {
+            "OTIO_SCHEMA": "TimeRange.1",
+            "duration": {
+                "OTIO_SCHEMA": "RationalTime.1",
+                "rate": 1000000000.0,
+                "value": 372100000000.0
+            },
+            "start_time": {
+                "OTIO_SCHEMA": "RationalTime.1",
+                "rate": 1000000000.0,
+                "value": 1723124086620000000
+            }
+        },
+        "available_image_bounds": null,
+        "target_url": "tamss://tams.example.com/flows/9bb414a5-862c-494f-86ce-8e2720ecc315"
+    }
+}
+```
+
+Note the addition of an `available_range_offset` that describes how the `available_range` here maps onto the Flow timeline, much as `ts_offset` remaps media essence timing to Flow timing.
