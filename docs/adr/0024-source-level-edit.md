@@ -32,13 +32,23 @@ This ADR discusses some options for improving on these limitations.
 
 ## Decision Outcome
 
-Chosen option: *TBD*
+Chosen option: Options 3 and 4
+
+In general the ability to easily re-use pieces of content and refer to them without duplicating essence is one of the strengths of TAMS, and opens up some interesting new workflows as a result.
+EDL formats such as OpenTimelineIO are intended to be very powerful, but with that power comes complexity, which reduces the ease with which content may be re-used, meaning that Option 4 (another EDL format) alone doesn't make sense.
+However using something like OpenTimelineIO is useful in some complex cases, so it makes sense to define a standard way to do so in TAMS.
+
+Option 3 (expanded Flow Segment references) is chosen instead because it avoids prescribing an approach to selecting the relevant Flows from Source references.
+While there are ways this could be approached (including ongoing discussion about "profiles" in Flows), the TAMS API is deliberately flexible in many places, and defining an approach by which implementations should decide the Flows to draw from when resolving references runs counter to this.
+Option 2b (Source Timeline, without automatic de-referencing) is rejected because of the additional work required for a client to make use of the the Source timeline makes the feature less useful.
+
+There is a gap between the simple Flow-centric approach in Option 3 and the complexity of EDL formats in Option 4.
+If necessary, a layer could be placed over the top of TAMS, providing something more like Option 2 (Source timeline API endpoints) while constraining the implementation around the organisation's rules, e.g. for how Flows should be selected to construct new reference Flows.
 
 ### Implementation
 
 {Once the proposal has been implemented, add a link to the relevant PRs here}
 
-<!-- This is an optional element. Feel free to remove. -->
 ## Pros and Cons of the Options
 
 ### Option 1: Provide an edit API
@@ -72,6 +82,7 @@ However this is much more complex in cases where more than one Flow exists of ea
 * Good, because it provides a way to edit operations (albeit limited ones) using Sources.
 * Good, because it allows for more efficient copies: a timerange can be copied into another Source without needing to create large numbers of new segment entries.
 * Good, because it provides a way to handle more complex edit/composition operations by writing new segments.
+* Good, because at read time the references are transparent to a client: the store can read-through them.
 * Good, because it's clear which Source a new Source originated from.
 * Neutral, because it's not clear how Flows should come into existence from reference-based Sources (although some kind of profile mechanism could be introduced for matching compatible Flows).
 * Bad, because some areas of a Flow timeline could originate due to a Source-level reference, and some due to new segments being created directly: care would need to be taken if the same point on a Source timeline is specified in two different ways.
@@ -89,6 +100,16 @@ The resulting Flow/Source pair C contains `SourceA@[0:0_9:0)`, `SourceD@[9:0_11:
 This option has the same list of pros and cons above, expect the following item is mitigated and removed:
 
 > Bad, because some areas of a Flow timeline could originate due to a Source-level reference, and some due to new segments being created directly: care would need to be taken if the same point on a Source timeline is specified in two different ways.
+
+### Option 2b: Provide a limited API as in (Option 2), that only works on Sources
+
+As above, however store implementations cannot "invent" the relevant segments: they merely provide detail of the Source timeline and leave the rest to the client.
+
+This option has the same list of pros and cons as Option 2, however the following benefit is removed:
+> Good, because at read time the references are transparent to a client: the store can read-through them.
+
+And the following drawback is added:
+> Bad, because clients have to do significant additional work to make use of a Source timeline (identifying, de-referencing and re-mapping the relevant Flows).
 
 ### Option 3: Provide additional Flow Segment API capability for more direct by-reference operations
 
@@ -125,6 +146,10 @@ The references could take a form such as:
     }
 ]
 ```
+
+It would make sense to have `POST /flows/<flowid>/segments` accept one of these reference objects as an alternative to supplying an `object_id` directly.
+However on read it would make sense to automatically de-reference and return standard Flow Segments drawn from the underlying Flow.
+An additional query parameter could be added, such that `GET /flows/<flowid>/segments?dereference=false` returns the references directly, for workflows that need that information.
 
 While this doesn't allow working directly with Sources, it might make propagating a lightweight copy across all the Flows of a Source much more efficient (providing there are a relatively small number of edit points).
 
