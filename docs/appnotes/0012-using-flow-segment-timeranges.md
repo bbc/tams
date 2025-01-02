@@ -129,6 +129,7 @@ Note that a Flow Segment can have gaps within it and creators of Flow Segments n
 
 Including the gap in the Flow Segment means extending the `timerange` to the next Flow Segment's first sample Timestamp.
 The `last_duration` is set to the difference between the `timerange` end and the last sample Timestamp.
+This may, for example, indicate that the gap represents a meaningful gap in the content (instead of content that was lost in transmission).
 
 If the gap needs to be exposed then the Flow Segment creator can set the end of the `timerange` to the last sample Timestamp plus the nominal sample duration.
 If the sample rate is variable but based on a fixed rate with dropped samples then use the fixed rate to set the duration.
