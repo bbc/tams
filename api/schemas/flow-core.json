@@ -89,11 +89,8 @@
       "$ref": "timerange.json"
     },
     "flow_collection": {
-        "type": "array",
         "description": "List of Flows that are collected together by this Flow.",
-        "items": {
-            "$ref": "collection-item.json"
-        }
+        "$ref": "flow-collection.json"
     },
     "collected_by": {
       "type": "array",

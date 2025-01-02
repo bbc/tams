@@ -1236,8 +1236,9 @@ paths:
           description: ""
           content:
             application/json:
-              example:
-                $ref: examples/flow-read-only-get-200.json
+              example: true
+              schema:
+                type: boolean
         "404":
           description: The requested flow does not exist.
     put:
@@ -1249,8 +1250,7 @@ paths:
       requestBody:
         content:
           application/json:
-            example:
-              $ref: examples/flow-read-only-put.json
+            example: true
             schema:
               type: boolean
         required: true
@@ -1261,6 +1261,222 @@ paths:
           description: Bad request. Invalid flow read_only value. Value must be boolean.
         "404":
           description: The requested flow does not exist.
+  /flows/{flowId}/flow_collection:
+    parameters:
+      - name: flowId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/uuid'
+        description: The flow identifier.
+    head:
+      summary: Flow Collection
+      description: Returns the flow collection path headers
+      operationId: HEAD_flows-flowId-flow-collection
+      tags:
+        - Flows
+      responses:
+        "200":
+          $ref: '#/components/responses/trait_resource_info_head_200'
+        "404":
+          $ref: '#/components/responses/trait_resource_info_head_404'
+    get:
+      summary: Flow Collection
+      description: Returns the flow collection property.
+      operationId: GET_flows-flowId-flow-collection
+      tags:
+        - Flows
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              example:
+                $ref: examples/flow-collection-get-200.json
+              schema:
+                $ref: schemas/flow-collection.json
+        "404":
+          description: The requested flow does not exist.
+    put:
+      summary: Create or Update Flow Collection
+      description: Create or update the flow collection property.
+      operationId: PUT_flows-flowId-flow-collection
+      tags:
+        - Flows
+      requestBody:
+        content:
+          application/json:
+            example:
+              $ref: examples/flow-collection-put.json
+            schema:
+              $ref: schemas/flow-collection.json
+        required: true
+      responses:
+        "204":
+          description: No content. The flow collection has been created or updated.
+        "400":
+          description: Bad request. Invalid flow collection.
+        "403":
+          description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
+        "404":
+          description: The requested flow does not exist.
+    delete:
+      summary: Delete Flow Collection
+      description: Delete the flow collection property.
+      operationId: DELETE_flows-flowId-flow-collection
+      tags:
+        - Flows
+      responses:
+        "204":
+          description: No content. The flow collection property has been deleted.
+        "403":
+          description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
+        "404":
+          description: The requested flow ID in the path is invalid.
+  /flows/{flowId}/max_bit_rate:
+    parameters:
+      - name: flowId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/uuid'
+        description: The flow identifier.
+    head:
+      summary: Flow Maximum Bit Rate
+      description: Returns the flow max bit rate path headers
+      operationId: HEAD_flows-flowId-max-bit-rate
+      tags:
+        - Flows
+      responses:
+        "200":
+          $ref: '#/components/responses/trait_resource_info_head_200'
+        "404":
+          $ref: '#/components/responses/trait_resource_info_head_404'
+    get:
+      summary: Flow Maximum Bit Rate
+      description: Returns the flow max bit rate property.
+      operationId: GET_flows-flowId-max-bit-rate
+      tags:
+        - Flows
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              example: 5000
+              schema:
+                type: integer
+                minimum: 0
+        "404":
+          description: The requested flow does not exist.
+    put:
+      summary: Create or Update Flow Maximum Bit Rate
+      description: Create or update the max bit rate property.
+      operationId: PUT_flows-flowId-max-bit-rate
+      tags:
+        - Flows
+      requestBody:
+        content:
+          application/json:
+            example: 5000
+            schema:
+              type: integer
+              minimum: 0
+        required: true
+      responses:
+        "204":
+          description: No content. The max bit rate has been created or updated.
+        "400":
+          description: Bad request. Invalid flow max bit rate.
+        "403":
+          description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
+        "404":
+          description: The requested flow does not exist.
+    delete:
+      summary: Delete Flow Maximum Bit Rate
+      description: Delete the flow max bit rate property.
+      operationId: DELETE_flows-flowId-max-bit-rate
+      tags:
+        - Flows
+      responses:
+        "204":
+          description: No content. The flow max bit rate property has been deleted.
+        "403":
+          description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
+        "404":
+          description: The requested flow ID in the path is invalid.
+  /flows/{flowId}/avg_bit_rate:
+    parameters:
+      - name: flowId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/uuid'
+        description: The flow identifier.
+    head:
+      summary: Flow Average Bit Rate
+      description: Returns the flow average bit rate path headers
+      operationId: HEAD_flows-flowId-avg-bit-rate
+      tags:
+        - Flows
+      responses:
+        "200":
+          $ref: '#/components/responses/trait_resource_info_head_200'
+        "404":
+          $ref: '#/components/responses/trait_resource_info_head_404'
+    get:
+      summary: Flow Average Bit Rate
+      description: Returns the flow average bit rate property.
+      operationId: GET_flows-flowId-avg-bit-rate
+      tags:
+        - Flows
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              example: 3246
+              schema:
+                type: integer
+                minimum: 0
+        "404":
+          description: The requested flow does not exist.
+    put:
+      summary: Create or Update Flow Average Bit Rate
+      description: Create or update the average bit rate property.
+      operationId: PUT_flows-flowId-avg-bit-rate
+      tags:
+        - Flows
+      requestBody:
+        content:
+          application/json:
+            example: 3246
+            schema:
+              type: integer
+              minimum: 0
+        required: true
+      responses:
+        "204":
+          description: No content. The average bit rate has been created or updated.
+        "400":
+          description: Bad request. Invalid flow avg bit rate.
+        "403":
+          description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
+        "404":
+          description: The requested flow does not exist.
+    delete:
+      summary: Delete Flow Average Bit Rate
+      description: Delete the flow average bit rate property.
+      operationId: DELETE_flows-flowId-avg-bit-rate
+      tags:
+        - Flows
+      responses:
+        "204":
+          description: No content. The flow average bit rate property has been deleted.
+        "403":
+          description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
+        "404":
+          description: The requested flow ID in the path is invalid.
   /flows/{flowId}/segments:
     parameters:
       - name: flowId
