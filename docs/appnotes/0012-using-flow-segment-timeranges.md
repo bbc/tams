@@ -32,6 +32,10 @@ The Timestamp at the zero point has a zero time value and Timestamps before the 
 
 TAMS uses Timestamps with a nanosecond resolution time unit.
 
+### Timestamp Representation in the TAMS API
+
+The TAMS API uses a string representation for Timestamps which is described in [Timestamps in TAMS - Timestamp Representation](./0008-timestamps-in-TAMS.md#timestamp-representation).
+
 ### What is a Sample Timestamp
 
 ![Video frames and audio samples](./images/0012-sample-timestamps.png)
@@ -73,6 +77,10 @@ The types of Timeranges that express the existence of samples may be more limite
 E.g. samples don't generally exist into infinity but a query could use infinity to apply no limits.
 A query may want to target a time period after a certain Timestamp, which results in an exclusive start Timestamp in the query Timerange.
 A query may use Timestamps that are positioned near sample Timestamps but not precisely equaling them.
+
+### Timerange Representation in the TAMS API
+
+The TAMS API uses a string representation for Timeranges which is described in [Timestamps in TAMS - TimeRange Representation](./0008-timestamps-in-TAMS.md#timerange-representation).
 
 ### What is a Sample Timerange
 
