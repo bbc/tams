@@ -1,8 +1,8 @@
-# Using Flow Segment Timeranges
+# Using Flow Segment TimeRanges
 
-This application note explains the usage of the Flow Segment `timerange` property, starting with a short primer on Timestamps and Timeranges.
+This application note explains the usage of the Flow Segment `timerange` property, starting with a short primer on Timestamps and TimeRanges.
 
-## A Short Primer on Timestamps and Timeranges
+## A Short Primer on Timestamps and TimeRanges
 
 > Note: video frames and audio samples and data items are all referred to as `samples` in this document (and the specification).
 > The word `sample` is intended to broadly denote something that was sampled at a point in time.
@@ -54,48 +54,48 @@ A Timestamp is generally taken to be the start of the sample on the timeline.
 
 A Timestamp does not specify the sample duration on the timeline.
 
-### What is a Timerange
+### What is a TimeRange
 
-A Timerange is a time period on a Timeline.
+A TimeRange is a time period on a Timeline.
 The time period may be zero, finite or infinite.
 
-The start and end of a Timerange is represented using a Timestamp if it does not extend to infinity.
-A Timerange may extend to negative infinity or positive infinity.
+The start and end of a TimeRange is represented using a Timestamp if it does not extend to infinity.
+A TimeRange may extend to negative infinity or positive infinity.
 
-A Timerange may be instantaneous with a zero duration, i.e. the Timerange is a Timestamp.
+A TimeRange may be instantaneous with a zero duration, i.e. the TimeRange is a Timestamp.
 
-A Timerange may be empty, i.e. have a zero duration and not overlap with any time values on the Timeline.
+A TimeRange may be empty, i.e. have a zero duration and not overlap with any time values on the Timeline.
 
-The extents of the Timerange may be defined as inclusive or exclusive.
+The extents of the TimeRange may be defined as inclusive or exclusive.
 An inclusive Timestamp start or end means that the given Timestamp is the first or last Timestamp included in the time period.
 An exclusive Timestamp start means the Timestamp is not included in the time period but the Timestamp after that is.
 Similarly, for an exclusive end Timestamp, it is not included but the Timestamp before that is.
 
-A Timerange may express the existence of samples for a time period.
-A Timerange may be used to query for samples for a time period.
-The types of Timeranges that express the existence of samples may be more limited than the types of Timeranges that are used to query with.
+A TimeRange may express the existence of samples for a time period.
+A TimeRange may be used to query for samples for a time period.
+The types of TimeRanges that express the existence of samples may be more limited than the types of TimeRanges that are used to query with.
 E.g. samples don't generally exist into infinity but a query could use infinity to apply no limits.
-A query may want to target a time period after a certain Timestamp, which results in an exclusive start Timestamp in the query Timerange.
+A query may want to target a time period after a certain Timestamp, which results in an exclusive start Timestamp in the query TimeRange.
 A query may use Timestamps that are positioned near sample Timestamps but not precisely equaling them.
 
-### Timerange Representation in the TAMS API
+### TimeRange Representation in the TAMS API
 
-The TAMS API uses a string representation for Timeranges which is described in [Timestamps in TAMS - TimeRange Representation](./0008-timestamps-in-TAMS.md#timerange-representation).
+The TAMS API uses a string representation for TimeRanges which is described in [Timestamps in TAMS - TimeRange Representation](./0008-timestamps-in-TAMS.md#timerange-representation).
 
-### What is a Sample Timerange
+### What is a Sample TimeRange
 
-![An audio Timerange](./images/0012-audio-timerange.png)
+![An audio TimeRange](./images/0012-audio-timerange.png)
 
-A Timerange may be represented by the first sample Timestamp as the inclusive start and the last sample Timestamp as the inclusive end.
+A TimeRange may be represented by the first sample Timestamp as the inclusive start and the last sample Timestamp as the inclusive end.
 
-Samples may have a duration and in that case the duration is included in the Timerange.
-The Timerange then starts with the first sample's Timestamp and (exclusive) ends before the last sample Timestamp plus duration.
+Samples may have a duration and in that case the duration is included in the TimeRange.
+The TimeRange then starts with the first sample's Timestamp and (exclusive) ends before the last sample Timestamp plus duration.
 
-## Setting Flow Segment Timeranges
+## Setting Flow Segment TimeRanges
 
-The Flow Segment `timerange` is the Timerange of samples contained in the Flow Segment on the Flow Timeline.
+The Flow Segment `timerange` is the TimeRange of samples contained in the Flow Segment on the Flow Timeline.
 The Flow Segment `ts_offset` specifies the time shift to be applied to the sample Timestamps on the media container Timeline.
-After applying `ts_offset` the Timerange of the samples equals the value of Flow Segment `timerange`.
+After applying `ts_offset` the TimeRange of the samples equals the value of Flow Segment `timerange`.
 
 The Flow Segment `timerange` start is inclusive and is the Timestamp of the first sample contained in the Flow Segment.
 If the samples have a duration then the `timerange` end is exclusive and is the last sample Timestamp plus duration.
@@ -113,7 +113,7 @@ If Timestamps include phase offsets and jitter that record how samples were prod
 
 If the Timestamps are not regularised then clients will need to handle the variance in Timestamps when querying and perform the regularisation process that is needed for "clean" timing.
 
-![Timerange for regularised and not timestamps](./images/0012-flow-segment-timestamp-regularisation.png)
+![TimeRange for regularised and not timestamps](./images/0012-flow-segment-timestamp-regularisation.png)
 
 If samples have a constant rate and the Timestamps are regularised then the `timerange` ends with the next Flow Segment's sample Timestamp and the `last_duration` equals the nominal sample duration if set.
 
@@ -121,7 +121,7 @@ If the samples don't have a constant rate or the Timestamps are not regularised 
 
 ### Gaps and Flow Ends
 
-![Timerange when there are gaps](./images/0012-flow-segment-timerange-with-gaps.png)
+![TimeRange when there are gaps](./images/0012-flow-segment-timerange-with-gaps.png)
 
 The Flow Segment `timerange` may also extend past the idealised sample durations when there are gaps that are not considered to be an error condition.
 
@@ -135,9 +135,9 @@ If the sample rate is variable but based on a fixed rate with dropped samples th
 If the sample rate is variable then the Flow Segment creator should decide on an appropriate value such as the average sample duration.
 The `last_duration` is set to the difference between the `timerange` end and the last sample Timestamp.
 
-## Querying Flow Timeranges
+## Querying Flow TimeRanges
 
-The TAMS will include the sample duration in the calculation that decides which Flow Segments to return in TAMS API Timerange query results.
+The TAMS will include the sample duration in the calculation that decides which Flow Segments to return in TAMS API TimeRange query results.
 
 The query results may include an additional Flow Segment to what the client expects if the query TimeRange starts after the last sample in a Flow Segment.
 The client can decide that the time period in the Flow Segment is essentially a gap or insufficiently covers the duration of the last sample and not use the Flow Segment.
