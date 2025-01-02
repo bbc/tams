@@ -16,7 +16,7 @@
       "$ref": "timestamp.json"
     },
     "timerange": {
-      "description": "The timerange for the samples contained in the segment. If samples have a duration then the timerange end is exclusive and covers at least the duration of the last sample. The exclusive timerange end will typically be set to the timestamp of the next sample. If the samples don't have a duration then the timerange end is inclusive. Format is described by the [TimeRange](../schemas/timerange#top) type. Note that where temporal re-ordering is used, the timerange and samples refers to the presentation timeline.",
+      "description": "The timerange for the samples contained in the segment. The timerange start is always inclusive. If samples have a duration then the timerange end is exclusive and covers at least the duration of the last sample. The exclusive timerange end will typically be set to the timestamp of the next sample. If the samples don't have a duration then the timerange end is inclusive. Format is described by the [TimeRange](../schemas/timerange#top) type. Note that where temporal re-ordering is used, the timerange and samples refers to the presentation timeline.",
       "$ref": "timerange.json"
     },
     "last_duration": {
