@@ -147,7 +147,7 @@ A `[` or `]` indicates that the bound is inclusive, and a `(` or `)` indicates t
 An implementation needs to handle both cases where markers are and aren't omitted.
 * An empty TimeRange should be represented using `()` rather than an empty string.
 Adding the exclusive markers makes it clearer that it is a TimeRange.
-* An eternal TimeRange shoule be represented as `_`, omitting the markers.
+* An eternal TimeRange should be represented as `_`, omitting the markers.
 * A TimeRange may consist of a single Timestamp, either with inclusive markers or no markers.
 Markers should be included for a single Timestamp to makes it clear that it is a TimeRange.
 * A TimeRange should be treated as an empty TimeRange by implementations if the end is before the start, or the start and end are equal and either has an exclusive marker.
