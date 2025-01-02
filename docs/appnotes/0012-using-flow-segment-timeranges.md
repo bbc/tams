@@ -44,6 +44,7 @@ A sample is a frame of video, a sample of audio or a data item like a subtitle.
 
 A sample Timestamp is an approximation of the time a sample is "active" on the Timeline.
 The sample Timestamps may simply represent the order of samples on the Timeline and may not be an accurate representation of the time the sample was captured or presented.
+However in many cases it is sufficient to assume the sample Timestamp accurately represents when the sample should be presented, and that the inherent inaccuracy was reduced to acceptable levels during the capture process.
 
 A Timestamp is a label for the sample that is distinguishable from all other Timestamp labels assigned to other samples in the same Flow.
 
