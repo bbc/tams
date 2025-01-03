@@ -54,12 +54,14 @@ The SCTE 214-1 specification adds a DASH extension `maxSegmentRate` (note that `
 
 ## Decision Outcome
 
-Currently favouring "Option 3b", because it allows a receiver to estimate the buffer size using the maximum bit rate and target segment duration.
-Option 3c may be chosen if segment size is a requirement.
+It was decided to select "Option 3b", because it allows a receiver to estimate the buffer size using the maximum bit rate and target segment duration.
+Option 3c may be chosen in future if segment size is a requirement.
 
 ### Implementation
 
-tbd
+Implemented in PR [#86](https://github.com/bbc/tams/pull/86).
+The implementation includes a more precise definition for the `max_bit_rate` and `avg_bit_rate` properties and addition of the `segment_duration` property.
+The [Setting Flow Bit Rate Properties](../appnotes/0013-setting-flow-bit-rate-properties.md) AppNote defines how to set the properties.
 
 ## Pros and Cons of the Options
 
