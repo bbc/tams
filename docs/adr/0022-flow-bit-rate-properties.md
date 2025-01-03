@@ -186,3 +186,6 @@ The `max_bit_rate` property is split into `max_essence_bit_rate` and `max_segmen
 
 Should there be a recommendation to always set `max_segment_bit_rate`?
 This corresponds to the required `BANDWIDTH` variant stream property in HLS and required `bandwidth` Representation property in DASH.
+
+* Good, supports applications that require either essence or segment bit rate types
+* Bad, the additional choice of a bit rate type may harm interoperability or require additional logic in implementations to support all bit rate types
