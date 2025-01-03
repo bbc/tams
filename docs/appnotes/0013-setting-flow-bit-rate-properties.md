@@ -20,7 +20,7 @@ The value could change over time as segments becomes available or are removed fr
 
 ## Setting Maximum Bit Rate
 
-The `max_bit_rate` is calculated as `int(peak_segment_bit_rate / 1000)`.
+The `max_bit_rate` is calculated as `int(peak_segment_bit_rate / 1000)` (kbit/sec) for the segments of the Flow.
 The `peak_segment_bit_rate` corresponds to the definition in HLS ([HTTP Live Streaming](https://datatracker.ietf.org/doc/html/rfc8216)), where it is defined as the maximum bit rate for a contiguous sequence of segments that has a duration between 0.5 and 1.5 the target segment duration.
 The HLS definition is extended to include single segments above 1.5 the target segment duration to handle Flows that don't follow the HLS retrictions for segment durations, e.g. segmentation optimised for best quality, with variable and potentially large GOP sizes etc..
 
