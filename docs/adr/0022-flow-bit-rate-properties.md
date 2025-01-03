@@ -20,26 +20,26 @@ In the most extreme case, a Flow could be stored as a single segment like a regu
 One interpretation of these properties is that they measure media essence (e.g. H.264 and AAC) bit rates.
 These properties relate to the essence only but don't account for the container overhead or network conditions.
 
-Essence bit rate information can be carried in the coded bitstream, such as the `hrd_parameters` structure in the H.264 bitstream that specifies the maximum bit rate into the CPB (Coded Picture Buffer) in the HRD (Hypothetical Reference Decoder).
+Essence bit rate information can be carried in the coded bitstream, such as the `hrd_parameters` structure in the [H.264](https://www.itu.int/rec/T-REC-H.264) bitstream that specifies the maximum bit rate into the CPB (Coded Picture Buffer) in the HRD (Hypothetical Reference Decoder).
 
 Essence bit rate information can also be found in the container.
-The MXF AVC (H.264) sub-descriptor defined in SMPTE ST 381-3 includes the `AVC Maximum Bitrate` and `AVC Average Bitrate` properties.
-MP4 / Quicktime has a `btrt` box that includes `Max bit rate` and `Average bit rate` properties.
-The MPEG-4 Systems (ISO/IEC 14496-1) defines a descriptor containing `maxBitRate`, `avgBitRate` and `bufferSizeDB` properties; this descriptor can be included in the MP4 / Quicktime `esds` box.
+The MXF AVC (H.264) sub-descriptor defined in [SMPTE ST 381-3](https://pub.smpte.org/doc/st381-3/) includes the `AVC Maximum Bitrate` and `AVC Average Bitrate` properties.
+[MP4](https://www.iso.org/standard/79110.html) / [Quicktime](https://developer.apple.com/documentation/quicktime-file-format) has a [`btrt`](https://developer.apple.com/documentation/quicktime-file-format/bit_rate_atom) box that includes `Max bit rate` and `Average bit rate` properties.
+The MPEG-4 Systems ([ISO/IEC 14496-1 Information technology — Coding of audio-visual objects, Part 1: Systems](https://www.iso.org/standard/55688.html)) defines a descriptor containing `maxBitRate`, `avgBitRate` and `bufferSizeDB` properties; this descriptor can be included in the MP4 / [Quicktime `esds`](https://developer.apple.com/documentation/quicktime-file-format/mpeg-4_elementary_stream_descriptor_atom) box.
 
 ### Segment Bit Rates
 
 Another interpretation of these properties is that they measure media segment (e.g. MPEG-TS and fMP4) bit rates.
 These properties relate to the segment files that contain the media essence but don't account for network conditions.
 
-The HLS (HTTP Live Streaming) specification includes a required `BANDWIDTH` Variant Stream property that specifies the largest sum of `peak segment bit rate` values.
+The HLS ([HTTP Live Streaming](https://datatracker.ietf.org/doc/html/rfc8216)) specification includes a required `BANDWIDTH` Variant Stream property that specifies the largest sum of `peak segment bit rate` values.
 The `AVERAGE-BANDWIDTH` Variant Stream property specifies the largest sum of `average segment bit rate` values.
 HLS also defines a required `EXT-X-TARGETDURATION` tag that specifies the target maximum segment duration.
 
-The DASH (Dynamic Adaptive Streaming over HTTP) specification includes a `bandwidth` Representation attribute and `minBufferTime` MPD attribute that together specify the sufficient conditions that allow continuous playback after buffering `minBufferTime` with a constant bit rate channel with bit rate equal to `bandwidth`.
+The DASH ([Dynamic adaptive streaming over HTTP](https://www.iso.org/standard/83314.html)) specification includes a `bandwidth` Representation attribute and `minBufferTime` MPD attribute that together specify the sufficient conditions that allow continuous playback after buffering `minBufferTime` with a constant bit rate channel with bit rate equal to `bandwidth`.
 DASH also specifies a `maxSegmentDuration` MPD attribute that specifies the maximum segment duration in any media Representation.
 
-The SCTE 214-1 (Society of Cable Telecommunications Engineers) "MPEG DASH for IP-Based Cable Services, Part 1: MPD Constraints and Extensions", section 10.3, is a useful resource to understand the DASH and HLS properties and how they can be used to calculate receiver buffer size or buffer times for continuous playback (under ideal network conditions).
+The SCTE 214-1 ([Society of Cable Telecommunications Engineers, MPEG DASH for IP-Based Cable Services, Part 1: MPD Constraints and Extensions](https://account.scte.org/standards/library/catalog/scte-214-1-mpeg-dash-for-ip-based-cable-services-part1-mpd-constraints-and-extensions/)), section 10.3, is a useful resource to understand the DASH and HLS properties and how they can be used to calculate receiver buffer size or buffer times for continuous playback (under ideal network conditions).
 The SCTE 214-1 specification adds a DASH extension `maxSegmentRate` (note that `Rate` is bit rate) Representation attribute to DASH that comparable to the HLS `BANDWIDTH` property (but applies to a single Representation).
 
 ## Considered Options
