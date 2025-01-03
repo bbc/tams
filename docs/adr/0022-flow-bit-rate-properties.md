@@ -133,7 +133,7 @@ A rational type allows more precise values to be set (e.g. to match frames rates
 The description in SCTE 214-1 section 10.3 includes a formula for calculating the buffer size required for continuous playback.
 The buffer size is defined as `1.1 * MSR[R] * SDmax`.
 `MSR[R]` in the TAMS context is `max_bit_rate`, `SDmax` is the maximum segment duration and `1.1` adds a 10% overhead for additional event data.
-The proposal is to add a `max_segment_duration` (floating point, seconds) property that provides the maximum segment duration (`SDmax`) for the Flow.
+The proposal is to add a `max_segment_duration` (rational, seconds) property that provides the maximum segment duration (`SDmax`) for the Flow.
 The variation in segment duration is assumed to be between 0.5 and 1.5 the segment_duration.
 The `SDmax` is approximately `segment_duration * 1.5` and the minimum buffer size in bytes is then approximately `max_bit_rate * 1000 * SDmax * 8`.
 
@@ -170,7 +170,7 @@ The `SDmax` is then approximately `min(segment_duration * 1.5, max_segment_durat
 
 In summary, this option extends [Option 3b](#option-3b-define-segment-bit-rates-with-target-segment-duration) with this property:
 
-* `max_segment_duration` (floating point, seconds): the maximum segment duration in TAMS for the Flow
+* `max_segment_duration` (rational, seconds): the maximum segment duration in TAMS for the Flow
 
 * Good, provides information about the segments that allows a more accurate bit rate estimate
 * Good, the calculations would not break down once segments exceed the 1.5 times the `segment_duration`.
