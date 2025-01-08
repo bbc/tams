@@ -27,6 +27,7 @@ This ADR discusses some options for improving on these limitations.
 * Option 1: Provide an edit API in the store that allows more complex operations to be specified on Sources
 * Option 2: Provide a limited API for simple cut operations on Sources
 * Option 2a: Provide a limited API as in (Option 2), that prevents mixing Flow and Source operations
+* Option 2b: Provide a limited API as in (Option 2), that only works on Sources
 * Option 3: Provide additional Flow Segment API capability for more direct by-reference operations
 * Option 4: Use another EDL format, outside the TAMS API.
 
@@ -97,7 +98,7 @@ In the case where new segments need to be written (e.g. to cover a transition) a
 Building on the example above, instead we now have Flow/Source pairs A, B and D, where D contains only the rendered dissolve between A and B.
 The resulting Flow/Source pair C contains `SourceA@[0:0_9:0)`, `SourceD@[9:0_11:0)`, `SourceB@[1:0_10:0)`.
 
-This option has the same list of pros and cons above, expect the following item is mitigated and removed:
+This option has the same list of pros and cons above, except the following item is mitigated and removed:
 
 > Bad, because some areas of a Flow timeline could originate due to a Source-level reference, and some due to new segments being created directly: care would need to be taken if the same point on a Source timeline is specified in two different ways.
 
@@ -134,7 +135,7 @@ The references could take a form such as:
             "timerange": "[0:0_2:0)"
         },
         "timerange": "[9:0_11:0)",
-        "ts_offset": "0:0",
+        "ts_offset": "9:0",
     },
     {
         "reference": {
@@ -240,11 +241,15 @@ The `source_range` also has a `start_time` as a nanosecond timestamp within the 
 ### Reference Form
 
 This form uses metadata to reference a Flow (or potentially Source) ID.
+In this example the reference is a `MissingReference`: no specific location is given for the media, however a client with access to a suitable TAMS instance could use a [Media Linker](https://opentimelineio.readthedocs.io/en/latest/tutorials/write-a-media-linker.html) plugin to read the `metadata` dictionary and locate the Flow.
+
+Once linked, an `ExternalReference` with a `target_url` could be constructed and used, which retains the same `metadata` dictionary.
+In principle the `metadata` [should be preserved](https://github.com/AcademySoftwareFoundation/OpenTimelineIO/wiki/OpenTimelineIO-Application-Integrator's-Guide#preserve-metadata-to-the-best-of-your-abilities) so even if the `target_url` is replaced with a file on disk, it should still be possible to reconstruct the TAMS reference.
 
 ```json
 "media_references": {
     "DEFAULT_MEDIA": {
-        "OTIO_SCHEMA": "ExternalReference.1",
+        "OTIO_SCHEMA": "MissingReference.1",
         "metadata": {
             "bbc.github.io/tams": {
                 "flow_id": "9bb414a5-862c-494f-86ce-8e2720ecc315",
@@ -265,8 +270,7 @@ This form uses metadata to reference a Flow (or potentially Source) ID.
                 "value": 1723124086620000000
             }
         },
-        "available_image_bounds": null,
-        "target_url": "tamss://tams.example.com/flows/9bb414a5-862c-494f-86ce-8e2720ecc315"
+        "available_image_bounds": null
     }
 }
 ```
