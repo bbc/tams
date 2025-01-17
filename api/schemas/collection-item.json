@@ -8,7 +8,7 @@
     ],
     "properties": {
         "id": {
-            "description": "Source or Flow Identifier of the member of this collection.  Must already be registered in TAMS",
+            "description": "Source or Flow Identifier of the member of this collection. Sources must only collect Sources, and Flows must only collect Flows. Must already be registered in TAMS",
             "type": "string",
             "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
         },
