@@ -24,7 +24,7 @@
       "$ref": "timestamp.json"
     },
     "sample_offset": {
-      "description": "The start of the segment represented as a count of samples from the start of the object. Note that a sample is a video frame or audio sample. A (coded) audio frame has multiple audio samples",
+      "description": "The start of the segment represented as a count of samples from the start of the object. Note that a sample is a video frame or audio sample. A (coded) audio frame has multiple audio samples. Assumed to be 0 if not set.",
       "type": "integer"
     },
     "sample_count": {
