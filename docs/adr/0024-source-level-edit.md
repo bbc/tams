@@ -22,6 +22,37 @@ Regardless, there is no way to reason about how a given Flow came in to existenc
 
 This ADR discusses some options for improving on these limitations.
 
+
+### Use Cases for Edit by Reference
+
+There are a number of use cases where an edit-by-reference capability could be useful, and these should inform the appropriate way to implement Source-level edit.
+
+#### Creating clips
+
+Pulling a period of time from another Source and making it an object in TAMS, akin to a sub-clip, which other systems can refer to while interacting with the store directly.
+This can be achieved currently by creating a Flow with the relevant Flow Segments, which is a somewhat expensive process.
+
+One example is pulling a particular event (e.g. a sports fixture or a press conference or similar) from a long running record of a feed, potentially while that event is still ongoing.
+It may also be necessary to time-shift the new Source to be used elsehwere, either to directly insert a delay, or potentially to align timestamps as played out with those in the store for future re-use.
+
+#### Fast turnaround clipping
+
+Building on the use case above, if creating sub-clips is a "cheap" metadata operation it makes clipping very fast (and decoupled from the length of the clip), because no essence is moved.
+Given a suitable implementation in the store, this could be transparent to readers, because the store could resolve references and serve back Flow Segments for the original material transparently.
+
+
+#### End-to-end Metadata
+
+Creating a machine-readable description of how a Source was created by other Sources, allowing metadata that exists on the original Source to propagate forwards.
+For example rights metadata may exist on the original Source, and be propagated through references to understand the rights of the finished programme timeline.
+Or logging and enrichment metadata could be accurately propagated forward to a finished programme, allowing them to be re-used for new audience experiences.
+
+#### Efficient Export & Reversioning
+
+Providing a way for a system to identify parts of Sources that are unchanged, and re-use them by reference (without duplicating essence), while overwriting parts of the timeline with new material as needed.
+
+This could also provide for an efficient way to store multiple versions of a piece of content, by storing the changes and referencing elsewhere, aligning with the approach taken by Interoperable Master Format (IMF).
+
 ## Considered Options
 
 * Option 1: Provide an edit API in the store that allows more complex operations to be specified on Sources
