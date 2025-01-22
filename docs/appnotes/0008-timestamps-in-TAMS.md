@@ -149,6 +149,7 @@ An implementation needs to handle both cases where markers are and aren't omitte
 Adding the exclusive markers makes it clearer that it is a TimeRange.
 * An eternal TimeRange should be represented as `_`, omitting the markers.
 * A TimeRange may consist of a single Timestamp, either with inclusive markers or no markers.
+Such a TimeRange is instantaneous (i.e. has zero duration).
 Markers should be included for a single Timestamp to makes it clear that it is a TimeRange.
 * A TimeRange should be treated as an empty TimeRange by implementations if the end is before the start, or the start and end are equal and either has an exclusive marker.
 
@@ -157,7 +158,7 @@ Some examples:
 * `[0:0_10:0)` represents 10 seconds of media starting at Timestamp `0:0` and ending before `10:0`.
 * `(5:0_` represents a Timerange starting after `5:0` and to eternity.
 * `[1694429247:0_1694429248:0)` is a 1 second TAI timerange starting at 2023-09-11T10:46:50.0Z UTC.
-* `[10:0]` is a TimeRange consisting of a single Timestamp `10:0`.
+* `[10:0]` is an instantaneous TimeRange consisting of a single Timestamp `10:0`.
 * `_` is an eternal TimeRange.
 * `()` is an empty TimeRange.
 
