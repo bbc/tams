@@ -173,11 +173,16 @@ The references could take a form such as:
             "flow_id": "flow-c-id",
             "timerange": "[1:0_10:0)"
         },
-        "timerange": "[11:0_20:0]",
-        "ts_offset": "10:0",
+        "timerange": "[11:0_20:0)"
+    },
+    {
+        "object_id": "my-bucket/object1",
+        "timerange": "[20:0_21:0)"
     }
 ]
 ```
+
+Note that this can be mixed with "concrete" Flow Segments, as illustrated by the last entry in the array.
 
 It would make sense to have `POST /flows/<flowid>/segments` accept one of these reference objects as an alternative to supplying an `object_id` directly.
 However on read it would make sense to automatically de-reference and return standard Flow Segments drawn from the underlying Flow.
