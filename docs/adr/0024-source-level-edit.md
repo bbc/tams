@@ -215,7 +215,7 @@ This appendix illustrates how TAMS references might work in OpenTimelineIO compo
 
 ### URL Form
 
-This form uses an `ExternalReference` to a URL in a TAMS instance.
+This form uses an `ExternalReference` to a URL in a TAMS instance: this should probably point to a specific Flow rather than a Source to align with the way other OpenTimelineIO `ExternalReference` objects behave.
 
 Notice that the URL has a prefix `tamss://` (for "TAMS Secure" - `tams://` would also work for HTTP).
 In addition the `start_time` and `duration` in the `available_range` are Flow timestamps with nanosecond precision,
@@ -271,10 +271,10 @@ The `source_range` also has a `start_time` as a nanosecond timestamp within the 
 
 ### Reference Form
 
-This form uses metadata to reference a Flow (or potentially Source) ID.
-In this example the reference is a `MissingReference`: no specific location is given for the media, however a client with access to a suitable TAMS instance could use a [Media Linker](https://opentimelineio.readthedocs.io/en/latest/tutorials/write-a-media-linker.html) plugin to read the `metadata` dictionary and locate the Flow.
+This form uses metadata to reference a Source ID.
+In this example the reference is a `MissingReference`: no specific location is given for the media, however a client with access to a suitable TAMS instance could use a [Media Linker](https://opentimelineio.readthedocs.io/en/latest/tutorials/write-a-media-linker.html) plugin to read the `metadata` dictionary and locate the Source, and then select a subset of Flows.
 
-Once linked, an `ExternalReference` with a `target_url` could be constructed and used, which retains the same `metadata` dictionary.
+Once linked, an `ExternalReference` with a `target_url` could be constructed and used for each Flow (with some suitable mechanism used to set the `active_media_reference_key`), which retains the same `metadata` dictionary.
 In principle the `metadata` [should be preserved](https://github.com/AcademySoftwareFoundation/OpenTimelineIO/wiki/OpenTimelineIO-Application-Integrator's-Guide#preserve-metadata-to-the-best-of-your-abilities) so even if the `target_url` is replaced with a file on disk, it should still be possible to reconstruct the TAMS reference.
 
 ```json
@@ -283,7 +283,7 @@ In principle the `metadata` [should be preserved](https://github.com/AcademySoft
         "OTIO_SCHEMA": "MissingReference.1",
         "metadata": {
             "bbc.github.io/tams": {
-                "flow_id": "9bb414a5-862c-494f-86ce-8e2720ecc315",
+                "source_id": "9bb414a5-862c-494f-86ce-8e2720ecc315",
                 "available_range_offset": "0:0"
             }
         },
