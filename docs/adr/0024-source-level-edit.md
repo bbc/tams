@@ -65,18 +65,24 @@ This could also provide for an efficient way to store multiple versions of a pie
 
 ## Decision Outcome
 
-Chosen option: Options 3 and 4
+Chosen option: Explore Option 3 further, write up Option 4, consider Option 5
 
 In general the ability to easily re-use pieces of content and refer to them without duplicating essence is one of the strengths of TAMS, and opens up some interesting new workflows as a result.
+However this is quite a complex topic, so some aspects will form the topic of additional ADRs containing more detail.
+
 EDL formats such as OpenTimelineIO are intended to be very powerful, but with that power comes complexity, which reduces the ease with which content may be re-used, meaning that Option 4 (another EDL format) alone doesn't make sense.
 However using something like OpenTimelineIO is useful in some complex cases, so it makes sense to define a standard way to do so in TAMS.
+An Application Note should be written describing how TAMS and OpenTimelineIO could fit together, covering the proposals described by Option 4.
+It should also describe how an EDL format could be used in conjunction with Flow references (at the most basic, object re-use as currently exists) to "write back" a rendered composition efficiently: referencing existing Flow Segments where possible, and creating new non-reference Flow Segments where it cannot directly map existing content: for example rendering a transition or effect and inserting it as a block, allowing the full capability of the NLE to be used while retaining the benefits of TAMS.
+However this does not stipulate OpenTimelineIO _must_ be used, it merely provides guidance on how to do so.
 
-Option 3 (expanded Flow Segment references) is chosen instead because it avoids prescribing an approach to selecting the relevant Flows from Source references.
-While there are ways this could be approached (including ongoing discussion about "profiles" in Flows), the TAMS API is deliberately flexible in many places, and defining an approach by which implementations should decide the Flows to draw from when resolving references runs counter to this.
-Option 2b (Source Timeline, without automatic de-referencing) is rejected because of the additional work required for a client to make use of the the Source timeline makes the feature less useful.
+Option 3 (expanded Flow Segment references) should be explored further, because it provides a way to cover many of the proposed use cases inside the store, without adding significant additional complexity.
+However it exposes a number of complications around how the implementation should operate (e.g. whether to allow timeshifting, and how to handle circular references) along with potential performance implications when resolving references through multiple Flows.
+This will be explored further in a future PR and ADR document, which will include a more detailed proposed specification.
 
-There is a gap between the simple Flow-centric approach in Option 3 and the complexity of EDL formats in Option 4.
-If necessary, a layer could be placed over the top of TAMS, providing something more like Option 2 (Source timeline API endpoints) while constraining the implementation around the organisation's rules, e.g. for how Flows should be selected to construct new reference Flows.
+Option 2 (and 2a, 2b) are rejected because they would require adding an entire new mechanism for managing a timeline on Sources.
+This adds a number of complications to manage both Source and Flow timelines together, and ensure they cannot contradict each other, while only providing support for very simple compositions that cut between other Sources.
+Furthermore, mapping that Source timeline onto Flows is also challenging in all but the simplest cases, because compatible Flows may not exist.
 
 Option 5 (bulk write of segments) was discussed while reviewing this ADR, but will form the subject of a future ADR and PR.
 
