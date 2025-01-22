@@ -137,6 +137,24 @@ If the sample rate is variable but based on a fixed rate with dropped samples th
 If the sample rate is variable then the Flow Segment creator should decide on an appropriate value such as the average sample duration.
 The `last_duration` is set to the difference between the `timerange` end and the last sample Timestamp.
 
+### Instantaneous TimeRanges
+
+Instantaneous TimeRanges may be represented in three ways.
+
+- `<tr>` - Strongly discouraged
+- `[<tr>_<tr>]`
+- `[<tr>]` - Preferred
+
+In these cases, `<tr>` is a timestamp which is identical in each case.
+The first syntax is a bare timestamp.
+This syntax is strongly discouraged for TimeRanges as it is indistinguishable from a Timestamp.
+It may, however, be convenient when querying a Flow at a specific Timestamp.
+The final syntax is strongly preferred as it is easily identifiable, both visually and programmatically, as an instantaneous.
+The second syntax may be convenient where a code path may generate an instantaneous or non-instantaneous TimeRange.
+
+Instantaneous TimeRanges should not normally be used for Flow Segment `timerange` on media with a duration (e.g. Video frames).
+Instantaneous TimeRanges may more commonly be used for some types of Data, or when querying a Flow at a specific Timestamp.
+
 ## Querying Flow TimeRanges
 
 The TAMS will include the sample duration in the calculation that decides which Flow Segments to return in TAMS API TimeRange query results.
