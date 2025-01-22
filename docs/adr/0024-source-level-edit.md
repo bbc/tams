@@ -22,7 +22,6 @@ Regardless, there is no way to reason about how a given Flow came in to existenc
 
 This ADR discusses some options for improving on these limitations.
 
-
 ### Use Cases for Edit by Reference
 
 There are a number of use cases where an edit-by-reference capability could be useful, and these should inform the appropriate way to implement Source-level edit.
@@ -39,7 +38,6 @@ It may also be necessary to time-shift the new Source to be used elsehwere, eith
 
 Building on the use case above, if creating sub-clips is a "cheap" metadata operation it makes clipping very fast (and decoupled from the length of the clip), because no essence is moved.
 Given a suitable implementation in the store, this could be transparent to readers, because the store could resolve references and serve back Flow Segments for the original material transparently.
-
 
 #### End-to-end Metadata
 
@@ -102,7 +100,7 @@ Stores implementations or their clients could then render that composition on-th
 * Good, because it allows for workflows that are fully edit-by-reference.
 * Good, because it allows for referential workflows entirely using Sources.
 * Bad, because it adds signficant additional complexity to store implementations or clients in order to implement the render process.
-* Bad, because it creates *another* composition data format, when a large number already exist.
+* Bad, because it creates _another_ composition data format, when a large number already exist.
 
 ### Option 2: Provide a limited API for simple cut operations on Sources
 
