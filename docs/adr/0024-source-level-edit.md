@@ -60,7 +60,8 @@ This could also provide for an efficient way to store multiple versions of a pie
 * Option 2a: Provide a limited API as in (Option 2), that prevents mixing Flow and Source operations
 * Option 2b: Provide a limited API as in (Option 2), that only works on Sources
 * Option 3: Provide additional Flow Segment API capability for more direct by-reference operations
-* Option 4: Use another EDL format, outside the TAMS API.
+* Option 4: Use another EDL format, outside the TAMS API
+* Option 5: Provide an endpoint to bulk-write Flow Segments
 
 ## Decision Outcome
 
@@ -76,6 +77,8 @@ Option 2b (Source Timeline, without automatic de-referencing) is rejected becaus
 
 There is a gap between the simple Flow-centric approach in Option 3 and the complexity of EDL formats in Option 4.
 If necessary, a layer could be placed over the top of TAMS, providing something more like Option 2 (Source timeline API endpoints) while constraining the implementation around the organisation's rules, e.g. for how Flows should be selected to construct new reference Flows.
+
+Option 5 (bulk write of segments) was discussed while reviewing this ADR, but will form the subject of a future ADR and PR.
 
 ### Implementation
 
@@ -213,6 +216,19 @@ Additional capabilities could be built on top of the combination of TAMS and OTI
 * Good, because the flexible plugin model in OTIO (e.g. Media Linkers) could be used to bridge into other tools: for example fetching Flows as a file locally for an NLE without direct TAMS support.
 * Neutral, because it requires incorporating an additional tech stack.
 * Bad, because OTIO might be overkill for simple operations such as basic clipping.
+
+### Option 5: Provide an endpoint to bulk write Flow Segments
+
+Add another endpoint that accepts a list of Flow Segments to create for a Flow, and writes them in bulk (rather than requiring one API call per segment).
+
+* Good, because it makes the segment writing process more efficient in terms of connection/API overheads
+* Good, because it supports use cases such as transcode which are intrinsically bulk operations
+* Neutral, because it doesn't directly address the use cases in this document
+* Bad, because it adds additional API endpoints and capabilities for store and client providers to implement
+* Bad, because it introduces a race condition complexity between a block of segments being accepted for write, and that process completing
+
+_This option was discussed in the course of reviewing this ADR, so is highlighted here._
+_However, it will be considered in more detail in a future ADR._
 
 ## Appendix: OpenTimelineIO TAMS References
 
