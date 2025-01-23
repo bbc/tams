@@ -141,11 +141,11 @@ The `last_duration` is set to the difference between the `timerange` end and the
 
 Instantaneous TimeRanges may be represented in three ways.
 
-- `<tr>` - Strongly discouraged
-- `[<tr>_<tr>]`
-- `[<tr>]` - Preferred
+- `<ts>` - Strongly discouraged
+- `[<ts>_<ts>]`
+- `[<ts>]` - Preferred
 
-In these cases, `<tr>` is a timestamp which is identical in each case.
+In these cases, `<ts>` is a timestamp which is identical in each case.
 The first syntax is a bare timestamp.
 This syntax is strongly discouraged for TimeRanges as it is indistinguishable from a Timestamp.
 It may, however, be convenient when querying a Flow at a specific Timestamp.
