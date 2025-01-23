@@ -152,6 +152,12 @@ It may, however, be convenient when querying a Flow at a specific Timestamp.
 The final syntax is strongly preferred as it is easily identifiable, both visually and programmatically, as an instantaneous.
 The second syntax may be convenient where a code path may generate an instantaneous or non-instantaneous TimeRange.
 
+Note that exclusive markers (i.e. `(` or `)`) should not be used with instantaneous TimeRanges.
+Where both markers are exclusive, the TimeRange is equivalent to the "never" TimeRange - `()`.
+A "never" TimeRange with a Timestamp (i.e. `(<ts>)`) is strongly discouraged as it may be confusing.
+Where a mix of inclusive and exclusive markers are used with a single Timestamp (i.e. `(<ts>]` or `[<ts>)`), behaviour is undefined.
+This would indicate that the Timestamp is both inclusive and exclusive at the same time, which is impossible.
+
 Instantaneous TimeRanges should not normally be used for Flow Segment `timerange` on media with a duration (e.g. Video frames).
 Instantaneous TimeRanges may more commonly be used for some types of Data, or when querying a Flow at a specific Timestamp.
 
