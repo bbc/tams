@@ -33,13 +33,14 @@ But they may provide multiple types of Object Storage.
 These may have vastly different properties.
 And there is often no universal naming conventions to describe these products in a way that is comparable between cloud providers.
 So while we need to signal this, we are not able to provide universal naming conventions.
+The storage type can optionally indicate whether the URLs are presigned or not.
 
 Finally, a more generic "store name" parameter is useful for human identification of stores, and for distinguishing stores which are otherwise identical.
 It should be noted that the logical concept of a named "store" in this case is distinct from a bucket (or equivalent concept).
 A "store" may make use of multiple buckets for performance reasons, for example.
 But the properties of buckets of a named store should be otherwise identical.
 
-In summary; we must signal storage provider, storage time, and store name.
+In summary; we must signal storage provider, storage type, and store name.
 However we may also need to add the optional parameters of region, and availability zone.
 We cannot, unfortunately, signal any of these in consistently named and universally comparable ways.
 But we can specify a schema which allows a client to consistently decide which pieces of information are important to it.
@@ -49,13 +50,13 @@ But we can specify a schema which allows a client to consistently decide which p
 Given all of the above, this Application Note recommends the following naming convention for the `get_urls` `label` parameter on flow segments:
 
 ```text
-<provider>.<region[optional]>.<availabilityZone[optional]>:<storeType>:<storeName>
+<provider>.<region[optional]>.<availabilityZone[optional]>:<storeType>.<presigned[optional]>:<storeName>
 ```
 
 This can be represented more formally with the following Python-compatible regex:
 
 ```regex
-^(?P<provider>[A-Za-z0-9\-\_]+)(.(?P<region>[A-Za-z0-9\-\_]+)(.(?P<availabilityZone>[A-Za-z0-9\-\_]+))?)?:(?P<storeType>[A-Za-z0-9\-\_]+):(?P<storeName>[A-Za-z0-9\-\_]+)$
+^(?P<provider>[A-Za-z0-9\-\_]+)(\.(?P<region>[A-Za-z0-9\-\_]+)(\.(?P<availabilityZone>[A-Za-z0-9\-\_]+))?)?:(?P<storeType>[A-Za-z0-9\-\_]+)(\.presigned)?:(?P<storeName>[A-Za-z0-9\-\_]+)$
 ```
 
 An example use of this would be:
@@ -74,6 +75,12 @@ An example use of this without a region would be:
 
 ```text
 example-cloud-provider:example-storage-product:example-store-name
+```
+
+An example use of this with presigned URLs would be:
+
+```text
+example-cloud-provider.eu-west-1.a:example-storage-product.presigned:example-store-name
 ```
 
 The parameters `provider`, `region`, `availabilityZone`, and `storeType` should use the machine readable values as provided by the cloud/storage vendor.
