@@ -153,7 +153,7 @@ The final syntax is strongly preferred as it is easily identifiable, both visual
 The second syntax may be convenient where a code path may generate an instantaneous or non-instantaneous TimeRange.
 
 Note that exclusive markers (i.e. `(` or `)`) cannot be used with instantaneous TimeRanges.
-As discussed in [TimeRange representation](#timerange-representation), this would be interpreted as an empty TimeRange.
+As discussed in [Timestamps in TAMS - TimeRange Representation](./0008-timestamps-in-TAMS.md#timerange-representation), this would be interpreted as an empty TimeRange.
 
 Instantaneous TimeRanges should not normally be used for Flow Segment `timerange` on media with a duration (e.g. Video frames).
 Instantaneous TimeRanges may more commonly be used for some types of Data, or when querying a Flow at a specific Timestamp.
