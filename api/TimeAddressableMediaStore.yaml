@@ -1519,7 +1519,7 @@ paths:
             generate a large number of pre-signed URLs for example.
           schema:
             type: string
-            pattern: ^[^,]*(,[^,]*)*$
+            pattern: ^([^,]+(,[^,]+)*)?$
         - $ref: '#/components/parameters/trait_resource_paged_key'
         - $ref: '#/components/parameters/trait_paged_limit'
       responses:
@@ -1621,7 +1621,7 @@ paths:
             generate a large number of pre-signed URLs for example.
           schema:
             type: string
-            pattern: ^[^,]*(,[^,]*)*$
+            pattern: ^([^,]+(,[^,]+)*)?$
         - $ref: '#/components/parameters/trait_resource_paged_key'
         - $ref: '#/components/parameters/trait_paged_limit'
       responses:
