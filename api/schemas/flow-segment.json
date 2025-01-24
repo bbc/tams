@@ -41,7 +41,7 @@
         ],
         "properties": {
           "label": {
-            "description": "Label identifying this URL",
+            "description": "Label identifying this URL. If the 'label' is not set then this URL can't be filtered for using the 'accept_get_urls' API query parameter.",
             "type": "string"
           },
           "url": {
