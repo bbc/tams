@@ -60,7 +60,7 @@ This adds a boolean option named `include_get_urls` that if set to `false` resul
 This extends [Option 2](#option-2-add-a-query-option-to-return-none-or-all-get_urls) to add a (comma-separated) list option named `accept_get_urls` that specifies the `labels` associated with URLS to include in the response.
 Omitting `accept_get_urls` will result in all URLs in the response.
 Setting `accept_get_urls` to an empty string will result in no URLs in the response.
-If `accept_get_urls` includes a `default` label then URLs with label `default` or no label are included in the response.
+Flow segment `get_urls` with no label cannot be filtered.
 
 * Good, because it allows clients to indicate that `get_urls` are not required
 * Good, because clients can retain URLs that don't cause increased request times
