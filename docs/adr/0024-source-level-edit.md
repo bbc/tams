@@ -1,5 +1,5 @@
 ---
-status: proposed
+status: accepted
 ---
 # Source-level Edit
 
@@ -86,7 +86,7 @@ Option 5 (bulk write of segments) was discussed while reviewing this ADR, but wi
 
 ### Implementation
 
-{Once the proposal has been implemented, add a link to the relevant PRs here}
+This ADR is `accepted` in the sense of broad agreement with the principles, however some of the detail will be moved to future ADR PRs, which should be linked here.
 
 ## Pros and Cons of the Options
 
