@@ -88,6 +88,8 @@ Option 5 (bulk write of segments) was discussed while reviewing this ADR, but wi
 
 This ADR is `accepted` in the sense of broad agreement with the principles, however some of the detail will be moved to future ADR PRs, which should be linked here.
 
+* [OpenTimelineIO appnote](https://github.com/bbc/tams/pull/104)
+
 ## Pros and Cons of the Options
 
 ### Option 1: Provide an edit API
