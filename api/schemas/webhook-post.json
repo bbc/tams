@@ -27,7 +27,7 @@
             }
         },
         "flow_ids": {
-            "description": "Limit Flow related events to the given list of Flow IDs. Non-Flow related events are not affected",
+            "description": "Limit Flow and Flow Segment events to Flows in the given list of Flow IDs",
             "type": "array",
             "items": {
                 "type": "string",
@@ -35,7 +35,23 @@
             }
         },
         "source_ids": {
-            "description": "Limit Source related events to the given list of Source IDs. Non-Source related events are not affected",
+            "description": "Limit Flow, Flow Segment and Source events to Sources in the given list of Source IDs",
+            "type": "array",
+            "items": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+        },
+        "flow_collected_by_ids": {
+            "description": "Limit Flow and Flow Segment events to those with Flow that is collected by a Flow Collection in the given list of Flow Collection IDs",
+            "type": "array",
+            "items": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+        },
+        "source_collected_by_ids": {
+            "description": "Limit Flow, Flow Segment and Source events to those with Source that is collected by a Source Collection in the given list of Source Collection IDs",
             "type": "array",
             "items": {
                 "type": "string",
