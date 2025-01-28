@@ -35,6 +35,7 @@ For more information on how we use ADRs, see [here](./adr/README.md).
 | [0023](./adr/0023-filter-segment-get-urls.md)                      | Add query option to filter Flow Segment `get_urls` by `label`              |
 | [0024](./adr/0024-source-level-edit.md)                            | Source-level Edit                                                          |
 | [0025](./adr/0025-flow-property-updates.md)                        | Options for updating Flow properties                                       |
+| [0026](./adr/0026-updated-webhook-events-and-filters.md)           | Updates to the webhook event structures and filters                        |
 
 \* Note: ADR 0004a was the unintended result of a number clash in the early development of TAMS which wasn't caught before publication
 
