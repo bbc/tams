@@ -2001,10 +2001,7 @@ webhooks:
             schema:
               title: Flow Segments Added
               description: |
-                Notification that new segments have been added to a Flow. The message body contains the timerange
-                covered by the new segments, however implementations MAY rate limit these messages and provide a single
-                message covering multiple segments. The timerange in the message MUST intersect with a segment at both
-                start and end (e.g. it cannot start or end in empty space).
+                Notification that new segments have been added to a Flow.
               required:
                 - event_timestamp
                 - event_type
@@ -2021,12 +2018,14 @@ webhooks:
                   type: object
                   required:
                     - flow_id
-                    - timerange
+                    - segments
                   properties:
                     flow_id:
                       $ref: "#/components/schemas/uuid"
-                    timerange:
-                      $ref: 'schemas/timerange.json'
+                    segments:
+                      type: array
+                      items:
+                        $ref: 'schemas/flow-segment.json'
   flows/segments_deleted:
     post:
       security:
@@ -2037,10 +2036,7 @@ webhooks:
             schema:
               title: Flow Segments Deleted
               description: |
-                Notification that segments have been deleted from a Flow. The message body contains the timerange over
-                which segments have been deleted, however implementations MAY rate limit these messages and provide a
-                single message covering multiple segments. The timerange in the message MUST intersect with a segment
-                which has been deleted at both start and end (e.g. it cannot start or end in empty space).
+                Notification that segments have been deleted from a Flow.
               required:
                 - event_timestamp
                 - event_type
@@ -2062,6 +2058,7 @@ webhooks:
                     flow_id:
                       $ref: "#/components/schemas/uuid"
                     timerange:
+                      description: The timerange of segments that have been deleted. The timerange MUST intersect with a segment which has been deleted at both start and end (e.g. it cannot start or end in empty space).
                       $ref: 'schemas/timerange.json'
   sources/created:
     post:
