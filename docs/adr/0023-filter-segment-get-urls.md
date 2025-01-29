@@ -1,5 +1,5 @@
 ---
-status: "proposed"
+status: "accepted"
 ---
 # Query Option to Filter get_urls
 
