@@ -1193,6 +1193,8 @@ paths:
           description: No content. The label has been created or updated.
         "400":
           description: Bad request. Invalid Flow label.
+        "403":
+          description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
         "404":
           description: The requested Flow does not exist.
     delete:
