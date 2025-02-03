@@ -175,7 +175,7 @@ def normalise_and_transfer_media(
 
             # Re-assign the packet to the output stream
             if len(av_output.streams) == 0:
-                av_output.add_stream(template=pkt.stream)
+                av_output.add_stream_from_template(pkt.stream)
             pkt.stream = av_output.streams[0]
 
             # Adjust the packet timing to place it on the Flow's timeline using FlowSegment.ts_offset
