@@ -68,11 +68,19 @@ async def get_media_storage_urls(
     session: aiohttp.ClientSession,
     credentials: Credentials,
     tams_url: str,
-    flow_id: UUID
+    flow_id: UUID,
+    segment_count: int
 ) -> AsyncGenerator[dict, None]:
     """Get media storage URLs for uploading media segments"""
     while True:
-        async with post_request(session, credentials, f"{tams_url}/flows/{flow_id}/storage") as resp:
+        async with post_request(
+            session,
+            credentials,
+            f"{tams_url}/flows/{flow_id}/storage",
+            json={
+                "limit": segment_count
+            }
+        ) as resp:
             resp.raise_for_status()
 
             media_storage = await resp.json()
@@ -189,7 +197,7 @@ async def hls_ingest(
     async with aiohttp.ClientSession() as session:
         await put_flow(session, credentials, tams_url, flow_id, source_id)
 
-        object_urls = get_media_storage_urls(session, credentials, tams_url, flow_id)
+        object_urls = get_media_storage_urls(session, credentials, tams_url, flow_id, hls_segment_count)
 
         hls_segment_filenames = get_hls_segment_filenames(hls_filename)
 
