@@ -173,6 +173,9 @@ Run the outgest file script as follows (replace `<URL>` and set `<FLOW ID>` to t
 ./outgest_file.py --tams-url <URL> --flow-id <FLOW ID> --check-timing --output output.ts
 ```
 
-> This simple edit example used the complete Flows.
-If the timerange args are used then note that this simple edit script will make the edit using whole segments only.
-The `sample_offset` and `sample_count` segment properties could have been used to set edit points within segments, but that might make things complicated for clients which would then need to deal with long GOP precharge for example.
+The simple edit example has another mode as well, to demonstrate the `sample_offset` and `sample_count` segment
+properties used to set edit points within segments.
+This mode can be used by adding the `--cut-interval-sec <seconds>` parameter to the `./simple_edit.py` command, and
+will cut between the two Flows on that interval.
+The resulting Flow will not be playable using simple tools (such as direct HLS mappings) and will require a client that
+fully implements the TAMS specification, including handling long-GOP precharge if necessary.
