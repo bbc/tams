@@ -19,7 +19,9 @@ async def request(
 ) -> AsyncGenerator[aiohttp.ClientResponse, None]:
     """Execute a request and retry once if there is a credentials failure"""
     # Extract the 'headers' as they need to be extended with the auth credentials
-    in_headers = {}
+    in_headers = {
+        "Content-Type": "application/json"
+    }
     if "headers" in kwargs:
         in_headers = kwargs.pop("headers")
 
@@ -67,10 +69,11 @@ async def post_request(
     session: aiohttp.ClientSession,
     credentials: Credentials,
     url: str,
+    json: dict = {},
     **kwargs
 ) -> AsyncGenerator[aiohttp.ClientResponse, None]:
     """Execute a POST request and retry once if there is a credentials failure"""
-    async with request(session, credentials, "POST", url, **kwargs) as resp:
+    async with request(session, credentials, "POST", url, json=json, **kwargs) as resp:
         yield resp
 
 
