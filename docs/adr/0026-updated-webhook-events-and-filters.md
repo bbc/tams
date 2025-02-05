@@ -26,25 +26,15 @@ This avoids needing additional API queries to get the missing information.
 ## Considered Options
 
 * Option 1: Leave the webhook specification unchanged
-* Option 2a: Make the event filter and complete Flow Segment information requested by users
-* Option 2b: Extend option 2a to add support for filtering by Source Collections
-* Option 3: Make the event transformation updates requested by users
+* Option 2: Make the event filter and complete Flow Segment information requested by users
+* Option 3: Extend option 2 to add support for filtering by Source Collections
+* Option 4: Extend option 3 to add filtering of Flow Segment `get_urls`
 
 ## Decision Outcome
 
-Chosen option: Option 2b, because that provides most of what users have explicitly requested.
-Also, filtering on Source Collections is likely to be needed in systems that operate on Sources.
+Chosen option: Option 4, because that provides what users have explicitly requested and filtering on Source Collections is likely to be needed in systems that operate on Sources.
 The assumption is that the extra queries to get the Flow and Source Collection IDs is worth the benefits of having more advanced event filtering on collections.
-
-Option 3 requires additional event processing to transform events for webhook endpoints.
-It is unclear whether the additional processing warrants specification at this time.
-
-There may be other ways to achieve a requirement to include or not include presigned `get_urls` in Flow Segments.
-
-* A TAMS implementation may include a configure option to enable inclusion of presigned URLs.
-* A Flow tag may be used to indicate where Flow Segment events should include presigned URLs.
-An application that requires presigned URLs for performance reasons (e.g. to avoid an API request) can decide to enable it for the Flows it creates.
-A permissions system sitting in front of a TAMS could decide whether users can enable presigned URLs for Flows using the tag.
+Similarly, the event transformation capability to select which `get_urls` to include allows access to content to be limited for certain webhook event recipients that don't have the required permissions.
 
 ### Implementation
 
@@ -58,7 +48,7 @@ Specification changes have been implemented in PR [#105](https://github.com/bbc/
 * Good, because it has been proven to work using existing implementations
 * Bad, because it doesn't fulfill known user requirements which may lead to future divergence in implementations to meet those requirements
 
-### Option 2a: Make the event filter and complete Flow Segment information requested by users
+### Option 2: Make the event filter and complete Flow Segment information requested by users
 
 The `flow_ids` and `source_ids` filter option in the webhook registration now refer to just the Flow and/or Source entity directly associated with the event.
 The Flow and Flow Segment events have a Flow (Flow `id` property) and Source (Flow `source_id` property) directly associated with it.
@@ -78,7 +68,7 @@ The `timerange` property is removed from the `flows/segments_added` event as tha
 * Neutral, because more information is included in Flow Segment events which may increase the transmission and processing costs
 * Neutral, because including presigned URLs in the Flow Segment information may compromise security as the webhook receiver is not directly involved in the authentication process
 
-### Option 2b: Extend option 2a to add support for filtering by Source Collections
+### Option 3: Extend option 2 to add support for filtering by Source Collections
 
 A system that prefers dealing with Sources rather than Flows would benefit from the ability to filter events based on Source Collections.
 A filter based on Source Collections would also support additions to the underlying Flows without requiring the webhook to be re-registered with an updated list of Flows to filter on.
@@ -91,15 +81,13 @@ The Source in the Flow and Flow Segment event case is the Source referenced by t
 * Good, because new Flows or Sources in a collection wouldn't require changes to the webhook registration
 * Neutral, because it requires an extra query to get the Source Collection IDs (Source's `collected_by` property) associated with the Flow's Source
 
-### Option 3: Make the event transformation updates requested by users
+### Option 4: Extend option 3 to add filtering of Flow Segment `get_urls`
 
-The webhook options could be extended with a `accept_get_urls` property that functions the same way as the query parameter on the segment access API endpoint.
+The webhook options is extended with a `accept_get_urls` property that functions the same way as the query parameter on the segment access API endpoint.
 This requires the event processing pipeline to transform the `segments` in the Flow Segment events by filtering the Flow Segment `get_urls` using the value set in `accept_get_urls`.
 
-A `segment_timerange_only` webhook option could be used to reduce the size of Flow Segment events by returning just a `timerange` rather than the `segments`.
-
 * Good, because it provides some control to webhook users of how much information is sent, which may help reduce transmission and processing costs.
-* Bad, because it requires additional processing in the event transmission pipeline to transform the events
+* Neutral, because it requires additional processing in the event transmission pipeline to transform the events that may be trivial or non-trivial depending on the implementation architecture.
 
 ## More Information
 
@@ -165,3 +153,7 @@ Here are some general use cases along with the webhook options:
 * Allow users to filter events for multiple Source Collections
   * Set the `events` to include the event types as required
   * Add the Source Collection IDs to the `source_collected_by_ids` property
+* Allow users to disable `get_urls` inclusion in Flow Segments
+  * Set the `accept_get_urls` to an empty list
+* Allow users to only pass through certain `get_urls` in Flow Segments
+  * Set the `accept_get_urls` to the list labels of URLs that should be included
