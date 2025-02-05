@@ -47,7 +47,7 @@ async def get_flow_segments(
                 segments = await resp.json()
                 for segment in segments:
                     segment_timerange = TimeRange.from_str(segment["timerange"])
-                    if segment_timerange not in timerange:
+                    if segment_timerange.overlaps_with_timerange(timerange):
                         yield segment
                     else:
                         logger.warning(
