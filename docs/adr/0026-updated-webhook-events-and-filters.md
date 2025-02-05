@@ -36,6 +36,9 @@ Chosen option: Option 4, because that provides what users have explicitly reques
 The assumption is that the extra queries to get the Flow and Source Collection IDs is worth the benefits of having more advanced event filtering on collections.
 Similarly, the event transformation capability to select which `get_urls` to include allows access to content to be limited for certain webhook event recipients that don't have the required permissions.
 
+API implementations may choose to only partially support the filtering and transformation capabilities, but they must return a 400 HTTP error code response on registration if the requested webhook capabilities are not fully supported.
+The avoids the scenario where for example webhook events include presigned URLs even though the API user has set `accept_get_urls` to an empty list because the webhook event recipient does not have permission to access the content.
+
 ### Implementation
 
 Specification changes have been implemented in PR [#105](https://github.com/bbc/tams/pull/105).

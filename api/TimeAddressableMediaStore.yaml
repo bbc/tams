@@ -175,6 +175,9 @@ paths:
 
         HTTP requests from the service SHOULD include a `api_key_name` header with the 'api_key_value' value. Clients SHOULD verify this against the value they provided when registering the webhook.
 
+        API implementations MAY partially support event filtering and transformations.
+        API implementations SHALL return a 400 response code if the filtering or transformation specified in the request is not supported.
+
         API implementations SHOULD consider the security implementations of providing webhooks, and include appropriate
         mitigations against Server Side Request Forgery (SSRF) attacks and similar.
       operationId: POST_webhooks
@@ -199,7 +202,7 @@ paths:
         "204":
           description: Success. The webhook has been removed
         "400":
-          description: Bad request. Invalid parameters.
+          description: Bad request. Invalid parameters or unsupported event filtering or transformation.
         "404":
           description: "Webhooks are not supported by this API implementation"
   /sources:
