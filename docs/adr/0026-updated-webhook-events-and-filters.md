@@ -62,6 +62,8 @@ Note that a TAMS implementation may limit the information returned in events, e.
 
 The `timerange` property is removed from the `flows/segments_added` event as that information is now available in the union of `timerange` properties in the `segments`.
 
+See the [More Information](#more-information) section for filtering guidelines and use cases.
+
 * Good, because it fulfills the known user requirements
 * Good, because it extends the current specifiction rather than being a complete overhaul
 * Neutral, because it requires an extra query to get the Flow Collection IDs (Flow's `collected_by` property) associated with the Flow
@@ -77,6 +79,8 @@ The `source_collected_by_ids` filter option is added to the webhook registration
 The property lists the Source Collections that collect the Source in the `collected_by` property.
 The Source in the Flow and Flow Segment event case is the Source referenced by the Flow's `source_id` property.
 
+See the [More Information](#more-information) section for filtering guidelines and use cases.
+
 * Good, because it provides a filtering capability at the Source level
 * Good, because new Flows or Sources in a collection wouldn't require changes to the webhook registration
 * Neutral, because it requires an extra query to get the Source Collection IDs (Source's `collected_by` property) associated with the Flow's Source
@@ -91,22 +95,35 @@ This requires the event processing pipeline to transform the `segments` in the F
 
 ## More Information
 
-### Event filter logic
+### Event filter guidelines
+
+The events can be filtered by associated Flows, Sources, Flow Collections and Source Collections.
+The following properties are needed by the filter process for Flow and Flow Segment events (the name used here is structured as `{entity}.{property}`):
+
+* `Flow.id`: the ID of the Flow.
+* `Flow.collected_by`: the IDs of the Flow Collections that collect the Flow.
+* `Source.id`: the ID of the Flow's Source.
+The property value equals `Flow.source_id`.
+* `Source.collected_by`: the IDs of the Source Collections that collect the Flow's Source.
+
+The following properties are needed by the filter process for Source events:
+
+* `Source.id`: the ID of the Source.
+* `Source.collected_by`: the IDs of the Source Collections that collect the Source.
 
 The `events` webhook property lists the event types that are passed through the filter.
 The `events` cannot be empty as an empty events is used to delete the webhook.
 
-If `flow_ids` is set then Flow and Flow Segment events are only passed through if they refer directly to a Flow in the `flow_ids` list.
+If the `flow_ids` webhook property is set then Flow and Flow Segment events are only passed through if the `Flow.id` is in the `flow_ids` list.
 The `flows_ids` has no filter effect if not set or for Source events.
 
-If `source_ids` is set then Flow, Flow Segment and Source events are only passed through if they refer directly to a Source in the `source_ids` list.
+If the `source_ids` webhook property is set then Flow, Flow Segment and Source events are only passed through if the `Source.id` is in the `source_ids` list.
 The `source_ids` has no filter effect if not set.
 
-If `flow_collected_by_ids` is set then Flow and Flow Segment events are only passed through if they are `collected_by` a Flow Collection in the `flow_collected_by_ids` list.
+If the `flow_collected_by_ids` webhook property is set then Flow and Flow Segment events are only passed through if there is an ID in the `Flow.collected_by` list that is also in the `flow_collected_by_ids` list.
 The `flow_collected_by_ids` has no filter effect if not set or for Source events.
 
-If `source_collected_by_ids` is set then Flow, Flow Segment and Source events are only passed through if they collected by a Source Collection in the `source_collected_by_ids` list.
-The Flow is collected by a Source Collection if the Source referenced by the Flow is collected by the Source Collection.
+If the `source_collected_by_ids` webhook property is set then Flow, Flow Segment and Source events are only passed through if there is an ID in the `Source.collected_by` list that is also in the `source_collected_by_ids` list.
 The `source_collected_by_ids` has no filter effect if not set.
 
 ### Some use cases and associated webhook options
