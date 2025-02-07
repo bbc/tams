@@ -1859,6 +1859,92 @@ paths:
           description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
         "404":
           description: The requested flow does not exist.
+  /objects:
+    head:
+      summary: Media Object Information
+      description: Return flow references and other information about media objects.
+      operationId: HEAD_objects
+      tags:
+        - Objects
+      parameters:
+        - name: object_id
+          in: query
+          description: The media object identifier.
+          required: true
+          schema:
+            type: string
+        - $ref: '#/components/parameters/trait_resource_paged_key'
+        - $ref: '#/components/parameters/trait_paged_limit'
+      responses:
+        "200":
+          description: ""
+          headers:
+            Link:
+              description: Provides references to cursors for paging. Only the 'rel' attribute with value 'next' and a link to the next page is currently supported. If 'next' is not present then it is the last page.
+              schema:
+                type: string
+            X-Paging-Limit:
+              description: Identifies the current limit being used for paging. This may not match the requested value if the requested value was too high for the implementation
+              schema:
+                type: integer
+            X-Paging-NextKey:
+              description: Opaque string that can be supplied to the `page` query parameter to get the next page of results.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: string
+        "400":
+          $ref: '#/components/responses/trait_resource_info_head_400'
+        "404":
+          description: The requested media object does not exist.
+    get:
+      summary: Media Object Information
+      description: |
+        Contains flows that references the media object and other information.
+
+        The paging query parameters and headers are required for the list of flow references in the media object.
+        API implementations should return a complete list of flow references within reason and API clients should expect
+        paging to happen in some rare cases where a media object is used in many flows.
+      operationId: GET_objects
+      tags:
+        - Objects
+      parameters:
+        - name: object_id
+          in: query
+          description: The media object identifier.
+          required: true
+          schema:
+            type: string
+        - $ref: '#/components/parameters/trait_resource_paged_key'
+        - $ref: '#/components/parameters/trait_paged_limit'
+      responses:
+        "200":
+          description: ""
+          headers:
+            Link:
+              description: Provides references to cursors for paging. Only the 'rel' attribute with value 'next' and a link to the next page is currently supported. If 'next' is not present then it is the last page.
+              schema:
+                type: string
+            X-Paging-Limit:
+              description: Identifies the current limit being used for paging. This may not match the requested value if the requested value was too high for the implementation
+              schema:
+                type: integer
+            X-Paging-NextKey:
+              description: Opaque string that can be supplied to the `page` query parameter to get the next page of results.
+              schema:
+                type: string
+          content:
+            application/json:
+              example:
+                $ref: examples/objects-get-200.json
+              schema:
+                $ref: "schemas/object.json"
+        "400":
+          description: Bad request. Invalid query options or missing 'object_id'.
+        "404":
+          description: The requested media object does not exist.
   /flow-delete-requests:
     head:
       summary: List Flow Delete Requests
@@ -2247,6 +2333,8 @@ tags:
   - name: FlowSegments
     description: |
       A timerange segment of a Flow that references a media object in the object store.
+  - name: Objects
+    description: The object in the object store that contains the media essence.
   - name: MediaStorage
     description: The system that stores the media objects referenced by flow segments.
   - name: FlowDeleteRequests
