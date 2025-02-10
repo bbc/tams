@@ -1,4 +1,4 @@
-# 0014: Referencing TAMS content in other systemss
+# 0014: Referencing TAMS content in other systems
 
 ## Abstract
 
@@ -19,7 +19,7 @@ https://tams.example.com/flows/f87f7f32-a34d-4a6f-b085-a5ee49b4b2f8
 
 #### Referring directly to a Source
 
-When referring to an "asset" that contains, for example, video and audio (e.g. attaching a clip in a MAM to an underlying TAMS concept), the reference should point to the relevan  t multi-essence Source.
+When referring to an "asset" that contains, for example, video and audio (e.g. attaching a clip in a MAM to an underlying TAMS concept), the reference should point to the relevant multi-essence Source.
 Clients will need to use the Source's collection to select the relevant Sources, and from there identify suitable Flows.
 
 This should be the preferred approach when referring to content, unless it is necessary to point to a specific Flow.
