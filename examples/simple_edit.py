@@ -72,6 +72,7 @@ async def get_segments(
     flow_id: UUID,
     timerange: TimeRange
 ) -> list[dict]:
+    """Fetch a single page of segments from the given Flow"""
     async with get_request(
         session,
         credentials,
@@ -212,35 +213,37 @@ async def interval_edit(
         current_seg = {
             "id": input_1_flow_id,
             "list": flow_1_segments,
-            "offset": TimeRange.from_str(flow_1_segments[0]["timerange"]).start
+            "timeshift": TimeRange.from_str(flow_1_segments[0]["timerange"]).start
         }
         other_seg = {
             "id": input_2_flow_id,
             "list": flow_2_segments,
-            "offset": TimeRange.from_str(flow_2_segments[0]["timerange"]).start
+            "timeshift": TimeRange.from_str(flow_2_segments[0]["timerange"]).start
         }
 
         while (len(flow_1_segments) > 0 and len(flow_2_segments) > 0):
-            position_in_flow_timeline = working_time + current_seg["offset"]
+            position_in_flow_timeline = working_time + current_seg["timeshift"]
 
             # Draw a segment from the current list (and drop segments if we've passed them)
             next_seg = current_seg["list"][0]
             next_seg_tr = TimeRange.from_str(next_seg["timerange"]).normalise(edit_rate.numerator,
                                                                               edit_rate.denominator)
-            if next_seg_tr.end <= position_in_flow_timeline:
+            if next_seg_tr.ends_earlier_than_timerange(position_in_flow_timeline):
                 print(f"Segment {next_seg_tr} is before current position {position_in_flow_timeline} - dropping")
                 current_seg["list"].popleft()
                 continue
 
-            next_seg_offset = Timestamp.from_str(next_seg.get("ts_offset", "0:0"))
+            next_seg_ts_offset = Timestamp.from_str(next_seg.get("ts_offset", "0:0"))
 
             # Work out how many seconds into the underlying segment we start
-            seg_start_offset = (working_time + current_seg["offset"]) - next_seg_tr.start
+            seg_start_offset = (working_time + current_seg["timeshift"]) - next_seg_tr.start
 
             # Work out how much of the segment to include in the output
             segment_length_remaining = next_seg_tr.end - position_in_flow_timeline
             remaining_time_in_cut = next_switch_at - working_time
 
+            # Note that for non-integer media rates this simple approach may lead to rounding anomalies
+            # however this approach is used to keep the example simple.
             if (remaining_time_in_cut < segment_length_remaining):
                 # Rest of this cut fits in the current segment, so we can write a new segment
                 new_seg_tr = TimeRange(working_time, next_switch_at, TimeRange.INCLUDE_START)
@@ -252,7 +255,7 @@ async def interval_edit(
             new_segment = {
                 "object_id": next_seg["object_id"],
                 "timerange": new_seg_tr,
-                "ts_offset": next_seg_offset - current_seg["offset"],
+                "ts_offset": next_seg_ts_offset - current_seg["timeshift"],
                 "sample_offset": seg_start_offset.to_count(edit_rate.numerator, edit_rate.denominator),
                 "sample_count": new_seg_tr.length.to_count(edit_rate.numerator, edit_rate.denominator)
             }
