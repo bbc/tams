@@ -141,7 +141,7 @@ The script follows these steps:
 ### Simple Edit ([simple_edit.py](./simple_edit.py))
 
 The [simple_edit.py](./ingest_hls.py) script demonstrates how media can be shared between Flows using a lightweight metadata-only operation that constructs a Flow from timeranges of other Flows.
-The script takes 2 Flows and timeranges as inputs, and creates an output Flow that is a concatenation of the 2 inputs.
+The script takes 2 Flows and timeranges as inputs, and creates an output Flow that is a concatenation of the 2 inputs, containing at most one page of segments from each.
 
 Firstly, create the 2 input Flows from the sample content.
 
