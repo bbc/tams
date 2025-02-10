@@ -11,6 +11,10 @@ This is intended to be a working document, and as new use cases are built out, n
 
 Content in a TAMS instance can be referred to by URI, for example `https://tams.example.com/flows/f87f7f32-a34d-4a6f-b085-a5ee49b4b2f8`, although in some cases (where the presence of a TAMS API is otherwise not indicated), it may be useful to refer to the "pseudo-protocol" `tams://`.
 
+In some cases a client may choose to ignore the location part of the URI, and parse it to identify the type (e.g. Flow or Source) and UUID.
+These could be applied to another TAMS interface known to the client: for example a local cache or a store interface aggregator.
+This is made possible by Flows and Sources having a unique identifier, which should always point to that particular Flow or Source without colliding.
+
 #### Referring directly to a Flow
 
 ```text
