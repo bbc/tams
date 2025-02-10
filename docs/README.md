@@ -33,6 +33,7 @@ For more information on how we use ADRs, see [here](./adr/README.md).
 | [0021](./adr/0021-storage-label-format.md)                         | Options for `get_urls` labels on Flow Segments                             |
 | [0022](./adr/0022-flow-bit-rate-properties.md)                     | Definitions for Flow bit rate properties and additional properties         |
 | [0023](./adr/0023-filter-segment-get-urls.md)                      | Add query option to filter Flow Segment `get_urls` by `label`              |
+| [0024](./adr/0024-source-level-edit.md)                            | Source-level Edit                                                          |
 | [0025](./adr/0025-flow-property-updates.md)                        | Options for updating Flow properties                                       |
 
 \* Note: ADR 0004a was the unintended result of a number clash in the early development of TAMS which wasn't caught before publication
