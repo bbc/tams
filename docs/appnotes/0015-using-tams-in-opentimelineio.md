@@ -148,6 +148,7 @@ In the diagram below Source/Flow `sO/fO` have been created as the output, contai
 ![Render process and new Flows](./images/0015-opentimeline-writeback-render.png)
 
 This makes the render process faster (references are a very "cheap" metadata operation), makes more efficient use of storage, and avoids an additional decode-encode cycle on some of the content.
+Having both the new material and the rendered output in the store also allows other tools and systems to consume that output; systems that may not be able to work with the EDL directly, but can readily utilise the reference-rendered output.
 
 In the diagram above, some of the non-TAMS content in the original timeline (`titles.mp4`) has also been written to the store as an independent Flow, and referenced as well.
 It is also possible to write those as new content in the output (as is done with the full-frame graphic), however writing independent Flows may be advantageous to unify workflows with TAMS, reducing the scope and complexity of other workflows.
