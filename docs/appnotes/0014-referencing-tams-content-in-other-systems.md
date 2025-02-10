@@ -9,7 +9,7 @@ This is intended to be a working document, and as new use cases are built out, n
 
 ### URI References
 
-Content in a TAMS instance can be referred to by URI, for example `https://tams.example.com/flows/f87f7f32-a34d-4a6f-b085-a5ee49b4b2f8`, although in some cases (where the presence of a TAMS API is otherwise not indicated), it may be useful to refer to the "pseudo-protocol" `tamss://` (or `tams://` where TLS is not in use, similar to HTTP/HTTPS).
+Content in a TAMS instance can be referred to by URI, for example `https://tams.example.com/flows/f87f7f32-a34d-4a6f-b085-a5ee49b4b2f8`, although in some cases (where the presence of a TAMS API is otherwise not indicated), it may be useful to refer to the "pseudo-protocol" `tams://`.
 
 #### Referring directly to a Flow
 

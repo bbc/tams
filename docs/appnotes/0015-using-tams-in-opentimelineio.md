@@ -80,7 +80,7 @@ Note the presence of an `available_range_offset` that describes how the `availab
 This format refers to a URL in a TAMS instance and points to a specific, concrete Flow.
 It is possible a Clip could have more than one `ExternalReference` object (e.g. for each Flow), with the appropriate default selected: this allows, for example, online and proxy workflows to be presented in a UI.
 
-Notice that the URL has a prefix `tamss://` (for "TAMS Secure" - `tams://` would also work for HTTP).
+Notice that the URL has a prefix `tams://`: in general this will be a TAMS instance accessed over HTTPS, however it is assumed some configuration will be required to handle credentials, and this could also be used to provide hints when HTTP is to be used instead.
 
 ```json
 {
@@ -122,7 +122,7 @@ Notice that the URL has a prefix `tamss://` (for "TAMS Secure" - `tams://` would
                 }
             },
             "available_image_bounds": null,
-            "target_url": "tamss://tams.example.com/flows/9bb414a5-862c-494f-86ce-8e2720ecc315"
+            "target_url": "tams://tams.example.com/flows/9bb414a5-862c-494f-86ce-8e2720ecc315"
         }
     },
     "active_media_reference_key": "DEFAULT_MEDIA"
