@@ -213,12 +213,12 @@ async def interval_edit(
         current_seg = {
             "id": input_1_flow_id,
             "list": flow_1_segments,
-            "timeshift": TimeRange.from_str(flow_1_segments[0]["timerange"]).start
+            "timeshift": input_1_timerange.start
         }
         other_seg = {
             "id": input_2_flow_id,
             "list": flow_2_segments,
-            "timeshift": TimeRange.from_str(flow_2_segments[0]["timerange"]).start
+            "timeshift": input_2_timerange.start
         }
 
         while (len(flow_1_segments) > 0 and len(flow_2_segments) > 0):
