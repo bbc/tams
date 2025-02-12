@@ -2,5 +2,5 @@
     "title": "TimeRange",
     "description": "A timerange of timestamps. It is represented using one or two timestamps with inclusivity and exclusivity markers.\n\nE.g.\n* `[0:0_10:0)` represents 10 seconds of media starting at timestamp `0:0` and ending before `10:0`.\n* `(5:0_` represents a timerange starting after `5:0` and to eternity.\n* `[1694429247:0_1694429248:0)` is a 1 second TAI timerange starting at 2023-09-11T10:46:50.0Z UTC.\n* `[1694429247:0]` is an instantaneous TAI timerange at 2023-09-11T10:46:50.0Z UTC.\n  This is equivalent to `[1694429247:0_1694429247:0]`.\n  The short syntax is preferred due to ease of identification as instantaneous.\n  Instantaneous TimeRanges cannot use exclusive markers (i.e. `(` or `)`).\n* A `[` or `]` indicates that bound is inclusive, and a `(` or `)` indicates that bound is exclusive.\n\nDetails of the format can be found in the [Timestamps in TAMS](https://github.com/bbc/tams/blob/main/docs/appnotes/0008-timestamps-in-TAMS.md) application note.\n",
     "type": "string",
-    "pattern": "^(\\[|\\()?(-?\\d+:\\d+)?(_(-?\\d+:\\d+)?)?(\\]|\\))?$"
+    "pattern": "^(\\[|\\()?(-?(0|[1-9][0-9]*):(0|[1-9][0-9]{0,8}))?(_(-?(0|[1-9][0-9]*):(0|[1-9][0-9]{0,8}))?)?(\\]|\\))?$"
  }

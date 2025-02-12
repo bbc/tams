@@ -107,6 +107,8 @@ Of course, if tracking phase difference and/or jitter are important for your use
 
 A Timestamp is represented in the TAMS API using a string with this structure: `{sign?}{seconds}:{nanoseconds}`.
 An optional sign followed by the number of seconds, colon and the number of nanoseconds.
+The `{seconds}` and `{nanoseconds}` must not have any leading zeros.
+The maximum `{nanoseconds}` value is 999999999 (1000^3 - 1).
 
 TAMS Implementations may choose to store Timestamps using different representations.
 For example:
