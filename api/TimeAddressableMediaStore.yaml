@@ -46,9 +46,9 @@ servers:
         description: API version
         default: v6.0
 security:
-  - {}
-  - basic_auth: []
   - bearer_token_auth: []
+  - url_token_auth: []
+  - basic_auth: []
 paths:
   /:
     head:
@@ -2204,11 +2204,39 @@ components:
     basic_auth:
       type: http
       scheme: basic
-      description: HTTP basic authentication
+      description: |
+        HTTP basic authentication using a username and password.
+
+        This option should only be used in constrained cases where Bearer tokens are impractical, since the password is
+        intrinsically long-lived, and managing user credentials across systems is difficult compared to using
+        centralised auth (e.g. via OAuth2) with Bearer tokens
     bearer_token_auth:
       type: http
       scheme: bearer
-      description: HTTP bearer token authentication
+      bearerFormat: JWT
+      description: |
+        HTTP bearer token authentication.
+
+        The method through which a client should acquire a bearer token is assumed to be an OAuth2 grant (either the
+        Authorization Code or Client Credentials grant), however the OpenAPI `OAuth Flow` object cannot be used because
+        it requires that the relevant URLs are known in advance.
+
+        Clients should provide options to allow one (or both) grant types to be configured, as appropriate.
+
+        Where tokens are not JWTs, or are acquired through some other mechanism, the API key method should be used
+        instead.
+    url_token_auth:
+      type: apiKey
+      name: access_token
+      in: query
+      description: |
+        URL token authentication.
+
+        The method through which a client should acquire the token is not specified: it is assumed this takes place in
+        another way, and a TAMS client may well be passed a URL to a store including the token.
+
+        Clients should retain the token in the `access_token` query string parameter, and use it for subsequent store
+        requests in the same session.
 tags:
   - name: Service
     description: The service root and documentation about the service itself
