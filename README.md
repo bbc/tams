@@ -170,6 +170,7 @@ It is possible to see what the version would be if a release was made at the cur
 
 The TAMS specification stipulates authentication methods that a client should support in order to identify themselves and provide credentials to the server, using standard HTTP approaches.
 The authorisation model (the rules by which authenticated requests are allowed or denied) is not part of the TAMS specification, and is up to individual implementers and organisations depending on their exact rules, needs and threat model.
+However some principles and suggestions are discussed in [AppNote0016: Authorisation in TAMS workflows](./docs/appnotes/0016-authorisation-in-tams-workflows.md).
 
 It is assumed that implementations will apply other IT and cloud infrastructure security best practices, notably including the use of TLS (e.g. HTTPS connections) within and between their systems.
 
