@@ -185,6 +185,24 @@ Status: **Deprecated**
 
 Replaced by the `segment_duration` field in Flow metadata.
 
+### hls_exclude
+
+Status: **Experimental**
+
+Used in the TAMS demonstration at NAB 2025.
+
+The type is a `boolean`.
+It is used to indictate the flow should be excluded from HLS manifest generation.
+Defaults to `false` if the tag is not set.
+
 ## Known Source Tags
 
-There are currently no known Source Tags.
+### hls_exclude
+
+Status: **Experimental**
+
+Used in the TAMS demonstration at NAB 2025.
+
+The type is a `boolean`.
+It is used to indictate the source should be excluded from HLS manifest generation.
+Defaults to `false` if the tag is not set.
