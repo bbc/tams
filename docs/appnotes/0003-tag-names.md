@@ -195,6 +195,17 @@ The type is a `boolean`.
 It is used to indictate the Flow should be excluded from HLS manifest generation.
 Defaults to `false` if the tag is not set.
 
+### authz_class.${classname}
+
+Status: **Experimental**
+
+Suggested as a way to build lightweight Attribute-based Access Control in [AppNote0016: Authorisation in TAMS workflows](./0016-authorisation-in-tams-workflows.md).
+The tag would actually be created once for each "class" associated with a Flow: for example there could be an `authz_class.news = 1` and `authz_class.sport = 1`.
+As a result, queries can be constructed on the presence of specific tags, which would not be possible if it were a comma-seperated list for example `authz_class = news, sport`.
+The value has no particular meaning, but tags must have a value.
+
+No known implementations yet.
+
 ## Known Source Tags
 
 ### hls_exclude
