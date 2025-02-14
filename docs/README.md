@@ -62,3 +62,4 @@ For more information on how we use application notes, see [here](./appnotes/READ
 | [0013](./appnotes/0013-setting-flow-bit-rate-properties.md)      | Setting Flow bit rate properties                              |
 | [0014](./appnotes/0014-referencing-tams-content-in-other-systems.md) | Referencing TAMS content in other systems                 |
 | [0015](./appnotes/0015-using-tams-in-opentimelineio.md)          | Using TAMS in OpenTimelineIO                                  |
+| [0016](./appnotes/0016-authorisation-in-tams-workflows.md)       | Authorisation in TAMS workflows                               |

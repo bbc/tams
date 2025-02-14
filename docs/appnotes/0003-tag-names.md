@@ -191,6 +191,17 @@ This tag is only used if the [flow_status](#flow_status) tag value is `ingesting
 The value of this tag should be set to the duration of each segment in the flow (in seconds).
 Flows using this feature must therefore have segments of consistant length.
 
+### authz_class.${classname}
+
+Status: **Experimental**
+
+Suggested as a way to build lightweight Attribute-based Access Control in [AppNote0016: Authorisation in TAMS workflows](./0016-authorisation-in-tams-workflows.md).
+The tag would actually be created once for each "class" associated with a Flow: for example there could be an `authz_class.news = 1` and `authz_class.sport = 1`.
+As a result, queries can be constructed on the presence of specific tags, which would not be possible if it were a comma-seperated list for example `authz_class = news, sport`.
+The value has no particular meaning, but tags must have a value.
+
+No known implementations yet.
+
 ## Known Source Tags
 
 There are currently no known Source Tags.
