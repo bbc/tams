@@ -38,7 +38,7 @@ async def get_flow_segments(
     timerange: TimeRange
 ) -> AsyncGenerator[dict, None]:
     """Generator of Flow Segment dicts for the given Flow ID and timerange"""
-    segments_url = f"{tams_url}/flows/{flow['id']}/segments?timerange={timerange!s}"
+    segments_url = f"{tams_url}/flows/{flow['id']}/segments?timerange={timerange!s}&presigned=true"
     async with aiohttp.ClientSession() as session:
         while True:
             async with get_request(session, credentials, segments_url) as resp:
@@ -255,13 +255,19 @@ async def outgest_file(
     with av.open(output_filename, mode="w", format="mpegts") as av_output:
         async with aiohttp.ClientSession() as media_object_session:
             async for segment in get_flow_segments(tams_url, credentials, flow, timerange):
+                try:
+                    download_url = segment["get_urls"][0]["url"]
+                except KeyError:
+                    raise ValueError("Unable to find download URL for segment "
+                                     f"{segment['object_id']} at {segment['timerange']}")
+
                 # Assuming the media object is small enough to load into memory. An alternative
                 # would be to use streaming responses, although that's complicated here as
                 # PyAV doesn't support async file / stream inputs.
                 # An optimisation would be to add some concurrency by fetching media objects
                 # in multiple asyncio tasks and to also use a queue + threads to parse and process
                 # the packets.
-                async with media_object_session.get(segment["get_urls"][0]["url"]) as resp:
+                async with media_object_session.get(download_url) as resp:
                     resp.raise_for_status()
                     media_essence = BytesIO(await resp.read())
 
