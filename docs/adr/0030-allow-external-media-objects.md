@@ -12,7 +12,7 @@ This requirement also forces copy transfers and duplication of media objects whi
 ## Considered Options
 
 * Option 1: Keep the current media object storage requirements
-* Option 2: Loosen the requirement to allow references to media objects from other Flows
+* Option 2: Loosen the requirement to allow references to existing media objects from other Flows
 * Option 3: Loosen the requirement to allow references to external media objects
 
 ## Decision Outcome
@@ -32,13 +32,17 @@ See the API specification changes in PR [#118](https://github.com/bbc/tams/pull/
 * Bad, because it contradicts the object reuse requirement and expectation that references to media objects in other Flows is supported
 * Bad, because it prevents any form of federation of storage and requires copy transfers to be made
 
-### Option 2: Loosen the requirement to allow references to media objects from other Flows
+### Option 2: Loosen the requirement to allow references to existing media objects from other Flows
 
 Media object reuse is expected to allow reuse across Flows.
 This change is essentially a fix of the specification rather than a feature or breaking change.
 
+This option still requires that a *new* media object is only stored in a location provided by the Flow referencing the media object's `/flows/{flow-id}/storage` endpoint.
+This essentially means that the *new* media object can't be stored in a location that was not intended for the Flow.
+This could be another Flow's intended location or a random location that a client has decided to use.
+
 * Good, because it allows media object reuse as designed
-* Neutral, because TAMS implementations would no longer need to enforce the limitation which requires knowing whether a object storage location was provided by the Flow's `/flows/{flow-id}/storage` endpoint
+* Neutral, because TAMS implementations would no longer need to enforce which location was used if the Flow Segment references an existing media object
 * Neutral, because clients can no longer rely on all TAMS instances to enforce a single Flow media object access control
 
 ### Option 3: Loosen the requirement to allow references to external media objects
