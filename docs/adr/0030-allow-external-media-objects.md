@@ -1,0 +1,62 @@
+---
+status: "proposed"
+---
+# Allow External Media Objects
+
+## Context and Problem Statement
+
+The TAMS API currently requires that Flow Segments registered through the `/flows/{flow-id}/segments` endpoint reference media objects that were uploaded to a location provided by the `/flows/{flow-id}/storage` endpoint.
+This requirement prevents TAMS from referencing media objects that are stored elsewhere, including media objects from other Flows.
+This requirement also forces copy transfers and duplication of media objects which is undesirable.
+
+## Considered Options
+
+* Option 1: Keep the current media object storage requirements
+* Option 2: Loosen the requirement to allow references to media objects from other Flows
+* Option 3: Loosen the requirement to allow references to external media objects
+
+## Decision Outcome
+
+Chosen option: Option 2 and 3, because object reuse is already assumed to work across Flows and external media objects is likely to be a requirement when using some form of storage federation.
+A TAMS implementation can still limit which media objects can be referenced if it wants to.
+
+### Implementation
+
+See the API specification changes in PR [#118](https://github.com/bbc/tams/pull/118).
+
+## Pros and Cons of the Options
+
+### Option 1: Keep the current media object storage requirements
+
+* Good, because it means there is no specification change
+* Bad, because it contradicts the object reuse requirement and expectation that references to media objects in other Flows is supported
+* Bad, because it prevents any form of federation of storage and requires copy transfers to be made
+
+### Option 2: Loosen the requirement to allow references to media objects from other Flows
+
+Media object reuse is expected to allow reuse across Flows.
+This change is essentially a fix of the specification rather than a feature or breaking change.
+
+* Good, because it allows media object reuse as designed
+* Neutral, because TAMS implementations would no longer need to enforce the limitation which requires knowing whether a object storage location was provided by the Flow's `/flows/{flow-id}/storage` endpoint
+* Neutral, because clients can no longer rely on all TAMS instances to enforce a single Flow media object access control
+
+### Option 3: Loosen the requirement to allow references to external media objects
+
+The media objects could be held in other storage locations.
+The requirement is loosened so that clients don't need to copy the media objects across to the storage provided by the TAMS instance.
+It also avoids having multiple copies of the same media objects which can complicate management of those media objects.
+
+The TAMS would need to know the location of a media object and how to provide access to those locations to clients.
+This knowledge would allow the TAMS to provide the right Flow Segment `get_urls` for clients to access the media object.
+One possibility is that the media object ID includes a component that tells the TAMS where the media objects is stored.
+E.g. the media object ID could be a URI that provides a location component that is populated for external media objects.
+Another possibility is that a TAMS could initiate a copy of the media object if the external location is deemed to not provide the necessary access performance.
+
+Recommendations for handling external media objects and federation are expected to be made in future ADRs and Appnotes.
+These recommendations would extend the [Referencing TAMS content in other systems](../appnotes/0014-referencing-tams-content-in-other-systems.md) Appnote that focusses on Flow and Source level references.
+The [Source-level Edit](../adr/0024-source-level-edit.md) ADR proposes exploration for more direct by-reference operations and this may also include support for referencing external media objects.
+
+* Good, because it allows references to media objects in other locations
+* Neutral, because TAMS implementations would need information to know what to provide in the Flow Segment `get-urls` for clients to access the media objects
+* Neutral, because TAMS implementations would need know how to handle when no more references are made to the media object, e.g. inform the external storage that the media object is no longer referenced and can be deleted
