@@ -166,6 +166,13 @@ Otherwise, the version will not change.
 
 It is possible to see what the version would be if a release was made at the current commit by running `make next-version` in the top directory of this repository.
 
+### Security
+
+The TAMS specification stipulates authentication methods that a client should support in order to identify themselves and provide credentials to the server, using standard HTTP approaches.
+The authorisation model (the rules by which authenticated requests are allowed or denied) is not part of the TAMS specification, and is up to individual implementers and organisations depending on their exact rules, needs and threat model.
+
+It is assumed that implementations will apply other IT and cloud infrastructure security best practices, notably including the use of TLS (e.g. HTTPS connections) within and between their systems.
+
 ## Proposals, Decisions and Architecture Changes
 
 This repository uses [(M)ADR documents](https://adr.github.io/madr/) to propose significant changes, facilitate discussions and decision making, and to store a record of options that were considered.
