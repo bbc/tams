@@ -1695,13 +1695,16 @@ paths:
         The segment may use a newly-written object, or re-use an existing object from another flow.
 
         For newly-written objects, the client is responsible for ensuring that the segment written to the store obeys the following restrictions:
-        - The object id provided for a segment MUST be one which was received in a POST from /storage for this flow.
         - All samples in the object SHOULD be used by the segment.
         - The timestamps of each sample in the media object MUST equal its position on the Flow timeline, OR `ts_offset` MUST
           be set such that `media_object_ts + ts_offset = segment_ts`
         - The timerange of the segment MUST NOT overlap any other segment in the same Flow. The behaviour is
           undefined if there is an overlap with existing segments and a store may return a 400 error response.
         - The `sample_offset` SHOULD be zero.
+
+        A TAMS MAY support object ids that were not received in a POST from /storage for this flow. In that case the TAMS would need
+        know how to provide access to the media objects for clients and the process for deleting them if necessary.
+        If a TAMS does not support an object id that was not provided by /storage then it SHOULD return a 400 error response.
 
         If a client needs to modify a Flow segment, e.g. to correct metadata such as the `key_frame_count` or add additional
         URLs to `get_urls`, then the client SHOULD first delete the existing segment and then write a new one. The behaviour is
