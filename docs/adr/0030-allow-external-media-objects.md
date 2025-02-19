@@ -51,16 +51,14 @@ The media objects could be held in other storage locations.
 The requirement is loosened so that clients don't need to copy the media objects across to the storage provided by the TAMS instance.
 It also avoids having multiple copies of the same media objects which can complicate management of those media objects.
 
-The TAMS would need to know the location of a media object and how to provide access to those locations to clients.
-This knowledge would allow the TAMS to provide the right Flow Segment `get_urls` for clients to access the media object.
-One possibility is that the media object ID includes a component that tells the TAMS where the media objects is stored.
+The TAMS would need to have information about the media object to provide access to clients.
+This information could be provided in the Flow Segment's `get_urls` by the client that registers the Flow Segment.
+Another possibility is that the media object ID includes a component that informs the TAMS where the media objects is stored and how to access it.
 E.g. the media object ID could be a URI that provides a location component that is populated for external media objects.
-Another possibility is that a TAMS could initiate a copy of the media object if the external location is deemed to not provide the necessary access performance.
 
 Recommendations for handling external media objects and federation are expected to be made in future ADRs and Appnotes.
 These recommendations would extend the [Referencing TAMS content in other systems](../appnotes/0014-referencing-tams-content-in-other-systems.md) Appnote that focusses on Flow and Source level references.
 The [Source-level Edit](../adr/0024-source-level-edit.md) ADR proposes exploration for more direct by-reference operations and this may also include support for referencing external media objects.
 
 * Good, because it allows references to media objects in other locations
-* Neutral, because TAMS implementations would need information to know what to provide in the Flow Segment `get-urls` for clients to access the media objects
-* Neutral, because TAMS implementations would need know how to handle when no more references are made to the media object, e.g. inform the external storage that the media object is no longer referenced and can be deleted
+* Neutral, because TAMS implementations may to need know by some means how to handle when no more references are made to the media object, e.g. inform the external storage that the media object is no longer referenced by the target TAMS and can be deleted

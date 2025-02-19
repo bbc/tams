@@ -1702,9 +1702,12 @@ paths:
           undefined if there is an overlap with existing segments and a store may return a 400 error response.
         - The `sample_offset` SHOULD be zero.
 
-        A TAMS MAY support object ids that were not received in a POST from /storage for this flow. In that case the TAMS would need
-        know how to provide access to the media objects for clients and the process for deleting them if necessary.
-        If a TAMS does not support an object id that was not provided by /storage then it SHOULD return a 400 error response.
+        A TAMS SHOULD reject registrations of Flow Segments with a 400 error response if it references a newly created media object
+        in the local TAMS storage that was not intended to be used for the Flow. A TAMS SHOULD accept Flow Segments that reference an
+        existing media object in the local TAMS storage that was originally created for another Flow.
+
+        A TAMS MAY support media objects that are held in external storage in another TAMS or other media storage system. The Flow Segment
+        may in that case require the `get_urls` property to provide the information needed by clients to access the media object.
 
         If a client needs to modify a Flow segment, e.g. to correct metadata such as the `key_frame_count` or add additional
         URLs to `get_urls`, then the client SHOULD first delete the existing segment and then write a new one. The behaviour is
