@@ -59,7 +59,7 @@ This could also provide for an efficient way to store multiple versions of a pie
 * Option 2b: Provide a limited API as in (Option 2), that only works on Sources
 * Option 3: Provide additional Flow Segment API capability for more direct by-reference operations
 * Option 4: Use another EDL format, outside the TAMS API
-* Option 5: Provide an endpoint to bulk-write Flow Segments
+* Option 5: Provide an endpoint to bulk-write Flow Segments - See [ADR0029](0029-bulk-flow-segments.md)
 
 ## Decision Outcome
 
@@ -82,7 +82,7 @@ Option 2 (and 2a, 2b) are rejected because they would require adding an entire n
 This adds a number of complications to manage both Source and Flow timelines together, and ensure they cannot contradict each other, while only providing support for very simple compositions that cut between other Sources.
 Furthermore, mapping that Source timeline onto Flows is also challenging in all but the simplest cases, because compatible Flows may not exist.
 
-Option 5 (bulk write of segments) was discussed while reviewing this ADR, but will form the subject of a future ADR and PR.
+Option 5 (bulk write of segments) was discussed while reviewing this ADR.  A separate [ADR0029](0029-bulk-flow-segments.md) has been raised to cover this option.
 
 ### Implementation
 
