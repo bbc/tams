@@ -5,7 +5,7 @@ status: "draft"
 
 ## Context and Problem Statement
 
-As part of the work on [ADR0024 source level edit](https://github.com/bbc/tams/blob/main/docs/adr/0024-source-level-edit.md) (also known as edit by reference) it was identified that it could be useful to be able to bulk create flow segments within the API. This ADR explores the impact of [option 5](https://github.com/bbc/tams/blob/main/docs/adr/0024-source-level-edit.md#option-5-provide-an-endpoint-to-bulk-write-flow-segments) this on the API implementation. 
+As part of the work on [ADR0024 source level edit](https://github.com/bbc/tams/blob/main/docs/adr/0024-source-level-edit.md) (also known as edit by reference) it was identified that it could be useful to be able to bulk create flow segments within the API. This ADR explores the impact of [option 5](https://github.com/bbc/tams/blob/main/docs/adr/0024-source-level-edit.md#option-5-provide-an-endpoint-to-bulk-write-flow-segments) on the API implementation. 
 
 When copying sections of one flow to another currently it is possible to query the TAMS API by time range and retrieve all the segments for a given flow.  However to then write these to the new flow it requires a single API call to create each segment which is a considerable overhead when all the segments are know in advance.
 
