@@ -29,6 +29,8 @@ Implementation is expected to not be significant within the API to look for a si
 
 ### Implementation
 
+See the API specification changes in PR [#117](https://github.com/bbc/tams/pull/117).
+
 ## Pros and Cons of the Options
 
 ### Option 1: Update existing end point
