@@ -39,6 +39,7 @@ jobs:
   configure_build:
     name: Configure Build
     runs-on: ubuntu-22.04
+    if: ${{ ! (( github.event_name == 'pull_request' ) && github.event.pull_request.head.repo.fork ) }}
     outputs:
       branches_list: ${{ steps.generate-matrix.outputs.branches_list }}
       shouldUpload: ${{ steps.shouldUpload.outputs.upload }}
