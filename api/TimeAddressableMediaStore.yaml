@@ -1690,7 +1690,7 @@ paths:
     post:
       summary: Create Flow Segment
       description: |
-        Register a new flow segment, attaching the object id given to a point in the flow timeline.
+        Register either a single new flow segment or an array of segments, attaching the object id given to a point in the flow timeline.
 
         The segment may use a newly-written object, or re-use an existing object from another flow.
 
@@ -1706,6 +1706,10 @@ paths:
         If a client needs to modify a Flow segment, e.g. to correct metadata such as the `key_frame_count` or add additional
         URLs to `get_urls`, then the client SHOULD first delete the existing segment and then write a new one. The behaviour is
         undefined if the segment exists and a store may return a 400 error response.
+
+        For successful creation of all segments in the request a 201 response should be provided.  If an error is detected when processing
+        a list of segments then processing should continue to try and process the remaining segments.  A 200 response should be returned 
+        listing the failed segments.
 
         Clients are expected to decide how to break content into media objects, however those objects SHOULD be large
         enough to avoid excessive round trip overheads in the underlying store (_e.g._ of the order of several megabytes)
@@ -1728,11 +1732,23 @@ paths:
             example:
               $ref: examples/flow-segment-post.json
             schema:
-              $ref: schemas/flow-segment.json
+              oneOf:
+              - $ref: schemas/flow-segment.json
+              - type: array
+                items:
+                  $ref: schemas/flow-segment.json
         required: true
       responses:
+        "200":
+          description: Partial success creating segments returning list of failed segments.  
+          content:
+            application/json:
+              schema:
+                $ref: schemas/flow-segment-bulk-failure.json
+              example:
+                $ref: examples/flow-segment-partial-failure.json
         "201":
-          description: created. The flow segment has been created.
+          description: created. The flow segment or list of segments has been created.
         "400":
           description: Bad request. Invalid flow segment JSON or the flow 'container' is not set.
         "403":
