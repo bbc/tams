@@ -82,7 +82,8 @@ Option 2 (and 2a, 2b) are rejected because they would require adding an entire n
 This adds a number of complications to manage both Source and Flow timelines together, and ensure they cannot contradict each other, while only providing support for very simple compositions that cut between other Sources.
 Furthermore, mapping that Source timeline onto Flows is also challenging in all but the simplest cases, because compatible Flows may not exist.
 
-Option 5 (bulk write of segments) was discussed while reviewing this ADR.  A separate [ADR0029](0029-bulk-flow-segments.md) has been raised to cover this option.
+Option 5 (bulk write of segments) was discussed while reviewing this ADR.  
+A separate [ADR0029](0029-bulk-flow-segments.md) has been raised to cover this option.
 
 ### Implementation
 
