@@ -8,7 +8,7 @@
     "properties": {
         "failed_segments": {
             "description": "The object ID of the segment which has failed to register with the TAMS API",
-            "type": "object",
+            "type": "array",
             "required": [
                 "object_id"
             ],
