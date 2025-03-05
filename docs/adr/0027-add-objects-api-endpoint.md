@@ -17,7 +17,7 @@ The proposal is to add a `/objects?object_id={object-id}` endpoint that provides
 * Option 2: Add a `/objects?object_id={object-id}` endpoint that lists all Flows that reference a media object
 * Option 3a: Extend 2 to optionally signal which Flow first referenced the media object in the TAMS instance
 * Option 3b: Restrict 3a to require signalling which Flow referenced the media object first
-* Option 3c: Allow a user to set `first_referenced_by`
+* Option 3c: Allow a user to set `first_referenced_by_flow`
 * Option 4: Add an endpoint to list media objects for a Flow
 
 ## Decision Outcome
@@ -42,7 +42,7 @@ The Flows (and Flow Segments) referencing a media object can be found by using a
 ### Option 2: Add a `/objects?object_id={object-id}` endpoint that lists all Flows that reference a media object
 
 This `/objects?object_id={object-id}` endpoint provides JSON that lists of all Flows referencing a media object.
-The `referenced_by` property contains the list of Flow IDs.
+The `referenced_by_flows` property contains the list of Flow IDs.
 
 The Flow Segments that reference the media object can all be found using a GET on `/flows/{flow-id}/segments?object_id={object-id}` for every Flow in the listing rather than every Flow.
 The Flow Segments that reference the media object can all be deleted using a DELETE on `/flows/{flow-id}/segments?object_id={object-id}` for every Flow in the listing.
@@ -68,12 +68,12 @@ This allows Flow-level permissions to be used to restrict which Flow Segments ca
 It may be useful to know which Flow was the first to reference the media object in the TAMS instance.
 This could help determine the origins of the media object.
 
-An optional `first_referenced_by` property is added to the `/objects?object_id={object-id}` resource that contains the Flow ID.
+An optional `first_referenced_by_flow` property is added to the `/objects?object_id={object-id}` resource that contains the Flow ID.
 
-The Flow ID in `first_referenced_by` is set by the TAMS instance and is not settable by a user.
+The Flow ID in `first_referenced_by_flow` is set by the TAMS instance and is not settable by a user.
 
 The TAMS instance should set the property to the first Flow that had a new Flow Segment created that referenced the media object.
-The TAMS instance should also include the Flow ID in the `referenced_by` property if the Flow exists in the TAMS and has a Flow Segment referencing the media object.
+The TAMS instance should also include the Flow ID in the `referenced_by_flows` property if the Flow exists in the TAMS and has a Flow Segment referencing the media object.
 The TAMS instance may either remove or keep the property if the first Flow or the Flow Segments referencing the media object in the first Flow are deleted.
 
 * Good, because it retains some information that could be used to trace the origins of a media object
@@ -82,15 +82,15 @@ The TAMS instance may either remove or keep the property if the first Flow or th
 
 ### Option 3b: Restrict 3a to require signalling which Flow referenced the media object first
 
-This option restricts 3a to require the `first_referenced_by` to be always be set and retain its value.
+This option restricts 3a to require the `first_referenced_by_flow` to be always be set and retain its value.
 
 * Good, because users can rely on the property being set and the value not changing
 * Neutral, because it could reference a Flow that no longer exists
 * Neutral, because it requires a TAMS to record which Flow first referenced a media object
 
-### Option 3c: Allow a user to set `first_referenced_by`
+### Option 3c: Allow a user to set `first_referenced_by_flow`
 
-This options allows a user to set `first_referenced_by` to provide potentially different information about the origins of the media object.
+This options allows a user to set `first_referenced_by_flow` to provide potentially different information about the origins of the media object.
 The Flow ID could be external to the TAMS instance and therefore signal the origin being elsewhere.
 
 * Good, because it could provide information that better informs about the origins of the media object

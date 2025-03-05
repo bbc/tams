@@ -4,14 +4,14 @@
     "title": "Object",
     "required": [
         "object_id",
-        "referenced_by"
+        "referenced_by_flows"
     ],
     "properties": {
         "object_id": {
             "description": "The media object identifier.",
             "type": "string"
         },
-        "referenced_by": {
+        "referenced_by_flows": {
             "type": "array",
             "description": "List of Flows that reference this media object via Flow Segments in this store.",
             "items": {
@@ -19,8 +19,8 @@
                 "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
             }
         },
-        "first_referenced_by": {
-            "description": "The first Flow that had a Flow Segment reference the media object in this store. This Flow is also present in 'referenced_by' if it is still referenced by the Flow. This property is optional and may in some implementations become unset if the Flow no longer references the media object, e.g. because it was deleted.",
+        "first_referenced_by_flow": {
+            "description": "The first Flow that had a Flow Segment reference the media object in this store. This Flow is also present in 'referenced_by_flows' if it is still referenced by the Flow. This property is optional and may in some implementations become unset if the Flow no longer references the media object, e.g. because it was deleted.",
             "type": "string",
             "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
         }

@@ -1,8 +1,8 @@
 {
   "object_id": "tams-6229dd5a-1781-4f80-859f-1a82ee5fa883.ts",
-  "referenced_by": [
+  "referenced_by_flows": [
     "4f79cfd1-c057-47f4-8e4d-1b126ca7bf34",
     "0fde9c11-da9d-434a-a113-d3b20a2cf251"
   ],
-  "first_referenced_by": "4f79cfd1-c057-47f4-8e4d-1b126ca7bf34"
+  "first_referenced_by_flow": "4f79cfd1-c057-47f4-8e4d-1b126ca7bf34"
 }
