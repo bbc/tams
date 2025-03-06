@@ -9,12 +9,12 @@ There is a requirement to identify all Flows that reference (via a Flow Segment)
 This for example supports a business or legal requirement to delete a media object from the store, which requires knowing which Flows reference it.
 The media object can be deleted by deleting all (Flow Segment) references to it.
 
-The proposal is to add a `/objects?object_id={object-id}` endpoint that provides a list of Flows that reference (via Flow Segments) the media object.
+The proposal is to add a `/objects/{object-id}` endpoint that provides a list of Flows that reference (via Flow Segments) the media object.
 
 ## Considered Options
 
 * Option 1: Use the existing endpoints to discover which Flows reference a media object
-* Option 2: Add a `/objects?object_id={object-id}` endpoint that lists all Flows that reference a media object
+* Option 2: Add a `/objects/{object-id}` endpoint that lists all Flows that reference a media object
 * Option 3a: Extend 2 to optionally signal which Flow first referenced the media object in the TAMS instance
 * Option 3b: Restrict 3a to require signalling which Flow referenced the media object first
 * Option 3c: Allow a user to set `first_referenced_by_flow`
@@ -39,23 +39,22 @@ The Flows (and Flow Segments) referencing a media object can be found by using a
 * Bad, because it requires a client to loop through all the Flows to GET the Flow Segments that reference the media object
 * Bad, because it is likely more efficient for TAMS to be asked to run a single query across all Flows then to run multiple queries for each Flow in turn
 
-### Option 2: Add a `/objects?object_id={object-id}` endpoint that lists all Flows that reference a media object
+### Option 2: Add a `/objects/{object-id}` endpoint that lists all Flows that reference a media object
 
-This `/objects?object_id={object-id}` endpoint provides JSON that lists of all Flows referencing a media object.
+This `/objects/{object-id}` endpoint provides JSON that lists of all Flows referencing a media object.
 The `referenced_by_flows` property contains the list of Flow IDs.
 
 The Flow Segments that reference the media object can all be found using a GET on `/flows/{flow-id}/segments?object_id={object-id}` for every Flow in the listing rather than every Flow.
 The Flow Segments that reference the media object can all be deleted using a DELETE on `/flows/{flow-id}/segments?object_id={object-id}` for every Flow in the listing.
 
-The `object_id` is as a query parameter rather than a URL path component because the media object ID structure is not restricted.
-For example, the `/` character is likely to be used where the object identifiers follow a file-system-like naming structure and it clashes with the use of `/` in the HTTP URL structure.
+The `/objects/{object-id}` URL may have percent encoding if the media object ID contains reserved characters for example.
 
-The `/objects?object_id={object-id}` endpoint does not allow a GET of all media objects; the `object_id` query parameter is required.
+The `/objects` endpoint does not allow a GET of all media objects; the `object_id` path component is required.
 
-The `/objects?object_id={object-id}` endpoint does not allow a POST or PUT to register a media object.
+The `/objects/{object-id}` endpoint does not allow a POST or PUT to register a media object.
 A media object can only registered in TAMS as part of Flow Segment registration.
 
-The `/objects?object_id={object-id}` endpoint does not allow a DELETE of a media object.
+The `/objects/{object-id}` endpoint does not allow a DELETE of a media object.
 A media object is only deleted in TAMS after all Flow Segments referencing the media object have been deleted.
 This allows Flow-level permissions to be used to restrict which Flow Segments can be deleted and ultimately whether the media object can be deleted.
 
@@ -68,7 +67,7 @@ This allows Flow-level permissions to be used to restrict which Flow Segments ca
 It may be useful to know which Flow was the first to reference the media object in the TAMS instance.
 This could help determine the origins of the media object.
 
-An optional `first_referenced_by_flow` property is added to the `/objects?object_id={object-id}` resource that contains the Flow ID.
+An optional `first_referenced_by_flow` property is added to the `/objects/{object-id}` resource that contains the Flow ID.
 
 The Flow ID in `first_referenced_by_flow` is set by the TAMS instance and is not settable by a user.
 
