@@ -1859,19 +1859,16 @@ paths:
           description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
         "404":
           description: The requested flow does not exist.
-  /objects:
+  /objects/{objectId}:
     head:
       summary: Media Object Information
-      description: |
-        Return flow references and other information about media objects.
-
-        The media object ID is provided by the 'object_id' parameter rather than a path component because the object ID string format is unrestricted.
+      description: Return flow references and other information about media objects.
       operationId: HEAD_objects
       tags:
         - Objects
       parameters:
-        - name: object_id
-          in: query
+        - name: objectId
+          in: path
           description: The media object identifier.
           required: true
           schema:
@@ -1907,8 +1904,6 @@ paths:
       description: |
         Contains flows that references the media object and other information.
 
-        The media object ID is provided by the 'object_id' parameter rather than a path component because the object ID string format is unrestricted.
-
         The paging query parameters and headers are required for the list of flow references in the media object.
         API implementations should return a complete list of flow references within reason and API clients should expect
         paging to happen in some rare cases where a media object is used in many flows.
@@ -1916,8 +1911,8 @@ paths:
       tags:
         - Objects
       parameters:
-        - name: object_id
-          in: query
+        - name: objectId
+          in: path
           description: The media object identifier.
           required: true
           schema:
@@ -1947,7 +1942,7 @@ paths:
               schema:
                 $ref: "schemas/object.json"
         "400":
-          description: Bad request. Invalid query options or missing 'object_id'.
+          description: Bad request. Invalid query options.
         "404":
           description: The requested media object does not exist.
   /flow-delete-requests:
