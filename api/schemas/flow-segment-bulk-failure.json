@@ -1,0 +1,34 @@
+{
+    "title": "Failed segments",
+    "description": "List of segments that have failed to register",
+    "type": "object",
+    "required": [
+        "failed_segments"
+    ],
+    "properties": {
+        "failed_segments": {
+            "description": "The list of segments which have failed to register with the TAMS API",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "description": "Failed segment details",
+                "required": [
+                    "object_id"
+                ],
+                "properties": {
+                    "object_id": {
+                        "description": "The object ID of the segment which has failed to register with the TAMS API",
+                        "type": "string"                },
+                    "timerange": {
+                        "description": "The timerange of segment that has failed, as described by the [TimeRange](../schemas/timerange#top) type",
+                        "$ref": "timerange.json"
+                    },
+                    "error": {
+                        "description": "Provides more information for the error status, as described by the [Error](../schemas/error#top) type",
+                        "$ref": "error.json"
+                    }
+                }
+            }
+        }
+    }
+}

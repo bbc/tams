@@ -62,33 +62,8 @@
             ]
         },
         "error": {
-            "description": "Provides more information for the error status.",
-            "type": "object",
-            "required": [
-                "type", "summary", "time"
-            ],
-            "properties": {
-                "type": {
-                    "description": "The error type name.",
-                    "type": "string"
-                },
-                "summary": {
-                    "description": "Summary description of the error and causes.",
-                    "type": "string"
-                },
-                "traceback": {
-                    "description": "Stack trace leading to error (as a list of strings)",
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "time": {
-                    "description": "Time at which the error ocurred, to aid in log correlation",
-                    "type": "string",
-                    "format": "date-time"
-                }
-            }
+            "description": "Provides more information for the error status, as described by the [Error](../schemas/error#top) type",
+            "$ref": "error.json"
         }
     }
 }
