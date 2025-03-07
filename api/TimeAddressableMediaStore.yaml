@@ -1688,7 +1688,7 @@ paths:
         "404":
           description: The flow ID in the path is invalid.
     post:
-      summary: Create Flow Segment
+      summary: Create Flow Segments
       description: |
         Register either a single new flow segment or an array of segments, attaching the object id given to a point in the flow timeline.
 
