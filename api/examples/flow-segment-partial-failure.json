@@ -5,9 +5,9 @@
             "timerange": "[0:0_10:0)",
             "error": {
                 "type": "TAMSError",
-                "summary": "Flow delete failed because ...",
+                "summary": "Flow segment created failed because ...",
                 "traceback": [
-                  "Exception: The flow segment could not be deleted",
+                  "Exception: The flow segment could not be created",
                   "The above exception was the direct cause of the following exception:",
                   "Traceback (most recent call last):",
                   "  <traceback...>",
