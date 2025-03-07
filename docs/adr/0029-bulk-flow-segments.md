@@ -1,5 +1,5 @@
 ---
-status: "draft"
+status: "accepted"
 ---
 # Ability to bulk create flow segments
 
