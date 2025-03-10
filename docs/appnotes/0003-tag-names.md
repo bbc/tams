@@ -181,16 +181,28 @@ However, listing all segments may result in the generation of the HLS manifest t
 
 ### hls_segment_length
 
+Status: **Deprecated**
+
+Replaced by the `segment_duration` field in Flow metadata.
+
+### hls_exclude
+
 Status: **Experimental**
 
-Used in the TAMS demonstration at IBC 2024.
+Used in the TAMS demonstration at NAB 2025.
 
-The type is a `number`.
-It is used to calculate the [MEDIA-SEQUENCE](https://datatracker.ietf.org/doc/html/rfc8216#section-4.3.3.2) value in the HLS manifest.
-This tag is only used if the [flow_status](#flow_status) tag value is `ingesting`.
-The value of this tag should be set to the duration of each segment in the flow (in seconds).
-Flows using this feature must therefore have segments of consistant length.
+The type is a `boolean`.
+It is used to indictate the flow should be excluded from HLS manifest generation.
+Defaults to `false` if the tag is not set.
 
 ## Known Source Tags
 
-There are currently no known Source Tags.
+### hls_exclude
+
+Status: **Experimental**
+
+Used in the TAMS demonstration at NAB 2025.
+
+The type is a `boolean`.
+It is used to indictate the source should be excluded from HLS manifest generation.
+Defaults to `false` if the tag is not set.
