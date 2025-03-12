@@ -861,6 +861,10 @@ paths:
                   summary: Video Flow - Uncompressed (Quicktime)
                   value:
                     $ref: examples/flow-get-200-video-raw.json
+                jpegimage:
+                  summary: Image Flow - JPEG Codec
+                  value:
+                    $ref: examples/flow-get-200-image=jpeg.json
                 ttml:
                   summary: Data Flow - TTML
                   description: TAMS can also be used for storing non-AV content such as subtitles or event data
