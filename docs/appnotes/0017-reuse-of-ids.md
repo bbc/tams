@@ -62,18 +62,20 @@ But there may be cases where such parallel ingests are in entirely separate syst
 ### Avoiding Duplication
 
 Systems may wish to present a list of existing Sources/Flows on setup in such a way that users could identify the content which is being duplicated and either re-use the existing copy (avoiding an un-needed ingest), or ingest with the existing identifiers.
+
 Note that systems probably shouldn't present the bare UUIDs to the user, they aren't intended to be human readable and will likely provide a bad experience.
 Systems should also avoid revealing the complex technical metadata of flows to users.
 Systems should ideally present users with the human readable Source Label and Description to enable them to identify matching Sources (i.e. content which matches editorially).
 Ideally, systems should then identify if there is a matching Flow automatically (i.e. a technical match).
+
 It is important to remember that what is most important to users is high level concepts such as editorial matches.
-A subset of users will be concerned about high level technical details like if content is Proxy or mezzanine quality.
+A subset of users will be concerned about high level technical details like if content is proxy or mezzanine quality.
 Many users will not, and probably should not, care about precise technical matches.
-In most cases, systems and not users should be concerned ensuring the availability of a full quality ladder where required.
+In most cases, systems and not users should be concerned with ensuring the availability of a full quality ladder where required.
+
 In some cases, matching Flows may be identified by checking the technical metadata of the Flow.
 Implementations should take care using this approach where Flows may have originated from different implementations as different codecs may produce different output for the same media and the same technical parameters.
 Implementations could verify matches by inspecting the media itself, though this method will be inefficient and likely doesn't make sense in most cases.
-Implementations could also present the human readable Flow Label and Description metadata to the user.
 
 ### De-duplication
 
