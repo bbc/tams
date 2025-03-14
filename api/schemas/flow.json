@@ -5,6 +5,7 @@
   "oneOf": [
     { "$ref": "flow-video.json" },
     { "$ref": "flow-audio.json" },
+    { "$ref": "flow-image.json" },
     { "$ref": "flow-data.json" },
     { "$ref": "flow-multi.json" }
   ]

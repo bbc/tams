@@ -1,0 +1,49 @@
+{
+    "type": "object",
+    "description": "Describes an image Flow",
+    "title": "Image Flow",
+    "allOf": [
+        {
+            "$ref": "flow-core.json"
+        },
+        {
+            "type": "object",
+            "required": [
+                "format",
+                "essence_parameters",
+                "codec"
+            ],
+            "properties": {
+                "format": {
+                    "description": "The primary content type URN for the flow.",
+                    "type": "string",
+                    "enum": [
+                        "urn:x-nmos:format:image"
+                    ]
+                },
+                "essence_parameters": {
+                    "type": "object",
+                    "description": "Describes the parameters of the essence inside this image Flow",
+                    "title": "Image Flow Essence Parameters",
+                    "required": [
+                        "frame_width",
+                        "frame_height"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                        "frame_width": {
+                            "description": "The width of the picture in pixels.",
+                            "type": "integer",
+                            "exclusiveMinimum": 0
+                        },
+                        "frame_height": {
+                            "description": "The height of the picture in pixels.",
+                            "type": "integer",
+                            "exclusiveMinimum": 0
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}
