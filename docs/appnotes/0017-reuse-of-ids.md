@@ -17,6 +17,11 @@ If two media Objects are bit-identical, they should be the same Object and use t
 That is to say the same Object should be re-used where possible, and not duplicated.
 Implementations may serve the same Object from multiple locations (i.e. via `get_urls` on Flow Segments which use the Object), but the content at all of these locations should be identical.
 
+> [!IMPORTANT]
+> It is not currently possible to maintain Object IDs when transferring media between TAMS instances.
+> This is because a new Object must be created on the destination store, and this will create a new Object ID.
+> It is, however, possible to re-use Object IDs when referencing media held in external storage in another TAMS.
+
 If two Flows have identical data (i.e. Objects) at the same Timestamps, they should be the same Flow and use the same Flow ID and, by extension, the same Source ID.
 That is to say the same Flow should be re-used where possible, and not duplicated.
 
