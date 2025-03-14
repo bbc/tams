@@ -8,7 +8,7 @@ It assumes basic knowledge of the [TAMS Content Model](https://github.com/bbc/ta
 
 ## The Identity Data Model
 
-The basic principle for identity in TAMS is that if content is identical in media and timing timing it should, in an ideal world, have the same identity.
+The basic principle for identity in TAMS is that if content is identical in media and timing it should, in an ideal world, have the same identity.
 This applies to both content within a single TAMS store, between multiple TAMS stores, and between TAMS and other compatible systems such as NMOS.
 
 Let's unpack this further.
@@ -28,7 +28,7 @@ That is to say the same Flow should be re-used where possible, and not duplicate
 If two Flows are editorially identical, but not technically identical (i.e. are different in technical characteristics alone) they are different Flows but the same Source.
 They should have the same Source ID but different Flow IDs.
 
-If two Flows are technically identical but are timeshifted, the are different Flows with different Flow IDs and different Source IDs.
+If two Flows are technically identical but are timeshifted, they are different Flows with different Flow IDs and different Source IDs.
 They may, however, re-use the same Objects using the Segments layer of the data model to map them to the two Flow's different timelines.
 
 If two (or more) Flows are editorially different but re-use technically identical sections (i.e. basic edits), they are different Flows with different Flow IDs and different Source IDs.
@@ -121,7 +121,7 @@ Whether clips are represented as Flows within TAMS or external to TAMS will be d
 
 #### Authorization
 
-Where authorisation is provided at the Flow level (e.g. by using the mechanism described in ADR-XXXX/AppNote-XXXX) new "clip" Flows may be created to provide access to a subsection of an existing Flow only.
+Where authorisation is provided at the Flow level (e.g. by using the mechanism described in ADR-0028/AppNote-0016) new "clip" Flows may be created to provide access to a subsection of an existing Flow only.
 These new flows, by necessity, will have new Flow IDs and Source IDs.
 They may, and for efficiency purposes probably should, use the same media Objects where possible.
 It should be noted that Objects may contain more than one frame/sample's worth of media.
