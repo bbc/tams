@@ -11,7 +11,7 @@ It assumes basic knowledge of the [TAMS Content Model](https://github.com/bbc/ta
 The basic principle for identity in TAMS is that if content is identical in media and timing timing it should, in an ideal world, have the same identity.
 This applies to both content within a single TAMS store, between multiple TAMS stores, and between TAMS and other compatible systems such as NMOS.
 
-Lets unpack this further.
+Let's unpack this further.
 
 If two media Objects are bit-identical, they should be the same Object and use the same Object ID.
 That is to say the same Object should be re-used where possible, and not duplicated.
@@ -112,7 +112,7 @@ Where a clip is to be created from a section of a Flow, the clip may be the same
 That is to say, a system could represent a clip via a Source/Flow ID and a TimeRange.
 Alternatively, a new Flow may be created that re-uses the required Objects.
 If the clip is time-shifted, it will always be a different Flow with a different Flow ID and different Source ID.
-Weather clips are represented as Flows within TAMS or external to TAMS will be dependent on the need for re-use, and the scalability implication of the increased number of Flow/Source IDs for a given use-case/deployment.
+Whether clips are represented as Flows within TAMS or external to TAMS will be dependent on the need for re-use, and the scalability implication of the increased number of Flow/Source IDs for a given use-case/deployment.
 
 #### Authorization
 
