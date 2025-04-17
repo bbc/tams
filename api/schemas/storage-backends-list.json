@@ -1,0 +1,29 @@
+{
+  "type": "array",
+  "description": "Information about the storage backends available on this service instance.",
+  "items": {
+    "allOf": [
+      {
+        "$ref": "storage-backend.json"
+      },
+      {
+        "required": [
+          "store_type",
+          "provider",
+          "store_product",
+          "id"
+        ]
+      },
+      {
+        "type": "object",
+        "properties": {
+          "default_storage": {
+            "description": "If set to `true`, this is the default storage backend. The default storage backend will be used if the client does not specify a storage backend id when requesting the allocation of storage. If this parameter is not set, assume `false`.",
+            "type": "boolean"
+          }
+        }
+      }
+    ]
+  },
+  "additionalProperties": false
+}

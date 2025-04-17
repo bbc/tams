@@ -89,7 +89,7 @@ paths:
           $ref: '#/components/responses/trait_resource_listing_head_200'
     get:
       summary: Service Information
-      description: Provide information about the service, including the media store in use.
+      description: Provide information about the service.
       operationId: GET_service
       tags:
         - Service
@@ -121,6 +121,31 @@ paths:
           description: Success. The service info has been updated.
         "400":
           description: Bad request. Invalid service JSON.
+  /service/storage_backends:
+    head:
+      summary: Storage Backend Information
+      description: Return storage backends path headers
+      operationId: HEAD_storage_backends
+      tags:
+        - Service
+      responses:
+        "200":
+          $ref: '#/components/responses/trait_resource_listing_head_200'
+    get:
+      summary: Storage Backend Information
+      description: Provide information about the storage backends available on this service instance. These are populated on deployment of the service instance.
+      operationId: GET_storage_backends
+      tags:
+        - Service
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: schemas/storage-backends-list.json
+              example:
+                $ref: examples/storage-backends-get-200.json
   /service/webhooks:
     head:
       summary: List Webhook URLs
@@ -1522,18 +1547,47 @@ paths:
           schema:
             default: false
             type: boolean
+        - name: verbose_storage
+          in: query
+          description: |
+            Include storage metadata in `get_urls`.
+            When `verbose_storage` is `false` only `url`, `presigned`, and `label` will be included in `get_urls`.
+          schema:
+            default: false
+            type: boolean
         - name: accept_get_urls
           in: query
           description: |
             A comma separated list of labels of flow segment `get_urls` to include in the response.
-            Omitting `accept_get_urls` will result in all `get_urls` returned.
+            Omitting `accept_get_urls` will result in no filtering of `get_urls`.
             An empty `accept_get_urls` results in an empty or no `get_urls` in the response.
-            Flow segment `get_urls` with no label cannot be filtered for; they will only be returned if `accept_get_urls` is omitted.
+            Flow segment `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
             Without `get_urls`, the response from the service could be substantially faster if it is not required to
             generate a large number of pre-signed URLs for example.
           schema:
             type: string
             pattern: ^([^,]+(,[^,]+)*)?$
+        - name: accept_storage_ids
+          in: query
+          description: |
+            A comma separated list of `storage_id`s of flow segment `get_urls` to include in the response.
+            Omitting `accept_storage_ids`, or providing an empty `accept_storage_ids` will result in no filtering of `get_urls`.
+            An empty `accept_get_urls` results in an empty or no `get_urls` in the response.
+            Flow segment `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
+            A full list of available `storage_id`s may be found at the `service/storage_backends` endpoint.
+          schema:
+            type: string
+            pattern: ^([0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})(,[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})*$
+        - name: presigned
+          in: query
+          description: |
+            If set to `true`, only presigned URLs (i.e. those whos `presigned` property is `true`) will be returned in `get_urls`.
+            If set to `false`, only non-presigned URLs (i.e. those whos `presigned` property is `false`) will be returned in `get_urls`.
+            If omitted, both presigned and non-presigned URLs will be returned.
+            If `presigned` is set to `false`, the response from the service could be substantially faster if it is not required to
+            generate a large number of pre-signed URLs.
+          schema:
+            type: boolean
         - $ref: '#/components/parameters/trait_resource_paged_key'
         - $ref: '#/components/parameters/trait_paged_limit'
       responses:
@@ -1624,18 +1678,47 @@ paths:
           schema:
             default: false
             type: boolean
+        - name: verbose_storage
+          in: query
+          description: |
+            Include storage metadata in `get_urls`.
+            When `verbose_storage` is `false` only `url`, `presigned`, and `label` will be included in `get_urls`.
+          schema:
+            default: false
+            type: boolean
         - name: accept_get_urls
           in: query
           description: |
             A comma separated list of labels of flow segment `get_urls` to include in the response.
-            Omitting `accept_get_urls` will result in all `get_urls` returned.
+            Omitting `accept_get_urls` will result in no filtering of `get_urls`.
             An empty `accept_get_urls` results in an empty or no `get_urls` in the response.
-            Flow segment `get_urls` with no label cannot be filtered for; they will only be returned if `accept_get_urls` is omitted.
+            Flow segment `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
             Without `get_urls`, the response from the service could be substantially faster if it is not required to
             generate a large number of pre-signed URLs for example.
           schema:
             type: string
             pattern: ^([^,]+(,[^,]+)*)?$
+        - name: accept_storage_ids
+          in: query
+          description: |
+            A comma separated list of `storage_id`s of flow segment `get_urls` to include in the response.
+            Omitting `accept_storage_ids`, or providing an empty `accept_storage_ids` will result in no filtering of `get_urls`.
+            An empty `accept_get_urls` results in an empty or no `get_urls` in the response.
+            Flow segment `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
+            A full list of available `storage_id`s may be found at the `service/storage_backends` endpoint.
+          schema:
+            type: string
+            pattern: ^([0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})(,[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})*$
+        - name: presigned
+          in: query
+          description: |
+            If set to `true`, only presigned URLs (i.e. those whos `presigned` property is `true`) will be returned in `get_urls`.
+            If set to `false`, only non-presigned URLs (i.e. those whos `presigned` property is `false`) will be returned in `get_urls`.
+            If omitted, both presigned and non-presigned URLs will be returned.
+            If `presigned` is set to `false`, the response from the service could be substantially faster if it is not required to
+            generate a large number of pre-signed URLs.
+          schema:
+            type: boolean
         - $ref: '#/components/parameters/trait_resource_paged_key'
         - $ref: '#/components/parameters/trait_paged_limit'
       responses:
@@ -1748,10 +1831,10 @@ paths:
               $ref: examples/flow-segment-post.json
             schema:
               oneOf:
-              - $ref: schemas/flow-segment.json
+              - $ref: schemas/flow-segment-post.json
               - type: array
                 items:
-                  $ref: schemas/flow-segment.json
+                  $ref: schemas/flow-segment-post.json
         required: true
       responses:
         "200":

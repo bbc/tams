@@ -1,0 +1,21 @@
+[
+  {
+    "id": "60af2ab4-e8a5-4c65-a09b-d35983680315",
+    "label": "example-store-name",
+    "store_type": "http_object_store",
+    "provider": "example-cloud-provider",
+    "region": "eu-west-1",
+    "availability_zone": "a",
+    "store_product": "example-storage-product",
+    "default_storage": true
+  },
+  {
+    "id": "323367fd-21bb-4f2e-ad38-faf048c4ccfc",
+    "label": "example-alternative-store-name",
+    "store_type": "http_object_store",
+    "provider": "example-cloud-provider",
+    "region": "eu-west-2",
+    "availability_zone": "a",
+    "store_product": "example-storage-product"
+  }
+]
