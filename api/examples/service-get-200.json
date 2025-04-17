@@ -4,9 +4,6 @@
   "type": "urn:x-tams:service.example",
   "api_version": "1.0",
   "service_version": "tams.1.10.0-da88b8b",
-  "media_store": {
-    "type": "http_object_store"
-  },
   "event_stream_mechanisms": [
     {
       "name": "webhooks",
