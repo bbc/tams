@@ -1,7 +1,7 @@
 ---
 status: "draft"
 ---
-# Ability to bulk create flow segments
+# Add support for new flow type to support still images  
 
 ## Context and Problem Statement
 
