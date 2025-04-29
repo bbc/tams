@@ -1,6 +1,6 @@
 {
     "type": "object",
-    "description": "Describes an image Flow",
+    "description": "Describes an still image Flow",
     "title": "Image Flow",
     "allOf": [
         {
