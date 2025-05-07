@@ -1,0 +1,26 @@
+{
+  "id": "4f79cfd1-c057-47f4-8e4d-1b126ca7bf33",
+  "source_id": "2aa143ac-0ab7-4d75-bc32-5c00c13d186e",
+  "generation": 0,
+  "created": "2008-05-27T18:51:00Z",
+  "metadata_updated": "2023-09-14T09:45:26Z",
+  "segments_updated": "2023-09-14T09:45:26Z",
+  "description": "Big Buck Bunny",
+  "label": "bbb",
+  "format": "urn:x-nmos:format:image",
+  "created_by": "tams-dev",
+  "updated_by": "tams-dev",
+  "tags": {
+    "input_quality": "full",
+    "_tams_segmentation_rate": "10"
+  },
+  "codec": "image/jpeg",
+  "container": "image/jpeg",
+  "essence_parameters": {
+    "frame_width": 1280,
+    "frame_height": 720
+  },
+  "collected_by": [
+    "e85efab4-993b-4ad6-9af3-4cd8d0d38861"
+  ]
+}

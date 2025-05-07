@@ -866,6 +866,10 @@ paths:
                   summary: Video Flow - Uncompressed (Quicktime)
                   value:
                     $ref: examples/flow-get-200-video-raw.json
+                jpegimage:
+                  summary: Image Flow - JPEG Codec
+                  value:
+                    $ref: examples/flow-get-200-image-jpeg.json
                 ttml:
                   summary: Data Flow - TTML
                   description: TAMS can also be used for storing non-AV content such as subtitles or event data
@@ -2274,6 +2278,7 @@ components:
       description: Identifies the content format for a flow or source using a URN string.
       enum:
         - urn:x-nmos:format:video
+        - urn:x-nmos:format:image
         - urn:x-nmos:format:audio
         - urn:x-nmos:format:data
         - urn:x-nmos:format:multi
