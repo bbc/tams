@@ -1518,6 +1518,14 @@ paths:
           schema:
             default: false
             type: boolean
+        - name: verbose_storage
+          in: query
+          description: |
+            Include storage metadata in `get_urls`.
+            When `verbose_storage` is `false` only `url`, `presigned`, and `label` will be included in `get_urls`.
+          schema:
+            default: false
+            type: boolean
         - name: accept_get_urls
           in: query
           description: |
@@ -1617,6 +1625,14 @@ paths:
         - name: reverse_order
           in: query
           description: Return segments in reverse time order.
+          schema:
+            default: false
+            type: boolean
+        - name: verbose_storage
+          in: query
+          description: |
+            Include storage metadata in `get_urls`.
+            When `verbose_storage` is `false` only `url`, `presigned`, and `label` will be included in `get_urls`.
           schema:
             default: false
             type: boolean
