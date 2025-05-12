@@ -18,7 +18,7 @@
                     "description": "The primary content type URN for the flow.",
                     "type": "string",
                     "enum": [
-                        "urn:x-nmos:format:image"
+                        "urn:x-tam:format:image"
                     ]
                 },
                 "essence_parameters": {
@@ -40,6 +40,26 @@
                             "description": "The height of the picture in pixels.",
                             "type": "integer",
                             "exclusiveMinimum": 0
+                        },
+                        "aspect_ratio": {
+                            "description": "The display aspect ratio. i.e. display_width / display_height",
+                            "type": "object",
+                            "required": [
+                                "numerator",
+                                "denominator"
+                            ],
+                            "properties": {
+                                "numerator": {
+                                    "description": "numerator",
+                                    "type": "integer",
+                                    "exclusiveMinimum": 0
+                                },
+                                "denominator": {
+                                    "description": "denominator",
+                                    "type": "integer",
+                                    "exclusiveMinimum": 0
+                                }
+                            }
                         }
                     }
                 }

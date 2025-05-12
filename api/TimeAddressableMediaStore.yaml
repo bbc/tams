@@ -2278,7 +2278,7 @@ components:
       description: Identifies the content format for a flow or source using a URN string.
       enum:
         - urn:x-nmos:format:video
-        - urn:x-nmos:format:image
+        - urn:x-tam:format:image
         - urn:x-nmos:format:audio
         - urn:x-nmos:format:data
         - urn:x-nmos:format:multi
