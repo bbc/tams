@@ -22,7 +22,7 @@ A TAMS implementation can still limit which media objects can be referenced if i
 
 ### Implementation
 
-See the API specification changes in PR [#118](https://github.com/bbc/tams/pull/118).
+See the API specification changes in PR [#120](https://github.com/bbc/tams/pull/120).
 
 ## Pros and Cons of the Options
 
