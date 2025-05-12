@@ -59,7 +59,8 @@ class OAuth2ClientCredentials(RenewableCredentials):
 
     async def renew_credentials(self) -> None:
         form_data = {
-            "grant_type": "client_credentials"
+            "grant_type": "client_credentials",
+            "scope": "tams-api/read tams-api/write tams-api/delete"
         }
         headers = get_basic_auth_header(self.client_id, self.client_secret)
 
