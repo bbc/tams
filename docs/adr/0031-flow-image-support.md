@@ -1,5 +1,5 @@
 ---
-status: "draft"
+status: "accepted"
 ---
 # Add support for new flow type to support still images  
 
