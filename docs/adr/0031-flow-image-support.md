@@ -34,7 +34,7 @@ Add a new flow type to the TAMS specification to support single images only.
 - Good: Provides simple method of storing and locating images
 - Good: Correctly described content rather than trying to mis-use existing fields
 - Good: Provides separation of essence parameters for video and still images so that in the future they can have new fields added independently
-- Bad: TAMS is a basis in the NMOS specification for the flow types.  Since NMOS is for live video feeds then it has no concept of still images.  This ADR proposes using NMOS style terminology to describe the flow type as images, however this is technically not in the NMOS specification.
+- Bad: TAMS uses the NMOS specification as a basis for the flow types.  Since NMOS is for live video feeds then it has no concept of still images.  This ADR proposes using a new TAM name space to describe the flow type as images, this means there are now two name spaces used for flow and source types.
 
 ### Option 2: Add new flow type to support both single and mosaic style images
 

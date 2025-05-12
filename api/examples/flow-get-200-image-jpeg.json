@@ -7,13 +7,9 @@
   "segments_updated": "2023-09-14T09:45:26Z",
   "description": "Big Buck Bunny",
   "label": "bbb",
-  "format": "urn:x-nmos:format:image",
+  "format": "urn:x-tam:format:image",
   "created_by": "tams-dev",
   "updated_by": "tams-dev",
-  "tags": {
-    "input_quality": "full",
-    "_tams_segmentation_rate": "10"
-  },
   "codec": "image/jpeg",
   "container": "image/jpeg",
   "essence_parameters": {
