@@ -14,7 +14,11 @@
   "container": "image/jpeg",
   "essence_parameters": {
     "frame_width": 1280,
-    "frame_height": 720
+    "frame_height": 720,
+    "aspect_ratio": {
+      "numerator": 16,
+      "denominator": 9
+    }
   },
   "collected_by": [
     "e85efab4-993b-4ad6-9af3-4cd8d0d38861"
