@@ -38,7 +38,7 @@ For more information on how we use ADRs, see [here](./adr/README.md).
 | [0026](./adr/0026-updated-webhook-events-and-filters.md)           | Updates to the webhook event structures and filters                        |
 | [0029](./adr/0029-bulk-flow-segments.md)                           | Changes to flow segments to add segments in bulk                           |
 | [0030](./adr/0030-allow-external-media-objects.md)                 | Allow a Flow to reference media objects in other Flows and storage         |
-| [0031](./adr/0030-flow-image-support.md)                           | Add new flow type to support still images                                 |
+| [0031](./adr/0031-flow-image-support.md)                           | Add new flow type to support still images                                 |
 
 \* Note: ADR 0004a was the unintended result of a number clash in the early development of TAMS which wasn't caught before publication
 
