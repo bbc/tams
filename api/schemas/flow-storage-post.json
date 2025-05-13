@@ -6,6 +6,9 @@
         "limit": {
             "description": "Limit the number of storage segments in each response page. Implementations may specify their own default and maximum for the limit",
             "type": "integer"
+        },
+        "storage_name": {
+            "description": "The storage backend to allocate storage in. A storage backend name as advertised at the `/service` endpoint. If not set the default, as advertised at the `/service` endpoint, will be used."
         }
     }
 }

@@ -5,7 +5,7 @@
   "required": [
     "type",
     "api_version",
-    "media_store"
+    "storage_backends"
   ],
   "properties": {
     "name": {
@@ -29,19 +29,34 @@
       "description": "The version of software providing this service. Note: Different implementations and software houses may use different conventions for their version identification. As such, this field is intentionally permissive and intended to be informative only. Implementations should avoid using this field to determine compatibility.",
       "type": "string"
     },
-    "media_store": {
-      "type": "object",
-      "description": "Provide information about the media store for this service",
-      "required": [
-        "type"
-      ],
-      "properties": {
-        "type": {
-          "description": "The type of the media store. This determines the endpoints for reading and writing media",
-          "type": "string",
-          "enum": ["http_object_store"]
-        }
-      }
+    "storage_backends": {
+      "type": "array",
+      "description": "Information about the storage backends available for writing by this service instance. If empty, this service instance is unable to allocate storage to the user (e.g. if the instance is read only).",
+      "items": {
+        "allOf": [
+          {
+            "$ref": "storage-backend.json"
+          },
+          {
+            "required": [
+              "store_type",
+              "provider",
+              "store_product",
+              "name"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "default_storage": {
+                "description": "If set to `true`, this is the default storage backend. The default storage backend will be used if the client does not specify a storage backend name when requesting the allocation of storage. If `storage_backends` is not empty, exactly one storage backend should be set as the default. If this parameter is not set, assume `false`.",
+                "type": "boolean"
+              }
+            }
+          }
+        ]
+      },
+      "additionalProperties": false
     },
     "event_stream_mechanisms": {
       "type": "array",
