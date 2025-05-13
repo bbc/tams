@@ -13,7 +13,9 @@
         "label": "pipeline-b",
         "url": "https://tams-b.s3.eu-west-1.amazonaws.com/35e9b447-be10-43e0-ab85-e1e9fe15d354?X-Amz-Security-Token=signature..."
       }
-    ]
+    ],
+    "created_by": "tams-dev",
+    "created": "2008-05-27T18:51:00Z"
   },
   {
     "object_id": "tams-5826312e-9633-4f90-807d-b2588a8ad61f",
@@ -29,7 +31,9 @@
         "label": "pipeline-b",
         "url": "https://tams-b.s3.eu-west-1.amazonaws.com/5826312e-9633-4f90-807d-b2588a8ad61f?X-Amz-Security-Token=signature..."
       }
-    ]
+    ],
+    "created_by": "tams-dev",
+    "created": "2008-05-27T18:51:10Z"
   },
   {
     "object_id": "tams-73c8d377-10fb-4c98-9263-6efaf94f3eab",
@@ -45,6 +49,8 @@
         "label": "pipeline-b",
         "url": "https://tams-b.s3.eu-west-1.amazonaws.com/73c8d377-10fb-4c98-9263-6efaf94f3eab?X-Amz-Security-Token=signature..."
       }
-    ]
+    ],
+    "created_by": "tams-dev",
+    "created": "2008-05-27T18:51:20Z"
   }
 ]
