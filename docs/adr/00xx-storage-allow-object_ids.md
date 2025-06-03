@@ -22,7 +22,7 @@ tbc
 
 ### Implementation
 
-See the API specification changes in PR [#xxx](https://github.com/bbc/tams/pull/xxx).
+See the API specification changes in PR [#132](https://github.com/bbc/tams/pull/132).
 
 ## Pros and Cons of the Options
 
