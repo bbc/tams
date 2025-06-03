@@ -6,6 +6,18 @@
         "limit": {
             "description": "Limit the number of storage segments in each response page. Implementations may specify their own default and maximum for the limit",
             "type": "integer"
+        },
+        "object_ids": {
+            "description": "Array of object_ids to use",
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
         }
-    }
+    },
+    "oneOf": [
+        {"required": ["limit"]},
+        {"required": ["object_ids"]},
+        {"not": {"required": ["limit", "object_ids"]}}
+    ]
 }
