@@ -1,6 +1,7 @@
 ---
-status: "accepted"
+status: "superseded by ADR-0032"
 ---
+
 # Label Conventions for get_urls
 
 ## Context and Problem Statement

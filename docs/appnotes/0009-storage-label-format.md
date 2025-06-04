@@ -1,4 +1,7 @@
-# Storage label format specification
+# 0009: Storage label format specification
+
+> [!CAUTION]
+> DEPRECATED: See [ADR0032](https://github.com/bbc/tams/blob/main/docs/appnotes/0032-specifying-storage-location.md) for more details
 
 ## Abstract
 

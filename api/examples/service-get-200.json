@@ -4,9 +4,25 @@
   "type": "urn:x-tams:service.example",
   "api_version": "1.0",
   "service_version": "tams.1.10.0-da88b8b",
-  "media_store": {
-    "type": "http_object_store"
-  },
+  "storage_backends": [
+    {
+      "store_type": "http_object_store",
+      "provider": "example-cloud-provider",
+      "region": "eu-west-1",
+      "availability_zone": "a",
+      "store_product": "example-storage-product",
+      "name": "example-store-name",
+      "default_storage": true
+    },
+    {
+      "store_type": "http_object_store",
+      "provider": "example-cloud-provider",
+      "region": "eu-west-2",
+      "availability_zone": "a",
+      "store_product": "example-storage-product",
+      "name": "example-alternative-store-name"
+    }
+  ],
   "event_stream_mechanisms": [
     {
       "name": "webhooks",

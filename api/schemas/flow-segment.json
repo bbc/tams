@@ -36,20 +36,32 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": [
-          "url"
-        ],
-        "properties": {
-          "label": {
-            "description": "Label identifying this URL. If the 'label' is not set then this URL can't be filtered for using the 'accept_get_urls' API query parameter.",
-            "type": "string"
+        "unevaluatedProperties": false,
+        "allOf": [
+          {
+            "$ref": "storage-backend.json"
           },
-          "url": {
-            "description": "A URL to which a GET request can be made to directly retrieve the contents of the segment. Clients should include credentials if the provide URL is on the same origin as the API endpoint",
-            "type": "string"
+          {
+            "type": "object",
+            "required": [
+              "url"
+            ],
+            "properties": {
+              "url": {
+                "description": "A URL to which a GET request can be made to directly retrieve the contents of the segment. Clients should include credentials if the provide URL is on the same origin as the API endpoint",
+                "type": "string"
+              },
+              "presigned": {
+                "description": "If `true`, this URL is pre-signed. If this parameter is unset, the URL is NOT pre-signed.",
+                "type": "boolean"
+              },
+              "label": {
+                "description": "Label identifying this URL. If the 'label' is not set then this URL can't be filtered for using the 'accept_get_urls' API query parameter.",
+                "type": "string"
+              }
+            }
           }
-        },
-        "additionalProperties": false
+        ]
       }
     },
     "key_frame_count": {

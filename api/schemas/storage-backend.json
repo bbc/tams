@@ -1,0 +1,34 @@
+{
+    "type": "object",
+    "description": "Provides technical, and logic metadata about a storage backend",
+    "title": "Storage Backend",
+    "properties": {
+        "store_type": {
+            "description": "The generic store type. Used to identify the required workflow for reading and writing media. Any `store_product` should be compatible, as much is required for basic interoperability between TAMS implementations, with their associated generic `store_type`.",
+            "type": "string",
+            "enum": [
+                "http_object_store"
+            ]
+        },
+        "provider": {
+            "description": "The cloud (or other) provider of the storage",
+            "type": "string"
+        },
+        "region": {
+            "description": "The region in the cloud this storage backend resides",
+            "type": "string"
+        },
+        "availability_zone": {
+            "description": "The availability zone in the cloud region this storage backend resides",
+            "type": "string"
+        },
+        "store_product": {
+            "description": "The storage product name.",
+            "type": "string"
+        },
+        "name": {
+            "description": "A name for this storage. Ideally human readable. Unique to this instance.",
+            "type": "string"
+        }
+    }
+}
