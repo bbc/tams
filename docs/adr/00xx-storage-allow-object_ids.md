@@ -40,8 +40,9 @@ The combination of the Flow Id and Timerange being the same as the source store 
 
 ### Option 2: Change the validation on the segments endpoint
 
-Update the validation on the POST segments endpoint to not enforce `object_id`s needing to be "known".
-One option could be to do this by requiring the client to supply a "special" get_url so that it can be recognised as a special case and `object_id` validation is not required.
+Update the validation on the POST segments endpoint.
+Current validation enforces either the supplied `object_id` must be known (issued via a POST to the storage API) or if unknown a get_urls value is required.
+One option could be to do this by requiring the client to supply a "special" get_url so that it can be recognised as a special case.
 
 - Good: No breaking changes would be required in the API Spec.
 - Bad: Potential to be abused, it would not be able to enforce the use case of replication it might be used in other cases where `object_id`s should be validated
