@@ -1863,7 +1863,7 @@ paths:
               example:
                 $ref: examples/flow-storage-post-201.json
         "400":
-          description: Bad request. Invalid flow storage request JSON or the flow 'container' is not set.
+          description: Bad request. Invalid flow storage request JSON or the flow 'container' is not set. If object_ids supplied, some or all already exist.
         "403":
           description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
         "404":
