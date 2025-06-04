@@ -1596,7 +1596,7 @@ paths:
         segments can be empty. A request for segments from a non-existent flow will return an empty
         list, not a 404.
 
-        Note that for codecs with temporal re-ordering, the timerange representes the _presentation_
+        Note that for codecs with temporal re-ordering, the timerange represents the _presentation_
         timeline, and clients may need to check the `key_frame_count` property and/or read backwards
         from the start of the requested timerange to retrieve enough reference material to start
         decoding.

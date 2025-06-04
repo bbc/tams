@@ -6,9 +6,12 @@
     "sample_offset": 0,
     "get_urls": [
       {
+        "label": "example-cloud-provider.eu-west-1:example-storage-product:example-store-name",
         "url": "https://a4c52e22f45b4a0fa3ea3b9a42b35808-tams-demo.static.lon1.bbcis.uk/tams-67cd7994-47d4-4e89-9e9f-5e548b7eb7dd.ts"
       }
-    ]
+    ],
+    "created_by": "tams-dev",
+    "created": "2008-05-27T18:51:00Z"
   },
   {
     "object_id": "tams-7dffa41c-9e12-4e7d-a269-0aae8351d806.ts",
@@ -17,9 +20,12 @@
     "sample_offset": 0,
     "get_urls": [
       {
+        "label": "example-cloud-provider.eu-west-1:example-storage-product:example-store-name",
         "url": "https://a4c52e22f45b4a0fa3ea3b9a42b35808-tams-demo.static.lon1.bbcis.uk/tams-7dffa41c-9e12-4e7d-a269-0aae8351d806.ts"
       }
-    ]
+    ],
+    "created_by": "tams-dev",
+    "created": "2008-05-27T18:51:10Z"
   },
   {
     "object_id": "tams-bdfb03ae-25a5-4a72-9b9e-14c5119813c9.ts",
@@ -28,8 +34,11 @@
     "sample_offset": 0,
     "get_urls": [
       {
+        "label": "example-cloud-provider.eu-west-1:example-storage-product:example-store-name",
         "url": "https://a4c52e22f45b4a0fa3ea3b9a42b35808-tams-demo.static.lon1.bbcis.uk/tams-bdfb03ae-25a5-4a72-9b9e-14c5119813c9.ts"
       }
-    ]
+    ],
+    "created_by": "tams-dev",
+    "created": "2008-05-27T18:51:20Z"
   }
 ]
