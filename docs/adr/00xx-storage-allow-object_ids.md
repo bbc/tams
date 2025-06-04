@@ -46,6 +46,7 @@ One option could be to do this by requiring the client to supply a "special" get
 - Good: No breaking changes would be required in the API Spec.
 - Bad: Potential to be abused, it would not be able to enforce the use case of replication it might be used in other cases where `object_id`s should be validated
 - Bad: The objects endpoint would not be able to determine the `first_referenced_by_flow` field.
+- Bad: "Special" get_url feels like an abuse of the field.
 
 ### Option 3: Add capability to the storage endpoint to allow `object_id`s to be supplied
 
