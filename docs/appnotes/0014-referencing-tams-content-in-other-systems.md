@@ -47,7 +47,6 @@ Instead, this form can be used, and a client can map it accordingly after traver
 
 ```text
 https://tams.example.com/sources/7abe4d59-7d1c-432d-ba2a-6180e12137cc?timerange=[100:0_200:0)
-``
 ```
 
 ## JSON Object References
