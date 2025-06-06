@@ -11,7 +11,7 @@ This document describes how flow profiles can be used within the TAMS API to sim
 
 ### House formats
 
-Within a customer implementation of TAMS it is expected that there would be limited number of recommended formats for users to work in. 
+Within a customer deployment of TAMS it is expected that there would be limited number of recommended formats for users to work in. 
 Typically this could include a target format for the high quality media and standardised formats for proxy media and images.
 These formats are typically refered to as House formats and do no preclude the storing of other content within the store, however it is likely to be normalised at some point to the house format.
 
