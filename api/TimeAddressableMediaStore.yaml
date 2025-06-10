@@ -1564,6 +1564,7 @@ paths:
             Flow segment `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
             Without `get_urls`, the response from the service could be substantially faster if it is not required to
             generate a large number of pre-signed URLs for example.
+            Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
           schema:
             type: string
             pattern: ^([^,]+(,[^,]+)*)?$
@@ -1575,6 +1576,7 @@ paths:
             An empty `accept_get_urls` results in an empty or no `get_urls` in the response.
             Flow segment `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
             A full list of available `storage_id`s may be found at the `service/storage_backends` endpoint.
+            Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
           schema:
             type: string
             pattern: ^([0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})(,[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})*$
@@ -1586,6 +1588,7 @@ paths:
             If omitted, both presigned and non-presigned URLs will be returned.
             If `presigned` is set to `false`, the response from the service could be substantially faster if it is not required to
             generate a large number of pre-signed URLs.
+            Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
           schema:
             type: boolean
         - $ref: '#/components/parameters/trait_resource_paged_key'
@@ -1695,6 +1698,7 @@ paths:
             Flow segment `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
             Without `get_urls`, the response from the service could be substantially faster if it is not required to
             generate a large number of pre-signed URLs for example.
+            Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
           schema:
             type: string
             pattern: ^([^,]+(,[^,]+)*)?$
@@ -1706,6 +1710,7 @@ paths:
             An empty `accept_get_urls` results in an empty or no `get_urls` in the response.
             Flow segment `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
             A full list of available `storage_id`s may be found at the `service/storage_backends` endpoint.
+            Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
           schema:
             type: string
             pattern: ^([0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})(,[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})*$
@@ -1717,6 +1722,7 @@ paths:
             If omitted, both presigned and non-presigned URLs will be returned.
             If `presigned` is set to `false`, the response from the service could be substantially faster if it is not required to
             generate a large number of pre-signed URLs.
+            Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
           schema:
             type: boolean
         - $ref: '#/components/parameters/trait_resource_paged_key'
