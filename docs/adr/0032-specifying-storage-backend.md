@@ -32,7 +32,7 @@ This ADR is not proposing how multiple TAMS instances may peer with each other.
 ## Considered Options
 
 * Option 1a: Multiple separate TAMS instances using the existing API with no changes
-* Option 1b: Update the TAMS API to allow storage backend to be specified when requestion storage allocation
+* Option 1b: Update the TAMS API to allow storage backend to be specified when requesting storage allocation
 * Option 2a: Specify storage backend using the [AppNote0009](https://github.com/bbc/tams/blob/main/docs/appnotes/0009-storage-label-format.md) label structure
 * Option 2b: Specify storage backend using the storeName portion of [AppNote0009](https://github.com/bbc/tams/blob/main/docs/appnotes/0009-storage-label-format.md) label structure
 * Option 2c: Specify storage backend using a storage backend UUID
@@ -50,7 +50,7 @@ This ADR is not proposing how multiple TAMS instances may peer with each other.
 
 Chosen options:
 
-* Option 1b: Update the TAMS API to allow storage backend to be specified when requestion storage allocation
+* Option 1b: Update the TAMS API to allow storage backend to be specified when requesting storage allocation
 * Option 2c: Specify storage backend using a storage backend UUID
 * Option 3d: Replace the `media_store` parameter at the `/service` endpoint with a `/service/storage_backends` endpoint to advertise available storage names/IDs, with storage metadata
 * Option 4b: Elevate the components of [AppNote0009](https://github.com/bbc/tams/blob/main/docs/appnotes/0009-storage-label-format.md) label structure to core spec
@@ -92,7 +92,7 @@ This option may also imped the discovery and re-use of content across TAMS insta
 * Bad, because it requires clients to communicate with multiple TAMS instances for more use cases
 * Bad, because it impedes zero-copy re-use of Segments
 
-### Option 1b: Update the TAMS API to allow storage backend to be specified when requestion storage allocation
+### Option 1b: Update the TAMS API to allow storage backend to be specified when requesting storage allocation
 
 Clients would be able to specify their required storage backend when requesting the allocation of storage.
 Clients supporting this feature would manage multiple storage layers for different technical/business purposes such as cost allocation, tiered storage, geographical location etc.
