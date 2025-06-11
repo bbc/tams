@@ -1849,10 +1849,17 @@ paths:
       requestBody:
         content:
           application/json:
+            examples:
+              limit:
+                summary: limit
+                value:
+                  $ref: examples/flow-storage-post.json
+              object_ids:
+                summary: object_ids
+                value:
+                  $ref: examples/flow-storage-post-object_ids.json
             schema:
               $ref: schemas/flow-storage-post.json
-            example:
-              $ref: examples/flow-storage-post.json
       responses:
         "201":
           description: Storage locations for writing media objects.
