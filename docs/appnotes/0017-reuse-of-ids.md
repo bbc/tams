@@ -18,8 +18,9 @@ That is to say the same Object should be re-used where possible, and not duplica
 Implementations may serve the same Object from multiple locations (i.e. via `get_urls` on Flow Segments which use the Object), but the content at all of these locations should be identical.
 
 > [!IMPORTANT]
-> It is not currently possible to maintain Object IDs when transferring media between TAMS instances.
-> This is because a new Object must be created on the destination store, and this will create a new Object ID.
+> ~~It is not currently possible to maintain Object IDs when transferring media between TAMS instances.~~
+> ~~This is because a new Object must be created on the destination store, and this will create a new Object ID.~~
+> **Update** - [ADR 032](https://github.com/bbc/tams/blob/main/docs/adr/0034-storage-allow-object_ids.md) now allows for Object IDs to be specified when allocating storage, this allows for Object IDs to be maintain when transferring media between TAMS instances.
 > It is, however, possible to re-use Object IDs when referencing media held in external storage in another TAMS.
 
 If two Flows have identical data (i.e. Objects) at the same Timestamps, they should be the same Flow and use the same Flow ID and, by extension, the same Source ID.

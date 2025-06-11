@@ -1,11 +1,11 @@
 ---
-status: "proposed"
+status: "accepted"
 ---
 # Add support for specifying object_ids when calling the storage endpoint
 
 ## Context and Problem Statement
 
-Currently the TAMS API generates the `object_id` for a flow segment to use automatically, there is no way the client can control the `object_id` generated.
+Currently an implementation of the TAMS API will need to generate the 'object_id' for a flow segment to use, there is no way the client can control the 'object_id' generated.
 Some use cases have come up with TAMS that required a need to "bring your own" `object_id`.
 The main use case is around TAMS Store replication.
 If a store is going to replicate content from another store without modification it makes sense to re-use the ids in use in the source store.
@@ -21,7 +21,8 @@ Currently the nearest option to allow this use case involves performing operatio
 
 ## Decision Outcome
 
-tbc
+Chosen option: Option 3, because doing nothing does not solve the problem when replicating objects between stores.
+Changing validation will cause complication and confusion.
 
 ### Implementation
 
@@ -61,3 +62,7 @@ The `object_ids` would be a list of string to allow multiple requests to be made
 - Good - Backwards compatible
 - Good - Retains all existing `object_ids` validation
 - Bad - API spec change required.
+
+## More Information
+
+Note: [0017-reuse-of-ids.md](https://github.com/bbc/tams/blob/main/docs/appnotes/0017-reuse-of-ids.md) contains some dicussion that may be relevant to this proposal.
