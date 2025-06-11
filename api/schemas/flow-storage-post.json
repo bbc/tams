@@ -15,9 +15,18 @@
             }
         }
     },
-    "oneOf": [
-        {"required": ["limit"]},
-        {"required": ["object_ids"]},
-        {"not": {"required": ["limit", "object_ids"]}}
-    ]
+    "not": {
+        "allOf": [
+            {
+                "required": [
+                    "limit"
+                ]
+            },
+            {
+                "required": [
+                    "object_ids"
+                ]
+            }
+        ]
+    }
 }
