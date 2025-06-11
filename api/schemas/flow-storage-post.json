@@ -8,7 +8,7 @@
             "type": "integer"
         },
         "object_ids": {
-            "description": "Array of object_ids to use. The supplied object_ids must new and not already in use in this store. A 400 response will be returned if any supplied object_id already exists.",
+            "description": "Array of object_ids to use. The supplied object_ids must be new and not already in use in this store. A 400 response will be returned if any supplied object_id already exists.",
             "type": "array",
             "items": {
                 "type": "string"
