@@ -45,6 +45,8 @@ This ADR is not proposing how multiple TAMS instances may peer with each other.
 * Option 5a: Don't add any additional filters on the flow `/segments`
 * Option 5b: Add a storage backend ID filter to the flow `/segments` endpoint
 * Option 5c: Add a pre-signed filter to the flow `/segments` endpoint
+* Option 6a: Assume storage backends will be configured at deploy time
+* Option 6b: Allow storage backends to be added/removed via the API
 
 ## Decision Outcome
 
@@ -56,6 +58,7 @@ Chosen options:
 * Option 4b: Elevate the components of [AppNote0009](https://github.com/bbc/tams/blob/main/docs/appnotes/0009-storage-label-format.md) label structure to core spec
 * Option 5b: Add a storage backend ID filter to the flow `/segments` endpoint
 * Option 5c: Add a pre-signed filter to the flow `/segments` endpoint
+* Option 6a: Assume storage backends will be configured at deploy time
 
 Supersede [ADR0021](https://github.com/bbc/tams/blob/main/docs/adr/0021-storage-label-format.md)
 Deprecate [AppNote0009](https://github.com/bbc/tams/blob/main/docs/appnotes/0009-storage-label-format.md)
@@ -234,3 +237,26 @@ Add a query string filter to the flow `/segments` endpoint that would filter `ge
 
 * Good, because it allows clients to filter for pre-signed URLs using a standardised approach
 * Neutral, because it requires a non-breaking change
+
+### Option 6a: Assume storage backends will be configured at deploy time
+
+It is likely that TAMS deployments will want to add/remove storage backends over time.
+
+This option is to assume that this will happen at deploy time.
+The addition/removal of storage backends will likely require the addition/removal of permissions, credentials, and other infrastructure changes to allow the TAMS service instance control of the storage backend.
+This will likely happen via changes to the infrastructure-as-code that describes the deployment, and performing an update operation on the deployment.
+As such, this option assumes that the configuration that populates the storage backends will be updated via the same process.
+
+* Good, because it reduces the complexity of the API
+* Good, because it promotes best practice of managing service configuration in deployment tooling
+* Good, because service instances can handle storage backend configuration statically
+* Neutral, because it requires a rolling upgrade/service instance replacement to update the available storage backends
+
+### Option 6b: Allow storage backends to be added/removed via the API
+
+This option is to add additional HTTP methods for the adding/removal of storage backends
+
+* Neutral, because it requires additional HTTP methods
+* Neutral, because available storage backends can be updated without a rolling upgrade/service instance replacement
+* Bad, because it splits service configuration between the API and deployment tooling
+* Bad, because it requires dynamic distribution of storage backend configuration between service instances where redundant instances are used
