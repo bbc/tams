@@ -69,10 +69,9 @@ Deprecate [AppNote0009](https://github.com/bbc/tams/blob/main/docs/appnotes/0009
 * Good, because it enables workflows that require multiple storage backends (e.g. tiered storage)
 * Bad, because it will result in a breaking change
 
-<!-- This is an optional element. Feel free to remove. -->
 ### Implementation
 
-{Once the proposal has been implemented, add a link to the relevant PRs here}
+Implemented by [#125](https://github.com/bbc/tams/pull/125).
 
 ## Pros and Cons of the Options
 
