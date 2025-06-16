@@ -9,7 +9,7 @@ The TAMS API supports the referencing of multiple storage backends for Flow Segm
 Properties of these locations may be signalled in the label as per [Application Note 0009](https://github.com/bbc/tams/blob/main/docs/appnotes/0009-storage-label-format.md).
 The support for multiple locations in `get_urls` was initially created to allow reference to locations outside of a given TAMS deployment (e.g. in another TAMS deployment, or another system entirely).
 The [allocation of storage](https://bbc.github.io/tams/main/index.html#/operations/POST_flows-flowId-storage) by a TAMS instance does not currently make any provisions for multiple storage backends.
-It currently is up to the TAMS implementation how and where to allocate storage.
+It currently is up to the TAMS implementation to decide how and where to allocate storage.
 
 Some deployments may want to provide multiple storage backends - for security, cost allocation, tiered storage, or other reasons.
 This ADR explores options for how this may be implemented.

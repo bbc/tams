@@ -45,7 +45,7 @@
             "type": "string"
           },
           "label": {
-            "description": "Label identifying this URL. If the 'label' is not set then this URL can't be filtered for using the 'accept_get_urls' API query parameter.",
+            "description": "Label identifying this URL. Service implementations should reject any requests using labels that are already associated with Storage Backends. If the 'label' is not set then this URL can't be filtered for using the 'accept_get_urls' API query parameter.",
             "type": "string"
           }
         }
