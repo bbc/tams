@@ -1573,7 +1573,6 @@ paths:
           description: |
             A comma separated list of `storage_id`s of flow segment `get_urls` to include in the response.
             Omitting `accept_storage_ids`, or providing an empty `accept_storage_ids` will result in no filtering of `get_urls`.
-            An empty `accept_get_urls` results in an empty or no `get_urls` in the response.
             Flow segment `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
             A full list of available `storage_id`s may be found at the `service/storage_backends` endpoint.
             Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
@@ -1635,7 +1634,7 @@ paths:
         Returns the flow segments.
 
         The flow segment provides information about the media object. The media store type, which is
-        indicated in the /service resource, determines the information that is included to allow the
+        indicated in the /service/storage_backends resource, determines the information that is included to allow the
         flow segment's media object to be downloaded. The examples provided here are for the
         "http_object_store" media store type which MUST include a `get_urls` property that contains the
         HTTP URLs for downloading the media object - server implementations should generate this internally.
@@ -1707,7 +1706,6 @@ paths:
           description: |
             A comma separated list of `storage_id`s of flow segment `get_urls` to include in the response.
             Omitting `accept_storage_ids`, or providing an empty `accept_storage_ids` will result in no filtering of `get_urls`.
-            An empty `accept_get_urls` results in an empty or no `get_urls` in the response.
             Flow segment `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
             A full list of available `storage_id`s may be found at the `service/storage_backends` endpoint.
             Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
