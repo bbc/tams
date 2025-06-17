@@ -36,7 +36,7 @@ For more information on how we use ADRs, see [here](./adr/README.md).
 | [0024](./adr/0024-source-level-edit.md)                            | Source-level Edit                                                          |
 | [0025](./adr/0025-flow-property-updates.md)                        | Options for updating Flow properties                                       |
 | [0026](./adr/0026-updated-webhook-events-and-filters.md)           | Updates to the webhook event structures and filters                        |
-| [0027](./adr/0028-authentication-methods.md)                       | Methods to authenticate clients with a TAMS server                         |
+| [0028](./adr/0028-authentication-methods.md)                       | Methods to authenticate clients with a TAMS server                         |
 | [0029](./adr/0029-bulk-flow-segments.md)                           | Changes to flow segments to add segments in bulk                           |
 | [0030](./adr/0030-allow-external-media-objects.md)                 | Allow a Flow to reference media objects in other Flows and storage         |
 | [0031](./adr/0031-flow-image-support.md)                           | Add new flow type to support still images                                  |

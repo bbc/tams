@@ -112,7 +112,7 @@ The user is then able to run an edit session with access only to the material th
 However care must be taken to balance the duration of the token, to account for the possibility of it expiring while the user is working, balanced against the risk of exposing a long-lived token.
 Using an online verification approach (where the authorisation server checks the token every time) along with long-lived tokens which are revoked at the end of the session may help with this.
 
-_Pros and Cons are broadly the same as Option 1, however "Neutral, because clients need to acquire tokens somehow and this can be complex" is partially mitigated.
+Pros and Cons are broadly the same as Option 1, however "Neutral, because clients need to acquire tokens somehow and this can be complex" is partially mitigated.
 
 * Good, because it creates a less prescriptive mechanism to integrate and acquire tokens for clients than Option 1
 * Bad, because there's no obvious way to refresh the token after initial issue, so expiry must be carefully managed
