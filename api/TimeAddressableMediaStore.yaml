@@ -121,11 +121,11 @@ paths:
           description: Success. The service info has been updated.
         "400":
           description: Bad request. Invalid service JSON.
-  /service/storage_backends:
+  /service/storage-backends:
     head:
       summary: Storage Backend Information
       description: Return storage backends path headers
-      operationId: HEAD_storage_backends
+      operationId: HEAD_storage-backends
       tags:
         - Service
       responses:
@@ -134,7 +134,7 @@ paths:
     get:
       summary: Storage Backend Information
       description: Provide information about the storage backends available on this service instance. These are populated on deployment of the service instance.
-      operationId: GET_storage_backends
+      operationId: GET_storage-backends
       tags:
         - Service
       responses:
@@ -1574,7 +1574,7 @@ paths:
             A comma separated list of `storage_id`s of flow segment `get_urls` to include in the response.
             Omitting `accept_storage_ids`, or providing an empty `accept_storage_ids` will result in no filtering of `get_urls`.
             Flow segment `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
-            A full list of available `storage_id`s may be found at the `service/storage_backends` endpoint.
+            A full list of available `storage_id`s may be found at the `service/storage-backends` endpoint.
             Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
           schema:
             type: string
@@ -1634,7 +1634,7 @@ paths:
         Returns the flow segments.
 
         The flow segment provides information about the media object. The media store type, which is
-        indicated in the /service/storage_backends resource, determines the information that is included to allow the
+        indicated in the /service/storage-backends resource, determines the information that is included to allow the
         flow segment's media object to be downloaded. The examples provided here are for the
         "http_object_store" media store type which MUST include a `get_urls` property that contains the
         HTTP URLs for downloading the media object - server implementations should generate this internally.
@@ -1707,7 +1707,7 @@ paths:
             A comma separated list of `storage_id`s of flow segment `get_urls` to include in the response.
             Omitting `accept_storage_ids`, or providing an empty `accept_storage_ids` will result in no filtering of `get_urls`.
             Flow segment `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
-            A full list of available `storage_id`s may be found at the `service/storage_backends` endpoint.
+            A full list of available `storage_id`s may be found at the `service/storage-backends` endpoint.
             Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
           schema:
             type: string
