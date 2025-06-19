@@ -39,7 +39,7 @@ This ADR is not proposing how multiple TAMS instances may peer with each other.
 * Option 3a: Configure storage backends out-of-band
 * Option 3b: Expand `media_store` parameter at the `/service` endpoint to advertise available storage names/IDs
 * Option 3c: Expand `media_store` parameter at the `/service` endpoint to advertise available storage names/IDs, with storage metadata
-* Option 3d: Replace the `media_store` parameter at the `/service` endpoint with a `/service/storage_backends` endpoint to advertise available storage names/IDs, with storage metadata
+* Option 3d: Replace the `media_store` parameter at the `/service` endpoint with a `/service/storage-backends` endpoint to advertise available storage names/IDs, with storage metadata
 * Option 4a: Don't modify approach to `get_urls` `label`
 * Option 4b: Elevate the components of [AppNote0009](https://github.com/bbc/tams/blob/main/docs/appnotes/0009-storage-label-format.md) label structure to core spec
 * Option 5a: Don't add any additional filters on the flow `/segments`
@@ -54,7 +54,7 @@ Chosen options:
 
 * Option 1b: Update the TAMS API to allow storage backend to be specified when requesting storage allocation
 * Option 2c: Specify storage backend using a storage backend UUID
-* Option 3d: Replace the `media_store` parameter at the `/service` endpoint with a `/service/storage_backends` endpoint to advertise available storage names/IDs, with storage metadata
+* Option 3d: Replace the `media_store` parameter at the `/service` endpoint with a `/service/storage-backends` endpoint to advertise available storage names/IDs, with storage metadata
 * Option 4b: Elevate the components of [AppNote0009](https://github.com/bbc/tams/blob/main/docs/appnotes/0009-storage-label-format.md) label structure to core spec
 * Option 5b: Add a storage backend ID filter to the flow `/segments` endpoint
 * Option 5c: Add a pre-signed filter to the flow `/segments` endpoint
@@ -180,7 +180,7 @@ As with Option 3b, but with a dict providing the metadata currently available in
 * Neutral, because this would be a breaking change in a lesser used part of the API
 * Bad, because it would currently differ in format to `get_urls` `labels` and would pre-empt what changes the future breaking change to elevate label parameters to the core API would look like (This bad point would be negated if we also choose Option 4b)
 
-### Option 3d: Replace the `media_store` parameter at the `/service` endpoint with a `/service/storage_backends` endpoint to advertise available storage names/IDs, with storage metadata
+### Option 3d: Replace the `media_store` parameter at the `/service` endpoint with a `/service/storage-backends` endpoint to advertise available storage names/IDs, with storage metadata
 
 As with Option 3c, but the `media_store` parameter is removed and replaced with a child endpoint.
 
