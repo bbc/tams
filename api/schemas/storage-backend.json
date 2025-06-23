@@ -3,10 +3,6 @@
     "description": "Provides technical, and logic metadata about a storage backend",
     "title": "Storage Backend",
     "properties": {
-        "label": {
-            "description": "Freeform string label for a storage backend.",
-            "type": "string"
-        },
         "store_type": {
             "description": "The generic store type. Used to identify the required workflow for reading and writing media. Any `store_product` should be compatible, as much is required for basic interoperability between TAMS implementations, with their associated generic `store_type`.",
             "type": "string",
