@@ -17,6 +17,7 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
         with:
+          ssh-key: ${{ secrets.WRITE_ACCESS_DEPLOY_KEY }}
           fetch-depth: 0 # check out entire repo for version calculation
 
       - name: Get next version number
