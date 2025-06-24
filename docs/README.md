@@ -41,6 +41,7 @@ For more information on how we use ADRs, see [here](./adr/README.md).
 | [0029](./adr/0029-bulk-flow-segments.md)                           | Changes to flow segments to add segments in bulk                           |
 | [0030](./adr/0030-allow-external-media-objects.md)                 | Allow a Flow to reference media objects in other Flows and storage         |
 | [0031](./adr/0031-flow-image-support.md)                           | Add new flow type to support still images                                  |
+| [0032](./adr/0032-specifying-storage-backend.md)                   | Specifying storage backend when requesting storage allocation              |
 | [0034](./adr/0034-storage-allow-object_ids.md)                     | Add object_ids option to Flow Storage request                              |
 
 \* Note: ADR 0004a was the unintended result of a number clash in the early development of TAMS which wasn't caught before publication
