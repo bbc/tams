@@ -28,7 +28,7 @@ info:
     could for example be implemented using an AWS S3 compatible store using presigned URLs or by
     a simple file system storage with an HTTP frontend. Clients should parse the /service endpoint
     and handle the media store type in use appropriately.
-  version: "6.0"
+  version: "7.0"
   contact:
     name: 'BBC R&D - Cloud-Fit Production Team'
     email: 'cloudfit-opensource@rd.bbc.co.uk'
@@ -44,7 +44,7 @@ servers:
     variables:
       version:
         description: API version
-        default: v6.0
+        default: v7.0
 security:
   - bearer_token_auth: []
   - url_token_auth: []
@@ -1785,46 +1785,7 @@ paths:
           description: The flow ID in the path is invalid.
     post:
       summary: Create Flow Segments
-      description: |
-        Register either a single new flow segment or an array of segments, attaching the object id given to a point in the flow timeline.
-
-        The segment may use a newly-written object, or re-use an existing object from another flow.
-
-        For newly-written objects, the client is responsible for ensuring that the segment written to the store obeys the following restrictions:
-        - All samples in the object SHOULD be used by the segment.
-        - The timestamps of each sample in the media object MUST equal its position on the Flow timeline, OR `ts_offset` MUST
-          be set such that `media_object_ts + ts_offset = segment_ts`
-        - The timerange of the segment MUST NOT overlap any other segment in the same Flow. The behaviour is
-          undefined if there is an overlap with existing segments and a store may return a 400 error response.
-        - The `sample_offset` SHOULD be zero.
-
-        A TAMS SHOULD reject registrations of Flow Segments with a 400 error response if it references a newly created media object
-        in the local TAMS storage that was not intended to be used for the Flow. A TAMS SHOULD accept Flow Segments that reference an
-        existing media object in the local TAMS storage that was originally created for another Flow.
-
-        A TAMS MAY support media objects that are held in external storage in another TAMS or other media storage system. The Flow Segment
-        may in that case require the `get_urls` property to provide the information needed by clients to access the media object.
-
-        If a client needs to modify a Flow segment, e.g. to correct metadata such as the `key_frame_count` or add additional
-        URLs to `get_urls`, then the client SHOULD first delete the existing segment and then write a new one. The behaviour is
-        undefined if the segment exists and a store may return a 400 error response.
-
-        For successful creation of all segments in the request a 201 response should be provided.  If an error is detected when processing
-        a list of segments then processing should continue to try and process the remaining segments.  A 200 response should be returned 
-        listing the failed segments.
-
-        Clients are expected to decide how to break content into media objects, however those objects SHOULD be large
-        enough to avoid excessive round trip overheads in the underlying store (_e.g._ of the order of several megabytes)
-        and where codecs with temporal re-ordering are used, object SHOULD contain complete GOPs or decodable units.
-
-        For objects that have been re-used from other flows, the `sample_offset` and `sample_count` MAY be used to
-        specify part of the object to use:
-        - The `timerange` field indicates the new segment's position in the flow
-        - The sample associated with the start of the `timerange` MUST be the one selected by `sample_offset`
-        - Likewise, the sample associated with the end of the `timerange` MUST be the one selected by
-          `sample_offset + sample_count - 1`, unless `timerange` has an exclusive end, in which case it will be
-          `sample_offset + sample_count`.
-        - The timerange of the segment MUST NOT overlap any other segment in the same Flow.
+      description: "Register either a single new flow segment or an array of segments, attaching the object id given to a point in the flow timeline.\n\nThe segment may use a newly-written object, or re-use an existing object from another flow.\n\nFor newly-written objects, the client is responsible for ensuring that the segment written to the store obeys the following restrictions:\n- All samples in the object SHOULD be used by the segment.\n- The timestamps of each sample in the media object MUST equal its position on the Flow timeline, OR `ts_offset` MUST\n  be set such that `media_object_ts + ts_offset = segment_ts`\n- The timerange of the segment MUST NOT overlap any other segment in the same Flow. The behaviour is\n  undefined if there is an overlap with existing segments and a store may return a 400 error response.\n- The `sample_offset` SHOULD be zero.\n\nA TAMS SHOULD reject registrations of Flow Segments with a 400 error response if it references a newly created media object\nin the local TAMS storage that was not intended to be used for the Flow. A TAMS SHOULD accept Flow Segments that reference an\nexisting media object in the local TAMS storage that was originally created for another Flow.\n\nA TAMS MAY support media objects that are held in external storage in another TAMS or other media storage system. The Flow Segment\nmay in that case require the `get_urls` property to provide the information needed by clients to access the media object.\n\nIf a client needs to modify a Flow segment, e.g. to correct metadata such as the `key_frame_count` or add additional\nURLs to `get_urls`, then the client SHOULD first delete the existing segment and then write a new one. The behaviour is\nundefined if the segment exists and a store may return a 400 error response.\n\nFor successful creation of all segments in the request a 201 response should be provided.  If an error is detected when processing\na list of segments then processing should continue to try and process the remaining segments.  A 200 response should be returned \nlisting the failed segments.\n\nClients are expected to decide how to break content into media objects, however those objects SHOULD be large\nenough to avoid excessive round trip overheads in the underlying store (_e.g._ of the order of several megabytes)\nand where codecs with temporal re-ordering are used, object SHOULD contain complete GOPs or decodable units.\n\nFor objects that have been re-used from other flows, the `sample_offset` and `sample_count` MAY be used to\nspecify part of the object to use:\n- The `timerange` field indicates the new segment's position in the flow\n- The sample associated with the start of the `timerange` MUST be the one selected by `sample_offset`\n- Likewise, the sample associated with the end of the `timerange` MUST be the one selected by\n  `sample_offset + sample_count - 1`, unless `timerange` has an exclusive end, in which case it will be\n  `sample_offset + sample_count`.\n- The timerange of the segment MUST NOT overlap any other segment in the same Flow.\n"
       operationId: POST_flows-flowId-segments
       tags:
         - FlowSegments
@@ -1835,14 +1796,14 @@ paths:
               $ref: examples/flow-segment-post.json
             schema:
               oneOf:
-              - $ref: schemas/flow-segment-post.json
-              - type: array
-                items:
-                  $ref: schemas/flow-segment-post.json
+                - $ref: schemas/flow-segment-post.json
+                - type: array
+                  items:
+                    $ref: schemas/flow-segment-post.json
         required: true
       responses:
         "200":
-          description: Partial success creating segments returning list of failed segments.  
+          description: Partial success creating segments returning list of failed segments.
           content:
             application/json:
               schema:
