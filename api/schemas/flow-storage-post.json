@@ -6,6 +6,32 @@
         "limit": {
             "description": "Limit the number of storage segments in each response page. Implementations may specify their own default and maximum for the limit",
             "type": "integer"
+        },
+        "object_ids": {
+            "description": "Array of object_ids to use. The supplied object_ids must be new and not already in use in this store. A 400 response will be returned if any supplied object_id already exists.",
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "storage_id": {
+            "description": "The storage backend to allocate storage in. A storage backend identifier as advertised at the `/service` endpoint. If not set the default, as advertised at the `/service` endpoint, will be used if available. An invalid storage backend identifier will result in a 400 error.",
+            "type": "string",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
         }
+    },
+    "not": {
+        "allOf": [
+            {
+                "required": [
+                    "limit"
+                ]
+            },
+            {
+                "required": [
+                    "object_ids"
+                ]
+            }
+        ]
     }
 }
