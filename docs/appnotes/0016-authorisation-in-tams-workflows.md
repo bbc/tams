@@ -24,26 +24,78 @@ This may be appropriate for example when working with a large number of third pa
 A simple approach is to define permissions that apply to an entire TAMS instance at a very coarse level, and use Role-based Access Control (RBAC) to grant access through those permissions.
 In RBAC, each action is restricted to users holding a certain role, and users are assigned the relevant roles they need.
 
-The permissions (or "scopes" in OAuth 2.0), could be:
+These are the recommended permissions (or "scopes" in OAuth 2.0):
 
-- `tams-api/read`: Allow GET and HEAD methods
-- `tams-api/write`: Allow PUT and POST methods
-- `tams-api/delete`: Allow DELETE methods
+| Endpoint                             | Method          | `tams-api/admin` | `tams-api/read` | `tams-api/write` | `tams-api/delete` |
+| ------------------------------------ | --------------- | ---------------- | --------------- | ---------------- | ----------------- |
+| `/`                                  | `HEAD`/`GET` ⚠️ | ✅               | ✅              | ✅               | ✅               |
+| `/service`                           | `HEAD`/`GET` ⚠️ | ✅               | ✅              | ✅               | ✅               |
+|                                      | `POST`       ⚠️ | ✅               | ❌              | ❌               | ❌               |
+| `/service/storage-backends`          | `HEAD`/`GET` ⚠️ | ❌               | ✅              | ✅               | ❌               |
+| `/service/webhooks`                  | `HEAD`/`GET` ⚠️ | ✅               | ❌              | ❌               | ❌               |
+|                                      | `POST`       ⚠️ | ✅               | ❌              | ❌               | ❌               |
+| `/sources`                           | `HEAD`/`GET`    | ❌               | ✅              | ❌               | ❌               |
+| `/sources/{sourceId}`                | `HEAD`/`GET`    | ❌               | ✅              | ❌               | ❌               |
+| `/sources/{sourceId}/tags`           | `HEAD`/`GET`    | ❌               | ✅              | ❌               | ❌               |
+| `/sources/{sourceId}/tags/{name}`    | `HEAD`/`GET`    | ❌               | ✅              | ❌               | ❌               |
+|                                      | `PUT`           | ❌               | ❌              | ✅               | ❌               |
+|                                      | `DELETE`     ⚠️ | ❌               | ❌              | ✅               | ❌               |
+| `/sources/{sourceId}/description`    | `HEAD`/`GET`    | ❌               | ✅              | ❌               | ❌               |
+|                                      | `PUT`           | ❌               | ❌              | ✅               | ❌               |
+|                                      | `DELETE`     ⚠️ | ❌               | ❌              | ✅               | ❌               |
+| `/sources/{sourceId}/label`          | `HEAD`/`GET`    | ❌               | ✅              | ❌               | ❌               |
+|                                      | `PUT`           | ❌               | ❌              | ✅               | ❌               |
+|                                      | `DELETE`     ⚠️ | ❌               | ❌              | ✅               | ❌               |
+| `/flows`                             | `HEAD`/`GET`    | ❌               | ✅              | ❌               | ❌               |
+| `/flows/{flowId}`                    | `HEAD`/`GET`    | ❌               | ✅              | ❌               | ❌               |
+|                                      | `PUT`           | ❌               | ❌              | ✅               | ❌               |
+|                                      | `DELETE`        | ❌               | ❌              | ❌               | ✅               |
+| `/flows/{flowId}/tags`               | `HEAD`/`GET`    | ❌               | ✅              | ❌               | ❌               |
+| `/flows/{flowId}/tags/{name}`        | `HEAD`/`GET`    | ❌               | ✅              | ❌               | ❌               |
+|                                      | `PUT`           | ❌               | ❌              | ✅               | ❌               |
+|                                      | `DELETE`     ⚠️ | ❌               | ❌              | ✅               | ❌               |
+| `/flows/{flowId}/description`        | `HEAD`/`GET`    | ❌               | ✅              | ❌               | ❌               |
+|                                      | `PUT`           | ❌               | ❌              | ✅               | ❌               |
+|                                      | `DELETE`     ⚠️ | ❌               | ❌              | ✅               | ❌               |
+| `/flows/{flowId}/label`              | `HEAD`/`GET`    | ❌               | ✅              | ❌               | ❌               |
+|                                      | `PUT`           | ❌               | ❌              | ✅               | ❌               |
+|                                      | `DELETE`     ⚠️ | ❌               | ❌              | ✅               | ❌               |
+| `/flows/{flowId}/read_only`          | `HEAD`/`GET`    | ❌               | ✅              | ❌               | ❌               |
+|                                      | `PUT`           | ❌               | ❌              | ✅               | ❌               |
+| `/flows/{flowId}/flow_collection`    | `HEAD`/`GET`    | ❌               | ✅              | ❌               | ❌               |
+|                                      | `PUT`           | ❌               | ❌              | ✅               | ❌               |
+|                                      | `DELETE`     ⚠️ | ❌               | ❌              | ✅               | ❌               |
+| `/flows/{flowId}/max_bit_rate`       | `HEAD`/`GET`    | ❌               | ✅              | ❌               | ❌               |
+|                                      | `PUT`           | ❌               | ❌              | ✅               | ❌               |
+|                                      | `DELETE`     ⚠️ | ❌               | ❌              | ✅               | ❌               |
+| `/flows/{flowId}/avg_bit_rate`       | `HEAD`/`GET`    | ❌               | ✅              | ❌               | ❌               |
+|                                      | `PUT`           | ❌               | ❌              | ✅               | ❌               |
+|                                      | `DELETE`     ⚠️ | ❌               | ❌              | ✅               | ❌               |
+| `/flows/{flowId}/segments`           | `HEAD`/`GET`    | ❌               | ✅              | ❌               | ❌               |
+|                                      | `POST`          | ❌               | ❌              | ✅               | ❌               |
+|                                      | `DELETE`        | ❌               | ❌              | ❌               | ✅               |
+| `/flows/{flowId}/storage`            | `POST`          | ❌               | ❌              | ✅               | ❌               |
+| `/objects/{objectId}`                | `HEAD`/`GET`    | ❌               | ✅              | ❌               | ❌               |
+| `/flow-delete-requests`              | `HEAD`/`GET` ⚠️ | ✅               | ❌              | ❌               | ❌               |
+| `/flow-delete-requests/{request-id}` | `HEAD`/`GET` ⚠️ | ❌               | ❌              | ❌               | ✅               |
 
-_Note that these example permissions are drawn from the [AWS TAMS implementation](https://github.com/awslabs/time-addressable-media-store/blob/v3.0/README.md#usage)._
+Key for the listing:
 
-Then roles could be created in the authorisation system which allow some combinations of those scopes, for example:
+- ✅: Allow method with this OAuth scope
+- ❌: Do not allow method with this OAuth scope.
+Other claimed scopes may still allow this method
+- ⚠️: Method does not follow the basic mapping of `tams-api/read` to `HEAD`/`GET`, `tams-api/write` to `POST`/`PUT`, and `tams-api/delete` to `DELETE`
 
-- `administrator`: Has all three scopes
+Users may be assigned combinations of these roles for different purposes, for example:
+
+- `administrator`: Has all four scopes
 - `viewer`: Has `tams-api/read`
 - `editor`: Has `tams-api/read` and `tams-api/write`
 - `store-writer`: Has `tams-api/write`
 - `store-cleanup-system`: Has `tams-api/delete`
 
-Users, or groups of users can then be assigned into those roles: for example a "News Journalists" group might be assigned `editor`, while other staff have `viewer`, but only the automated processes of a MAM have `store-cleanup-system`.
-Alternatively, the permissions can be used directly, assigning them to user groups without grouping them into roles.
-
-To implement the authorisation, the authorisation server checks the requested scopes against the user's access when issuing a token, and rejects the request if a suitable access isn't assigned.
+To implement the authorisation, the authorisation server checks the requested scopes against the user's access when issuing a token.
+The TAMS server, or it's auth proxy, rejects requests without appropriate scopes.
 
 ## Finer Grained Authorisation
 
