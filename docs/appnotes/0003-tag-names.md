@@ -195,6 +195,15 @@ The type is a `boolean`.
 It is used to indictate the flow should be excluded from HLS manifest generation.
 Defaults to `false` if the tag is not set.
 
+### scope
+
+Status: **Experimental**
+
+Suggested as a way to build lightweight Attribute-based Access Control in [AppNote0016: Authorisation in TAMS workflows](./0016-authorisation-in-tams-workflows.md).
+A comma seperated list of scopes providing permissions on the Flow.
+
+No known implementations yet.
+
 ## Known Source Tags
 
 ### hls_exclude
@@ -206,3 +215,12 @@ Used in the TAMS demonstration at NAB 2025.
 The type is a `boolean`.
 It is used to indictate the source should be excluded from HLS manifest generation.
 Defaults to `false` if the tag is not set.
+
+### scope
+
+Status: **Experimental**
+
+Suggested as a way to build lightweight Attribute-based Access Control in [AppNote0016: Authorisation in TAMS workflows](./0016-authorisation-in-tams-workflows.md).
+A comma seperated list of scopes providing permissions on the Source.
+
+No known implementations yet.
