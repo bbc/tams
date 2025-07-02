@@ -30,60 +30,58 @@ These are the recommended permissions (or "scopes" in OAuth 2.0):
 | ------------------------------------ | --------------- | ---------------- | --------------- | ---------------- | ----------------- |
 | `/`                                  | `HEAD`/`GET` ⚠️ | ✅               | ✅              | ✅               | ✅               |
 | `/service`                           | `HEAD`/`GET` ⚠️ | ✅               | ✅              | ✅               | ✅               |
-|                                      | `POST`       ⚠️ | ✅               | ❌              | ❌               | ❌               |
+|                                      | `POST`       ⚠️ | ✅               |                 |                  |                  |
 | `/service/storage-backends`          | `HEAD`/`GET` ⚠️ | ✅               | ✅              | ✅               | ✅               |
-| `/service/webhooks`                  | `HEAD`/`GET` ⚠️ | ✅               | ❌              | ❌               | ❌               |
-|                                      | `POST`       ⚠️ | ✅               | ❌              | ❌               | ❌               |
-| `/sources`                           | `HEAD`/`GET`    | ❌               | ✅              | ❌               | ❌               |
-| `/sources/{sourceId}`                | `HEAD`/`GET`    | ❌               | ✅              | ❌               | ❌               |
-| `/sources/{sourceId}/tags`           | `HEAD`/`GET`    | ❌               | ✅              | ❌               | ❌               |
-| `/sources/{sourceId}/tags/{name}`    | `HEAD`/`GET`    | ❌               | ✅              | ❌               | ❌               |
-|                                      | `PUT`           | ❌               | ❌              | ✅               | ❌               |
-|                                      | `DELETE`     ⚠️ | ❌               | ❌              | ✅               | ❌               |
-| `/sources/{sourceId}/description`    | `HEAD`/`GET`    | ❌               | ✅              | ❌               | ❌               |
-|                                      | `PUT`           | ❌               | ❌              | ✅               | ❌               |
-|                                      | `DELETE`     ⚠️ | ❌               | ❌              | ✅               | ❌               |
-| `/sources/{sourceId}/label`          | `HEAD`/`GET`    | ❌               | ✅              | ❌               | ❌               |
-|                                      | `PUT`           | ❌               | ❌              | ✅               | ❌               |
-|                                      | `DELETE`     ⚠️ | ❌               | ❌              | ✅               | ❌               |
-| `/flows`                             | `HEAD`/`GET`    | ❌               | ✅              | ❌               | ❌               |
-| `/flows/{flowId}`                    | `HEAD`/`GET`    | ❌               | ✅              | ❌               | ❌               |
-|                                      | `PUT`           | ❌               | ❌              | ✅               | ❌               |
-|                                      | `DELETE`        | ❌               | ❌              | ❌               | ✅               |
-| `/flows/{flowId}/tags`               | `HEAD`/`GET`    | ❌               | ✅              | ❌               | ❌               |
-| `/flows/{flowId}/tags/{name}`        | `HEAD`/`GET`    | ❌               | ✅              | ❌               | ❌               |
-|                                      | `PUT`           | ❌               | ❌              | ✅               | ❌               |
-|                                      | `DELETE`     ⚠️ | ❌               | ❌              | ✅               | ❌               |
-| `/flows/{flowId}/description`        | `HEAD`/`GET`    | ❌               | ✅              | ❌               | ❌               |
-|                                      | `PUT`           | ❌               | ❌              | ✅               | ❌               |
-|                                      | `DELETE`     ⚠️ | ❌               | ❌              | ✅               | ❌               |
-| `/flows/{flowId}/label`              | `HEAD`/`GET`    | ❌               | ✅              | ❌               | ❌               |
-|                                      | `PUT`           | ❌               | ❌              | ✅               | ❌               |
-|                                      | `DELETE`     ⚠️ | ❌               | ❌              | ✅               | ❌               |
-| `/flows/{flowId}/read_only`          | `HEAD`/`GET`    | ❌               | ✅              | ❌               | ❌               |
-|                                      | `PUT`           | ❌               | ❌              | ✅               | ❌               |
-| `/flows/{flowId}/flow_collection`    | `HEAD`/`GET`    | ❌               | ✅              | ❌               | ❌               |
-|                                      | `PUT`           | ❌               | ❌              | ✅               | ❌               |
-|                                      | `DELETE`     ⚠️ | ❌               | ❌              | ✅               | ❌               |
-| `/flows/{flowId}/max_bit_rate`       | `HEAD`/`GET`    | ❌               | ✅              | ❌               | ❌               |
-|                                      | `PUT`           | ❌               | ❌              | ✅               | ❌               |
-|                                      | `DELETE`     ⚠️ | ❌               | ❌              | ✅               | ❌               |
-| `/flows/{flowId}/avg_bit_rate`       | `HEAD`/`GET`    | ❌               | ✅              | ❌               | ❌               |
-|                                      | `PUT`           | ❌               | ❌              | ✅               | ❌               |
-|                                      | `DELETE`     ⚠️ | ❌               | ❌              | ✅               | ❌               |
-| `/flows/{flowId}/segments`           | `HEAD`/`GET`    | ❌               | ✅              | ❌               | ❌               |
-|                                      | `POST`          | ❌               | ❌              | ✅               | ❌               |
-|                                      | `DELETE`        | ❌               | ❌              | ❌               | ✅               |
-| `/flows/{flowId}/storage`            | `POST`          | ❌               | ❌              | ✅               | ❌               |
-| `/objects/{objectId}`                | `HEAD`/`GET`    | ❌               | ✅              | ❌               | ❌               |
-| `/flow-delete-requests`              | `HEAD`/`GET` ⚠️ | ✅               | ❌              | ❌               | ❌               |
-| `/flow-delete-requests/{request-id}` | `HEAD`/`GET` ⚠️ | ❌               | ❌              | ❌               | ✅               |
+| `/service/webhooks`                  | `HEAD`/`GET` ⚠️ | ✅               |                 |                  |                  |
+|                                      | `POST`       ⚠️ | ✅               |                 |                  |                  |
+| `/sources`                           | `HEAD`/`GET`    |                  | ✅              |                  |                  |
+| `/sources/{sourceId}`                | `HEAD`/`GET`    |                  | ✅              |                  |                  |
+| `/sources/{sourceId}/tags`           | `HEAD`/`GET`    |                  | ✅              |                  |                  |
+| `/sources/{sourceId}/tags/{name}`    | `HEAD`/`GET`    |                  | ✅              |                  |                  |
+|                                      | `PUT`           |                  |                 | ✅               |                  |
+|                                      | `DELETE`     ⚠️ |                  |                 | ✅               |                  |
+| `/sources/{sourceId}/description`    | `HEAD`/`GET`    |                  | ✅              |                  |                  |
+|                                      | `PUT`           |                  |                 | ✅               |                  |
+|                                      | `DELETE`     ⚠️ |                  |                 | ✅               |                  |
+| `/sources/{sourceId}/label`          | `HEAD`/`GET`    |                  | ✅              |                  |                  |
+|                                      | `PUT`           |                  |                 | ✅               |                  |
+|                                      | `DELETE`     ⚠️ |                  |                 | ✅               |                  |
+| `/flows`                             | `HEAD`/`GET`    |                  | ✅              |                  |                  |
+| `/flows/{flowId}`                    | `HEAD`/`GET`    |                  | ✅              |                  |                  |
+|                                      | `PUT`           |                  |                 | ✅               |                  |
+|                                      | `DELETE`        |                  |                 |                  | ✅               |
+| `/flows/{flowId}/tags`               | `HEAD`/`GET`    |                  | ✅              |                  |                  |
+| `/flows/{flowId}/tags/{name}`        | `HEAD`/`GET`    |                  | ✅              |                  |                  |
+|                                      | `PUT`           |                  |                 | ✅               |                  |
+|                                      | `DELETE`     ⚠️ |                  |                 | ✅               |                  |
+| `/flows/{flowId}/description`        | `HEAD`/`GET`    |                  | ✅              |                  |                  |
+|                                      | `PUT`           |                  |                 | ✅               |                  |
+|                                      | `DELETE`     ⚠️ |                  |                 | ✅               |                  |
+| `/flows/{flowId}/label`              | `HEAD`/`GET`    |                  | ✅              |                  |                  |
+|                                      | `PUT`           |                  |                 | ✅               |                  |
+|                                      | `DELETE`     ⚠️ |                  |                 | ✅               |                  |
+| `/flows/{flowId}/read_only`          | `HEAD`/`GET`    |                  | ✅              |                  |                  |
+|                                      | `PUT`           |                  |                 | ✅               |                  |
+| `/flows/{flowId}/flow_collection`    | `HEAD`/`GET`    |                  | ✅              |                  |                  |
+|                                      | `PUT`           |                  |                 | ✅               |                  |
+|                                      | `DELETE`     ⚠️ |                  |                 | ✅               |                  |
+| `/flows/{flowId}/max_bit_rate`       | `HEAD`/`GET`    |                  | ✅              |                  |                  |
+|                                      | `PUT`           |                  |                 | ✅               |                  |
+|                                      | `DELETE`     ⚠️ |                  |                 | ✅               |                  |
+| `/flows/{flowId}/avg_bit_rate`       | `HEAD`/`GET`    |                  | ✅              |                  |                  |
+|                                      | `PUT`           |                  |                 | ✅               |                  |
+|                                      | `DELETE`     ⚠️ |                  |                 | ✅               |                  |
+| `/flows/{flowId}/segments`           | `HEAD`/`GET`    |                  | ✅              |                  |                  |
+|                                      | `POST`          |                  |                 | ✅               |                  |
+|                                      | `DELETE`        |                  |                 |                  | ✅               |
+| `/flows/{flowId}/storage`            | `POST`          |                  |                 | ✅               |                  |
+| `/objects/{objectId}`                | `HEAD`/`GET`    |                  | ✅              |                  |                  |
+| `/flow-delete-requests`              | `HEAD`/`GET` ⚠️ | ✅               |                 |                  |                  |
+| `/flow-delete-requests/{request-id}` | `HEAD`/`GET` ⚠️ |                  |                 |                  | ✅               |
 
 Key for the listing:
 
 - ✅: Allow method with this OAuth scope
-- ❌: Do not allow method with this OAuth scope.
-Other claimed scopes may still allow this method
 - ⚠️: Method does not follow the basic mapping of `tams-api/read` to `HEAD`/`GET`, `tams-api/write` to `POST`/`PUT`, and `tams-api/delete` to `DELETE`
 
 Users may be assigned combinations of these roles for different purposes, for example:
