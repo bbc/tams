@@ -31,7 +31,7 @@ These are the recommended permissions (or "scopes" in OAuth 2.0):
 | `/`                                  | `HEAD`/`GET` ⚠️ | ✅               | ✅              | ✅               | ✅               |
 | `/service`                           | `HEAD`/`GET` ⚠️ | ✅               | ✅              | ✅               | ✅               |
 |                                      | `POST`       ⚠️ | ✅               | ❌              | ❌               | ❌               |
-| `/service/storage-backends`          | `HEAD`/`GET` ⚠️ | ❌               | ✅              | ✅               | ❌               |
+| `/service/storage-backends`          | `HEAD`/`GET` ⚠️ | ✅               | ✅              | ✅               | ✅               |
 | `/service/webhooks`                  | `HEAD`/`GET` ⚠️ | ✅               | ❌              | ❌               | ❌               |
 |                                      | `POST`       ⚠️ | ✅               | ❌              | ❌               | ❌               |
 | `/sources`                           | `HEAD`/`GET`    | ❌               | ✅              | ❌               | ❌               |
@@ -102,53 +102,149 @@ The TAMS server, or it's auth proxy, rejects requests without appropriate scopes
 A further build on the very coarse role-based approach above is to expand the set of permissions to apply to specific Sources and Flows.
 However the implementation of this can become complex and unwieldy, especially if each Source and Flow in the system has a separate set of permissions to manage and it becomes necessary to edit them all to implement a policy change.
 
-Attribute-based Access Control (ABAC) is one approach to manage this complexity, by describing permissions policies based on the attributes of resources (Sources and Flows), and if necessary, users as well.
+Attribute-Based Access Control (ABAC) is one approach to manage this complexity, by describing permissions policies based on the attributes of resources (Sources and Flows), and if necessary, users as well.
 However full ABAC can be challenging to implement and requires a degree of organisational maturity to construct and manage stable attributes.
-This topic is well outside the scope of this document, however there exists plenty of literature and tools implementing ABAC in general terms.
+This section describes a recommended approach to ABAC authorisation logic to aid interoperability between TAMS implementations.
+This approach should be considered experimental at this point.
+Due its experimental nature, this approach makes use of the tags feature in TAMS.
+Future iterations of these proposals may elevate ABAC attributes to a specific field in the core specification.
 
-In practical TAMS solutions, this could look like defining a "class" attribute which can be applied to a Source or Flow, where "class" could also be thought of as "owner" or "project".
-A permissions system then defines policies that apply to those classes.
+### Scopes
+
+In practical TAMS solutions, ABAC could look like defining a "scope" tag which maps to OAuth scopes.
+A permissions system then defines policies that apply to those scopes.
+
+These scopes could use the following patterns:
+
+| Scope name regex | Meaning                           | Example       |
+| `^admin$`        | Grants all permission to the user | `admin`       |
+| `^\w+_read$`     | Grants read access to the user    | `news_read`   |
+| `^\w+_write$`    | Grants write access to the user   | `news_write`  |
+| `^\w+_delete$`   | Grants delete access to the user  | `news_delete` |
 
 For example, consider a store shared by multiple teams from the News and Sport production teams of an organisation.
 Each team have the ability to read and write their own content, and no access to the other team's content.
 However in some cases it is necessary to share a particular Source (e.g. to work on a shared story) to the other team.
 
-| Resource       | Classes | Comments |
-| -------------- | ------- | -------- |
-| Source Sport A | sport | |
-| Source Sport B | sport | |
-| Source News X  | news, sport_share | This item is shared across to Sport |
-| Source News Y  | news | |
+| Resource       | Scopes                                                 | Comments                                            |
+| -------------- | ------------------------------------------------------ | --------------------------------------------------- |
+| Source Sport A | `sport_read`, `sport_write`, `sport_delete`            | Sport have full access. News have no access.        |
+| Source Sport B | `sport_read`, `sport_write`, `sport_delete`            | Sport have full access. News have no access.        |
+| Source News X  | `news_read`, `news_write`, `news_delete`, `sport_read` | News have full access. Sport have read access only. |
+| Source News Y  | `news_read`, `news_write`, `news_delete`               | News have full access. Sport have no access.        |
 
-The permissions policies are then implemented as:
+As another example, consider an organisation which makes all content readable to all by default to promote reuse of content.
+All users are assigned a special `global_read` scope.
+The `global_read` scope is automatically assigned to all content by default, via some means not specified here.
 
-- Users in the "sport" user group have read and write access to all content in the "sport" class
-- Users in the "news" user group have read and write access to all content in the "news" class
-- Users in the "sport" user group have read access to all content in the "sport_share" class
+| Resource       | Scopes                                       | Comments                                      |
+| -------------- | -------------------------------------------- | --------------------------------------------- |
+| Source Sport A | `global_read`, `sport_write`, `sport_delete` | All have read access. Sport have full access. |
+| Source Sport B | `global_read`, `sport_write`, `sport_delete` | All have read access. Sport have full access. |
+| Source News X  | `global_read`, `news_write`, `news_delete`   | All have read access. News have full access.  |
+| Source News Y  | `global_read`, `news_write`, `news_delete`   | All have read access. News have full access.  |
+
+### Auth logic
+
+In order that implementations may have consistent expectations about which methods they may access, this section provides recommended auth logic for methods.
+
+It is assumed that the `admin` scope grants permission to execute all methods on all endpoints.
+It is only explicitly called out in the listing below where `admin` is the only scope which grants permission.
+
+Where requests are rejected, they should return as follows:
+
+- `404` if the request has no permissions on the endpoint
+- `403` if the request has any permission on the endpoint, but not sufficient to complete the request
+
+The listing below refers to requests having permissions, rather than users.
+This is to account for cases where users only "claim" a subset of their permissions for a given request.
+Note that in some circumstances, requests may have to claim more permissions than may initially be assumed.
+For example - when editing scopes on a Source/Flow, requests must claim both write permissions and the permission they are changing.
+i.e. If the request adds or removes delete permissions for any group, it must have valid delete permissions itself.
+This is to prevent permission escalation attacks such as a user with write permissions adding delete permissions to themselves.
+
+Implementations may choose to additionally filter data based on the claimed scopes of a request.
+For example, where a Source collections may be filtered to only include Sources the request has read/write/delete permissions on.
+Implementers should consider the implications of hiding data.
+For example - hiding collection relationships may result in clients deciding to delete a resource which, unknowingly, is still referenced by another.
+
+| Endpoint                             | Method       | Auth logic                                                                                        |
+| ------------------------------------ | ------------ | ------------------------------------------------------------------------------------------------- |
+| `/`                                  | `HEAD`/`GET` | Available to all                                                                                  |
+| `/service`                           | `HEAD`/`GET` | Available to all                                                                                  |
+|                                      | `POST`       | Execute if `admin` in claimed scopes. Otherwise reject.                                           |
+| `/service/storage-backends`          | `HEAD`/`GET` | Available to all                                                                                  |
+| `/service/webhooks`                  | `HEAD`/`GET` | Return if `admin` in claimed scopes. Otherwise reject.                                            |
+|                                      | `POST`       | Execute if `admin` in claimed scopes. Otherwise reject.                                           |
+| `/sources`                           | `HEAD`/`GET` | Restrict returned data by adding list of claimed scopes to `tag.scope.includes`. If the incoming request has `tag.scope.includes` set, the request must be processed with `tag.scope.includes` set to the intersection of the claimed scopes and the provided list in `tag.scope.includes`. |
+| `/sources/{sourceId}`                | `HEAD`/`GET` | Return result if any claimed read scope is in `/sources/{sourceId}/tags/scope`. Otherwise reject. |
+| `/sources/{sourceId}/tags`           | `HEAD`/`GET` | Return result if any claimed read scope is in `/sources/{sourceId}/tags/scope`. Otherwise reject. |
+| `/sources/{sourceId}/tags/{name}`    | `HEAD`/`GET` | Return result if any claimed read scope is in `/sources/{sourceId}/tags/scope`. Otherwise reject. |
+|                                      | `PUT`        | Execute if any claimed write scope is in `/sources/{sourceId}/tags/scope`. If the request is to `/sources/{sourceId}/tags/scope` the request must have the permissions being edited. i.e. If the request adds or removes delete permissions for any group, it must have delete claim which is present in `/sources/{sourceId}/tags/scope`. Otherwise, reject. |
+|                                      | `DELETE`     | Execute if any claimed write scope is in `/sources/{sourceId}/tags/scope`. If the request is to `/sources/{sourceId}/tags/scope` the request must have the permissions being edited. i.e. If the request adds or removes delete permissions for any group, it must have delete claim which is present in `/sources/{sourceId}/tags/scope`. Otherwise, reject. |
+| `/sources/{sourceId}/description`    | `HEAD`/`GET` | Return result if any claimed read scope is in `/sources/{sourceId}/tags/scope`. Otherwise reject. |
+|                                      | `PUT`        | Execute if any claimed write scope is in `/sources/{sourceId}/tags/scope`. Otherwise, reject.     |
+|                                      | `DELETE`     | Execute if any claimed write scope is in `/sources/{sourceId}/tags/scope`. Otherwise, reject.     |
+| `/sources/{sourceId}/label`          | `HEAD`/`GET` | Return result if any claimed read scope is in `/sources/{sourceId}/tags/scope`. Otherwise reject. |
+|                                      | `PUT`        | Execute if any claimed write scope is in `/sources/{sourceId}/tags/scope`. Otherwise, reject.     |
+|                                      | `DELETE`     | Execute if any claimed write scope is in `/sources/{sourceId}/tags/scope`. Otherwise, reject.     |
+| `/flows`                             | `HEAD`/`GET` | Restrict returned data by adding list of claimed scopes to `tag.scope.includes`. If the incoming request has `tag.scope.includes` set, the request must be processed with `tag.scope.includes` set to the intersection of the claimed scopes and the provided list in `tag.scope.includes`. |
+| `/flows/{flowId}`                    | `HEAD`/`GET` | Return result if any claimed read scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.     |
+|                                      | `PUT`        | Execute if any claimed write scope is in `/sources/{sourceId}/tags/scope` for the Flow's Source ID, or the Source ID doesn't currently exist in this TAMS instance. Otherwise, reject. |
+|                                      | `DELETE`     | Return result if any claimed delete scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.   |
+| `/flows/{flowId}/tags`               | `HEAD`/`GET` | Return result if any claimed read scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.     |
+| `/flows/{flowId}/tags/{name}`        | `HEAD`/`GET` | Return result if any claimed read scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.     |
+|                                      | `PUT`        | Execute if any claimed write scope is in `/flows/{flowId}/tags/scope`. If the request is to `/flows/{flowId}/tags/scope` the request must have the permissions being edited. i.e. If the request adds or removes delete permissions for any group, it must have delete claim which is present in `/flows/{flowId}/tags/scope`. Otherwise, reject. |
+|                                      | `DELETE`     | Execute if any claimed write scope is in `/flows/{flowId}/tags/scope`. If the request is to `/flows/{flowId}/tags/scope` the request must have the permissions being edited. i.e. If the request adds or removes delete permissions for any group, it must have delete claim which is present in `/flows/{flowId}/tags/scope`. Otherwise, reject. |
+| `/flows/{flowId}/description`        | `HEAD`/`GET` | Return result if any claimed read scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.     |
+|                                      | `PUT`        | Execute if any claimed write scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.          |
+|                                      | `DELETE`     | Execute if any claimed write scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.          |
+| `/flows/{flowId}/label`              | `HEAD`/`GET` | Return result if any claimed read scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.     |
+|                                      | `PUT`        | Execute if any claimed write scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.          |
+|                                      | `DELETE`     | Execute if any claimed write scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.          |
+| `/flows/{flowId}/read_only`          | `HEAD`/`GET` | Return result if any claimed read scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.     |
+|                                      | `PUT`        | Execute if any claimed write scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.          |
+| `/flows/{flowId}/flow_collection`    | `HEAD`/`GET` | Return result if any claimed read scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.     |
+|                                      | `PUT`        | Execute if any claimed write scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.          |
+|                                      | `DELETE`     | Execute if any claimed write scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.          |
+| `/flows/{flowId}/max_bit_rate`       | `HEAD`/`GET` | Return result if any claimed read scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.     |
+|                                      | `PUT`        | Execute if any claimed write scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.          |
+|                                      | `DELETE`     | Execute if any claimed write scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.          |
+| `/flows/{flowId}/avg_bit_rate`       | `HEAD`/`GET` | Return result if any claimed read scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.     |
+|                                      | `PUT`        | Execute if any claimed write scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.          |
+|                                      | `DELETE`     | Execute if any claimed write scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.          |
+| `/flows/{flowId}/segments`           | `HEAD`/`GET` | Return result if any claimed read scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.     |
+|                                      | `POST`       | Execute if any claimed write scope is in `/flows/{flowId}/tags/scope`, and any flows are listed in `referenced_by_flows` at `/objects/{objectId}` with `flow_tag.scope.includes` set to claimed read scopes for each Object ID being written. Otherwise reject.    |
+|                                      | `DELETE`     | Execute if any claimed write scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.          |
+| `/flows/{flowId}/storage`            | `POST`       | Execute if any claimed write scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.          |
+| `/objects/{objectId}`                | `HEAD`/`GET` | Restrict returned data by adding list of claimed scopes to `flow_tag.scope.includes`. If the incoming request has `flow_tag.scope.includes` set, the request must be processed with `flow_tag.scope.includes` set to the intersection of the claimed scopes and the provided list in `flow_tag.scope.includes`. |
+| `/flow-delete-requests`              | `HEAD`/`GET` | Return if `admin` in claimed scopes. Otherwise reject.                                            |
+| `/flow-delete-requests/{request-id}` | `HEAD`/`GET` | Return result if any claimed delete scope is in `/flows/{flowId}/tags/scope` for the Delete Request's Flow ID. Otherwise reject. |
 
 ### Implementation
 
-To implement the model above, way to hold the classes in the store is needed, along with a system to store the permissions and how they map on to classes.
+To implement the model above, away to hold the scopes in TAMS is needed, along with a system to store the permissions and the authorisation logic that maps them to scopes.
 
 For the latter, [Amazon Verified Permissions](https://aws.amazon.com/verified-permissions/) and [Permify](https://github.com/Permify/permify) both serve as permissions management tools.
-They allow authorisation decisions to be made by taking a set of policies defined in some domain-specific language, along with the attributes of the user (group membership) and resource (Source/Flow class), and computing whether to allow the request.
+They allow authorisation decisions to be made by taking a set of policies defined in some domain-specific language, along with the attributes of the user (group membership) and resource (Source/Flow scope), and computing whether to allow the request.
 This decision process is intended to be run inline for each request, for example at an authenticating proxy placed in front of the API server.
 
-For storing classes, an initial proof-of-concept could be built using Source and Flow tags: for example defining "special" tags such as `authz_class.news = 1` (using one tag per class to enable querying for presence of that tag, which is not possible with e.g. a comma-separated list).
-The authenticating proxy would need to take steps to prevent unauthorised modification of this special tag.
+For storing scopes an initial proof-of-concept could be built, as described above, using Source and Flow tags.
+A "special" `scope` tag would store a comma-separated list of scopes assigned to a Flow or Source
+The authenticating proxy would need to take steps to prevent unauthorised modification of this special tag, as described above.
 
-In addition, it should be possible to set a class on a multi-essence Source or Flow, and apply that permissions downwards to all the Sources or Flows it collects.
-Similarly, classes should be set by default on a Source (and apply to all Flows), but be settable on individual Flows as well for additional flexibility.
+In addition, it should be possible to set a scope on a multi-essence Source or Flow, and apply that permissions downwards to all the Sources or Flows it collects.
+Similarly, scopes should be set by default on a Source (and apply to all Flows), but be settable on individual Flows as well for additional flexibility.
 To avoid a complex traversal of potentially a large hierarchy (and to simplify the listing endpoints), it may be useful to denormalise the tag on write, writing it to all the Sources and Flows it would affect as well.
 
 As a result, the process of authorising a request is:
 
-1. Read the list of classes assigned to the resource
-2. Read the user's groups from their provided token
+1. Read the list of scopes assigned to the resource
+2. Read the user's claimed scopes from their provided token
 3. Request a decision from the permissions system based on those data
-4. (Write requests only): Check whether the request would modify a special `authz_*` tag, and confirm the user has permission to make that modification
+4. (Write requests only): Check whether the request would modify the special `scope` tag, and confirm the user has permission to make that modification
 5. (Flow segment write requests only): Check if the object already exists in the store using the `/objects` endpoint, and if it does, confirm the user would have access to read it
-6. (Write requests only): Propagate any changes to `authz_class` tags to Flows and Sources collected by this one
+6. (Write requests only): Propagate any changes to the `scope` tag to Flows and Sources collected by this one
 
 ## Where to Enforce Authorisation
 
@@ -159,14 +255,21 @@ In this case it would make sense to treat all clients of that TAMS instance as i
 Another deployment approach might see a MAM or other tool expose a TAMS API interface itself, which is proxied through to some simpler backing store.
 In this case the MAM might manage and enforce the other policies and rules around access to content, so it would make more sense to do the same in the TAMS API interface, and then use the MAM's own credentials to access the backing TAMS instance.
 
+## Use Cases
+
+### Providing access to a subset of a Flow's timerange
+
+The model described above allows access to content to be controlled at the Source/Flow level.
+Some use cases may require finer grained control.
+Object-level access control was deemed to be too inefficient to implement.
+It may, however, be achieved by creating a new flow with the relevant permissions that refers to the Objects of interest.
+Caution should be taken where the boundary timestamps land partway through an Object.
+Where the material around the boundaries is sensitive, new trimmed Objects should be created at the boundaries that only include the media used in the new Flow.
+
 ## Future Work
 
 The model described above allows for more use cases than coarse-grained RBAC: especially use cases where multiple tenants share a single store.
 However it would be useful to allow more attributes to be used in rules: for example making the tags of the Sources/Flows available to write policies upon as well.
-
-Furthermore the finer-grained model makes listing Sources and Flows difficult: items in the list from the backing database that the user does not have access to should be removed.
-For a small number of policies, this may be achievable by appending `?tag=<XXXX>` queries in the authenticating proxy (and then merging the results if multiple classes are involved).
-However for a larger and more complex system, it may be necessary to integrate policies into the TAMS implementation itself, using queries to the underlying database to limit results based on policies.
 
 One of the areas noted in [ADR0028: Authentication Methods](../adr/0028-authentication-methods.md) is being able to issue credentials restricted to a limited subset of Sources or Flows, which must also be supported by the authorisation system.
 This could be achieved by issuing JWT bearer tokens using the [RFC9396 authorization details](https://www.rfc-editor.org/rfc/rfc9396.html#name-authorization-request) field to embed permissions granted directly into the token.
