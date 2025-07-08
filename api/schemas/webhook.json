@@ -81,6 +81,9 @@
         "verbose_storage": {
             "description": "Whether to include storage metadata in the `get_urls` property in `flows/segments_added` events. This option is the same as the `verbose_storage` query parameter for the [/flows/{flowId}/segments](#/operations/GET_flows-flowId-segments) API endpoint.",
             "type": "boolean"
+        },
+        "tags": {
+          "$ref": "tags.json"
         }
     }
 }

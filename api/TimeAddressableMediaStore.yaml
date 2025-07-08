@@ -154,6 +154,27 @@ paths:
       tags:
         - Webhooks
       parameters:
+        - name: tag.{name}
+          in: query
+          description: |
+            Filter on webhooks that have a tag named {name} with a value in the given comma-seperated list of values.
+            The {name} could contain escaped characters to allow it to be used in a
+            URL.
+            Where the tag's value is a string, at least one of the given values will match.
+            Where the tag's value is an array, at least one value in the array will match at least one of the given values.
+            Partial string matches of the values are not valid.
+          schema:
+            type: string
+        - name: tag_exists.{name}
+          in: query
+          description: |
+            Filter on webhooks that have a tag named {name} regardless of value. The
+            {name} could contain escaped characters to allow it to be used in a
+            URL. If set to true then the presence of the tag is filtered for. If set
+            to false then its absence is. If left out then no filtering on tag presence
+            is performed.
+          schema:
+            type: boolean
         - $ref: '#/components/parameters/trait_resource_paged_key'
         - $ref: '#/components/parameters/trait_paged_limit'
       responses:
@@ -188,6 +209,27 @@ paths:
       tags:
         - Webhooks
       parameters:
+        - name: tag.{name}
+          in: query
+          description: |
+            Filter on webhooks that have a tag named {name} with a value in the given comma-seperated list of values.
+            The {name} could contain escaped characters to allow it to be used in a
+            URL.
+            Where the tag's value is a string, at least one of the given values will match.
+            Where the tag's value is an array, at least one value in the array will match at least one of the given values.
+            Partial string matches of the values are not valid.
+          schema:
+            type: string
+        - name: tag_exists.{name}
+          in: query
+          description: |
+            Filter on webhooks that have a tag named {name} regardless of value. The
+            {name} could contain escaped characters to allow it to be used in a
+            URL. If set to true then the presence of the tag is filtered for. If set
+            to false then its absence is. If left out then no filtering on tag presence
+            is performed.
+          schema:
+            type: boolean
         - $ref: '#/components/parameters/trait_resource_paged_key'
         - $ref: '#/components/parameters/trait_paged_limit'
       responses:
