@@ -195,12 +195,12 @@ The type is a `boolean`.
 It is used to indictate the Flow should be excluded from HLS manifest generation.
 Defaults to `false` if the tag is not set.
 
-### scope
+### auth_classes
 
 Status: **Experimental**
 
 Suggested as a way to build lightweight Attribute-based Access Control in [AppNote0016: Authorisation in TAMS workflows](./0016-authorisation-in-tams-workflows.md).
-A comma seperated list of scopes providing permissions on the Flow.
+A comma seperated list of auth classes used to derive permissions on the Flow.
 
 No known implementations yet.
 
@@ -216,11 +216,11 @@ The type is a `boolean`.
 It is used to indictate the Source should be excluded from HLS manifest generation.
 Defaults to `false` if the tag is not set.
 
-### scope
+### auth_classes
 
 Status: **Experimental**
 
 Suggested as a way to build lightweight Attribute-based Access Control in [AppNote0016: Authorisation in TAMS workflows](./0016-authorisation-in-tams-workflows.md).
-A comma seperated list of scopes providing permissions on the Source.
+A comma seperated list of auth classes used to derive permissions on the Source.
 
 No known implementations yet.
