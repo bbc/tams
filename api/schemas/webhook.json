@@ -15,10 +15,6 @@
             "description": "The HTTP header name that is added to the event POST",
             "type": "string"
         },
-        "api_key_value": {
-            "description": "The value that the HTTP header 'api_key_name' will be set to",
-            "type": "string"
-        },
         "events": {
             "description": "List of event types to receive",
             "type": "array",
