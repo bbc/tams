@@ -107,47 +107,38 @@ This approach should be considered experimental at this point.
 Due its experimental nature, this approach makes use of the tags feature in TAMS.
 Future iterations of these proposals may elevate ABAC attributes to a specific field in the core specification.
 
-### Scopes
+### Scopes and Auth Classes
 
-In practical TAMS solutions, ABAC could look like defining a "scope" tag which maps to OAuth scopes.
-A permissions system then defines policies that apply to those scopes.
-
-These scopes could use the following patterns:
-
-| Scope name regex | Meaning                           | Example       |
-| ---------------- | --------------------------------- | ------------- |
-| `^admin$`        | Grants all permission to the user | `admin`       |
-| `^\w+_read$`     | Grants read access to the user    | `news_read`   |
-| `^\w+_write$`    | Grants write access to the user   | `news_write`  |
-| `^\w+_delete$`   | Grants delete access to the user  | `news_delete` |
+In practical TAMS solutions, ABAC could look like defining an `auth_classes` tag.
+A permissions system then defines policies that evaluates permissions based on to those `auth_classes` and a request's claimed OAuth scopes.
 
 For example, consider a store shared by multiple teams from the News and Sport production teams of an organisation.
 Each team have the ability to read and write their own content, and no access to the other team's content.
 However in some cases it is necessary to share a particular Source (e.g. to work on a shared story) to the other team.
 
-| Resource       | Scopes                                                 | Comments                                            |
-| -------------- | ------------------------------------------------------ | --------------------------------------------------- |
-| Source Sport A | `sport_read`, `sport_write`, `sport_delete`            | Sport have full access. News have no access.        |
-| Source Sport B | `sport_read`, `sport_write`, `sport_delete`            | Sport have full access. News have no access.        |
-| Source News X  | `news_read`, `news_write`, `news_delete`, `sport_read` | News have full access. Sport have read access only. |
-| Source News Y  | `news_read`, `news_write`, `news_delete`               | News have full access. Sport have no access.        |
+| Resource       | Auth classes       | Comments                                            |
+| -------------- | ------------------ | --------------------------------------------------- |
+| Source Sport A | `sport`            | Sport have full access. News have no access.        |
+| Source Sport B | `sport`            | Sport have full access. News have no access.        |
+| Source News X  | `news`, `sport_ro` | News have full access. Sport have read access only. |
+| Source News Y  | `news`             | News have full access. Sport have no access.        |
 
 
 ### Auth logic
 
 In order that implementations may have consistent expectations about which methods they may access, this section provides recommended auth logic for methods.
 
-It is assumed that the `admin` scope grants permission to execute all methods on all endpoints.
-It is only explicitly called out in the listing below where `admin` is the only scope which grants permission.
+It is assumed that admins have permission to execute all methods on all endpoints.
+It is only explicitly called out in the listing below where admins are the only users granted permissions.
 
 The listing below refers to requests having permissions, rather than users.
 This is to account for cases where users only "claim" a subset of their permissions for a given request.
 Note that in some circumstances, requests may have to claim more permissions than may initially be assumed.
-For example - when editing scopes on a Source/Flow, requests must claim both write permissions and the permission they are changing.
+For example - when editing the `auth_classes` tag on a Source/Flow, requests must claim both write permissions and the permission they are changing.
 i.e. If the request adds or removes delete permissions for any group, it must have valid delete permissions itself.
 This is to prevent permission escalation attacks such as a user with write permissions adding delete permissions to themselves.
 
-Implementations may choose to additionally filter data based on the claimed scopes of a request.
+Implementations may choose to additionally filter data based on the permissions of a request.
 For example, where a Source collections may be filtered to only include Sources the request has read/write/delete permissions on.
 Implementers should consider the implications of hiding data.
 For example - hiding collection relationships may result in clients deciding to delete a resource which, unknowingly, is still referenced by another.
@@ -158,28 +149,28 @@ For example - hiding collection relationships may result in clients deciding to 
 | `/service`                           | `HEAD`/`GET` | Available to all                                                                        |
 |                                      | `POST`       | Request must have admin permissions. Otherwise reject.                                  |
 | `/service/storage-backends`          | `HEAD`/`GET` | Available to all                                                                        |
-| `/service/webhooks`                  | `HEAD`/`GET` | Restrict returned data by adding list of claimed scopes to `tag.scope.includes`. If the incoming request has `tag.scope.includes` set, the request must be processed with `tag.scope.includes` set to the intersection of the claimed scopes and the provided list in `tag.scope.includes`. |
-|                                      | `POST`       | Request must have write permissions on the webhook being edited. If the request edits the `scope` tag of a webhook, the request must have the permissions being edited. i.e. If the request adds or removes delete permissions for any group, it must have delete permissions on the webhook. If the request includes Source or Flow filters, the request must have read permissions on all Source or Flow IDs. If an implementation is not capable dynamically assessing permissions of new Sources/Flows, it may reject requests which do not specify Source/Flow filters. Otherwise, reject. |
-| `/sources`                           | `HEAD`/`GET` | Restrict returned data by adding list of claimed scopes to `tag.scope.includes`. If the incoming request has `tag.scope.includes` set, the request must be processed with `tag.scope.includes` set to the intersection of the claimed scopes and the provided list in `tag.scope.includes`. |
+| `/service/webhooks`                  | `HEAD`/`GET` | Restrict returned data by adding list of claimed auth_classes to `tag.auth_classes.includes`. If the incoming request has `tag.auth_classes.includes` set, the request must be processed with `tag.auth_classes.includes` set to the intersection of the claimed auth_classes and the provided list in `tag.auth_classes.includes`. |
+|                                      | `POST`       | Request must have write permissions on the webhook being edited. If the request edits the `auth_classes` tag of a webhook, the request must have the permissions being edited. i.e. If the request adds or removes delete permissions for any group, it must have delete permissions on the webhook. If the request includes Source or Flow filters, the request must have read permissions on all Source or Flow IDs. If an implementation is not capable dynamically assessing permissions of new Sources/Flows, it may reject requests which do not specify Source/Flow filters. Otherwise, reject. |
+| `/sources`                           | `HEAD`/`GET` | Restrict returned data by adding list of claimed auth_classes to `tag.auth_classes.includes`. If the incoming request has `tag.auth_classes.includes` set, the request must be processed with `tag.auth_classes.includes` set to the intersection of the claimed auth_classes and the provided list in `tag.auth_classes.includes`. |
 | `/sources/{sourceId}`                | `HEAD`/`GET` | Request must have read permissions on {sourceId}. Otherwise reject.                     |
 | `/sources/{sourceId}/tags`           | `HEAD`/`GET` | Request must have read permissions on {sourceId}. Otherwise reject.                     |
 | `/sources/{sourceId}/tags/{name}`    | `HEAD`/`GET` | Request must have read permissions on {sourceId}. Otherwise reject.                     |
-|                                      | `PUT`        | Request must have write permissions on {sourceId}. If the request is to `/sources/{sourceId}/tags/scope` the request must have the permissions being edited. i.e. If the request adds or removes delete permissions for any group, it must have delete permissions on {sourceId}. Otherwise, reject. |
-|                                      | `DELETE`     | Request must have write permissions on {sourceId}. If the request is to `/sources/{sourceId}/tags/scope` the request must have the permissions being edited. i.e. If the request adds or removes delete permissions for any group, it must have delete permissions on {sourceId}. Otherwise, reject. |
+|                                      | `PUT`        | Request must have write permissions on {sourceId}. If the request is to `/sources/{sourceId}/tags/auth_classes` the request must have the permissions being edited. i.e. If the request adds or removes delete permissions for any group, it must have delete permissions on {sourceId}. Otherwise, reject. |
+|                                      | `DELETE`     | Request must have write permissions on {sourceId}. If the request is to `/sources/{sourceId}/tags/auth_classes` the request must have the permissions being edited. i.e. If the request adds or removes delete permissions for any group, it must have delete permissions on {sourceId}. Otherwise, reject. |
 | `/sources/{sourceId}/description`    | `HEAD`/`GET` | Request must have read permissions on {sourceId}. Otherwise reject.                     |
 |                                      | `PUT`        | Request must have write permissions on {sourceId}. Otherwise, reject.                   |
 |                                      | `DELETE`     | Request must have write permissions on {sourceId}. Otherwise, reject.                   |
 | `/sources/{sourceId}/label`          | `HEAD`/`GET` | Request must have read permissions on {sourceId}. Otherwise reject.                     |
 |                                      | `PUT`        | Request must have write permissions on {sourceId}. Otherwise, reject.                   |
 |                                      | `DELETE`     | Request must have write permissions on {sourceId}. Otherwise, reject.                   |
-| `/flows`                             | `HEAD`/`GET` | Restrict returned data by adding list of claimed scopes to `tag.scope.includes`. If the incoming request has `tag.scope.includes` set, the request must be processed with `tag.scope.includes` set to the intersection of the claimed scopes and the provided list in `tag.scope.includes`. |
+| `/flows`                             | `HEAD`/`GET` | Restrict returned data by adding list of claimed auth_classes to `tag.auth_classes.includes`. If the incoming request has `tag.auth_classes.includes` set, the request must be processed with `tag.auth_classes.includes` set to the intersection of the claimed auth_classes and the provided list in `tag.auth_classes.includes`. |
 | `/flows/{flowId}`                    | `HEAD`/`GET` | Request must have read permissions on {flowID}. Otherwise reject.                       |
-|                                      | `PUT`        | If {flowId} does not currently exist, request must have write permissions on the Flow's Source ID or the Source ID doesn't currently exist in this TAMS instance. If {flowId} already exists Request must have write permissions on {flowId}. If the request edits the `scope` tag, the request must have the permissions being edited. i.e. If the request adds or removes delete permissions for any group, it must have delete permissions on {flowId}. Otherwise, reject. |
+|                                      | `PUT`        | If {flowId} does not currently exist, request must have write permissions on the Flow's Source ID or the Source ID doesn't currently exist in this TAMS instance. If {flowId} already exists Request must have write permissions on {flowId}. If the request edits the `auth_classes` tag, the request must have the permissions being edited. i.e. If the request adds or removes delete permissions for any group, it must have delete permissions on {flowId}. Otherwise, reject. |
 |                                      | `DELETE`     | Request must have delete permissions on {flowId}. Otherwise reject.                     |
 | `/flows/{flowId}/tags`               | `HEAD`/`GET` | Request must have read permissions on {flowId}. Otherwise reject.                       |
 | `/flows/{flowId}/tags/{name}`        | `HEAD`/`GET` | Request must have read permissions on {flowId}. Otherwise reject.                       |
-|                                      | `PUT`        | Request must have write permissions on {flowId}. If the request is to `/flows/{flowId}/tags/scope` the request must have the permissions being edited. i.e. If the request adds or removes delete permissions for any group, it must have delete permissions on {flowId}. Otherwise, reject. |
-|                                      | `DELETE`     | Request must have write permissions on {flowId}. If the request is to `/flows/{flowId}/tags/scope` the request must have the permissions being edited. i.e. If the request adds or removes delete permissions for any group, it must have delete permissions on {flowId}. Otherwise, reject. |
+|                                      | `PUT`        | Request must have write permissions on {flowId}. If the request is to `/flows/{flowId}/tags/auth_classes` the request must have the permissions being edited. i.e. If the request adds or removes delete permissions for any group, it must have delete permissions on {flowId}. Otherwise, reject. |
+|                                      | `DELETE`     | Request must have write permissions on {flowId}. If the request is to `/flows/{flowId}/tags/auth_classes` the request must have the permissions being edited. i.e. If the request adds or removes delete permissions for any group, it must have delete permissions on {flowId}. Otherwise, reject. |
 | `/flows/{flowId}/description`        | `HEAD`/`GET` | Request must have read permissions on {flowId}. Otherwise reject.                       |
 |                                      | `PUT`        | Request must have write permissions on {flowId}. Otherwise reject.                      |
 |                                      | `DELETE`     | Request must have write permissions on {flowId}. Otherwise reject.                      |
@@ -198,10 +189,10 @@ For example - hiding collection relationships may result in clients deciding to 
 |                                      | `PUT`        | Request must have write permissions on {flowId}. Otherwise reject.                      |
 |                                      | `DELETE`     | Request must have write permissions on {flowId}. Otherwise reject.                      |
 | `/flows/{flowId}/segments`           | `HEAD`/`GET` | Request must have read permissions on {flowId}. Otherwise reject.                       |
-|                                      | `POST`       | Request must have write permissions on {flowId}, and either this must be the first registration of the object (i.e. `/objects/{objectId}` returns 404) or `referenced_by_flows` at `/objects/{objectId}` must not be empty when `flow_tag.scope.includes` is set to claimed read scopes for each Object ID being written. Otherwise reject.    |
+|                                      | `POST`       | Request must have write permissions on {flowId}, and either this must be the first registration of the object (i.e. `/objects/{objectId}` returns 404) or `referenced_by_flows` at `/objects/{objectId}` must not be empty when `flow_tag.auth_classes.includes` is set to claimed read auth_classes for each Object ID being written. Otherwise reject.    |
 |                                      | `DELETE`     | Request must have write permissions on {flowId}. Otherwise reject.                      |
 | `/flows/{flowId}/storage`            | `POST`       | Request must have write permissions on {flowId}. Otherwise reject.                      |
-| `/objects/{objectId}`                | `HEAD`/`GET` | Restrict returned data by adding list of claimed scopes to `flow_tag.scope.includes`. If the incoming request has `flow_tag.scope.includes` set, the request must be processed with `flow_tag.scope.includes` set to the intersection of the claimed scopes and the provided list in `flow_tag.scope.includes`. |
+| `/objects/{objectId}`                | `HEAD`/`GET` | Restrict returned data by adding list of claimed auth_classes to `flow_tag.auth_classes.includes`. If the incoming request has `flow_tag.auth_classes.includes` set, the request must be processed with `flow_tag.auth_classes.includes` set to the intersection of the claimed auth_classes and the provided list in `flow_tag.auth_classes.includes`. |
 | `/flow-delete-requests`              | `HEAD`/`GET` | Request must have admin permissions. Otherwise reject.                                  |
 | `/flow-delete-requests/{request-id}` | `HEAD`/`GET` | Request must have delete permissions on the Delete Request's Flow ID. Otherwise reject. |
 
@@ -209,18 +200,18 @@ For example - hiding collection relationships may result in clients deciding to 
 
 #### Flows
 
-Read, write, and delete permissions on individual flows may be determined via scopes listed in the `scope` tag on the flow.
-This may be done via the `/flows/{flowId}/tags/scope` endpoint.
+Read, write, and delete permissions on individual flows may be determined via auth_classes listed in the `auth_classes` tag on the flow.
+This may be done via the `/flows/{flowId}/tags/auth_classes` endpoint.
 
 #### Sources
 
-Read, write, and delete permissions on individual sources may be determined via scopes listed in the `scope` tag on the source.
-This may be done via the `/sources/{sourceId}/tags/scope` endpoint.
+Read, write, and delete permissions on individual sources may be determined via auth_classes listed in the `auth_classes` tag on the source.
+This may be done via the `/sources/{sourceId}/tags/auth_classes` endpoint.
 
 #### Webhooks
 
-Read, write, and delete permissions on individual webhooks may be determined via scopes listed in the `scope` tag on the webhook.
-This may be done via the `/sources/{sourceId}/tags/scope` endpoint.
+Read, write, and delete permissions on individual webhooks may be determined via auth_classes listed in the `auth_classes` tag on the webhook.
+This may be done via the `/sources/{sourceId}/tags/auth_classes` endpoint.
 
 ### Handling rejected requests
 
@@ -234,7 +225,7 @@ Where requests are rejected, they should return as follows:
 A basic implementation may enumerate Flows and Sources a user has access to when creating/updating the webhook.
 This approach is strongly discouraged as permissions may change over time.
 It is recommended that implementations asses permissions on a per-event basis.
-Implementations may use `scope` tags in Flow/Source updated events to maintain a cache of Flow/Sources a webhook has read permissions for.
+Implementations may use `auth_classes` tags in Flow/Source updated events to maintain a cache of Flow/Sources a webhook has read permissions for.
 Implementations should regularly inspect flow tags to guard against missed events.
 Implementations should regularly check the user's permissions in the auth system for changes.
 
@@ -245,32 +236,32 @@ In order to prevent malicious actors adding maliciously crafted Flows to an exis
 This may be an impediment to some workflows, such as where dual-redundant ingesters capture the same Source.
 Or where different teams within a business re-ingest the same Source in a different format.
 Some deployments may choose to accept this risk and allow broader re-use of Sources.
-Implementations may either apply default scopes to Sources which will grant all users write permissions, or they may use more permissive auth logic.
+Implementations may either apply default auth_classes to Sources which will grant all users write permissions, or they may use more permissive auth logic.
 
 ### Implementation
 
-To implement the model above, a way to hold the scopes in TAMS is needed, along with a system to store the permissions and the authorisation logic that maps them to scopes.
+To implement the model above, a way to hold the auth_classes in TAMS is needed, along with a system to store the permissions and the authorisation logic that maps them to auth_classes.
 
 For the latter, [Amazon Verified Permissions](https://aws.amazon.com/verified-permissions/) and [Permify](https://github.com/Permify/permify) both serve as permissions management tools.
-They allow authorisation decisions to be made by taking a set of policies defined in some domain-specific language, along with the attributes of the user (group membership) and resource (Source/Flow scope), and computing whether to allow the request.
+They allow authorisation decisions to be made by taking a set of policies defined in some domain-specific language, along with the attributes of the user (group membership) and resource (Source/Flow auth_classes), and computing whether to allow the request.
 This decision process is intended to be run inline for each request, for example at an authenticating proxy placed in front of the API server.
 
-For storing scopes an initial proof-of-concept could be built, as described above, using Source and Flow tags.
-A "special" `scope` tag would store a comma-separated list of scopes assigned to a Flow or Source
+For storing auth_classes an initial proof-of-concept could be built, as described above, using Source and Flow tags.
+A "special" `auth_classes` tag would store a comma-separated list of auth_classes assigned to a Flow or Source
 The authenticating proxy would need to take steps to prevent unauthorised modification of this special tag, as described above.
 
-In addition, it should be possible to set a scope on a multi-essence Source or Flow, and apply that permissions downwards to all the Sources or Flows it collects.
-Similarly, scopes should be set by default on a Source (and apply to all Flows), but be settable on individual Flows as well for additional flexibility.
+In addition, it should be possible to set auth_classes on a multi-essence Source or Flow, and apply that permissions downwards to all the Sources or Flows it collects.
+Similarly, auth_classes should be set by default on a Source (and apply to all Flows), but be settable on individual Flows as well for additional flexibility.
 To avoid a complex traversal of potentially a large hierarchy (and to simplify the listing endpoints), it may be useful to denormalise the tag on write, writing it to all the Sources and Flows it would affect as well.
 
 As a result, the process of authorising a request is:
 
-1. Read the list of scopes assigned to the resource
+1. Read the list of auth_classes assigned to the resource
 2. Read the user's claimed scopes from their provided token
 3. Request a decision from the permissions system based on those data
-4. (Write requests only): Check whether the request would modify the special `scope` tag, and confirm the user has permission to make that modification
+4. (Write requests only): Check whether the request would modify the special `auth_classes` tag, and confirm the user has permission to make that modification
 5. (Flow segment write requests only): Check if the object already exists in the store using the `/objects` endpoint, and if it does, confirm the user would have access to read it
-6. (Write requests only): Propagate any changes to the `scope` tag to Flows and Sources collected by this one
+6. (Write requests only): Propagate any changes to the `auth_classes` tag to Flows and Sources collected by this one
 
 ## Where to Enforce Authorisation
 
