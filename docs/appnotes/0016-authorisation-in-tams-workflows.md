@@ -115,6 +115,7 @@ A permissions system then defines policies that apply to those scopes.
 These scopes could use the following patterns:
 
 | Scope name regex | Meaning                           | Example       |
+| ---------------- | --------------------------------- | ------------- |
 | `^admin$`        | Grants all permission to the user | `admin`       |
 | `^\w+_read$`     | Grants read access to the user    | `news_read`   |
 | `^\w+_write$`    | Grants write access to the user   | `news_write`  |
@@ -131,16 +132,6 @@ However in some cases it is necessary to share a particular Source (e.g. to work
 | Source News X  | `news_read`, `news_write`, `news_delete`, `sport_read` | News have full access. Sport have read access only. |
 | Source News Y  | `news_read`, `news_write`, `news_delete`               | News have full access. Sport have no access.        |
 
-As another example, consider an organisation which makes all content readable to all by default to promote reuse of content.
-All users are assigned a special `global_read` scope.
-The `global_read` scope is automatically assigned to all content by default, via some means not specified here.
-
-| Resource       | Scopes                                       | Comments                                      |
-| -------------- | -------------------------------------------- | --------------------------------------------- |
-| Source Sport A | `global_read`, `sport_write`, `sport_delete` | All have read access. Sport have full access. |
-| Source Sport B | `global_read`, `sport_write`, `sport_delete` | All have read access. Sport have full access. |
-| Source News X  | `global_read`, `news_write`, `news_delete`   | All have read access. News have full access.  |
-| Source News Y  | `global_read`, `news_write`, `news_delete`   | All have read access. News have full access.  |
 
 ### Auth logic
 
@@ -148,11 +139,6 @@ In order that implementations may have consistent expectations about which metho
 
 It is assumed that the `admin` scope grants permission to execute all methods on all endpoints.
 It is only explicitly called out in the listing below where `admin` is the only scope which grants permission.
-
-Where requests are rejected, they should return as follows:
-
-- `404` if the request has no permissions on the endpoint
-- `403` if the request has any permission on the endpoint, but not sufficient to complete the request
 
 The listing below refers to requests having permissions, rather than users.
 This is to account for cases where users only "claim" a subset of their permissions for a given request.
@@ -166,62 +152,104 @@ For example, where a Source collections may be filtered to only include Sources 
 Implementers should consider the implications of hiding data.
 For example - hiding collection relationships may result in clients deciding to delete a resource which, unknowingly, is still referenced by another.
 
-| Endpoint                             | Method       | Auth logic                                                                                        |
-| ------------------------------------ | ------------ | ------------------------------------------------------------------------------------------------- |
-| `/`                                  | `HEAD`/`GET` | Available to all                                                                                  |
-| `/service`                           | `HEAD`/`GET` | Available to all                                                                                  |
-|                                      | `POST`       | Execute if `admin` in claimed scopes. Otherwise reject.                                           |
-| `/service/storage-backends`          | `HEAD`/`GET` | Available to all                                                                                  |
-| `/service/webhooks`                  | `HEAD`/`GET` | Return if `admin` in claimed scopes. Otherwise reject.                                            |
-|                                      | `POST`       | Execute if `admin` in claimed scopes. Otherwise reject.                                           |
+| Endpoint                             | Method       | Auth logic                                                                              |
+| ------------------------------------ | ------------ | --------------------------------------------------------------------------------------- |
+| `/`                                  | `HEAD`/`GET` | Available to all                                                                        |
+| `/service`                           | `HEAD`/`GET` | Available to all                                                                        |
+|                                      | `POST`       | Request must have admin permissions. Otherwise reject.                                  |
+| `/service/storage-backends`          | `HEAD`/`GET` | Available to all                                                                        |
+| `/service/webhooks`                  | `HEAD`/`GET` | Restrict returned data by adding list of claimed scopes to `tag.scope.includes`. If the incoming request has `tag.scope.includes` set, the request must be processed with `tag.scope.includes` set to the intersection of the claimed scopes and the provided list in `tag.scope.includes`. |
+|                                      | `POST`       | Request must have write permissions on the webhook being edited. If the request edits the `scope` tag of a webhook, the request must have the permissions being edited. i.e. If the request adds or removes delete permissions for any group, it must have delete permissions on the webhook. If the request includes Source or Flow filters, the request must have read permissions on all Source or Flow IDs. If an implementation is not capable dynamically assessing permissions of new Sources/Flows, it may reject requests which do not specify Source/Flow filters. Otherwise, reject. |
 | `/sources`                           | `HEAD`/`GET` | Restrict returned data by adding list of claimed scopes to `tag.scope.includes`. If the incoming request has `tag.scope.includes` set, the request must be processed with `tag.scope.includes` set to the intersection of the claimed scopes and the provided list in `tag.scope.includes`. |
-| `/sources/{sourceId}`                | `HEAD`/`GET` | Return result if any claimed read scope is in `/sources/{sourceId}/tags/scope`. Otherwise reject. |
-| `/sources/{sourceId}/tags`           | `HEAD`/`GET` | Return result if any claimed read scope is in `/sources/{sourceId}/tags/scope`. Otherwise reject. |
-| `/sources/{sourceId}/tags/{name}`    | `HEAD`/`GET` | Return result if any claimed read scope is in `/sources/{sourceId}/tags/scope`. Otherwise reject. |
-|                                      | `PUT`        | Execute if any claimed write scope is in `/sources/{sourceId}/tags/scope`. If the request is to `/sources/{sourceId}/tags/scope` the request must have the permissions being edited. i.e. If the request adds or removes delete permissions for any group, it must have delete claim which is present in `/sources/{sourceId}/tags/scope`. Otherwise, reject. |
-|                                      | `DELETE`     | Execute if any claimed write scope is in `/sources/{sourceId}/tags/scope`. If the request is to `/sources/{sourceId}/tags/scope` the request must have the permissions being edited. i.e. If the request adds or removes delete permissions for any group, it must have delete claim which is present in `/sources/{sourceId}/tags/scope`. Otherwise, reject. |
-| `/sources/{sourceId}/description`    | `HEAD`/`GET` | Return result if any claimed read scope is in `/sources/{sourceId}/tags/scope`. Otherwise reject. |
-|                                      | `PUT`        | Execute if any claimed write scope is in `/sources/{sourceId}/tags/scope`. Otherwise, reject.     |
-|                                      | `DELETE`     | Execute if any claimed write scope is in `/sources/{sourceId}/tags/scope`. Otherwise, reject.     |
-| `/sources/{sourceId}/label`          | `HEAD`/`GET` | Return result if any claimed read scope is in `/sources/{sourceId}/tags/scope`. Otherwise reject. |
-|                                      | `PUT`        | Execute if any claimed write scope is in `/sources/{sourceId}/tags/scope`. Otherwise, reject.     |
-|                                      | `DELETE`     | Execute if any claimed write scope is in `/sources/{sourceId}/tags/scope`. Otherwise, reject.     |
+| `/sources/{sourceId}`                | `HEAD`/`GET` | Request must have read permissions on {sourceId}. Otherwise reject.                     |
+| `/sources/{sourceId}/tags`           | `HEAD`/`GET` | Request must have read permissions on {sourceId}. Otherwise reject.                     |
+| `/sources/{sourceId}/tags/{name}`    | `HEAD`/`GET` | Request must have read permissions on {sourceId}. Otherwise reject.                     |
+|                                      | `PUT`        | Request must have write permissions on {sourceId}. If the request is to `/sources/{sourceId}/tags/scope` the request must have the permissions being edited. i.e. If the request adds or removes delete permissions for any group, it must have delete permissions on {sourceId}. Otherwise, reject. |
+|                                      | `DELETE`     | Request must have write permissions on {sourceId}. If the request is to `/sources/{sourceId}/tags/scope` the request must have the permissions being edited. i.e. If the request adds or removes delete permissions for any group, it must have delete permissions on {sourceId}. Otherwise, reject. |
+| `/sources/{sourceId}/description`    | `HEAD`/`GET` | Request must have read permissions on {sourceId}. Otherwise reject.                     |
+|                                      | `PUT`        | Request must have write permissions on {sourceId}. Otherwise, reject.                   |
+|                                      | `DELETE`     | Request must have write permissions on {sourceId}. Otherwise, reject.                   |
+| `/sources/{sourceId}/label`          | `HEAD`/`GET` | Request must have read permissions on {sourceId}. Otherwise reject.                     |
+|                                      | `PUT`        | Request must have write permissions on {sourceId}. Otherwise, reject.                   |
+|                                      | `DELETE`     | Request must have write permissions on {sourceId}. Otherwise, reject.                   |
 | `/flows`                             | `HEAD`/`GET` | Restrict returned data by adding list of claimed scopes to `tag.scope.includes`. If the incoming request has `tag.scope.includes` set, the request must be processed with `tag.scope.includes` set to the intersection of the claimed scopes and the provided list in `tag.scope.includes`. |
-| `/flows/{flowId}`                    | `HEAD`/`GET` | Return result if any claimed read scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.     |
-|                                      | `PUT`        | Execute if any claimed write scope is in `/sources/{sourceId}/tags/scope` for the Flow's Source ID, or the Source ID doesn't currently exist in this TAMS instance. Otherwise, reject. |
-|                                      | `DELETE`     | Return result if any claimed delete scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.   |
-| `/flows/{flowId}/tags`               | `HEAD`/`GET` | Return result if any claimed read scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.     |
-| `/flows/{flowId}/tags/{name}`        | `HEAD`/`GET` | Return result if any claimed read scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.     |
-|                                      | `PUT`        | Execute if any claimed write scope is in `/flows/{flowId}/tags/scope`. If the request is to `/flows/{flowId}/tags/scope` the request must have the permissions being edited. i.e. If the request adds or removes delete permissions for any group, it must have delete claim which is present in `/flows/{flowId}/tags/scope`. Otherwise, reject. |
-|                                      | `DELETE`     | Execute if any claimed write scope is in `/flows/{flowId}/tags/scope`. If the request is to `/flows/{flowId}/tags/scope` the request must have the permissions being edited. i.e. If the request adds or removes delete permissions for any group, it must have delete claim which is present in `/flows/{flowId}/tags/scope`. Otherwise, reject. |
-| `/flows/{flowId}/description`        | `HEAD`/`GET` | Return result if any claimed read scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.     |
-|                                      | `PUT`        | Execute if any claimed write scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.          |
-|                                      | `DELETE`     | Execute if any claimed write scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.          |
-| `/flows/{flowId}/label`              | `HEAD`/`GET` | Return result if any claimed read scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.     |
-|                                      | `PUT`        | Execute if any claimed write scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.          |
-|                                      | `DELETE`     | Execute if any claimed write scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.          |
-| `/flows/{flowId}/read_only`          | `HEAD`/`GET` | Return result if any claimed read scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.     |
-|                                      | `PUT`        | Execute if any claimed write scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.          |
-| `/flows/{flowId}/flow_collection`    | `HEAD`/`GET` | Return result if any claimed read scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.     |
-|                                      | `PUT`        | Execute if any claimed write scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.          |
-|                                      | `DELETE`     | Execute if any claimed write scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.          |
-| `/flows/{flowId}/max_bit_rate`       | `HEAD`/`GET` | Return result if any claimed read scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.     |
-|                                      | `PUT`        | Execute if any claimed write scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.          |
-|                                      | `DELETE`     | Execute if any claimed write scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.          |
-| `/flows/{flowId}/avg_bit_rate`       | `HEAD`/`GET` | Return result if any claimed read scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.     |
-|                                      | `PUT`        | Execute if any claimed write scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.          |
-|                                      | `DELETE`     | Execute if any claimed write scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.          |
-| `/flows/{flowId}/segments`           | `HEAD`/`GET` | Return result if any claimed read scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.     |
-|                                      | `POST`       | Execute if any claimed write scope is in `/flows/{flowId}/tags/scope`, and any flows are listed in `referenced_by_flows` at `/objects/{objectId}` with `flow_tag.scope.includes` set to claimed read scopes for each Object ID being written. Otherwise reject.    |
-|                                      | `DELETE`     | Execute if any claimed write scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.          |
-| `/flows/{flowId}/storage`            | `POST`       | Execute if any claimed write scope is in `/flows/{flowId}/tags/scope`. Otherwise reject.          |
+| `/flows/{flowId}`                    | `HEAD`/`GET` | Request must have read permissions on {flowID}. Otherwise reject.                       |
+|                                      | `PUT`        | If {flowId} does not currently exist, request must have write permissions on the Flow's Source ID or the Source ID doesn't currently exist in this TAMS instance. If {flowId} already exists Request must have write permissions on {flowId}. If the request edits the `scope` tag, the request must have the permissions being edited. i.e. If the request adds or removes delete permissions for any group, it must have delete permissions on {flowId}. Otherwise, reject. |
+|                                      | `DELETE`     | Request must have delete permissions on {flowId}. Otherwise reject.                     |
+| `/flows/{flowId}/tags`               | `HEAD`/`GET` | Request must have read permissions on {flowId}. Otherwise reject.                       |
+| `/flows/{flowId}/tags/{name}`        | `HEAD`/`GET` | Request must have read permissions on {flowId}. Otherwise reject.                       |
+|                                      | `PUT`        | Request must have write permissions on {flowId}. If the request is to `/flows/{flowId}/tags/scope` the request must have the permissions being edited. i.e. If the request adds or removes delete permissions for any group, it must have delete permissions on {flowId}. Otherwise, reject. |
+|                                      | `DELETE`     | Request must have write permissions on {flowId}. If the request is to `/flows/{flowId}/tags/scope` the request must have the permissions being edited. i.e. If the request adds or removes delete permissions for any group, it must have delete permissions on {flowId}. Otherwise, reject. |
+| `/flows/{flowId}/description`        | `HEAD`/`GET` | Request must have read permissions on {flowId}. Otherwise reject.                       |
+|                                      | `PUT`        | Request must have write permissions on {flowId}. Otherwise reject.                      |
+|                                      | `DELETE`     | Request must have write permissions on {flowId}. Otherwise reject.                      |
+| `/flows/{flowId}/label`              | `HEAD`/`GET` | Request must have read permissions on {flowId}. Otherwise reject.                       |
+|                                      | `PUT`        | Request must have write permissions on {flowId}. Otherwise reject.                      |
+|                                      | `DELETE`     | Request must have write permissions on {flowId}. Otherwise reject.                      |
+| `/flows/{flowId}/read_only`          | `HEAD`/`GET` | Request must have read permissions on {flowId}. Otherwise reject.                       |
+|                                      | `PUT`        | Request must have write permissions on {flowId}. Otherwise reject.                      |
+| `/flows/{flowId}/flow_collection`    | `HEAD`/`GET` | Request must have read permissions on {flowId}. Otherwise reject.                       |
+|                                      | `PUT`        | Request must have write permissions on {flowId}. Otherwise reject.                      |
+|                                      | `DELETE`     | Request must have write permissions on {flowId}. Otherwise reject.                      |
+| `/flows/{flowId}/max_bit_rate`       | `HEAD`/`GET` | Request must have read permissions on {flowId}. Otherwise reject.                       |
+|                                      | `PUT`        | Request must have write permissions on {flowId}. Otherwise reject.                      |
+|                                      | `DELETE`     | Request must have write permissions on {flowId}. Otherwise reject.                      |
+| `/flows/{flowId}/avg_bit_rate`       | `HEAD`/`GET` | Request must have read permissions on {flowId}. Otherwise reject.                       |
+|                                      | `PUT`        | Request must have write permissions on {flowId}. Otherwise reject.                      |
+|                                      | `DELETE`     | Request must have write permissions on {flowId}. Otherwise reject.                      |
+| `/flows/{flowId}/segments`           | `HEAD`/`GET` | Request must have read permissions on {flowId}. Otherwise reject.                       |
+|                                      | `POST`       | Request must have write permissions on {flowId}, and either this must be the first registration of the object (i.e. `/objects/{objectId}` returns 404) or `referenced_by_flows` at `/objects/{objectId}` must not be empty when `flow_tag.scope.includes` is set to claimed read scopes for each Object ID being written. Otherwise reject.    |
+|                                      | `DELETE`     | Request must have write permissions on {flowId}. Otherwise reject.                      |
+| `/flows/{flowId}/storage`            | `POST`       | Request must have write permissions on {flowId}. Otherwise reject.                      |
 | `/objects/{objectId}`                | `HEAD`/`GET` | Restrict returned data by adding list of claimed scopes to `flow_tag.scope.includes`. If the incoming request has `flow_tag.scope.includes` set, the request must be processed with `flow_tag.scope.includes` set to the intersection of the claimed scopes and the provided list in `flow_tag.scope.includes`. |
-| `/flow-delete-requests`              | `HEAD`/`GET` | Return if `admin` in claimed scopes. Otherwise reject.                                            |
-| `/flow-delete-requests/{request-id}` | `HEAD`/`GET` | Return result if any claimed delete scope is in `/flows/{flowId}/tags/scope` for the Delete Request's Flow ID. Otherwise reject. |
+| `/flow-delete-requests`              | `HEAD`/`GET` | Request must have admin permissions. Otherwise reject.                                  |
+| `/flow-delete-requests/{request-id}` | `HEAD`/`GET` | Request must have delete permissions on the Delete Request's Flow ID. Otherwise reject. |
+
+### Determining base permissions
+
+#### Flows
+
+Read, write, and delete permissions on individual flows may be determined via scopes listed in the `scope` tag on the flow.
+This may be done via the `/flows/{flowId}/tags/scope` endpoint.
+
+#### Sources
+
+Read, write, and delete permissions on individual sources may be determined via scopes listed in the `scope` tag on the source.
+This may be done via the `/sources/{sourceId}/tags/scope` endpoint.
+
+#### Webhooks
+
+Read, write, and delete permissions on individual webhooks may be determined via scopes listed in the `scope` tag on the webhook.
+This may be done via the `/sources/{sourceId}/tags/scope` endpoint.
+
+### Handling rejected requests
+
+Where requests are rejected, they should return as follows:
+
+- `404` if the request has no permissions on the endpoint
+- `403` if the request has any permission on the endpoint, but not sufficient to complete the request
+
+### Fine-grained authorisation and webhook events
+
+A basic implementation may enumerate Flows and Sources a user has access to when creating/updating the webhook.
+This approach is strongly discouraged as permissions may change over time.
+It is recommended that implementations asses permissions on a per-event basis.
+Implementations may use `scope` tags in Flow/Source updated events to maintain a cache of Flow/Sources a webhook has read permissions for.
+Implementations should regularly inspect flow tags to guard against missed events.
+Implementations should regularly check the user's permissions in the auth system for changes.
+
+### Adding Flows to Sources
+
+New Sources inherit permissions from the first Flow which references them.
+In order to prevent malicious actors adding maliciously crafted Flows to an existing Source, Flows using an existing Source ID must have write write permissions on the Source.
+This may be an impediment to some workflows, such as where dual-redundant ingesters capture the same Source.
+Or where different teams within a business re-ingest the same Source in a different format.
+Some deployments may choose to accept this risk and allow broader re-use of Sources.
+Implementations may either apply default scopes to Sources which will grant all users write permissions, or they may use more permissive auth logic.
 
 ### Implementation
 
-To implement the model above, away to hold the scopes in TAMS is needed, along with a system to store the permissions and the authorisation logic that maps them to scopes.
+To implement the model above, a way to hold the scopes in TAMS is needed, along with a system to store the permissions and the authorisation logic that maps them to scopes.
 
 For the latter, [Amazon Verified Permissions](https://aws.amazon.com/verified-permissions/) and [Permify](https://github.com/Permify/permify) both serve as permissions management tools.
 They allow authorisation decisions to be made by taking a set of policies defined in some domain-specific language, along with the attributes of the user (group membership) and resource (Source/Flow scope), and computing whether to allow the request.
@@ -263,6 +291,11 @@ Object-level access control was deemed to be too inefficient to implement.
 It may, however, be achieved by creating a new flow with the relevant permissions that refers to the Objects of interest.
 Caution should be taken where the boundary timestamps land partway through an Object.
 Where the material around the boundaries is sensitive, new trimmed Objects should be created at the boundaries that only include the media used in the new Flow.
+
+### Global read access
+
+Some organisations/implementations may choose to provide read access to all Sources and Flows to promote content re-use, and reduce the writing of duplicate content to the store.
+Implementations may provide this feature by either adding default groups to Sources and Flows that provide appropriate read access to users, or by using more permissive auth logic.
 
 ## Future Work
 
