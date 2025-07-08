@@ -123,7 +123,6 @@ However in some cases it is necessary to share a particular Source (e.g. to work
 | Source News X  | `news`, `sport_ro` | News have full access. Sport have read access only. |
 | Source News Y  | `news`             | News have full access. Sport have no access.        |
 
-
 ### Auth logic
 
 In order that implementations may have consistent expectations about which methods they may access, this section provides recommended auth logic for methods.
