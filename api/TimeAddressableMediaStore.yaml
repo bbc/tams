@@ -2177,7 +2177,7 @@ paths:
         "400":
           $ref: '#/components/responses/trait_resource_info_head_400'
         "404":
-          description: The requested Media Object does not exist.
+          description: The requested Media Object does not exist. 404 MUST be returned if the ID has been assigned via the storage endpoint, but not yet registered against a Flow Segment.
     get:
       summary: Media Object Information
       description: |
