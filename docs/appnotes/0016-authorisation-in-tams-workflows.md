@@ -149,7 +149,7 @@ For example - hiding collection relationships may result in clients deciding to 
 |                                      | `POST`       | Request must have admin permissions. Otherwise reject.                                  |
 | `/service/storage-backends`          | `HEAD`/`GET` | Available to all                                                                        |
 | `/service/webhooks`                  | `HEAD`/`GET` | Restrict returned data by adding list of claimed auth_classes to `tag.auth_classes.includes`. If the incoming request has `tag.auth_classes.includes` set, the request must be processed with `tag.auth_classes.includes` set to the intersection of the claimed auth_classes and the provided list in `tag.auth_classes.includes`. |
-|                                      | `POST`       | Request must have write permissions on the webhook being edited. If the request edits the `auth_classes` tag of a webhook, the request must have the permissions being edited. i.e. If the request adds or removes delete permissions for any group, it must have delete permissions on the webhook. If the request includes Source or Flow filters, the request must have read permissions on all Source or Flow IDs. If an implementation is not capable dynamically assessing permissions of new Sources/Flows, it may reject requests which do not specify Source/Flow filters. Otherwise, reject. |
+|                                      | `POST`       | Request must have write permissions on the webhook being edited. If the request edits the `auth_classes` tag of a webhook, the request must have the permissions being edited. i.e. If the request adds or removes delete permissions for any group, it must have delete permissions on the webhook. If the request includes Source or Flow filters, the request must have read permissions on all Source or Flow IDs. If an implementation is not capable of dynamically assessing permissions of new Sources/Flows, it may reject requests which do not specify Source/Flow filters. Otherwise, reject. |
 | `/sources`                           | `HEAD`/`GET` | Restrict returned data by adding list of claimed auth_classes to `tag.auth_classes.includes`. If the incoming request has `tag.auth_classes.includes` set, the request must be processed with `tag.auth_classes.includes` set to the intersection of the claimed auth_classes and the provided list in `tag.auth_classes.includes`. |
 | `/sources/{sourceId}`                | `HEAD`/`GET` | Request must have read permissions on {sourceId}. Otherwise reject.                     |
 | `/sources/{sourceId}/tags`           | `HEAD`/`GET` | Request must have read permissions on {sourceId}. Otherwise reject.                     |
@@ -221,7 +221,8 @@ Where requests are rejected, they should return as follows:
 
 ### Fine-grained authorisation and webhook events
 
-A basic implementation may enumerate Flows and Sources a user has access to when creating/updating the webhook.
+Implementations must evaluate permissions against webhook events themselves as well as the API's HTTP endpoints.
+A basic implementation may enumerate Flows and Sources a user has access to when creating/updating the webhook and use this to filter events.
 This approach is strongly discouraged as permissions may change over time.
 It is recommended that implementations asses permissions on a per-event basis.
 Implementations may use `auth_classes` tags in Flow/Source updated events to maintain a cache of Flow/Sources a webhook has read permissions for.
