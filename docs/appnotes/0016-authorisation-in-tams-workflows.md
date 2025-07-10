@@ -3,7 +3,7 @@
 ## Abstract
 
 Media workflows often contain sensitive or high-value content, and media organisations need to effectively manage access to that content across their estate.
-That requires suitable approaches across both authentication (identifying the user) as discussed in [ADR0028](../adr/0028-authentication-methods.md), and also authorisation (deciding what the user can do), which is discussed here.
+That requires suitable approaches across both authentication (identifying the user) as discussed in [ADR0028](../adr/0028-authentication-methods.md), and also authorisation (deciding what the user can do), which is discussed in [ADR035](../adr/0035-fine-grained-auth.md) and implemented here.
 In general, store implementations, and the organisations that deploy them, are free to define how the authorisation model works based on their needs, however this Application Note provides some guidelines and a starting point.
 
 ## Overall Principles
