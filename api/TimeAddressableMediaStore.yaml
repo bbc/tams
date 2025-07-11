@@ -165,6 +165,7 @@ paths:
             Partial string matches of the values are not valid.
           schema:
             type: string
+            pattern: ^([^,]+(,[^,]+)*)?$
         - name: tag_exists.{name}
           in: query
           description: |
@@ -202,6 +203,7 @@ paths:
             Partial string matches of the values are not valid.
           schema:
             type: string
+            pattern: ^([^,]+(,[^,]+)*)?$
         - name: tag_exists.{name}
           in: query
           description: |
@@ -298,6 +300,7 @@ paths:
             Partial string matches of the values are not valid.
           schema:
             type: string
+            pattern: ^([^,]+(,[^,]+)*)?$
         - name: tag_exists.{name}
           in: query
           description: |
@@ -360,6 +363,7 @@ paths:
             Partial string matches of the values are not valid.
           schema:
             type: string
+            pattern: ^([^,]+(,[^,]+)*)?$
         - name: tag_exists.{name}
           in: query
           description: |
@@ -738,6 +742,7 @@ paths:
             Partial string matches of the values are not valid.
           schema:
             type: string
+            pattern: ^([^,]+(,[^,]+)*)?$
         - name: tag_exists.{name}
           in: query
           description: |
@@ -826,6 +831,7 @@ paths:
             Partial string matches of the values are not valid.
           schema:
             type: string
+            pattern: ^([^,]+(,[^,]+)*)?$
         - name: tag_exists.{name}
           in: query
           description: |
