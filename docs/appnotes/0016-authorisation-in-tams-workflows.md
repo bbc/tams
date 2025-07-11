@@ -149,9 +149,9 @@ For example - hiding collection relationships may result in clients deciding to 
 | `/service`                           | `HEAD`/`GET` | Available to all                                                                        |
 |                                      | `POST`       | Request must have admin permissions. Otherwise reject.                                  |
 | `/service/storage-backends`          | `HEAD`/`GET` | Available to all                                                                        |
-| `/service/webhooks`                  | `HEAD`/`GET` | Restrict returned data by adding list of claimed auth classes to `tag.auth_classes.includes`. If the incoming request has `tag.auth_classes.includes` set, the request must be processed with `tag.auth_classes.includes` set to the intersection of the claimed auth classes and the provided list in `tag.auth_classes.includes`. |
+| `/service/webhooks`                  | `HEAD`/`GET` | Restrict returned data by adding list of claimed auth classes to `tag.auth_classes`. If the incoming request has `tag.auth_classes` set, the request must be processed with `tag.auth_classes` set to the intersection of the claimed auth classes and the provided list in `tag.auth_classes`. |
 |                                      | `POST`       | Request must have write permissions on the webhook being edited. If the request edits the `auth_classes` tag of a webhook, the request must have the permissions being edited. i.e. If the request adds or removes delete permissions for any group, it must have delete permissions on the webhook. If the request includes Source or Flow filters, the request must have read permissions on all Source or Flow IDs requested. Otherwise, reject. |
-| `/sources`                           | `HEAD`/`GET` | Restrict returned data by adding list of claimed auth classes to `tag.auth_classes.includes`. If the incoming request has `tag.auth_classes.includes` set, the request must be processed with `tag.auth_classes.includes` set to the intersection of the claimed auth classes and the provided list in `tag.auth_classes.includes`. |
+| `/sources`                           | `HEAD`/`GET` | Restrict returned data by adding list of claimed auth classes to `tag.auth_classes`. If the incoming request has `tag.auth_classes` set, the request must be processed with `tag.auth_classes` set to the intersection of the claimed auth classes and the provided list in `tag.auth_classes`. |
 | `/sources/{sourceId}`                | `HEAD`/`GET` | Request must have read permissions on {sourceId}. Otherwise reject.                     |
 | `/sources/{sourceId}/tags`           | `HEAD`/`GET` | Request must have read permissions on {sourceId}. Otherwise reject.                     |
 | `/sources/{sourceId}/tags/{name}`    | `HEAD`/`GET` | Request must have read permissions on {sourceId}. Otherwise reject.                     |
@@ -163,7 +163,7 @@ For example - hiding collection relationships may result in clients deciding to 
 | `/sources/{sourceId}/label`          | `HEAD`/`GET` | Request must have read permissions on {sourceId}. Otherwise reject.                     |
 |                                      | `PUT`        | Request must have write permissions on {sourceId}. Otherwise, reject.                   |
 |                                      | `DELETE`     | Request must have write permissions on {sourceId}. Otherwise, reject.                   |
-| `/flows`                             | `HEAD`/`GET` | Restrict returned data by adding list of claimed auth classes to `tag.auth_classes.includes`. If the incoming request has `tag.auth_classes.includes` set, the request must be processed with `tag.auth_classes.includes` set to the intersection of the claimed auth classes and the provided list in `tag.auth_classes.includes`. |
+| `/flows`                             | `HEAD`/`GET` | Restrict returned data by adding list of claimed auth classes to `tag.auth_classes`. If the incoming request has `tag.auth_classes` set, the request must be processed with `tag.auth_classes` set to the intersection of the claimed auth classes and the provided list in `tag.auth_classes`. |
 | `/flows/{flowId}`                    | `HEAD`/`GET` | Request must have read permissions on {flowID}. Otherwise reject.                       |
 |                                      | `PUT`        | If {flowId} does not currently exist, request must have write permissions on the Flow's Source ID if it already exists in this TAMS instance. If {flowId} already exists, request must have write permissions on {flowId}. If the request edits the `auth_classes` tag, the request must have the permissions being edited. i.e. If the request adds or removes delete permissions for any group, it must have delete permissions on {flowId}. Otherwise, reject. |
 |                                      | `DELETE`     | Request must have delete permissions on {flowId}. Otherwise reject.                     |
@@ -192,7 +192,7 @@ For example - hiding collection relationships may result in clients deciding to 
 |                                      | `POST`       | Request must have write permissions on {flowId}, and either this must be the first registration of the object(s) (i.e. `/objects/{objectId}` returns 404) or the request must have read access to the object(s) being written. Otherwise reject.    |
 |                                      | `DELETE`     | Request must have write permissions on {flowId}. Otherwise reject.                      |
 | `/flows/{flowId}/storage`            | `POST`       | Request must have write permissions on {flowId}. Otherwise reject.                      |
-| `/objects/{objectId}`                | `HEAD`/`GET` | Restrict returned data in `referenced_by_flows` property by adding list of claimed auth classes to `flow_tag.auth_classes.includes`. If the incoming request has `flow_tag.auth_classes.includes` set, the request must be processed with `flow_tag.auth_classes.includes` set to the intersection of the claimed auth classes and the provided list in `flow_tag.auth_classes.includes`. |
+| `/objects/{objectId}`                | `HEAD`/`GET` | Restrict returned data in `referenced_by_flows` property by adding list of claimed auth classes to `flow_tag.auth_classes`. If the incoming request has `flow_tag.auth_classes` set, the request must be processed with `flow_tag.auth_classes` set to the intersection of the claimed auth classes and the provided list in `flow_tag.auth_classes`. |
 | `/flow-delete-requests`              | `HEAD`/`GET` | Request must have admin permissions. Otherwise reject.                                  |
 | `/flow-delete-requests/{request-id}` | `HEAD`/`GET` | Request must have delete permissions on the Delete Request's Flow ID. Otherwise reject. |
 
@@ -211,14 +211,14 @@ This may be done via the `/sources/{sourceId}/tags/auth_classes` endpoint.
 #### Objects
 
 Read, write, and delete permissions on individual objects may be determined by filtering returned flows on the object.
-This may be done by setting `flow_tag.auth_classes.includes` to relevant claimed auth classes (e.g. auth classes with read permissions if read permissions on the object are to be verified).
+This may be done by setting `flow_tag.auth_classes` to relevant claimed auth classes (e.g. auth classes with read permissions if read permissions on the object are to be verified).
 If `referenced_by_flows` in the returned data is empty, the request DOES NOT have the relevant permissions.
 If `referenced_by_flows` in the returned data is empty, the request DOES have the relevant permissions.
 
 #### Webhooks
 
-Read, write, and delete permissions on individual webhooks may be determined via auth classes listed in the `auth_classes` tag on the webhook.
-This may be done via the `/sources/{sourceId}/tags/auth_classes` endpoint.
+Read, write, and delete permissions on webhooks may be determined via auth classes listed in the `auth_classes` tag on webhooks.
+The webhooks endpoint may be filtered to those with specific auth classes using the `tag.auth_closses` query parameter.
 
 ### Handling rejected requests
 
