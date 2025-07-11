@@ -34,6 +34,7 @@ This ADR presents the decisions and considerations that informed the initial app
 * Option 2a: Level of prescriptiveness - General principles
 * Option 2b: Level of prescriptiveness - Auth logic
 * Option 2c: Level of prescriptiveness - Specific API requests/pseudocode/scopes
+* Option 2d: Level of prescriptiveness - Mandate the use of the proposed approach
 * Option 3a: Supported architectures - Deep integration
 * Option 3b: Supported architectures - Auth proxy
 * Option 4a: Auth attributes - Multiple Tags
@@ -134,6 +135,14 @@ Define all auth logic, algorithms that evaluate that auth logic, and API request
 * Good, because implementers don't have to derive auth logic, or algorithms from scratch
 * Bad, because it provides low levels of flexibility to implementations
   * This may conflict with existing auth systems, and workflows in deployments and organisational structures and models
+
+### Option 2d: Level of prescriptiveness - Mandate the use of the proposed approach
+
+Make the proposed approach to fine-grained auth mandatory.
+
+* Good, because it ensures full interoperability around fine-grained auth
+* Bad, because the approach may conflict with existing auth systems, and workflows in deployments and organisational structures and models
+* Bad, because such conflicts being a mandatory part of the specification may prevent/impede use of TAMS by some organisations
 
 ### Option 3a: Supported architectures - Deep integration
 
