@@ -6,9 +6,9 @@ status: "proposed"
 ## Context and Problem Statement
 
 TAMS provides multiple methods for authentication, as described in [ADR0028](./0028-authentication-methods.md).
-The most commonly used method is currently OAuth2.
+The most commonly used method to implement authentication is Bearer tokens acquired using OAuth2 flows.
 OAuth2 allows for auth tokens to claim [scopes](https://oauth.net/2/scope/) as a means to restrict the permissions of clients and requests.
-This has been used in TAMS implementations to provide coarse grained authorization.
+This has been used in TAMS implementations to provide coarse grained authorisation.
 
 Emerging TAMS use cases are making use of TAMS' media re-use capabilities over increasingly large numbers of users, teams, and organisations.
 As the number of clients accessing content in a TAMS store grows, the need for finer-grained control of that content becomes more acute.
@@ -74,6 +74,7 @@ Permissions are then propagated down to Flows, Segments, and Objects.
 
 Define permissions at the Source and Flow levels.
 Permissions are then propagated down to Segments, and Objects.
+However the default approach should be to define permissions on Sources (since permissions are likely to apply to all renditions of a piece of content), with the option to use Flows where restricting specific variants is required.
 
 * Good, because it can be implemented with minimal changes to the API specification
 * Good, because it requires a manageable amount of additional data to be stored in/alongside the API
@@ -98,6 +99,7 @@ Define permissions at the Source, Flow, Segment, and Object levels.
 
 * Good, because it can be implemented with minimal changes to the API specification
 * Good, because it provides control over different representations of media
+* Good, because it maps the right to access content onto the content itself, regardless of how it is re-used
 * Neutral, because it enables direct control of access to segments of flow timelines
   * Allowing direct sub-segment access control would require significant modification
 * Bad, because it requires significant amounts of additional data to be stored in/alongside the API
@@ -115,7 +117,7 @@ Leave the definition of auth logic etc up to individual implementations.
 ### Option 2b: Level of prescriptiveness - Auth logic
 
 Define principles, and high-level auth logic.
-Leave specific algorithms, and the requests permissions evaluation systems may make to the API up to the individual implementations.
+Leave specific algorithms, and the requests that permissions evaluation systems may make to the API up to the individual implementations.
 
 * Good, because it facilitates interoperability around fine-grained auth
 * Good, because implementers don't have to derive auth logic from scratch
@@ -128,18 +130,18 @@ Define all auth logic, algorithms that evaluate that auth logic, and API request
 * Good, because it facilitates interoperability around fine-grained auth
 * Good, because implementers don't have to derive auth logic, or algorithms from scratch
 * Bad, because it provides low levels of flexibility to implementations
-  * This may conflict with existing auth systems, and workflows in deployments
+  * This may conflict with existing auth systems, and workflows in deployments and organisational structures and models
 
 ### Option 3a: Supported architectures - Deep integration
 
-Assume all TAMS services that support fine-grained auth will implement it with deep integration into the API implementation.
+Assume all TAMS services that support fine-grained auth will implement it with deep integration into the API implementation where policy decisions are made by the store implementation as part of processing a request, with full access to any backing databases etc.
 
 * Good, because its the most efficient option to implement
 * Bad, because it provides low levels of flexibility when integrating with existing auth systems, and workflows in deployments
 
 ### Option 3b: Supported architectures - Auth proxy
 
-Assume fine-grained auth may be implemented using the Auth Proxy pattern.
+Assume fine-grained auth may be implemented using the Auth Proxy pattern where an HTTP reverse proxy can receive incoming requests, amend them as needed and forward them onto a store (which may have no fine-grained authorisation model). The proxy can use the contents of the original request, the amended request(s) and the response(s) to make a decision on what to return to the user without modifying the underlying store.
 
 * Good, because it provides high levels of flexibility when integrating with existing auth systems, and workflows in deployments
 * Neutral, because its an acceptably efficient option to implement
