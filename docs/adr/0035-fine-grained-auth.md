@@ -20,6 +20,7 @@ This ADR presents the decisions and considerations that informed the initial app
 
 * Be prescriptive enough to enable interoperability of service and client implementations
 * Be permissive enough to facilitate integration with existing workflows and systems
+* Acknowledge that organisations will have different threat models, and interoperability should be equally possible in more open and more restrictive environments
 * As far as practical, maintain sensible parallels between coarse and fine-grained approaches
 * Enable as fine-grained auth as is practical and sensible
 * Must be possible to implement the design efficiently
@@ -50,6 +51,7 @@ Chosen options:
 
 This combination of options provides a good balance of well defined behaviour and flexibility.
 It facilitates both interoperability and integration with existing auth systems and workflows.
+The choice of Option 3b does not preclude the solution developed being implemented as described in Option 3a.
 The choice of Option 4b allows for us to experiment with, and refine our approach to fine-grained auth.
 Once our approach is mature, we may wish to consider migrating to Option 4c to provide a more efficient solution.
 
@@ -89,8 +91,9 @@ Permissions are then propagated down to Objects.
 
 * Good, because it can be implemented with minimal changes to the API specification
 * Good, because it provides control over different representations of media
-* Neutral, because it enables direct control of access to segments of flow timelines
-  * Allowing direct sub-segment access control would require significant modification
+* Good, because it enables direct control of access to segments of flow timelines
+  * Note that segments may contain multiple video frames/audio samples etc
+  * Allowing direct sub-segment access control would require significant further modification
 * Bad, because it requires significant amounts of additional data to be stored in/alongside the API
 
 ### Option 1d: Granularity of auth - Object
@@ -141,7 +144,8 @@ Assume all TAMS services that support fine-grained auth will implement it with d
 
 ### Option 3b: Supported architectures - Auth proxy
 
-Assume fine-grained auth may be implemented using the Auth Proxy pattern where an HTTP reverse proxy can receive incoming requests, amend them as needed and forward them onto a store (which may have no fine-grained authorisation model). The proxy can use the contents of the original request, the amended request(s) and the response(s) to make a decision on what to return to the user without modifying the underlying store.
+Assume fine-grained auth may be implemented using the Auth Proxy pattern where an HTTP reverse proxy can receive incoming requests, amend them as needed and forward them onto a store (which may have no fine-grained authorisation model).
+The proxy can use the contents of the original request, the amended request(s) and the response(s) to make a decision on what to return to the user without modifying the underlying store.
 
 * Good, because it provides high levels of flexibility when integrating with existing auth systems, and workflows in deployments
 * Neutral, because its an acceptably efficient option to implement
