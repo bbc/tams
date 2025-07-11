@@ -261,10 +261,6 @@ For storing auth classes an initial proof-of-concept could be built using Source
 A "special" `auth_classes` tag would store a comma-separated list of auth classes assigned to a Flow, Source or webhook.
 The authenticating proxy would need to take steps to prevent unauthorised modification of this special tag, as described above.
 
-In addition, it should be possible to set auth classes on a multi-essence Source or Flow, and apply that permissions downwards to all the Sources or Flows it collects.
-Similarly, auth classes should be set by default on a Source (and apply to all Flows), but be settable on individual Flows as well for additional flexibility.
-To avoid a complex traversal of potentially a large hierarchy (and to simplify the listing endpoints), it may be useful to denormalise the tag on write, writing it to all the Sources and Flows it would affect as well.
-
 As a result, the process of authorising a request is:
 
 1. Read the list of auth classes assigned to the resource
@@ -283,7 +279,7 @@ In this case it would make sense to treat all clients of that TAMS instance as i
 Another deployment approach might see a MAM or other tool expose a TAMS API interface itself, which is proxied through to some simpler backing store.
 In this case the MAM might manage and enforce other policies and rules around access to content, so it would make more sense to do the same in the TAMS API interface, and then use the MAM's own credentials to access the backing TAMS instance.
 
-## Use Cases
+## Use cases and additional optional functionality
 
 ### Providing access to a subset of a Flow's timerange
 
@@ -297,6 +293,25 @@ Where the material around the boundaries is sensitive, new trimmed Objects shoul
 
 Some organisations/implementations may choose to provide read access to all Sources and Flows to promote content re-use, and reduce the writing of duplicate content to the store.
 Implementations may provide this feature by either adding default groups to Sources and Flows that provide appropriate read access to users, or by using more permissive auth logic.
+
+### Permissions propagation
+
+The basic implementation described above will populate auth classes on a new Source with those in the Flow that results in its creation.
+This is a product of TAMS' general behaviour of populating Source metadata from Flows on creation.
+
+Some implementations may also find it useful to propagate changes of Source permissions to their Flows, and Source/Flow permissions down to Sources and Flows they collect.
+For example, where Multi Source A collects Video Source B and Audio Source C, changes to permissions on Source A would be reflected on Sources B and C as well as the Flows of A, B, and C.
+The propagation of these permissions should happen on write to avoid the need for potentially extensive tree traversal on read.
+When changes are propagated, they must only be applied to resources where the request has the permission to edit auth classes.
+Where propagation reaches a resource that the request doesn't have sufficient permissions to edit, the process will stop following that branch of the resource tree.
+Propagation of permissions should only be performed after the successful modification of a parent resource.
+
+Propagation should also be triggered when a new Source/Flow is added to a Source/Flow collection, or when a Flow is added to an existing Source.
+
+### Deny permissions
+
+Implementations may wish to support auth classes and related auth logic that explicitly denies permissions against resources.
+In these cases, a matching "deny" class takes precedent over an "allow" class.
 
 ## Future Work
 
