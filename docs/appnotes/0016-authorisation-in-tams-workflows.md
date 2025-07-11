@@ -94,7 +94,7 @@ Users may be assigned combinations of these roles for different purposes, for ex
 - `store-cleanup-system`: Has `tams-api/delete`
 
 To implement the authorisation, the authorisation server checks the requested scopes against the user's access when issuing a token.
-The TAMS server, or it's auth proxy, rejects requests without appropriate scopes.
+The TAMS server, or its auth proxy, rejects requests without appropriate scopes.
 
 ## Finer Grained Authorisation
 
@@ -103,7 +103,7 @@ However the implementation of this can become complex and unwieldy, especially i
 
 Attribute-Based Access Control (ABAC) is one approach to manage this complexity, by describing permissions policies based on the attributes of resources (Sources and Flows), and if necessary, users as well.
 However full ABAC can be challenging to implement and requires a degree of organisational maturity to construct and manage stable attributes.
-This section describes a recommended approach to ABAC authorisation logic to aid interoperability between TAMS implementations.
+This section describes a possible approach to ABAC authorisation logic to aid interoperability between TAMS implementations, in which content is assigned an attribute in the form of a "class".
 This approach should be considered experimental at this point.
 Due its experimental nature, this approach makes use of the tags feature in TAMS.
 Future iterations of these proposals may elevate ABAC attributes to a specific field in the core specification.
