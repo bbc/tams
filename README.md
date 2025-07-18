@@ -138,6 +138,25 @@ In the diagram below, portions of Flow X and Flow Y are combined to form Flow Z,
 
 ![Graphic showing the Flow timeline and Flow Segments of Flows X, Y and Z, where Z is composed of a mix of re-used segments and new media](./docs/images/Flow%20and%20Media%20Timelines-Flow%20XYZ.drawio.png)
 
+In practice a client may need to read (and potentially decode, in the case of inter-frame video codecs) the entire object, discarding the unwanted grains and returning those selected by the segment to the consumer.
+This can be handled by mapping the object's timeline into the Flow timeline by adding `ts_offset` to each timestamp inside the media object, and then discarding grains when the resulting timestamp falls outside the given `timerange` for the segment.
+Alternatively if `sample_offset` and `sample_count` are set on the segment, a client may count the samples read from the object and discard accordingly, although care must be taken with temporal re-ordering, since the `sample_offset` and `sample_count` refer to the presentation timeline, rather than the decode timeline.
+
+![Graphic showing the objects making up Flow Z (above) and their segments, along with the selected grains](./docs/images/Flow%20and%20Media%20Timelines-Flow%20XYZ-subsegments.drawio.png)
+
+The diagram above shows a smaller portion of the Flow Z timeline considered previously, with the presentation time stamp (PTS) of each grain in the object along the bottom.
+The pseudocode below shows how a client might apply the `ts_offset` to each PTS, then validate whether it is inside the given `timerange`.
+
+```python
+grain_ts = pts_to_timestamp(grain_pts)             # `4:0` for `grain_pts = 40`
+grain_ts_in_flow_timeline = grain_ts + ts_offset   # `4:0 + -0:700000000` = `3:300000000`
+if (grain_ts_in_flow_timeline < timerange.start or
+    grain_ts_in_flow_timeline >= timerange.end):   # `3:300000000 is less than 3:500000000`
+    discard_grain()                                # So this grain is discarded
+else:
+    new_grain_pts = timestamp_to_pts()             # `grain_pts = 42` will be retained, with `new_grain_pts = 35`
+```
+
 ### Events from the API
 
 The TAMS API specifies a list of event messages that should be generated and sent to interested clients in response to certain events, such as the creation of a new Flow.
