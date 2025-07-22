@@ -68,6 +68,7 @@ For more information on how we use ADRs, see [here](./adr/README.md).
 | [0031](./adr/0031-flow-image-support.md)                           | Add new flow type to support still images                                  |
 | [0032](./adr/0032-specifying-storage-backend.md)                   | Specifying storage backend when requesting storage allocation              |
 | [0034](./adr/0034-storage-allow-object_ids.md)                     | Add object_ids option to Flow Storage request                              |
+| [0036](./adr/0036-specifying-partial-segment-usage.md)             | Specifying partial segment usage |
 | [0037](./adr/0037-improve-webhooks.md)                             | Proposal for improvements to the Webhooks endpoints                        |
 | [0038](./adr/0038-improved-storage-management.md)                  | Improved Storage Management                                                |
 | [0039](./adr/0039-remove-pre-actions.md)                           | Proposal to remove pre-actions from storage allocation response            |
