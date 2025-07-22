@@ -149,7 +149,7 @@ The pseudocode below shows how a client might apply the `ts_offset` to each PTS,
 
 ```python
 grain_ts = pts_to_timestamp(grain_pts)             # `4:0` for `grain_pts = 40`
-grain_ts_in_flow_timeline = grain_ts + ts_offset   # `4:0 + -0:700000000` = `3:300000000`
+grain_ts_in_flow_timeline = grain_ts + ts_offset   # `4:0 + -0:700000000 = 3:300000000`
 if (grain_ts_in_flow_timeline < timerange.start or
     grain_ts_in_flow_timeline >= timerange.end):   # `3:300000000 is less than 3:500000000`
     discard_grain()                                # So this grain is discarded
