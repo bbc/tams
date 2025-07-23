@@ -174,62 +174,109 @@ paths:
           content:
             application/json:
               example:
-                - url: https://hook.example.com
-                  api_key_name: Authorization
-                  events:
-                    - flows/created
-                    - flows/updated
-                    - flows/deleted
+                $ref: "examples/webhook-get-200-list.json"
               schema:
                 type: array
                 items:
                   $ref: "schemas/webhook.json"
         "404":
           description: "Webhooks are not supported by this API implementation"
-    post:
-      summary: Register Webhook URL
+  /service/webhooks/{webhookId}:
+    parameters:
+      - name: webhookId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/uuid'
+        description: The Webhook identifier.
+    head:
+      summary: Webhook details
+      description: Return webhook path headers
+      operationId: HEAD_webhooks-webhookId
+      tags:
+        - Webhooks
+      responses:
+        "200":
+          $ref: '#/components/responses/trait_resource_listing_head_200'
+        "404":
+          description: The requested Webhook ID in the path is invalid, or Webhooks are not supported by this API implementation
+    get:
+      summary: Webhook details
+      description: |
+        Get the details of a webhook. Implementations SHOULD take steps to avoid displaying URLs to users
+        other than those who have suitable permissions (e.g. the owning user).
+        Availability of this endpoint is indicated by the name "webhooks" appearing in the `event_stream_mechanisms`
+        list on the service endpoint.
+      operationId: GET_webhooks-webhookId
+      tags:
+        - Webhooks
+      responses:
+        "200":
+          description: Return the webhook details.
+          content:
+            application/json:
+              example:
+                $ref: "examples/webhook-get-200.json"
+              schema:
+                $ref: "schemas/webhook.json"
+        "404":
+          description: The requested Webhook ID in the path is invalid, or Webhooks are not supported by this API implementation
+    put:
+      summary: Create or update webhook details
       description: |
         Register to receive event notifications as webhooks on a specified URL. Webhook messages will conform to the
         format in the `webhooks` section of the API docs, depending on the event type (as defined in the same section).
         Availability of this endpoint is indicated by the name "webhooks" appearing in the `event_stream_mechanisms`
         list on the service endpoint.
 
-        Making a POST request to this endpoint with the same URL, API key name and value but a different list
-        of `events` SHOULD update the existing registration. POSTing an empty list of events SHOULD remove the
-        registration.
-
         HTTP requests from the service SHOULD include a `api_key_name` header with the 'api_key_value' value. Clients SHOULD verify this against the value they provided when registering the webhook.
 
         API implementations MAY partially support event filtering and transformations.
         API implementations SHALL return a 400 response code if the filtering or transformation specified in the request is not supported.
 
-        API implementations SHOULD consider the security implementations of providing webhooks, and include appropriate
-        mitigations against Server Side Request Forgery (SSRF) attacks and similar.
-      operationId: POST_webhooks
+        API implementations SHOULD consider the security implementations of providing webhooks, and include appropriate mitigations against Server Side Request Forgery (SSRF) attacks and similar. API implementations SHOULD take appropriate steps to authorize the modification of existing webhooks. This may take the form of RBAC, or ABAC.
+      operationId: PUT_webhooks-webhookId
       tags:
         - Webhooks
       requestBody:
         content:
           application/json:
             example:
-              url: https://hook.example.com
-              api_key_name: Authorization
-              api_key_value: Bearer 21238dksdjqwpqscj9
-              events:
-                - flows/created
-                - flows/updated
+              $ref: "examples/webhook-put.json"
             schema:
-              $ref: schemas/webhook-post.json
+              $ref: schemas/webhook-put.json
         required: true
       responses:
         "201":
-          description: Success. The webhook has been registered or updated
+          description: Success. The webhook has been updated
+          content:
+            application/json:
+              example:
+                $ref: "examples/webhook-get-200.json"
+              schema:
+                $ref: schemas/webhook.json
         "204":
-          description: Success. The webhook has been removed
+          description: No content. The webhook has been deleted.
         "400":
           description: Bad request. Invalid parameters or unsupported event filtering or transformation.
         "404":
-          description: "Webhooks are not supported by this API implementation"
+          description: The requested Webhook ID in the path is invalid, or Webhooks are not supported by this API implementation
+    delete:
+      summary: Delete Webhook
+      description: |
+        Deletes the webhook. Availability of this endpoint is indicated by the name "webhooks" appearing in the `event_stream_mechanisms` list on the service endpoint.
+
+        API implementations SHOULD consider the security implementations of providing webhooks, and include appropriate mitigations against Server Side Request Forgery (SSRF) attacks and similar. API implementations SHOULD take appropriate steps to authorize the deleting of webhooks. This may take the form of RBAC, or ABAC.
+      operationId: DELETE_webhooks-webhookId
+      tags:
+        - Webhooks
+      responses:
+        "204":
+          description: No content. The webhook has been deleted.
+        "403":
+          description: Forbidden. You do not have permission to modify this webhook.
+        "404":
+          description: The requested Webhook ID in the path is invalid, or Webhooks are not supported by this API implementation
   /sources:
     head:
       summary: List Sources

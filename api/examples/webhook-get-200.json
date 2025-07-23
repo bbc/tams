@@ -1,0 +1,9 @@
+{
+    "id": "e85efab4-993b-4ad6-9af3-4cd8d0d38860",
+    "url": "https://hook.example.com",
+    "api_key_name": "Authorization",
+    "events": [
+        "flows/created",
+        "flows/updated"
+    ]
+}
