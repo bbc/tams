@@ -169,7 +169,7 @@ paths:
         - Webhooks
       responses:
         "200":
-          description: Return the list of known webhook URLs. Note that the `api_key_value` will be omitted.
+          description: Return the list of known webhook URLs.
           content:
             application/json:
               example:
