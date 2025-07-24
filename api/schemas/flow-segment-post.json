@@ -41,7 +41,7 @@
         },
         "get_urls":
         {
-            "description": "A list of URLs to which a GET request can be made to directly retrieve the contents of the Segment. This is required by the `http_object_store` Storage Backend type, which is the only one currently described. Clients may choose any URL in the list and treat them as identical, however service instances may sort the list such that the preferred URL is first. `get_urls` should only be used to add uncontrolled URLs. URLs for the provided object_id controlled by the service instance will be populated automatically by the service instance.",
+            "description": "A list of URLs to which a GET request can be made to directly retrieve the contents of the Media Object. This is required by the `http_object_store` Storage Backend type, which is the only one currently described. Clients may choose any URL in the list and treat them as identical, however service instances may sort the list such that the preferred URL is first. `get_urls` should only be used to add uncontrolled URLs. URLs for the provided object_id controlled by the service instance will be populated automatically by the service instance.",
             "type": "array",
             "items":
             {
@@ -54,7 +54,7 @@
                 {
                     "url":
                     {
-                        "description": "A URL to which a GET request can be made to directly retrieve the contents of the Segment. Clients should include credentials if the provide URL is on the same origin as the API endpoint",
+                        "description": "A URL to which a GET request can be made to directly retrieve the contents of the Media Object. Clients should include credentials if the provide URL is on the same origin as the API endpoint",
                         "type": "string"
                     },
                     "label":
@@ -67,7 +67,7 @@
         },
         "key_frame_count":
         {
-            "description": "The number of key frames in the Segment. This should be set greater than zero when the Segment contains key frames that serve as a stream access point",
+            "description": "The number of key frames in the Media Object. This should be set greater than zero when the Media Object contains key frames that serve as a stream access point",
             "type": "integer"
         }
     }

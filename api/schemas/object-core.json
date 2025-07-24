@@ -1,0 +1,53 @@
+{
+  "type": "object",
+  "description": "Provides the location and metadata of the media files corresponding to a media Object.",
+  "title": "Object",
+  "properties": {
+    "get_urls": {
+      "description": "A list of URLs to which a GET request can be made to directly retrieve the contents of the media object. This is required by the `http_object_store` media store type, which is the only one currently described. Clients may choose any URL in the list and treat the content returned as identical, however servers may sort the list such that the preferred URL is first. Storage backend metadata for controlled URLs should be populated by the TAMS instance based on the storage backend the object copy resides in.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "unevaluatedProperties": false,
+        "allOf": [
+          {
+            "$ref": "storage-backend.json"
+          },
+          {
+            "type": "object",
+            "required": [
+              "url"
+            ],
+            "properties": {
+              "storage_id": {
+                  "description": "Storage backend identifier",
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+              },
+              "url": {
+                "description": "A URL to which a GET request can be made to directly retrieve the contents of the media object. Clients should include credentials if the provide URL is on the same origin as the API endpoint",
+                "type": "string"
+              },
+              "presigned": {
+                "description": "If `true`, this URL is pre-signed. If this parameter is unset, the URL is NOT pre-signed.",
+                "type": "boolean"
+              },
+              "label": {
+                "description": "Label identifying this URL. If the URL is controlled by the service instance, this is the Storage Backend's label. If the URL is uncontrolled, this is the label provided when a client registered the URL. If the 'label' is not set then this URL can't be filtered for using the 'accept_get_urls' API query parameter.",
+                "type": "string"
+              },
+              "controlled": {
+                "description": "If `true`, this URL is on a storage backend controlled by this service instance. If `false`, this URL is uncontrolled and does not have it's lifecycle managed by this instance. If this parameter is unset, assume `true`.",
+                "type": "boolean"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "key_frame_count": {
+      "description": "The number of key frames in the media object. This should be set greater than zero when the media object contains key frames that serve as a stream access point",
+      "type": "integer"
+    }
+  }
+}
