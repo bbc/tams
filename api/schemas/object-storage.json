@@ -1,0 +1,56 @@
+{
+  "type": "object",
+  "title": "Media Bucket Object Store",
+  "description": "Gives information on storage for media objects. This schema is for the `http_object_store` media store type which provides URLs for storing media objects in bucket, and is the only store type currently implemented.",
+  "properties": {
+    "pre": {
+      "type": "array",
+      "description": "Actions that need to be taken before the media object can be written",
+      "maxItems": 1,
+      "items": {
+        "type": "object",
+        "description": "An action",
+        "required": [
+          "action"
+        ],
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": [
+              "create_bucket"
+            ]
+          },
+          "bucket_id": {
+            "type": "string",
+            "description": "The name of the bucket that needs to be created"
+          },
+          "put_url": { "$ref": "http-request.json" },
+          "put_cors_url": { "$ref": "http-request.json" }
+        }
+      }
+    },
+    "media_objects": {
+      "type": "array",
+      "description": "List of information for identifying and uploading media objects",
+      "minItems": 1,
+      "maxItems": 1,
+      "items": {
+        "type": "object",
+        "description": "Information for a media object",
+        "required": [
+          "object_id",
+          "put_url"
+        ],
+        "properties": {
+          "object_id": {
+            "description": "The object store identifier for the media object.",
+            "type": "string"
+          },
+          "put_url": { "$ref": "http-request.json" },
+          "put_cors_url": { "$ref": "http-request.json" }
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}
