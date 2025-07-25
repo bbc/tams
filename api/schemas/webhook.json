@@ -3,20 +3,22 @@
     "description": "Register to receive updates via webhook",
     "type": "object",
     "required": [
+        "id",
         "url",
         "events"
     ],
     "properties": {
+        "id": {
+          "description": "Webhook identifier",
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
         "url": {
             "description": "The URL to which the API should make HTTP POST requests with event data",
             "type": "string"
         },
         "api_key_name": {
             "description": "The HTTP header name that is added to the event POST",
-            "type": "string"
-        },
-        "api_key_value": {
-            "description": "The value that the HTTP header 'api_key_name' will be set to",
             "type": "string"
         },
         "events": {

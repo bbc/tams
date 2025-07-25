@@ -1,0 +1,19 @@
+{
+    "title": "Register Webhook",
+    "description": "Register to receive updates via webhook",
+    "type": "object",
+    "allOf": [
+        {
+            "$ref": "webhook.json"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "api_key_value": {
+                    "description": "The value that the HTTP header 'api_key_name' will be set to",
+                    "type": "string"
+                }
+            }
+        }
+    ]
+}
