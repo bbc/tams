@@ -78,7 +78,7 @@ Chosen options:
 
 ### Implementation
 
-{Once the proposal has been implemented, add a link to the relevant PRs here}
+See the API specification changes in PR [#142](https://github.com/bbc/tams/pull/142).
 
 ## Pros and Cons of the Options
 
