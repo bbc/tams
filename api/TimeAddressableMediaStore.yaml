@@ -1826,6 +1826,10 @@ paths:
         A service instance MAY support Media Objects that are held in external storage in another TAMS or other media storage system.
         The Flow Segment may in that case require the `get_urls` property to provide the information needed by clients to access the Media Object.
 
+        Clients MAY modify Flow Segments, but this should only be done in exceptional circumstances to correct metadata as such operations will likely break the idempotency of Segments.
+        Properties of Media Objects, such as `get_urls`, SHOULD be modified via the `/objects` endpoints. 
+        They SHOULD NOT be modified at this endpoint, and TAMS instences SHOULD reject such requests with a `400` error.
+
         If a client needs to modify a Flow Segment, e.g. to correct metadata such as the `key_frame_count` or add additional URLs to `get_urls`, then the client SHOULD first delete the existing Segment and then write a new one.
         The behaviour is undefined if the Segment exists and the service may return a 400 error response.
 
