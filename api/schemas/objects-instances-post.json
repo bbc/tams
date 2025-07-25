@@ -1,0 +1,40 @@
+{
+    "type": "object",
+    "description": "Register a Media Object instance in the store.",
+    "title": "Media object registration",
+    "oneOf": [
+        {
+            "description": "Register a controlled Media Object instance via its `storage_id`.",
+            "title": "Controlled instance",
+            "type": "object",
+            "required": [
+                "storage_id"
+            ],
+            "properties": {
+                "storage_id": {
+                    "description": "Storage backend identifier",
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+                }
+            }
+        },
+        {
+            "description": "Register an uncontrolled Media Object instance via its `url`.",
+            "title": "Uncontrolled instance",
+            "type": "object",
+            "required": [
+                "url"
+            ],
+            "properties": {
+                "url": {
+                    "description": "A URL to which a GET request can be made to directly retrieve the contents of the media object. Clients should include credentials if the provide URL is on the same origin as the API endpoint",
+                    "type": "string"
+                },
+                "label": {
+                    "description": "Label identifying this Media Object instance. Service implementations should reject any requests using labels that are already associated with Storage Backends. If the 'label' is not set then this instance can't be filtered for using the 'accept_get_urls' API query parameter.",
+                    "type": "string"
+                }
+            }
+        }
+    ]
+}
