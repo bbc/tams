@@ -1,0 +1,24 @@
+{
+  "id": "ecf7393a-f7ba-4253-9f1a-eebeace5b7b3",
+  "urn": "urn:x-tam:profile:image_1920_1080_jpg",
+  "label": "HD JPG still image ",
+  "description": "1920 x 1080 JPG image",
+  "created_by": "tams-dev",
+  "created": "2013-09-09T19:01:00Z",
+  "tags": {
+    "_external_id": "1234567890"
+  },
+  "flow_metadata": {
+    "format": "urn:x-tam:format:image",
+    "codec": "image/jpeg",
+    "container": "image/jpeg",
+    "essence_parameters": {
+      "frame_width": 1920,
+      "frame_height": 1080,
+      "aspect_ratio": {
+        "numerator": 16,
+        "denominator": 9
+      }
+    }
+  }
+}

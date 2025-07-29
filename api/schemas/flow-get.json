@@ -1,0 +1,26 @@
+{
+  "type": "object",
+  "description": "Describes a Flow",
+  "title": "Flow",
+  "properties": {
+    "profile_id": {
+      "description": "Profile identifier that was used to create the flow.",
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    }
+  },
+  "allOf": [
+    {
+        "$ref": "flow-common.json"
+    },
+    {
+      "oneOf": [
+        { "$ref": "flow-video.json" },
+        { "$ref": "flow-audio.json" },
+        { "$ref": "flow-image.json" },
+        { "$ref": "flow-data.json" },
+        { "$ref": "flow-multi.json" }
+      ]
+    }
+  ]
+}

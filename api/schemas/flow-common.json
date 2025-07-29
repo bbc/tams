@@ -1,6 +1,6 @@
 {
   "type": "object",
-  "description": "Describes a Flow (common properties to all Flows, imported by type-specific specifications)",
+  "description": "Describes the core fields of a Flow (common properties to all Flows, imported by flow-get and flow-put specifications)",
   "title": "Flow Core",
   "required": [
     "id",
@@ -64,46 +64,7 @@
       "description": "If set to 'true', implementations SHOULD reject client requests to update Flow metadata (other than the read_only property), Flow Segments and media objects",
       "type": "boolean"
     },
-    "codec": {
-      "description": "A MIME type identification of the (lossy or lossless) coding used for the flow content.",
-      "type": "string",
-      "pattern": "^[^\\s\/]+/[^\\s\/]+$"
-    },
-    "container": {
-      "description": "The container MIME type for flow segments.",
-      "type": "string",
-      "pattern": "^[^\\s\/]+/[^\\s\/]+$"
-    },
-    "avg_bit_rate": {
-      "description": "The average bit rate of the flow segments in 1000 bits/second. A precise definition can be found in the [Setting Flow Bit Rate Properties](https://github.com/bbc/tams/blob/main/docs/appnotes/0013-setting-flow-bit-rate-properties.md) AppNote.",
-      "type": "integer",
-      "minimum": 0
-    },
-    "max_bit_rate": {
-      "description": "The maximum bit rate of the flow segments in 1000 bits/second. A precise definition can be found in the [Setting Flow Bit Rate Properties](https://github.com/bbc/tams/blob/main/docs/appnotes/0013-setting-flow-bit-rate-properties.md) AppNote.",
-      "type": "integer",
-      "minimum": 0
-    },
-    "segment_duration": {
-      "description": "The target flow segment duration in seconds. The duration for each segment may vary around this target value. See also the [Setting Flow Bit Rate Properties](https://github.com/bbc/tams/blob/main/docs/appnotes/0013-setting-flow-bit-rate-properties.md) AppNote for how this property can be used to calculate buffer sizes.",
-      "type": "object",
-      "required": [
-          "numerator"
-      ],
-      "properties": {
-          "numerator": {
-              "description": "numerator",
-              "type": "integer",
-              "exclusiveMinimum": 0
-          },
-          "denominator": {
-              "description": "denominator",
-              "type": "integer",
-              "default": 1,
-              "exclusiveMinimum": 0
-          }
-      }
-    },
+
     "timerange": {
       "description": "The timerange of samples available in the flow, as described by the [TimeRange](../schemas/timerange#top) type",
       "$ref": "timerange.json"
@@ -119,10 +80,6 @@
           "type": "string",
           "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
       }
-    },
-    "container_mapping": {
-        "description": "Describes the mapping of the Flow essence from the this Flow's container",
-        "$ref": "container-mapping.json"
     }
   }
 }

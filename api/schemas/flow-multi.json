@@ -2,24 +2,16 @@
   "type": "object",
   "description": "Describes a multi-essence Flow",
   "title": "Multi-essence Flow",
-  "allOf": [
-    {
-      "$ref": "flow-core.json"
-    },
-    {
-      "type": "object",
-      "required": [
-        "format"
-      ],
-      "properties": {
-        "format": {
-          "description": "The primary content type URN for the flow.",
-          "type": "string",
-          "enum": [
-            "urn:x-nmos:format:multi"
-          ]
-        }
-      }
+  "required": [
+    "format"
+  ],
+  "properties": {
+    "format": {
+      "description": "The primary content type URN for the flow.",
+      "type": "string",
+      "enum": [
+        "urn:x-nmos:format:multi"
+      ]
     }
-  ]
+  }
 }
