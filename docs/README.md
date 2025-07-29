@@ -23,6 +23,7 @@ For more information on how we use application notes, see [here](./appnotes/READ
 | [0014](./appnotes/0014-referencing-tams-content-in-other-systems.md) | Referencing TAMS content in other systems                       |
 | [0015](./appnotes/0015-using-tams-in-opentimelineio.md)              | Using TAMS in OpenTimelineIO                                    |
 | [0017](./appnotes/0017-reuse-of-ids.md)                              | When to re-use IDs in TAMS and compatible systems               |
+| [0018](./appnotes/0018-managing-multiple-object-instances.md)        | Managing Multiple Object Instances                              |
 
 ## ADRs
 
