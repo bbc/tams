@@ -2,36 +2,28 @@
     "title": "Multi-essence Flow",
     "description": "Describes a multi-essence Flow",
     "type": "object",
-    "allOf": [
-        {
-            "$ref": "flow-core.json"
+    "required": [
+        "format"
+    ],
+    "properties": {
+        "format": {
+            "description": "The primary content type URN for the flow.",
+            "type": "string",
+            "enum": [
+                "urn:x-nmos:format:multi"
+            ]
         },
-        {
+        "essence_parameters": {
+            "title": "Multi Flow Essence Parameters",
+            "description": "Describes the parameters of the essence inside this multi Flow",
             "type": "object",
-            "required": [
-                "format"
-            ],
+            "additionalProperties": false,
             "properties": {
-                "format": {
-                    "description": "The primary content type URN for the Flow.",
-                    "type": "string",
-                    "enum": [
-                        "urn:x-nmos:format:multi"
-                    ]
-                },
-                "essence_parameters": {
-                    "title": "Multi Flow Essence Parameters",
-                    "description": "Describes the parameters of the essence inside this multi Flow",
-                    "type": "object",
-                    "additionalProperties": false,
-                    "properties": {
-                        "init_segments": {
-                            "description": "Whether the Flow makes use of initialisation segments. This parameter MUST be set to `true` if Media Objects have `init_object` populated. If set to `true`, all Media Objects MUST have `init_object` populated. Assume `false` if omitted.",
-                            "type": "boolean"
-                        }
-                    }
+                "init_segments": {
+                    "description": "Whether the Flow makes use of initialisation segments. This parameter MUST be set to `true` if Media Objects have `init_object` populated. If set to `true`, all Media Objects MUST have `init_object` populated. Assume `false` if omitted.",
+                    "type": "boolean"
                 }
             }
         }
-    ]
+    }
 }
