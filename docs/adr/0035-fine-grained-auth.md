@@ -15,14 +15,13 @@ As the number of clients accessing content in a TAMS store grows, the need for f
 
 This ADR presents the decisions and considerations that informed the initial approach to fine-grained auth in TAMS.
 
-<!-- This is an optional element. Feel free to remove. -->
 ## Decision Drivers
 
 * Be prescriptive enough to enable interoperability of service and client implementations
 * Be permissive enough to facilitate integration with existing workflows and systems
 * Acknowledge that organisations will have different threat models, and interoperability should be equally possible in more open and more restrictive environments
 * As far as practical, maintain sensible parallels between coarse and fine-grained approaches
-* Enable as fine-grained auth as is practical and sensible
+* Enable authorization at a sufficiently fine-grained level for practical use cases
 * Must be possible to implement the design efficiently
 
 ## Considered Options
