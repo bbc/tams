@@ -16,6 +16,7 @@ This might be appropriate for example in a newsroom, where staff are deliberatel
 
 Conversely a finer-grained approach may be required, where specific rules and policies are applied to each piece of content, and groups of users are carefully managed.
 This may be appropriate for example when working with a large number of third parties and freelancers in drama production, or when managing a large media archive of high-value content.
+It may also be necessary to consider the context of a request: for example whether it originated from a managed device (such as an ingester or edit suite in a facility), from a particular network or in a particular setting: in some cases it may be appropriate to create "machine users" with broader permssions, and in others to have the user work interactively, using their own credentials.
 
 > [!NOTE]
 > Throughout this document the term "user" is used as a shorthand for all security principals, including human users, machine accounts, third-party SaaS integrations, etc.
