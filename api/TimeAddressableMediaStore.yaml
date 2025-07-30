@@ -1079,6 +1079,10 @@ paths:
                   summary: Image Flow - JPEG Codec
                   value:
                     $ref: examples/flow-get-200-image-jpeg.json
+                video_vfr:
+                  summary: Video Flow - H.264 Codec, Variable Frame Rate
+                  value:
+                    $ref: examples/flow-get-200-video-h264-vfr.json
                 ttml:
                   summary: Data Flow - TTML
                   description: TAMS can also be used for storing non-AV content such as subtitles or event data
