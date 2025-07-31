@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # This script demonstrates ingest of media from an HLS playlist into TAMS
 
-from copy import copy
 import json
 from typing import Generator, Any, AsyncGenerator, Optional
 import asyncio
@@ -51,13 +50,12 @@ async def put_flow(
     tams_url: str,
     flow_id: UUID,
     source_id: UUID,
-    flow_params: Optional[dict]
+    flow_metadata: Optional[dict]
 ) -> None:
-    """Create a H.264 video Flow"""
-    if flow_params is not None:
-        flow_metadata = copy(flow_params)
-    else:
+    """Create a H.264 video Flow (note: the given `flow_metadata` will be mutated)"""
+    if flow_metadata is None:
         flow_metadata = DEFAULT_FLOW_METADATA
+
     flow_metadata["id"] = str(flow_id)
     flow_metadata["source_id"] = str(source_id)
 
