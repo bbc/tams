@@ -31,7 +31,7 @@ Chosen option: "{title of option 1}", because
 
 ### Implementation
 
-{Once the proposal has been implemented, add a link to the relevant PRs here}
+A draft implementation is present alongside the PR that added this ADR.
 
 ## Pros and Cons of the Options
 
