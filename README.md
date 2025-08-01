@@ -146,6 +146,7 @@ Alternatively if `sample_offset` and `sample_count` are set on the segment, a cl
 
 The diagram above shows a smaller portion of the Flow Z timeline considered previously, with the presentation time stamp (PTS) of each grain in the object along the bottom.
 The pseudocode below shows how a client might apply the `ts_offset` to each PTS, then validate whether it is inside the given `timerange`.
+Note that the PTS may be a different precision or timebase to the nanosecond timestamps used by TAMS, so some conversion may be required.
 
 ```python
 grain_ts = pts_to_timestamp(grain_pts)             # `4:0` for `grain_pts = 40`
