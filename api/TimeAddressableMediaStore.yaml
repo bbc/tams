@@ -177,9 +177,47 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "schemas/webhook.json"
+                  $ref: "schemas/webhook-with-id.json"
         "404":
-          description: "Webhooks are not supported by this service implementation"
+          description: "Webhooks are not supported by this API implementation"
+    post:
+      summary: Register webhook details
+      description: |
+        Register to receive event notifications as webhooks on a specified URL. Webhook messages will conform to the
+        format in the `webhooks` section of the API docs, depending on the event type (as defined in the same section).
+        Availability of this endpoint is indicated by the name "webhooks" appearing in the `event_stream_mechanisms`
+        list on the service endpoint.
+
+        HTTP requests from the service SHOULD include a `api_key_name` header with the 'api_key_value' value. Clients SHOULD verify this against the value they provided when registering the webhook.
+
+        API implementations MAY partially support event filtering and transformations.
+        API implementations SHALL return a 400 response code if the filtering or transformation specified in the request is not supported.
+
+        API implementations SHOULD consider the security implementations of providing webhooks, and include appropriate mitigations against Server Side Request Forgery (SSRF) attacks and similar. API implementations SHOULD take appropriate steps to authorize the modification of existing webhooks. This may take the form of RBAC, or ABAC.
+      operationId: POST_webhooks
+      tags:
+        - Webhooks
+      requestBody:
+        content:
+          application/json:
+            example:
+              $ref: "examples/webhook-post.json"
+            schema:
+              $ref: schemas/webhook-post.json
+        required: true
+      responses:
+        "201":
+          description: Success. The webhook has been updated
+          content:
+            application/json:
+              example:
+                $ref: "examples/webhook-get-200.json"
+              schema:
+                $ref: schemas/webhook-with-id.json
+        "400":
+          description: Bad request. Invalid parameters or unsupported event filtering or transformation.
+        "404":
+          description: Webhooks are not supported by this service implementation
   /service/webhooks/{webhookId}:
     parameters:
       - name: webhookId
@@ -215,11 +253,11 @@ paths:
               example:
                 $ref: "examples/webhook-get-200.json"
               schema:
-                $ref: "schemas/webhook.json"
+                $ref: "schemas/webhook-with-id.json"
         "404":
           description: The requested Webhook ID in the path is invalid, or Webhooks are not supported by this service implementation
     put:
-      summary: Create or update webhook details
+      summary: Update webhook details
       description: |
         Register to receive event notifications as webhooks on a specified URL.
         Webhook messages will conform to the format in the `webhooks` section of the API docs, depending on the event type (as defined in the same section).
