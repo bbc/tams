@@ -61,7 +61,7 @@ Chosen options:
 * 1d Primary key: Add a UUID
 * 2b Authorization method: Use the same auth methods as the rest of the API
 * 3b HTTP endpoint structure: Add a `/service/webhooks/{id}` endpoint
-* 4c Registering of Webhooks: PUT/POST to `/service/webhooks/{id}`
+* 4a Registering of Webhooks: Existing POST to `/service/webhooks`
 * 5c Editing of Webhooks: PUT/POST to `/service/webhooks/{id}`
 * 6d Deleting of Webhooks: DELETE to `/service/webhooks/{id}`
 * 7b Backwards compatibility: Do not maintain backwards compatibility
