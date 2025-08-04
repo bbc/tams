@@ -111,7 +111,7 @@ There are many reasons a client may want to create a duplicate instance of a Med
 To create a backup.
 To create copies that are physically or logically closer to other systems.
 To move content to archive storage.
-All while being able to refer to the this collection of duplicates with the same Media Object ID in Flow Segments.
+All while being able to refer to this collection of duplicates with the same Media Object ID in Flow Segments.
 
 There are two methods of creating duplicate instances of a Media Object.
 The first requires the client to manage the duplication process.
@@ -204,7 +204,7 @@ The approach to supporting multiple Media Object instances in TAMS enables effic
 With this increased flexibility comes the potential for new attack vectors for malicious actors.
 
 Consider a Flow A with its Media Objects.
-A malicious actor has read access to Flow A, but not read access.
+A malicious actor has read access to Flow A, but not write access.
 The actor creates a new Flow, Flow B, and re-uses Media Objects from Flow A in Flow B.
 The write permissions they have on Flow B allows them to add new instances to the Objects.
 The malicious actor creates new malicious instances and adds them to the Objects.
