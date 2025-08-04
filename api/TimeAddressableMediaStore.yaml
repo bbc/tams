@@ -924,7 +924,10 @@ paths:
           description: Bad request. Invalid query options.
     put:
       summary: Create or Replace Flow
-      description: Create or replace the flow metadata.
+      description: |
+        Create or replace the flow metadata.
+
+        Store implementations SHOULD verify that Flow metadata is compatible with the associated Source. Store implementations MAY accept modification/addition of parameters, and reflect such changes in the Source, where it will not bring any Flows of the Source into conflict. Where metadata would result in any Flow of the Source coming into conflict, the request SHOULD be rejected with a 400 response.
       operationId: PUT_flows-flowId
       tags:
         - Flows
@@ -1338,7 +1341,10 @@ paths:
           description: The requested flow does not exist.
     put:
       summary: Create or Update Flow Collection
-      description: Create or update the flow collection property.
+      description: |
+        Create or update the flow collection property.
+
+        Store implementations SHOULD verify that Flow metadata is compatible with the associated Source. Store implementations MAY accept modification/addition of parameters, and reflect such changes in the Source, where it will not bring any Flows of the Source into conflict. Where metadata would result in any Flow of the Source coming into conflict, the request SHOULD be rejected with a 400 response.
       operationId: PUT_flows-flowId-flow-collection
       tags:
         - Flows
