@@ -1,6 +1,6 @@
 {
-    "title": "Flow Storage Post",
-    "description": "Post data for the flow storage endpoint",
+    "title": "Object Storage Post",
+    "description": "Post data for the storage endpoint for working with existing objects",
     "type": "object",
     "required": ["storage_id"],
     "properties": {

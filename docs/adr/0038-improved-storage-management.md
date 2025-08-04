@@ -36,19 +36,19 @@ Chosen options:
 * Option 2b: Manage additional Object storage via a Objects storage endpoint
 * Option 3b: Call Object Instance management endpoint `instances`
 
-These options have been chosen because they provide clearer boundaries between Media Objects and Segments in the data model and it's implementation.
+These options have been chosen because they provide clearer boundaries between Media Objects and Segments in the data model and its implementation.
 They should avoid confusion arrising from changes to one Flow impacting another.
 And they minimise un-needed changes to the API and common workflows.
 
 ### Implementation
 
-{Once the proposal has been implemented, add a link to the relevant PRs here}
+Implemented by <https://github.com/bbc/tams/pull/144>
 
 ## Pros and Cons of the Options
 
 ### Option 1a: Manage `get_urls` via the Flows endpoints
 
-This option would see us add support for in-place editing of `get_urls` and see the edits propogated to other segments making use of the same Media Object.
+This option would see us add support for in-place editing of `get_urls` and see the edits propagated to other segments making use of the same Media Object.
 
 * Good, because it somewhat matches existing patterns for updating `get_urls`
 * Good, because it would remove a race condition of the delete & re-create pattern with Object garbage-collection in implementations
