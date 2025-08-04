@@ -8,10 +8,14 @@
         },
         {
             "type": "object",
+            "required": [
+                "id"
+            ],
             "properties": {
-                "api_key_value": {
-                    "description": "The value that the HTTP header 'api_key_name' will be set to",
-                    "type": "string"
+                "id": {
+                  "description": "Webhook identifier",
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
                 }
             }
         }
