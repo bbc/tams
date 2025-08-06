@@ -1645,14 +1645,14 @@ paths:
         "http_object_store" media store type which MUST include a `get_urls` property that contains the
         HTTP URLs for downloading the media object - server implementations should generate this internally.
 
-        The flow segment may include timing and timerange adjustment information that the client needs to
-        apply when extracting the samples from the media object.
-        - If `sample_count` is set, the timerange of samples must be `sample_offset` to
-         `sample_offset + sample_count` (exclusive). Otherwise, the timerange of samples must be
-          `sample_offset` until the end.
+        The flow segment may include timing adjustment information that the client needs to apply when extracting
+        the samples from the media object, and may not use the entirety of the samples in the media object.
         - The sample timestamp in the flow segment (`segment_ts`) is the timestamp in the media object
-          (`media_object_ts`) adjusted by `ts_offset`: `segment_ts = media_object_ts + ts_offset`. The
-          `segment_ts` should equal the start of the `timerange` for the sample at `sample_offset`.
+          (`media_object_ts`) adjusted by `ts_offset`: `segment_ts = media_object_ts + ts_offset`.
+        - If the segment only uses part of the object, that part is where `segment_ts` falls within the segment
+          `timerange`
+        - In addition, the samples within `timerange` must start after `sample_offset` samples on the presentation
+          timeline of the object, and end after `sample_offset + sample_count` samples.
 
         Use the pagination options to limit the results to a timerange and/or count. The list of flow
         segments can be empty. A request for segments from a non-existent flow will return an empty
