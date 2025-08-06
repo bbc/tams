@@ -15,7 +15,7 @@ And a move from thinking about "Segment reuse" to "Object reuse".
 Until now, the TAMS specifcation has been unclear on the ownership of `get_urls` being the Segment or Object.
 In particular, whether re-use of an Object should result in `get_urls` and changes to them being reflected across all segments using of them.
 
-This ADR proposes explicitely linking ownership of `get_urls` to Objects, and providing mechanisms for adding and removing controlled and uncontrolled instances of Objects to their `get_urls` list.
+This ADR proposes explicitly linking ownership of `get_urls` to Objects, and providing mechanisms for adding and removing controlled and uncontrolled instances of Objects to their `get_urls` list.
 This seperation of Objects and Segments does not require breaking changes, but does provide greater clarity in how the specification should be implemented.
 
 ## Considered Options
