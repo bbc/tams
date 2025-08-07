@@ -2150,17 +2150,19 @@ paths:
     post:
       summary: Register a Media Object instance
       description: |
-        Signal that a media object instance is now available on a new storage backend and may be advertised in `get_urls`. Or add a new uncontrolled URL to `get_urls`.
+        Request the service to create an object instance on a new storage backend. Or add a new uncontrolled URL to `get_urls`.
 
-        Where a client has written a new object instance, the client is responsible for ensuring that the object written is complete and correct before registering it with this method. All instances of an object MUST be identical.
-
-        API implementations MAY also support managed copying of media objects using this method. Where implementations support this feature, clients may POST a `storage_id` to this endpoint without previously allocating storage for media object `objectId` on storage backend `storage_id`. The API will then:
+        To request the duplication of the Object to a new storage backend, clients POST a `storage_id` to this endpoint that does not currently have an instance of the Object. The API will then:
 
         - Allocate storage for media object `objectId` on storage backend `storage_id`
         - Copy the media object from an existing location to the newly allocated storage
         - Start advertising the new copy in `get_urls` once ready
 
-        Where the above mechanism is not supported and the URL being registered is controlled, API implementations SHOULD verify that storage has previously been allocated on the requested storage backend `storage_id` for the media object `objectId`.
+        The API instances SHOULD be capable of handling the case where the only existant instances are uncontrolled.
+
+        Where a client has written a new uncontrolled object instance, the client is responsible for ensuring that the object written is complete and correct before registering it with this method.
+
+        All instances of an object MUST be identical.
       operationId: POST_objects-instances
       tags:
         - Objects
@@ -2204,7 +2206,7 @@ paths:
 
         API instances should remove the Media Object instance from the `get_urls` list and then, if the instance is controlled, delete the object instance from storage.
 
-        API instances SHOULD prevent clients from deleting all Object instances. Where clients wish to remove all copies of an Object from the store, they should do so by deleting all Flows or Flow Segments which reference the Object.
+        API instances SHOULD prevent clients from deleting all Object instances. Additionally, API instances MAY prevent clients from deleting all controlled Object instances. Where clients wish to remove all copies of an Object from the store, they should do so by deleting all Flows or Flow Segments which reference the Object.
       operationId: DELETE_objects-instances
       tags:
         - Objects
@@ -2234,64 +2236,6 @@ paths:
           description: Forbidden. You do not have permission to modify this Media Object.
         "404":
           description: The requested object ID in the path is invalid.
-  /objects/{objectId}/storage:
-    parameters:
-      - name: objectId
-        in: path
-        required: true
-        schema:
-          $ref: '#/components/schemas/uuid'
-        description: The object identifier.
-    post:
-      summary: Allocate Additional Object Storage
-      description: |
-        Allocate additional storage locations for writing media objects.
-
-        Storage for object `objectId` will be allocated against storage backend `storage_id`. If the object already exists on the specified storage backend, the request will be rejected.
-
-        The media store type, which is indicated in the /service resource, determines the information provided
-        in the response. The examples and description below are for the "http_object_store" media store type.
-        This media store type provides HTTP URLs for uploading and downloading media objects in buckets.
-
-        The response will include a PUT URL that a client uses to upload the media object. The client is expected
-        to register the object instance using the `/objects/{objectId}/instances` endpoint once the upload is complete.
-        Implementations need to handle situations where objects were uploaded but no Media Object instance was registered
-        successfully.
-
-        The response may include PUT URLs for creating buckets for the media objects. These PUT URLs should
-        be used before uploading media objects. The object_id associated with each storage location has the
-        bucket name as its prefix.
-
-        The response may include PUT URLs for setting the CORS properties for the buckets and media objects.
-
-        When making requests to the provided `put_url`, clients should include credentials if the provided
-        URL is on the same origin as the API itself, akin to the `same-origin` mode in the
-        [WhatWG Fetch Standard](https://fetch.spec.whatwg.org/#concept-request-credentials-mode).
-      operationId: POST_objects-objectId-storage
-      tags:
-        - MediaStorage
-      requestBody:
-        content:
-          application/json:
-            example:
-              $ref: examples/object-storage-post.json
-            schema:
-              $ref: schemas/object-storage-post.json
-      responses:
-        "201":
-          description: Storage locations for writing media objects.
-          content:
-            application/json:
-              schema:
-                $ref: schemas/object-storage.json
-              example:
-                $ref: examples/object-storage-post-201.json
-        "400":
-          description: Bad request. Invalid object storage request JSON. The storage backend `storage_id` may not exist. The object may already exist on storage backend.
-        "403":
-          description: Forbidden. You do not have permission to modify this media object.
-        "404":
-          description: The requested object does not exist.
 
   /flow-delete-requests:
     head:

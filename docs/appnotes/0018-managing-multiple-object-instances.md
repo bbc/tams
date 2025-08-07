@@ -105,7 +105,7 @@ The Segment above in `flowId` used the default `ts_offset` of `0:0`.
 As the Segment it was used in in `flowId` started at `20:0`, but in `flowId2` it is placed at `165:0`, we must set a `ts_offset` of `145:0`.
 For more information on `ts_offset`, see [here](https://bbc.github.io/tams/7.0/index.html#/operations/GET_flows-flowId-segments).
 
-### Duplicating an Existing Object (Client Managed)
+### Duplicating an Existing Object
 
 There are many reasons a client may want to create a duplicate instance of a Media Object.
 To create a backup.
@@ -113,67 +113,8 @@ To create copies that are physically or logically closer to other systems.
 To move content to archive storage.
 All while being able to refer to this collection of duplicates with the same Media Object ID in Flow Segments.
 
-There are two methods of creating duplicate instances of a Media Object.
-The first requires the client to manage the duplication process.
-
-The client first has to allocate additional storage to the Media Object on the required Storage Backend.
-This is done via a POST to `/objects/{objectId}/storage` with the required `storage_id`.
-
-Example POST body to `/objects/{objectId}/storage`:
-
-```json
-{
-  "storage_id": "323367fd-21bb-4f2e-ad38-faf048c4ccfc"
-}
-```
-
-The response is identical in form to the `/flows/{flowId}/storage` response above:
-
-```json
-{
-  "pre": [
-    {
-      "action": "create_bucket",
-      "bucket_id": "tams-c6b8e7cc-edd3-5f6d-9d79-4467d06eb8bf",
-      "put_url": {
-        "url": "https://example.store.com/tams-c6b8e7cc-edd3-5f6d-9d79-4467d06eb8bf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=0&X-Amz-Date=20230316T120329Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&X-Amz-Signature=0",
-        "body": "<CreateBucketConfiguration xmlns=\"http://s3.amazonaws.com/doc/2006-03-01/\">\n    <LocationConstraint>default</LocationConstraint>\n</CreateBucketConfiguration >\n"
-      }
-    }
-  ],
-  "media_objects": [
-    {
-      "object_id": "tams-c6b8e7cc-edd3-5f6d-9d79-4467d06eb8bf/846023d3-612d-5014-bc47-88f6eb2d04bb",
-      "put_url": {
-        "url": "https://example.store.com/tams-c6b8e7cc-edd3-5f6d-9d79-4467d06eb8bf/846023d3-612d-5014-bc47-88f6eb2d04bb?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=0&X-Amz-Date=20230316T120329Z&X-Amz-Expires=300&X-Amz-SignedHeaders=content-type%3Bhost&X-Amz-Signature=0",
-        "content-type": "video/mp2t"
-      }
-    }
-  ]
-}
-```
-
-Once the media has been uploaded to the new Storage Backend, it must be registered as available.
-This is done via a POST to `/objects/{objectId}/instances` with the `storage_id`.
-
-Example POST body to `/objects/{objectId}/instances`:
-
-```json
-{
-  "storage_id": "323367fd-21bb-4f2e-ad38-faf048c4ccfc"
-}
-```
-
-The available instances of the Media Object will now be advertised in `get_urls` on the `/objects/{objectId}` endpoint and on the `/flows/{flowId}/segments` for all Flow Segments which use the Media Object.
-
-### Duplicating an Existing Object (Server Managed)
-
-Some TAMS implementations may support a second, server managed, method of duplicating Media Objects.
-
-For this method, clients POST the required `storage_id` to `/objects/{objectId}/instances`.
-This is the same as the final step in the client managed approach.
-The TAMS instance will identify that it has not previously allocated storage for the requested Media Object on the requested Storage Backend.
-It will allocate storage, and populate it from an existing copy of the Media Object.
+To initiate the duplication of a Media Object to a new Storage Backend, clients POST the required `storage_id` to `/objects/{objectId}/instances`.
+The TAMS instance will allocate storage, and populate it from an existing copy of the Media Object.
 It will then begin advertising the copy in `get_urls` lists.
 
 Example POST body to `/objects/{objectId}/instances`:
@@ -207,15 +148,18 @@ Consider a Flow A with its Media Objects.
 A malicious actor has read access to Flow A, but not write access.
 The actor creates a new Flow, Flow B, and re-uses Media Objects from Flow A in Flow B.
 The write permissions they have on Flow B allows them to add new instances to the Objects.
-The malicious actor creates new malicious instances and adds them to the Objects.
+The malicious actor creates new malicious uncontrolled instances with content different to the existing instances and adds them to the Objects.
 Users of Flow A are now presented with the malicious instances, in addition to the original ones, on Flow A's Segments.
 
 This attack vector can be mitigated in multiple ways.
 
-The TAMS instance's authorisation logic may be configured to only allow those with write access to the original Flow A to add new instances.
-This mitigates the attack vector described, but places more of a burden on the original owner to manage creation/deletion of duplicate instances.
+The TAMS instance's authorisation logic may be configured to only allow those with specific permissions, such as write access to the original Flow A, to add new uncontrolled instances.
+This mitigates the attack vector described, but places more of a burden on the original owner to manage creation/deletion of duplicate uncontrolled instances.
 
 The TAMS instance may be configured to only allow managed duplication.
 This guarantees all instances will be identical and removes the ability for malicious instances to be uploaded by the actor.
 
-An organisation may, of course, also assess and accept the risk associated with allowing user-managed duplication of Media Objects.
+Clients may also wish to exercise extra caution when using uncontrolled instances.
+They may wish to favour controlled URLs or check that the URL is on a trusted domain, for example.
+
+An organisation may, of course, also assess and accept the risk associated with allowing user-managed creation of uncontrolled instances of Media Objects.
