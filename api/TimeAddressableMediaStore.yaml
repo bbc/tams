@@ -2217,7 +2217,7 @@ paths:
           required: true
           schema:
             type: string
-        - name: storge_id
+        - name: storage_id
           in: query
           description: The storage_id identifying the Media Object instance to be deleted.
           schema:
