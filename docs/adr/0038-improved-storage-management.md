@@ -27,6 +27,8 @@ This seperation of Objects and Segments does not require breaking changes, but d
 * Option 2c: Manage additional Object storage AND initial Object storage via a Objects storage endpoint
 * Option 3a: Call Object Instance management endpoint `get_urls`
 * Option 3b: Call Object Instance management endpoint `instances`
+* Option 4a: Duplicaion of Object Instances is managed by the Server
+* Option 4b: Duplicaion of Object Instances is managed by the Client
 
 ## Decision Outcome
 
@@ -35,10 +37,12 @@ Chosen options:
 * Option 1b: Add `get_urls` management to the Objects endpoint
 * Option 2b: Manage additional Object storage via a Objects storage endpoint
 * Option 3b: Call Object Instance management endpoint `instances`
+* Option 4a: Duplicaion of Object Instances is managed by the Server
 
 These options have been chosen because they provide clearer boundaries between Media Objects and Segments in the data model and its implementation.
 They should avoid confusion arrising from changes to one Flow impacting another.
 And they minimise un-needed changes to the API and common workflows.
+Option 4a also minamises potential new attack vectors.
 
 ### Implementation
 
@@ -121,3 +125,28 @@ Another option is to title the endpoint `instances`.
 * Good, because it could avoid confusion over the one-to-many relationship of instances and URLs
 * Good, becuase it more clearly conveys that the client manages the instance, but the service manages the URL
 * Neutral, because it doesn't match the name of the property it affects
+
+### Option 4a: Duplicaion of Object Instances is managed by the Server
+
+This option would see client's request duplication of an Object to a new Storage Backend, and for that duplication to be carried out by the Server.
+
+* Good, because it requires minimal HTTP requests
+* Good, because it ensures the copy is identical to the originating Instance
+* Good, because it allows use of efficient copy mechanisms on storage backends
+* Neutral, because it requires the server to carry out a task beyond processing metadata
+  * Given many object stores support duplication via a single request, it is likely to be more simple and efficient to implement and process than creating multiple pre-signed URLs, verifying Objects have been allocated on a given Storage Backend when registering, etc.
+* Neutral, because it doesn't follow existing patterns for Object upload
+  * Though those patterns are for a subtly different purpose
+
+### Option 4b: Duplicaion of Object Instances is managed by the Client
+
+This option would see a similar pattern to the existing one for initial creation of objects used for duplication.
+Clients would request storage allocation, upload the Media Object to that new location, and then register its availability with the server.
+
+* Good, because it follows existing patterns
+* Neutral, because it only requires the server to carry out metadata management
+  * Though this may require more a complex implementation in practice
+* Bad, because it requires more HTTP requests that Option 4a
+* Bad, because it presents a potential attack vector
+  * A malicious actor could upload a maliciously crafted Object which doesn't match the original for it to be advertised against existing segments
+* Bad, because it prevents the use of efficient object duplication methods present on some object stores
