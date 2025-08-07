@@ -4,7 +4,7 @@
     "title": "Media object registration",
     "oneOf": [
         {
-            "description": "Register a controlled Media Object instance via its `storage_id`.",
+            "description": "Request the duplication of a Media Object instance to a new Storage Backend, via it's `storage_id`.",
             "title": "Controlled instance",
             "type": "object",
             "required": [
