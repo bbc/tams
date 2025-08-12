@@ -927,7 +927,7 @@ paths:
       description: |
         Create or replace the flow metadata.
 
-        Store implementations SHOULD verify that Flow metadata is compatible with the associated Source. Store implementations MAY accept modification/addition of parameters, and reflect such changes in the Source, where it will not bring any Flows of the Source into conflict. Where metadata would result in any Flow of the Source coming into conflict, the request SHOULD be rejected with a 400 response.
+        Store implementations SHOULD verify that Flow metadata is compatible with the associated Source. Store implementations MAY accept modification/addition of parameters, and reflect such changes in the Source, where it will not bring any Flows of the Source into conflict. Where metadata would result in any Flow of the Source coming into conflict, the request SHOULD be rejected with a 400 response. Examples of conflicting metadata include `format` not matching, or the `role` in `source_collection` and `flow_collection` not matching. It may also be possible for store implementations to detect some instances where multiple Flows should not be considered of the same Source, such as audio Flows with different numbers of tracks. Further guidance on when Flows/Sources may be considered the same/different may be found in the [Practical Guidance for Media](https://specs.amwa.tv/ms-04/releases/v1.0.0/docs/3.0._Practical_Guidance_for_Media.html) section of AMWA MS-04.
       operationId: PUT_flows-flowId
       tags:
         - Flows
