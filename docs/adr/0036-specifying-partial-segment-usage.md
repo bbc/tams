@@ -42,6 +42,7 @@ Call out in documentation that either method can be used by a reader.
 
 * Good, because it may be easier to select the correct grains by counting and discarding (when temporal re-ordering is not applied).
   For example it may be possible to avoid parsing/demuxing the container to extract timestamps, if Flow timing is carried out-of-band
+* Good, because it supports simple "clip list" based implementations that can only count decoded media units and not read the object's internal timing
 * Good, because it avoids a change to the existing API
 * Neutral, because it works for containers without any internal timing where the Flow doesn't have a rate, however there are no current known use cases (or containers!) with this property
 * Bad, because a writer has to do additional work to identify the correct `sample_offset`/`sample_count` settings when re-using segments, which may require it to download and parse the media
@@ -58,6 +59,7 @@ Readers will then need to calculate the timestamp for each grain on the Flow tim
 * Good, because it avoids un-necessary work for writers of partial-segment Flows
 * Good, because it removes duplicated information and potential for an error condition
 * Neutral, because it forces the use of either containers with some kind of internal timing or Flows with a rate and no gaps inside the objects (although gaps between segments is still possible)
+* Bad, because it forces readers to parse the internal timing of media objects
 * Bad, because it may break existing implementations or make them more complex in some cases
 
 _Note:_ if the container has no internal timing, however the Flow has a rate and it can be assumed to have no gaps, the grain timestamp can still be calculated by computing its timestamp at the relevant rate from the beginning of the object, then mapping that into the Flow timeline using `ts_offset`.
