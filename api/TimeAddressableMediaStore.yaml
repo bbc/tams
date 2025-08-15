@@ -1960,7 +1960,7 @@ paths:
       parameters:
         - name: objectId
           in: path
-          description: The media object identifier.
+          description: The media object identifier. The Object ID may include special characters such as `/` which should be URL encoded.
           required: true
           schema:
             type: string
@@ -2047,7 +2047,7 @@ paths:
       parameters:
         - name: objectId
           in: path
-          description: The media object identifier.
+          description: The media object identifier. The Object ID may include special characters such as `/` which should be URL encoded.
           required: true
           schema:
             type: string
@@ -2145,7 +2145,7 @@ paths:
       parameters:
         - name: objectId
           in: path
-          description: The media object identifier.
+          description: The media object identifier. The Object ID may include special characters such as `/` which should be URL encoded.
           required: true
           schema:
             type: string
@@ -2189,7 +2189,7 @@ paths:
       parameters:
         - name: objectId
           in: path
-          description: The Media Object identifier.
+          description: The Media Object identifier. The Object ID may include special characters such as `/` which should be URL encoded.
           required: true
           schema:
             type: string
