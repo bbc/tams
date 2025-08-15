@@ -1564,10 +1564,10 @@ paths:
         - name: accept_get_urls
           in: query
           description: |
-            A comma separated list of labels of flow segment `get_urls` to include in the response.
+            A comma separated list of labels of media object `get_urls` to include in the response.
             Omitting `accept_get_urls` will result in no filtering of `get_urls`.
             An empty `accept_get_urls` results in an empty or no `get_urls` in the response.
-            Flow segment `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
+            Media object `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
             Without `get_urls`, the response from the service could be substantially faster if it is not required to
             generate a large number of pre-signed URLs for example.
             Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
@@ -1577,9 +1577,9 @@ paths:
         - name: accept_storage_ids
           in: query
           description: |
-            A comma separated list of `storage_id`s of flow segment `get_urls` to include in the response.
+            A comma separated list of `storage_id`s of media object `get_urls` to include in the response.
             Omitting `accept_storage_ids`, or providing an empty `accept_storage_ids` will result in no filtering of `get_urls`.
-            Flow segment `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
+            Media object `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
             A full list of available `storage_id`s may be found at the `service/storage-backends` endpoint.
             Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
           schema:
@@ -1697,10 +1697,10 @@ paths:
         - name: accept_get_urls
           in: query
           description: |
-            A comma separated list of labels of flow segment `get_urls` to include in the response.
+            A comma separated list of labels of media object `get_urls` to include in the response.
             Omitting `accept_get_urls` will result in no filtering of `get_urls`.
             An empty `accept_get_urls` results in an empty or no `get_urls` in the response.
-            Flow segment `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
+            Media object `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
             Without `get_urls`, the response from the service could be substantially faster if it is not required to
             generate a large number of pre-signed URLs for example.
             Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
@@ -1710,9 +1710,9 @@ paths:
         - name: accept_storage_ids
           in: query
           description: |
-            A comma separated list of `storage_id`s of flow segment `get_urls` to include in the response.
+            A comma separated list of `storage_id`s of media object `get_urls` to include in the response.
             Omitting `accept_storage_ids`, or providing an empty `accept_storage_ids` will result in no filtering of `get_urls`.
-            Flow segment `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
+            Media object `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
             A full list of available `storage_id`s may be found at the `service/storage-backends` endpoint.
             Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
           schema:
@@ -1791,7 +1791,34 @@ paths:
           description: The flow ID in the path is invalid.
     post:
       summary: Create Flow Segments
-      description: "Register either a single new flow segment or an array of segments, attaching the object id given to a point in the flow timeline.\n\nThe segment may use a newly-written object, or re-use an existing object from another flow.\n\nFor newly-written objects, the client is responsible for ensuring that the segment written to the store obeys the following restrictions:\n- All samples in the object SHOULD be used by the segment.\n- The timestamps of each sample in the media object MUST equal its position on the Flow timeline, OR `ts_offset` MUST\n  be set such that `media_object_ts + ts_offset = segment_ts`\n- The timerange of the segment MUST NOT overlap any other segment in the same Flow. The behaviour is\n  undefined if there is an overlap with existing segments and a store may return a 400 error response.\n- The `sample_offset` SHOULD be zero.\n\nA TAMS SHOULD reject registrations of Flow Segments with a 400 error response if it references a newly created media object\nin the local TAMS storage that was not intended to be used for the Flow. A TAMS SHOULD accept Flow Segments that reference an\nexisting media object in the local TAMS storage that was originally created for another Flow.\n\nA TAMS MAY support media objects that are held in external storage in another TAMS or other media storage system. The Flow Segment\nmay in that case require the `get_urls` property to provide the information needed by clients to access the media object.\n\nIf a client needs to modify a Flow segment, e.g. to correct metadata such as the `key_frame_count` or add additional\nURLs to `get_urls`, then the client SHOULD first delete the existing segment and then write a new one. The behaviour is\nundefined if the segment exists and a store may return a 400 error response.\n\nFor successful creation of all segments in the request a 201 response should be provided.  If an error is detected when processing\na list of segments then processing should continue to try and process the remaining segments.  A 200 response should be returned \nlisting the failed segments.\n\nClients are expected to decide how to break content into media objects, however those objects SHOULD be large\nenough to avoid excessive round trip overheads in the underlying store (_e.g._ of the order of several megabytes)\nand where codecs with temporal re-ordering are used, object SHOULD contain complete GOPs or decodable units.\n\nFor objects that have been re-used from other flows, the `sample_offset` and `sample_count` MAY be used to\nspecify part of the object to use:\n- The `timerange` field indicates the new segment's position in the flow\n- The sample associated with the start of the `timerange` MUST be the one selected by `sample_offset`\n- Likewise, the sample associated with the end of the `timerange` MUST be the one selected by\n  `sample_offset + sample_count - 1`, unless `timerange` has an exclusive end, in which case it will be\n  `sample_offset + sample_count`.\n- The timerange of the segment MUST NOT overlap any other segment in the same Flow.\n"
+      description: |
+        Register either a single new flow segment or an array of segments, attaching the object id given to a point in the flow timeline.
+
+        The segment may use a newly-written object, or re-use an existing object from another flow.
+
+        For newly-written objects, the client is responsible for ensuring that the segment written to the store obeys the following restrictions:
+
+        - All samples in the object SHOULD be used by the segment.
+        - The timestamps of each sample in the media object MUST equal its position on the Flow timeline, OR `ts_offset` MUST be set such that `media_object_ts + ts_offset = segment_ts`
+        - The timerange of the segment MUST NOT overlap any other segment in the same Flow. The behaviour is undefined if there is an overlap with existing segments and a store may return a 400 error response.
+        - The `sample_offset` SHOULD be zero.
+
+        A TAMS SHOULD reject registrations of Flow Segments with a 400 error response if it references a newly created media object in the local TAMS storage that was not intended to be used for the Flow. A TAMS SHOULD accept Flow Segments that reference an existing media object in the local TAMS storage that was originally created for another Flow.
+
+        A TAMS MAY support media objects that are held in external storage in another TAMS or other media storage system. The Flow Segment may in that case require the `get_urls` property to provide the information needed by clients to access the media object.
+
+        Clients MAY modify Flow Segments, but this should only be done in exceptional circumstances to correct metadata as such operations will likely break the idempotency of Segments. Properties of Media Objects, such as `get_urls`, SHOULD be modified via the `/objects` endpoints. They SHOULD NOT be modified at this endpoint, and TAMS instances SHOULD reject such requests with a `400` error.
+
+        For successful creation of all segments in the request a 201 response should be provided.  If an error is detected when processing a list of segments then processing should continue to try and process the remaining segments.  A 200 response should be returned listing the failed segments.
+
+        Clients are expected to decide how to break content into media objects, however those objects SHOULD be large enough to avoid excessive round trip overheads in the underlying store (_e.g._ of the order of several megabytes) and where codecs with temporal re-ordering are used, object SHOULD contain complete GOPs or decodable units.
+
+        For objects that have been re-used from other flows, the `sample_offset` and `sample_count` MAY be used to specify part of the object to use:
+
+        - The `timerange` field indicates the new segment's position in the flow
+        - The sample associated with the start of the `timerange` MUST be the one selected by `sample_offset`
+        - Likewise, the sample associated with the end of the `timerange` MUST be the one selected by `sample_offset + sample_count - 1`, unless `timerange` has an exclusive end, in which case it will be `sample_offset + sample_count`.
+        - The timerange of the segment MUST NOT overlap any other segment in the same Flow.
       operationId: POST_flows-flowId-segments
       tags:
         - FlowSegments
@@ -1875,9 +1902,9 @@ paths:
           $ref: '#/components/schemas/uuid'
         description: The flow identifier.
     post:
-      summary: Allocate Flow Storage
+      summary: Allocate Initial Flow Storage
       description: |
-        Allocate storage locations for writing media objects.
+        Allocate initial storage locations for writing media objects.
 
         The media store type, which is indicated in the /service resource, determines the information provided
         in the response. The examples and description below are for the "http_object_store" media store type.
@@ -1939,10 +1966,53 @@ paths:
       parameters:
         - name: objectId
           in: path
-          description: The media object identifier.
+          description: The media object identifier. The Object ID may include special characters such as `/` which should be URL encoded.
           required: true
           schema:
             type: string
+        - name: verbose_storage
+          in: query
+          description: |
+            Include storage metadata in `get_urls`.
+            When `verbose_storage` is `false` only `url`, `presigned`, and `label` will be included in `get_urls`.
+          schema:
+            default: false
+            type: boolean
+        - name: accept_get_urls
+          in: query
+          description: |
+            A comma separated list of labels of media object `get_urls` to include in the response.
+            Omitting `accept_get_urls` will result in no filtering of `get_urls`.
+            An empty `accept_get_urls` results in an empty or no `get_urls` in the response.
+            Media object `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
+            Without `get_urls`, the response from the service could be substantially faster if it is not required to
+            generate a large number of pre-signed URLs for example.
+            Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
+          schema:
+            type: string
+            pattern: ^([^,]+(,[^,]+)*)?$
+        - name: accept_storage_ids
+          in: query
+          description: |
+            A comma separated list of `storage_id`s of media object `get_urls` to include in the response.
+            Omitting `accept_storage_ids`, or providing an empty `accept_storage_ids` will result in no filtering of `get_urls`.
+            Media object `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
+            A full list of available `storage_id`s may be found at the `service/storage-backends` endpoint.
+            Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
+          schema:
+            type: string
+            pattern: ^([0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})(,[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})*$
+        - name: presigned
+          in: query
+          description: |
+            If set to `true`, only presigned URLs (i.e. those whos `presigned` property is `true`) will be returned in `get_urls`.
+            If set to `false`, only non-presigned URLs (i.e. those whos `presigned` property is `false`) will be returned in `get_urls`.
+            If omitted, both presigned and non-presigned URLs will be returned.
+            If `presigned` is set to `false`, the response from the service could be substantially faster if it is not required to
+            generate a large number of pre-signed URLs.
+            Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
+          schema:
+            type: boolean
         - $ref: '#/components/parameters/trait_resource_paged_key'
         - $ref: '#/components/parameters/trait_paged_limit'
       responses:
@@ -1983,10 +2053,53 @@ paths:
       parameters:
         - name: objectId
           in: path
-          description: The media object identifier.
+          description: The media object identifier. The Object ID may include special characters such as `/` which should be URL encoded.
           required: true
           schema:
             type: string
+        - name: verbose_storage
+          in: query
+          description: |
+            Include storage metadata in `get_urls`.
+            When `verbose_storage` is `false` only `url`, `presigned`, and `label` will be included in `get_urls`.
+          schema:
+            default: false
+            type: boolean
+        - name: accept_get_urls
+          in: query
+          description: |
+            A comma separated list of labels of media object `get_urls` to include in the response.
+            Omitting `accept_get_urls` will result in no filtering of `get_urls`.
+            An empty `accept_get_urls` results in an empty or no `get_urls` in the response.
+            Media object `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
+            Without `get_urls`, the response from the service could be substantially faster if it is not required to
+            generate a large number of pre-signed URLs for example.
+            Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
+          schema:
+            type: string
+            pattern: ^([^,]+(,[^,]+)*)?$
+        - name: accept_storage_ids
+          in: query
+          description: |
+            A comma separated list of `storage_id`s of media object `get_urls` to include in the response.
+            Omitting `accept_storage_ids`, or providing an empty `accept_storage_ids` will result in no filtering of `get_urls`.
+            Media object `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
+            A full list of available `storage_id`s may be found at the `service/storage-backends` endpoint.
+            Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
+          schema:
+            type: string
+            pattern: ^([0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})(,[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})*$
+        - name: presigned
+          in: query
+          description: |
+            If set to `true`, only presigned URLs (i.e. those whos `presigned` property is `true`) will be returned in `get_urls`.
+            If set to `false`, only non-presigned URLs (i.e. those whos `presigned` property is `false`) will be returned in `get_urls`.
+            If omitted, both presigned and non-presigned URLs will be returned.
+            If `presigned` is set to `false`, the response from the service could be substantially faster if it is not required to
+            generate a large number of pre-signed URLs.
+            Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
+          schema:
+            type: boolean
         - $ref: '#/components/parameters/trait_resource_paged_key'
         - $ref: '#/components/parameters/trait_paged_limit'
       responses:
@@ -2015,6 +2128,97 @@ paths:
           description: Bad request. Invalid query options.
         "404":
           description: The requested media object does not exist.
+  /objects/{objectId}/instances:
+    post:
+      summary: Register a Media Object instance
+      description: |
+        Request the service to create an object instance on a new storage backend. Or add a new uncontrolled URL to `get_urls`.
+
+        To request the duplication of the Object to a new storage backend, clients POST a `storage_id` to this endpoint that does not currently have an instance of the Object. The API will then:
+
+        - Allocate storage for media object `objectId` on storage backend `storage_id`
+        - Copy the media object from an existing location to the newly allocated storage
+        - Start advertising the new copy in `get_urls` once ready
+
+        The API instances SHOULD be capable of handling the case where the only existant instances are uncontrolled.
+
+        Where a client has written a new uncontrolled object instance, the client is responsible for ensuring that the object written is complete and correct before registering it with this method.
+
+        All instances of an object MUST be identical.
+      operationId: POST_objects-instances
+      tags:
+        - Objects
+      parameters:
+        - name: objectId
+          in: path
+          description: The media object identifier. The Object ID may include special characters such as `/` which should be URL encoded.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            examples:
+              controlled:
+                summary: Registering a controlled instance
+                value:
+                  $ref: examples/objects-instances-controlled-post.json
+              uncontrolled:
+                summary: Registering a uncontrolled instance
+                value:
+                  $ref: examples/objects-instances-uncontrolled-post.json
+            schema:
+              $ref: schemas/objects-instances-post.json
+        required: true
+      responses:
+        "201":
+          description: Object instance successfully registered.
+        "400":
+          description: Bad request. Invalid request JSON.
+        "403":
+          description: Forbidden. You do not have permission to modify this Media Object.
+        "404":
+          description: The media object does not exist.
+    delete:
+      summary: Delete a Media Object instance
+      description: |
+        Delete an instance of a media object.
+
+        One of `storage_id` or `label` MUST be specified in the query parameters. `storage_id` SHOULD be used where `controlled` is `True` for the instance.
+
+        API instances should remove the Media Object instance from the `get_urls` list and then, if the instance is controlled, delete the object instance from storage.
+
+        API instances SHOULD prevent clients from deleting all Object instances. Additionally, API instances MAY prevent clients from deleting all controlled Object instances. Where clients wish to remove all copies of an Object from the store, they should do so by deleting all Flows or Flow Segments which reference the Object.
+      operationId: DELETE_objects-instances
+      tags:
+        - Objects
+      parameters:
+        - name: objectId
+          in: path
+          description: The Media Object identifier. The Object ID may include special characters such as `/` which should be URL encoded.
+          required: true
+          schema:
+            type: string
+        - name: storage_id
+          in: query
+          description: The storage_id identifying the Media Object instance to be deleted.
+          schema:
+            type: string
+        - name: label
+          in: query
+          description: The label identifying the Media Object instance to be deleted.
+          schema:
+            type: string
+      responses:
+        "204":
+          description: No content. The Media Object instance has been deleted.
+        "400":
+          description: Bad request. Invalid query options.
+        "403":
+          description: Forbidden. You do not have permission to modify this Media Object.
+        "404":
+          description: The requested object ID in the path is invalid.
+
   /flow-delete-requests:
     head:
       summary: List Flow Delete Requests

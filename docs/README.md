@@ -43,6 +43,7 @@ For more information on how we use ADRs, see [here](./adr/README.md).
 | [0031](./adr/0031-flow-image-support.md)                           | Add new flow type to support still images                                  |
 | [0032](./adr/0032-specifying-storage-backend.md)                   | Specifying storage backend when requesting storage allocation              |
 | [0034](./adr/0034-storage-allow-object_ids.md)                     | Add object_ids option to Flow Storage request                              |
+| [0038](./adr/0038-improved-storage-management.md)                  | Improved Storage Management                                                |
 
 \* Note: ADR 0004a was the unintended result of a number clash in the early development of TAMS which wasn't caught before publication
 
@@ -69,3 +70,4 @@ For more information on how we use application notes, see [here](./appnotes/READ
 | [0014](./appnotes/0014-referencing-tams-content-in-other-systems.md) | Referencing TAMS content in other systems                       |
 | [0015](./appnotes/0015-using-tams-in-opentimelineio.md)              | Using TAMS in OpenTimelineIO                                    |
 | [0017](./appnotes/0017-reuse-of-ids.md)                              | When to re-use IDs in TAMS and compatible systems               |
+| [0018](./appnotes/0018-managing-multiple-object-instances.md)        | Managing Multiple Object Instances                              |
