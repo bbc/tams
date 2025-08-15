@@ -112,7 +112,7 @@ Various scenarios are explored in the [Practical Guidance for Media](https://spe
 
 Flows exist on an infinite timeline (the "Flow timeline"), and the position of content on this timeline is defined by the `timerange` attribute in each Flow Segment of that Flow.
 A timerange is represented in JSON and text using the [TimeRange string pattern](https://bbc.github.io/tams/5.1/index.html#/schemas/timerange).
-Separately the media objects have a timeline (the "media timeline") defined by the container format itself: the timestamps recorded inside the media object for each grain.
+Separately the media objects have a timeline (the "media timeline") defined by the container format itself: the timestamps recorded inside the media object for each grain in the natural format for that container (e.g. the PTS timing for MPEG-TS).
 The Flow Segment attributes describe how to map the media timeline onto the Flow timeline.
 For Flows using codecs with temporal re-ordering, both of these timelines represent the presentation timeline of the media.
 Note that no explicit relationship is defined between the Flow timelines of different Flows, although a mechanism to define that may be added in future.
@@ -144,19 +144,23 @@ Alternatively if `sample_offset` and `sample_count` are set on the segment, a cl
 
 ![Graphic showing the objects making up Flow Z (above) and their segments, along with the selected grains](./docs/images/Flow%20and%20Media%20Timelines-Flow%20XYZ-subsegments.drawio.png)
 
-The diagram above shows a smaller portion of the Flow Z timeline considered previously, with the presentation time stamp (PTS) of each grain in the object along the bottom.
-The pseudocode below shows how a client might apply the `ts_offset` to each PTS, then validate whether it is inside the given `timerange`.
-Note that the PTS may be a different precision or timebase to the nanosecond timestamps used by TAMS, so some conversion may be required.
+The diagram above shows three of the objects used by Flow Z and a smaller portion of the Flow Z timeline considered previously, with both the media object timeline (and `media_ts`) and Flow timeline (`grain_ts`) of each grain in the object along the bottom.
+The `timerange`/`ts_offset` approach is illustrated by the following pseudocode, which shows how a client might apply the `ts_offset` to each `media_ts`, then validate whether it is inside the given `timerange`.
+Note that the `media_ts` may be a different precision or timebase to the nanosecond timestamps used by TAMS, so some conversion may be required.
 
 ```python
-grain_ts = pts_to_timestamp(grain_pts)             # `4:0` for `grain_pts = 40`
+grain_ts = media_ts_to_timestamp(media_ts)         # `4:0` for `media_ts = 4.0`
 grain_ts_in_flow_timeline = grain_ts + ts_offset   # `4:0 + -0:700000000 = 3:300000000`
 if (grain_ts_in_flow_timeline < timerange.start or
     grain_ts_in_flow_timeline >= timerange.end):   # `3:300000000 is less than 3:500000000`
     discard_grain()                                # So this grain is discarded
 else:
-    new_grain_pts = timestamp_to_pts()             # `grain_pts = 42` will be retained, with `new_grain_pts = 35`
+    keep_grain()                                   # `media_ts = 4.2` will be retained, with `grain_ts = 3:500000000 (or 3.5sec)`
 ```
+
+The diagram below also shows both approaches: by `timerange` and `ts_offset`, and by selecting samples using `sample_offset` and `sample_count`.
+
+![Graphic showing media units being drawn from Flow Z's objects using their timestamps](./docs/images/Flow%20and%20Media%20Timelines-Flow%20XYZ-selecting-units.drawio.png)
 
 ### Events from the API
 
