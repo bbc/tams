@@ -74,10 +74,9 @@ The process of reading from the store is:
 The process of writing to the store is:
 
 1. Client creates a Flow if necessary by making a request to [`PUT flows/<flow_id>`](https://bbc.github.io/tams/5.1/index.html#/operations/PUT_flows-flowId)
-2. Client makes a request to [`POST flows/<flow_id>/storage`](https://bbc.github.io/tams/5.1/index.html#/operations/POST_flows-flowId-storage) and receives a list of URLs to PUT media data into, along with an optional `pre` URL to call before writing
-3. If a `pre` URL was given, client calls it
-4. Client breaks content into Flow Segments (each of which should contain complete decodable units, _e.g._ a number of complete GOPs for video) and uploads the corresponding media data
-5. Client makes requests to [`POST flows/<flow_id>/segments`](https://bbc.github.io/tams/5.1/index.html#/operations/POST_flows-flowId-segments) with details of each new Flow Segment created, to register them on the timeline
+2. Client makes a request to [`POST flows/<flow_id>/storage`](https://bbc.github.io/tams/5.1/index.html#/operations/POST_flows-flowId-storage) and receives a list of URLs to PUT media data into
+3. Client breaks content into Flow Segments (each of which should contain complete decodable units, _e.g._ a number of complete GOPs for video) and uploads the corresponding media data
+4. Client makes requests to [`POST flows/<flow_id>/segments`](https://bbc.github.io/tams/5.1/index.html#/operations/POST_flows-flowId-segments) with details of each new Flow Segment created, to register them on the timeline
 
 ### Sources
 
