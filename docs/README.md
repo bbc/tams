@@ -67,5 +67,6 @@ For more information on how we use ADRs, see [here](./adr/README.md).
 | [0031](./adr/0031-flow-image-support.md)                           | Add new flow type to support still images                                  |
 | [0032](./adr/0032-specifying-storage-backend.md)                   | Specifying storage backend when requesting storage allocation              |
 | [0034](./adr/0034-storage-allow-object_ids.md)                     | Add object_ids option to Flow Storage request                              |
+| [0039](./adr/0039-remove-pre-actions.md)                           | Proposal to remove pre-actions from storage allocation response            |
 
 \* Note: ADR 0004a was the unintended result of a number clash in the early development of TAMS which wasn't caught before publication

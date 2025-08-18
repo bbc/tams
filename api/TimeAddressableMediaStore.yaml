@@ -1938,7 +1938,7 @@ paths:
         These PUT URLs should be used before uploading Media Objects.
         The object_id associated with each storage location has the bucket name as its prefix.
 
-        The response may include PUT URLs for setting the CORS properties for the buckets and Media Objects.
+        The response may include PUT URLs for setting the CORS properties for the Media Objects.
 
         When making requests to the provided `put_url`, clients should include credentials if the provided URL is on the same origin as the API itself, akin to the `same-origin` mode in the [WhatWG Fetch Standard](https://fetch.spec.whatwg.org/#concept-request-credentials-mode).
       operationId: POST_flows-flowId-storage
