@@ -233,7 +233,7 @@ Where requests are rejected, they should return as follows:
 Implementations must evaluate permissions against webhook events themselves as well as the API's HTTP endpoints.
 A basic implementation may enumerate Flows and Sources a user has access to when creating/updating the webhook and use this to filter events.
 This approach is strongly discouraged as permissions may change over time.
-It is recommended that implementations asses permissions on a per-event basis.
+It is recommended that implementations assess permissions on a per-event basis.
 Implementations may use `auth_classes` tags in Flow/Source updated events to maintain a cache of Flow/Sources a webhook has read permissions for.
 Implementations should regularly inspect Source/Flow tags, via the HTTP API or other methods, to guard against missed events.
 Implementations should regularly check the user's permissions in the auth system for changes.
