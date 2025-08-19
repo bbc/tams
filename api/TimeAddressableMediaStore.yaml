@@ -2094,7 +2094,7 @@ paths:
         "400":
           description: Bad request. Invalid query options.
         "404":
-          description: The requested media object does not exist.
+          description: The requested media object does not exist. 404 MUST be returned if the ID has been assigned via the storage endpoint, but not yet registered against a segment.
   /flow-delete-requests:
     head:
       summary: List Flow Delete Requests
