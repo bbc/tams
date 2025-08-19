@@ -2348,7 +2348,7 @@ paths:
         "400":
           description: Bad request. Invalid query options.
         "404":
-          description: The requested media object does not exist.
+          description: The requested media object does not exist. 404 MUST be returned if the ID has been assigned via the storage endpoint, but not yet registered against a segment.
   /objects/{objectId}/instances:
     post:
       summary: Register a Media Object instance
@@ -2399,7 +2399,7 @@ paths:
         "403":
           description: Forbidden. You do not have permission to modify this Media Object.
         "404":
-          description: The Media Object does not exist.
+          description: The Media Object does not exist. 404 MUST be returned if the ID has been assigned via the storage endpoint, but not yet registered against a segment.
     delete:
       summary: Delete a Media Object instance
       description: |
@@ -2438,7 +2438,7 @@ paths:
         "403":
           description: Forbidden. You do not have permission to modify this Media Object.
         "404":
-          description: The requested Object ID in the path is invalid.
+          description: The requested Object ID in the path is invalid. 404 MUST be returned if the ID has been assigned via the storage endpoint, but not yet registered against a segment.
 
   /flow-delete-requests:
     head:
