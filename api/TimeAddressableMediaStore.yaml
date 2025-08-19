@@ -262,7 +262,9 @@ paths:
     put:
       summary: Update webhook details
       description: |
-        Register to receive event notifications as webhooks on a specified URL. Webhook messages will conform to the
+        Update the configuration of an existing webhook.
+
+        Webhook messages will conform to the
         format in the `webhooks` section of the API docs, depending on the event type (as defined in the same section).
         Availability of this endpoint is indicated by the name "webhooks" appearing in the `event_stream_mechanisms`
         list on the service endpoint.
