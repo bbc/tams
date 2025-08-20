@@ -5,5 +5,10 @@
         "4f79cfd1-c057-47f4-8e4d-1b126ca7bf34",
         "0fde9c11-da9d-434a-a113-d3b20a2cf251"
     ],
-    "first_referenced_by_flow": "4f79cfd1-c057-47f4-8e4d-1b126ca7bf34"
+    "first_referenced_by_flow": "4f79cfd1-c057-47f4-8e4d-1b126ca7bf34",
+    "get_urls": [
+        {
+            "url": "https://a4c52e22f45b4a0fa3ea3b9a42b35808-tams-demo.static.lon1.bbcis.uk/tams-7dffa41c-9e12-4e7d-a269-0aae8351d806.ts"
+        }
+    ]
 }
