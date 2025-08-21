@@ -293,8 +293,6 @@ paths:
                 $ref: "examples/webhook-get-200.json"
               schema:
                 $ref: schemas/webhook.json
-        "204":
-          description: No content. The webhook has been deleted.
         "400":
           description: Bad request. Invalid parameters or unsupported event filtering or transformation.
         "403":
