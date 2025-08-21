@@ -41,11 +41,12 @@ This could result in unexpected incompatibility between implementations.
 * Option 1: No changes
 * Option 2: Move bucket ID to a separate parameter
 * Option 3: Remove pre-actions
+* Option 4: Remove `put_cors_url` from `media_objects`
 
 ## Decision Outcome
 
-Chosen option 3: Remove pre-actions.
-This will simplify the specification by removing a feature which is non-trivial to implement, but has no current real-world use cases.
+Chosen option 3: Remove pre-actions, and option 4: Remove `put_cors_url` from `media_objects`.
+This will simplify the specification by removing features which are non-trivial to implement, but have no known real-world use cases.
 
 ### Implementation
 
@@ -81,3 +82,10 @@ This option would see support for pre-actions removed from the storage endpoint.
 * Good, because extra information will no longer be embedded in Object IDs
 * Good, because it removes a non-trivial part of the spec that we have no real use cases for
 * Neutral, because it's a breaking change to pre-actions workflows that we don't believe are in any implementations
+
+### Option 4: Remove `put_cors_url` from `media_objects`
+
+This option would additionally see us remove the `put_cors_url` property from `media_objects`. As with pre-actions, we have found no real-world use cases for this.
+
+* Good, because it removes a non-trivial part of the spec that we have no real use cases for
+* Neutral, because it's a breaking change to media object upload workflows that we don't believe are in any implementations
