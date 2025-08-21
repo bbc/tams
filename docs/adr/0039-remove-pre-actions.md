@@ -49,7 +49,7 @@ This will simplify the specification by removing a feature which is non-trivial 
 
 ### Implementation
 
-{Once the proposal has been implemented, add a link to the relevant PRs here}
+Implemented by <https://github.com/bbc/tams/pull/148/>
 
 ## Pros and Cons of the Options
 
