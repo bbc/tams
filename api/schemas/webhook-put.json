@@ -1,10 +1,10 @@
 {
-    "title": "Register Webhook",
-    "description": "Register to receive updates via webhook",
+    "title": "Modify Webhook",
+    "description": "Modify existing webhook",
     "type": "object",
     "allOf": [
         {
-            "$ref": "webhook.json"
+            "$ref": "webhook-with-id.json"
         },
         {
             "type": "object",
