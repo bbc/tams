@@ -85,7 +85,8 @@ This option would see support for pre-actions removed from the storage endpoint.
 
 ### Option 4: Remove `put_cors_url` from `media_objects`
 
-This option would additionally see us remove the `put_cors_url` property from `media_objects`. As with pre-actions, we have found no real-world use cases for this.
+This option would additionally see us remove the `put_cors_url` property from `media_objects`.
+As with pre-actions, we have found no real-world use cases for this.
 
 * Good, because it removes a non-trivial part of the spec that we have no real use cases for
 * Neutral, because it's a breaking change to media object upload workflows that we don't believe are in any implementations
