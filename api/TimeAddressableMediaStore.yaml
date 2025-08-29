@@ -153,9 +153,29 @@ paths:
       operationId: HEAD_webhooks
       tags:
         - Webhooks
+      parameters:
+        - $ref: '#/components/parameters/trait_resource_paged_key'
+        - $ref: '#/components/parameters/trait_paged_limit'
       responses:
         "200":
-          $ref: '#/components/responses/trait_resource_listing_head_200'
+          description: ""
+          headers:
+            Link:
+              description: Provides references to cursors for paging. Only the 'rel' attribute with value 'next' and a link to the next page is currently supported. If 'next' is not present then it is the last page.
+              schema:
+                type: string
+            X-Paging-Limit:
+              description: Identifies the current limit being used for paging. This may not match the requested value if the requested value was too high for the implementation
+              schema:
+                type: integer
+            X-Paging-NextKey:
+              description: Opaque string that can be supplied to the `page` query parameter to get the next page of results.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: string
         "404":
           description: "Webhooks are not supported by this API implementation"
     get:
@@ -168,9 +188,25 @@ paths:
       operationId: GET_webhooks
       tags:
         - Webhooks
+      parameters:
+        - $ref: '#/components/parameters/trait_resource_paged_key'
+        - $ref: '#/components/parameters/trait_paged_limit'
       responses:
         "200":
           description: Return the list of known webhook URLs.
+          headers:
+            Link:
+              description: Provides references to cursors for paging. Only the 'rel' attribute with value 'next' and a link to the next page is currently supported. If 'next' is not present then it is the last page.
+              schema:
+                type: string
+            X-Paging-Limit:
+              description: Identifies the current limit being used for paging. This may not match the requested value if the requested value was too high for the implementation
+              schema:
+                type: integer
+            X-Paging-NextKey:
+              description: Opaque string that can be supplied to the `page` query parameter to get the next page of results.
+              schema:
+                type: string
           content:
             application/json:
               example:
