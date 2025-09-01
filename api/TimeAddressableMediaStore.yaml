@@ -2344,7 +2344,7 @@ webhooks:
                   format: date-time
                 event_type:
                   type: string
-                  const: flows/segments_added
+                  const: flows/segments_deleted
                 event:
                   type: object
                   required:
