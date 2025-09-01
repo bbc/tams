@@ -19,7 +19,17 @@
             "description": "List of event types to receive",
             "type": "array",
             "items": {
-                "type": "string"
+                "type": "string",
+                "enum": [
+                    "flows/created",
+                    "flows/updated",
+                    "flows/deleted",
+                    "flows/segments_added",
+                    "flows/segments_deleted",
+                    "sources/created",
+                    "sources/updated",
+                    "sources/deleted"
+                ]
             }
         },
         "flow_ids": {
