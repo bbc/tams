@@ -296,8 +296,7 @@ if __name__ == "__main__":
 
     parser.add_argument(
         "--tams-url", type=str, required=True,
-        help=("URL of the top level endpoint in the TAMS service. "
-              "For Squirrel this must include the '/x-cloudfit/squirrelmediastore/<version>' path")
+        help=("URL of the top level endpoint in the TAMS service.")
     )
     parser.add_argument(
         "--oauth2-url", type=str, default=os.environ.get("OAUTH2_URL"),
