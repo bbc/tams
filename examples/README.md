@@ -45,7 +45,7 @@ E.g., to run a script with OAuth2 credentials you can
 E.g.
 
 ```bash
-export OAUTH2_URL=https://demo-oauth2-service/token
+export OAUTH2_URL=https://demo-oauth2-service.example.com/token
 export CLIENT_ID=demo
 export CLIENT_SECRET=asecret
 ```

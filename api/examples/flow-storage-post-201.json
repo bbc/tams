@@ -4,7 +4,7 @@
             "action": "create_bucket",
             "bucket_id": "tams-e2b89b02-21e7-5f9d-aa2d-db38b01453c9",
             "put_url": {
-                "url": "https://example.store.com/tams-e2b89b02-21e7-5f9d-aa2d-db38b01453c9?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=0&X-Amz-Date=20230316T120329Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&X-Amz-Signature=0",
+                "url": "https://store.example.com/tams-e2b89b02-21e7-5f9d-aa2d-db38b01453c9?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=0&X-Amz-Date=20230316T120329Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&X-Amz-Signature=0",
                 "body": "<CreateBucketConfiguration xmlns=\"http://s3.amazonaws.com/doc/2006-03-01/\">\n    <LocationConstraint>default</LocationConstraint>\n</CreateBucketConfiguration >\n"
             }
         },
@@ -12,79 +12,79 @@
             "action": "create_bucket",
             "bucket_id": "tams-c6b8e7cc-edd3-5f6d-9d79-4467d06eb8bf",
             "put_url": {
-                "url": "https://example.store.com/tams-c6b8e7cc-edd3-5f6d-9d79-4467d06eb8bf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=0&X-Amz-Date=20230316T120329Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&X-Amz-Signature=0",
+                "url": "https://store.example.com/tams-c6b8e7cc-edd3-5f6d-9d79-4467d06eb8bf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=0&X-Amz-Date=20230316T120329Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&X-Amz-Signature=0",
                 "body": "<CreateBucketConfiguration xmlns=\"http://s3.amazonaws.com/doc/2006-03-01/\">\n    <LocationConstraint>default</LocationConstraint>\n</CreateBucketConfiguration >\n"
             }
         }
     ],
     "media_objects": [
         {
-            "object_id": "tams-e2b89b02-21e7-5f9d-aa2d-db38b01453c9/846023d3-612d-5014-bc47-88f6eb2d04bb",
+            "object_id": "846023d3-612d-5014-bc47-88f6eb2d04bb",
             "put_url": {
-                "url": "https://example.store.com/tams-e2b89b02-21e7-5f9d-aa2d-db38b01453c9/846023d3-612d-5014-bc47-88f6eb2d04bb?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=0&X-Amz-Date=20230316T120329Z&X-Amz-Expires=300&X-Amz-SignedHeaders=content-type%3Bhost&X-Amz-Signature=0",
+                "url": "https://store.example.com/tams-e2b89b02-21e7-5f9d-aa2d-db38b01453c9/846023d3-612d-5014-bc47-88f6eb2d04bb?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=0&X-Amz-Date=20230316T120329Z&X-Amz-Expires=300&X-Amz-SignedHeaders=content-type%3Bhost&X-Amz-Signature=0",
                 "content-type": "video/mp2t"
             }
         },
         {
-            "object_id": "tams-e2b89b02-21e7-5f9d-aa2d-db38b01453c9/25be83fc-11d1-5743-9d47-6865cef5ea35",
+            "object_id": "25be83fc-11d1-5743-9d47-6865cef5ea35",
             "put_url": {
-                "url": "https://example.store.com/tams-e2b89b02-21e7-5f9d-aa2d-db38b01453c9/25be83fc-11d1-5743-9d47-6865cef5ea35?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=0&X-Amz-Date=20230316T120329Z&X-Amz-Expires=300&X-Amz-SignedHeaders=content-type%3Bhost&X-Amz-Signature=0",
+                "url": "https://store.example.com/tams-e2b89b02-21e7-5f9d-aa2d-db38b01453c9/25be83fc-11d1-5743-9d47-6865cef5ea35?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=0&X-Amz-Date=20230316T120329Z&X-Amz-Expires=300&X-Amz-SignedHeaders=content-type%3Bhost&X-Amz-Signature=0",
                 "content-type": "video/mp2t"
             }
         },
         {
-            "object_id": "tams-e2b89b02-21e7-5f9d-aa2d-db38b01453c9/8b785422-6a82-5d60-b25a-f77e0a748321",
+            "object_id": "8b785422-6a82-5d60-b25a-f77e0a748321",
             "put_url": {
-                "url": "https://example.store.com/tams-e2b89b02-21e7-5f9d-aa2d-db38b01453c9/8b785422-6a82-5d60-b25a-f77e0a748321?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=0&X-Amz-Date=20230316T120329Z&X-Amz-Expires=300&X-Amz-SignedHeaders=content-type%3Bhost&X-Amz-Signature=0",
+                "url": "https://store.example.com/tams-e2b89b02-21e7-5f9d-aa2d-db38b01453c9/8b785422-6a82-5d60-b25a-f77e0a748321?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=0&X-Amz-Date=20230316T120329Z&X-Amz-Expires=300&X-Amz-SignedHeaders=content-type%3Bhost&X-Amz-Signature=0",
                 "content-type": "video/mp2t"
             }
         },
         {
-            "object_id": "tams-e2b89b02-21e7-5f9d-aa2d-db38b01453c9/a94cee18-1a40-5676-b788-1ac74c8a26e9",
+            "object_id": "a94cee18-1a40-5676-b788-1ac74c8a26e9",
             "put_url": {
-                "url": "https://example.store.com/tams-e2b89b02-21e7-5f9d-aa2d-db38b01453c9/a94cee18-1a40-5676-b788-1ac74c8a26e9?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=0&X-Amz-Date=20230316T120329Z&X-Amz-Expires=300&X-Amz-SignedHeaders=content-type%3Bhost&X-Amz-Signature=0",
+                "url": "https://store.example.com/tams-e2b89b02-21e7-5f9d-aa2d-db38b01453c9/a94cee18-1a40-5676-b788-1ac74c8a26e9?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=0&X-Amz-Date=20230316T120329Z&X-Amz-Expires=300&X-Amz-SignedHeaders=content-type%3Bhost&X-Amz-Signature=0",
                 "content-type": "video/mp2t"
             }
         },
         {
-            "object_id": "tams-e2b89b02-21e7-5f9d-aa2d-db38b01453c9/9d2b1d66-d785-5dcd-82d8-70d37d39259e",
+            "object_id": "9d2b1d66-d785-5dcd-82d8-70d37d39259e",
             "put_url": {
-                "url": "https://example.store.com/tams-e2b89b02-21e7-5f9d-aa2d-db38b01453c9/9d2b1d66-d785-5dcd-82d8-70d37d39259e?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=0&X-Amz-Date=20230316T120329Z&X-Amz-Expires=300&X-Amz-SignedHeaders=content-type%3Bhost&X-Amz-Signature=0",
+                "url": "https://store.example.com/tams-e2b89b02-21e7-5f9d-aa2d-db38b01453c9/9d2b1d66-d785-5dcd-82d8-70d37d39259e?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=0&X-Amz-Date=20230316T120329Z&X-Amz-Expires=300&X-Amz-SignedHeaders=content-type%3Bhost&X-Amz-Signature=0",
                 "content-type": "video/mp2t"
             }
         },
         {
-            "object_id": "tams-e2b89b02-21e7-5f9d-aa2d-db38b01453c9/e3a116a0-416c-5530-ae79-58f2ecea31cb",
+            "object_id": "e3a116a0-416c-5530-ae79-58f2ecea31cb",
             "put_url": {
-                "url": "https://example.store.com/tams-e2b89b02-21e7-5f9d-aa2d-db38b01453c9/e3a116a0-416c-5530-ae79-58f2ecea31cb?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=0&X-Amz-Date=20230316T120329Z&X-Amz-Expires=300&X-Amz-SignedHeaders=content-type%3Bhost&X-Amz-Signature=0",
+                "url": "https://store.example.com/tams-e2b89b02-21e7-5f9d-aa2d-db38b01453c9/e3a116a0-416c-5530-ae79-58f2ecea31cb?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=0&X-Amz-Date=20230316T120329Z&X-Amz-Expires=300&X-Amz-SignedHeaders=content-type%3Bhost&X-Amz-Signature=0",
                 "content-type": "video/mp2t"
             }
         },
         {
-            "object_id": "tams-c6b8e7cc-edd3-5f6d-9d79-4467d06eb8bf/8859eec0-cf59-54b2-8572-51ffb755b369",
+            "object_id": "8859eec0-cf59-54b2-8572-51ffb755b369",
             "put_url": {
-                "url": "https://example.store.com/tams-c6b8e7cc-edd3-5f6d-9d79-4467d06eb8bf/8859eec0-cf59-54b2-8572-51ffb755b369?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=0&X-Amz-Date=20230316T120329Z&X-Amz-Expires=300&X-Amz-SignedHeaders=content-type%3Bhost&X-Amz-Signature=0",
+                "url": "https://store.example.com/tams-c6b8e7cc-edd3-5f6d-9d79-4467d06eb8bf/8859eec0-cf59-54b2-8572-51ffb755b369?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=0&X-Amz-Date=20230316T120329Z&X-Amz-Expires=300&X-Amz-SignedHeaders=content-type%3Bhost&X-Amz-Signature=0",
                 "content-type": "video/mp2t"
             }
         },
         {
-            "object_id": "tams-c6b8e7cc-edd3-5f6d-9d79-4467d06eb8bf/5b143aae-fa75-50b4-9cba-b7c0676dba15",
+            "object_id": "5b143aae-fa75-50b4-9cba-b7c0676dba15",
             "put_url": {
-                "url": "https://example.store.com/tams-c6b8e7cc-edd3-5f6d-9d79-4467d06eb8bf/5b143aae-fa75-50b4-9cba-b7c0676dba15?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=0&X-Amz-Date=20230316T120329Z&X-Amz-Expires=300&X-Amz-SignedHeaders=content-type%3Bhost&X-Amz-Signature=0",
+                "url": "https://store.example.com/tams-c6b8e7cc-edd3-5f6d-9d79-4467d06eb8bf/5b143aae-fa75-50b4-9cba-b7c0676dba15?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=0&X-Amz-Date=20230316T120329Z&X-Amz-Expires=300&X-Amz-SignedHeaders=content-type%3Bhost&X-Amz-Signature=0",
                 "content-type": "video/mp2t"
             }
         },
         {
-            "object_id": "tams-c6b8e7cc-edd3-5f6d-9d79-4467d06eb8bf/028ce16f-96ab-5334-bf3c-db95fdc73b17",
+            "object_id": "028ce16f-96ab-5334-bf3c-db95fdc73b17",
             "put_url": {
-                "url": "https://example.store.com/tams-c6b8e7cc-edd3-5f6d-9d79-4467d06eb8bf/028ce16f-96ab-5334-bf3c-db95fdc73b17?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=0&X-Amz-Date=20230316T120329Z&X-Amz-Expires=300&X-Amz-SignedHeaders=content-type%3Bhost&X-Amz-Signature=0",
+                "url": "https://store.example.com/tams-c6b8e7cc-edd3-5f6d-9d79-4467d06eb8bf/028ce16f-96ab-5334-bf3c-db95fdc73b17?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=0&X-Amz-Date=20230316T120329Z&X-Amz-Expires=300&X-Amz-SignedHeaders=content-type%3Bhost&X-Amz-Signature=0",
                 "content-type": "video/mp2t"
             }
         },
         {
-            "object_id": "tams-c6b8e7cc-edd3-5f6d-9d79-4467d06eb8bf/8264b3d3-d903-58b1-ab28-0ea164a22d2b",
+            "object_id": "8264b3d3-d903-58b1-ab28-0ea164a22d2b",
             "put_url": {
-                "url": "https://example.store.com/tams-c6b8e7cc-edd3-5f6d-9d79-4467d06eb8bf/8264b3d3-d903-58b1-ab28-0ea164a22d2b?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=0&X-Amz-Date=20230316T120329Z&X-Amz-Expires=300&X-Amz-SignedHeaders=content-type%3Bhost&X-Amz-Signature=0",
+                "url": "https://store.example.com/tams-c6b8e7cc-edd3-5f6d-9d79-4467d06eb8bf/8264b3d3-d903-58b1-ab28-0ea164a22d2b?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=0&X-Amz-Date=20230316T120329Z&X-Amz-Expires=300&X-Amz-SignedHeaders=content-type%3Bhost&X-Amz-Signature=0",
                 "content-type": "video/mp2t"
             }
         }
