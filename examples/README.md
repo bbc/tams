@@ -54,10 +54,9 @@ export CLIENT_SECRET=asecret
 E.g.
 
 ```bash
-./outgest_file.py --tams-url https://squirrel-service/x-cloudfit/squirrelmediastore/v5.1 --flow-id eca3c5ff-d5b0-44b7-bd17-e58863f69bed --check-timing --output output.ts
+./outgest_file.py --tams-url https://tams-service.example.com --flow-id eca3c5ff-d5b0-44b7-bd17-e58863f69bed --check-timing --output output.ts
 ```
 
-> Note that the `--tams-url` must include the `/x-cloudfit/squirrelmediastore/<version>` path for the "Squirrel" TAMS implementation.
 
 ## Examples
 
