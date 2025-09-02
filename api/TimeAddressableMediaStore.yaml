@@ -244,7 +244,7 @@ paths:
         required: true
       responses:
         "201":
-          description: Success. The webhook has been updated
+          description: Success. The webhook has been registered.
           content:
             application/json:
               example:
