@@ -53,6 +53,10 @@ But if that is not needed, media work can be done purely by reference.
 Grains are grouped into Flow Segments, containing for example one second of content, wrapped in a container format such as MPEG-TS.
 The store provides a mechanism to upload and register new Flow Segments, and an interface to request all the Flow Segments covering a particular timerange and their download URLs; an approach inspired by chunked streaming protocols like HTTP Live Streaming.
 
+> [!NOTE]
+> TAMS is not opinionated about what container format is used.
+> But conventions are emerging for common technical profiles used in interoperable implementations.
+
 The media data contained within Flow Segments may be stored separately from the metadata linking them to a position on the timeline, separating the media data and metadata planes.
 For example our implementation uses a database (_e.g._ Amazon DynamoDB) to store Flow Segment metadata and an object store (_e.g._ AWS S3) to store the media data for Flow Segments.
 We refer to media data stored in the object store as 'media objects'.
