@@ -41,6 +41,7 @@
         },
         "tags":
         {
+            "description": "Key value is a freeform string. WARNING: When updating a flow with `tags` set, `tags` will be replaced with the provided dictionary. `tags` WILL NOT be merged with the provided values. When `tags` is not set in the request, `tags` will be unset (i.e. set to `{}`). To update individual tags, clients should use the [Create or Update Flow Tag](#/operations/PUT_flows-flowId-tags-name) endpoint.",
             "$ref": "tags.json"
         },
         "metadata_version":
