@@ -1572,8 +1572,7 @@ paths:
             generate a large number of pre-signed URLs for example.
             Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
           schema:
-            type: string
-            pattern: ^([^,]+(,[^,]+)*)?$
+            $ref: 'schemas/url-label-list.json'
         - name: accept_storage_ids
           in: query
           description: |
@@ -1701,8 +1700,7 @@ paths:
             generate a large number of pre-signed URLs for example.
             Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
           schema:
-            type: string
-            pattern: ^([^,]+(,[^,]+)*)?$
+            $ref: 'schemas/url-label-list.json'
         - name: accept_storage_ids
           in: query
           description: |

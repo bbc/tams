@@ -1,0 +1,6 @@
+{
+    "title": "Query String GET URL Label list",
+    "description": "A list of Media Object GET URL Labels, formatted for use in query string parameters",
+    "type": "string",
+    "pattern": "^([^,]+(,[^,]+)*)?$"
+ }
