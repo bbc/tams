@@ -46,7 +46,7 @@
         },
         "metadata_version":
         {
-            "description": "A change to the flow metadata, not including metadata_version, last_update or segments, results in a new version. If the metadata_version for flow instances is identical then the metadata is identical.",
+            "description": "A change to the flow metadata, not including metadata_version, metadata_updated, segments_updated, or segments, results in a new version. If the metadata_version for flow instances is identical then the metadata is identical. Implementations SHOULD set suitable default values for `metadata_version` whenever flow metadata is changed and `metadata_version` is either not set by the client, or set to it's existing value. Implementations MAY permit clients to edit the value, subject to suitable permissions-based limitations. Where media is transfered between stores without changing the Flow metadata, clients SHOULD maintain the `metadata_version`. To support this, implementations SHOULD always accept the setting of `metadata_version` by the client on initial Flow creation. Implementations SHOULD update this field where metadata is updated via child endpoints. Note that this specification places no requirements on incremental versioning. Implementations may, for example, choose to use hashes or date-time version identifiers.",
             "type": "string"
         },
         "generation":
