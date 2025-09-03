@@ -18,16 +18,14 @@ info:
   title: Time-addressable Media Store
   description: |
     The Time-addressable Media Store (TAMS) is used for storing segmented media flows.
-    The TAMS consists of a media store for the media flow segment objects and a service providing
-    a database index of the flow segments. This document is a specification of the service API.
+    The TAMS consists of a media store for the media flow segment objects and a service providing a database index of the flow segments.
+    This document is a specification of the service API.
 
     See the [bbc/tams](https://github.com/bbc/tams) repository for more background on TAMS.
 
-    **Note**: the examples provided in this specification are for a system which uses a media
-    store that provides HTTP URLs for uploading and downloading media objects in buckets. This
-    could for example be implemented using an AWS S3 compatible store using presigned URLs or by
-    a simple file system storage with an HTTP frontend. Clients should parse the /service endpoint
-    and handle the media store type in use appropriately.
+    **Note**: the examples provided in this specification are for a system which uses a media store that provides HTTP URLs for uploading and downloading media objects in buckets.
+    This could for example be implemented using an AWS S3 compatible store using presigned URLs or by a simple file system storage with an HTTP frontend.
+    Clients should parse the /service endpoint and handle the media store type in use appropriately.
   version: "7.0"
   contact:
     name: 'BBC R&D - Cloud-Fit Production Team'
@@ -163,10 +161,9 @@ paths:
     get:
       summary: List Webhook URLs
       description: |
-        Get the list of registered webhook URLs. Implementations SHOULD take steps to avoid displaying URLs to users
-        other than those who have suitable permissions (e.g. the owning user).
-        Availability of this endpoint is indicated by the name "webhooks" appearing in the `event_stream_mechanisms`
-        list on the service endpoint.
+        Get the list of registered webhook URLs.
+        Implementations SHOULD take steps to avoid displaying URLs to users other than those who have suitable permissions (e.g. the owning user).
+        Availability of this endpoint is indicated by the name "webhooks" appearing in the `event_stream_mechanisms` list on the service endpoint.
       operationId: GET_webhooks
       tags:
         - Webhooks
@@ -191,22 +188,20 @@ paths:
     post:
       summary: Register Webhook URL
       description: |
-        Register to receive event notifications as webhooks on a specified URL. Webhook messages will conform to the
-        format in the `webhooks` section of the API docs, depending on the event type (as defined in the same section).
-        Availability of this endpoint is indicated by the name "webhooks" appearing in the `event_stream_mechanisms`
-        list on the service endpoint.
+        Register to receive event notifications as webhooks on a specified URL.
+        Webhook messages will conform to the format in the `webhooks` section of the API docs, depending on the event type (as defined in the same section).
+        Availability of this endpoint is indicated by the name "webhooks" appearing in the `event_stream_mechanisms` list on the service endpoint.
 
-        Making a POST request to this endpoint with the same URL, API key name and value but a different list
-        of `events` SHOULD update the existing registration. POSTing an empty list of events SHOULD remove the
-        registration.
+        Making a POST request to this endpoint with the same URL, API key name and value but a different list of `events` SHOULD update the existing registration.
+        POSTing an empty list of events SHOULD remove the registration.
 
-        HTTP requests from the service SHOULD include a `api_key_name` header with the 'api_key_value' value. Clients SHOULD verify this against the value they provided when registering the webhook.
+        HTTP requests from the service SHOULD include a `api_key_name` header with the 'api_key_value' value.
+        Clients SHOULD verify this against the value they provided when registering the webhook.
 
         API implementations MAY partially support event filtering and transformations.
         API implementations SHALL return a 400 response code if the filtering or transformation specified in the request is not supported.
 
-        API implementations SHOULD consider the security implementations of providing webhooks, and include appropriate
-        mitigations against Server Side Request Forgery (SSRF) attacks and similar.
+        API implementations SHOULD consider the security implementations of providing webhooks, and include appropriate mitigations against Server Side Request Forgery (SSRF) attacks and similar.
       operationId: POST_webhooks
       tags:
         - Webhooks
@@ -251,18 +246,17 @@ paths:
           in: query
           description: |
             Filter on Sources that have a tag named {name} and with the given value.
-            The {name} could contain escaped characters to allow it to be used in a
-            URL.
+            The {name} could contain escaped characters to allow it to be used in a URL.
           schema:
             type: string
         - name: tag_exists.{name}
           in: query
           description: |
-            Filter on Sources that have a tag named {name} regardless of value. The
-            {name} could contain escaped characters to allow it to be used in a
-            URL. If set to true then the presence of the tag is filtered for. If set
-            to false then its absence is. If left out then no filtering on tag presence
-            is performed.
+            Filter on Sources that have a tag named {name} regardless of value.
+            The {name} could contain escaped characters to allow it to be used in a URL.
+            If set to true then the presence of the tag is filtered for.
+            If set to false then its absence is.
+            If left out then no filtering on tag presence is performed.
           schema:
             type: boolean
         - name: format
@@ -310,18 +304,17 @@ paths:
           in: query
           description: |
             Filter on Sources that have a tag named {name} and with the given value.
-            The {name} could contain escaped characters to allow it to be used in a
-            URL.
+            The {name} could contain escaped characters to allow it to be used in a URL.
           schema:
             type: string
         - name: tag_exists.{name}
           in: query
           description: |
-            Filter on Sources that have a tag named {name} regardless of value. The
-            {name} could contain escaped characters to allow it to be used in a
-            URL. If set to true then the presence of the tag is filtered for. If set
-            to false then its absence is. If left out then no filtering on tag presence
-            is performed.
+            Filter on Sources that have a tag named {name} regardless of value.
+            The {name} could contain escaped characters to allow it to be used in a URL.
+            If set to true then the presence of the tag is filtered for.
+            If set to false then its absence is.
+            If left out then no filtering on tag presence is performed.
           schema:
             type: boolean
         - name: format
@@ -695,18 +688,17 @@ paths:
           in: query
           description: |
             Filter on flows that have a tag named {name} and with the given value.
-            The {name} could contain escaped characters to allow it to be used in a
-            URL.
+            The {name} could contain escaped characters to allow it to be used in a URL.
           schema:
             type: string
         - name: tag_exists.{name}
           in: query
           description: |
-            Filter on flows that have a tag named {name} regardless of value. The
-            {name} could contain escaped characters to allow it to be used in a
-            URL. If set to true then the presence of the tag is filtered for. If set
-            to false then its absence is. If left out then no filtering on tag presence
-            is performed.
+            Filter on flows that have a tag named {name} regardless of value.
+            The {name} could contain escaped characters to allow it to be used in a URL.
+            If set to true then the presence of the tag is filtered for.
+            If set to false then its absence is.
+            If left out then no filtering on tag presence is performed.
           schema:
             type: boolean
         - name: frame_width
@@ -780,18 +772,17 @@ paths:
           in: query
           description: |
             Filter on flows that have a tag named {name} and with the given value.
-            The {name} could contain escaped characters to allow it to be used in a
-            URL.
+            The {name} could contain escaped characters to allow it to be used in a URL.
           schema:
             type: string
         - name: tag_exists.{name}
           in: query
           description: |
-            Filter on flows that have a tag named {name} regardless of value. The
-            {name} could contain escaped characters to allow it to be used in a
-            URL. If set to true then the presence of the tag is filtered for. If set
-            to false then its absence is. If left out then no filtering on tag presence
-            is performed.
+            Filter on flows that have a tag named {name} regardless of value.
+            The {name} could contain escaped characters to allow it to be used in a URL.
+            If set to true then the presence of the tag is filtered for.
+            If set to false then its absence is.
+            If left out then no filtering on tag presence is performed.
           schema:
             type: boolean
         - name: frame_width
@@ -941,7 +932,12 @@ paths:
       description: |
         Create or replace the flow metadata.
 
-        Store implementations SHOULD verify that Flow metadata is compatible with the associated Source. Store implementations MAY accept modification/addition of parameters, and reflect such changes in the Source, where it will not bring any Flows of the Source into conflict. Where metadata would result in any Flow of the Source coming into conflict, the request SHOULD be rejected with a 400 response. Examples of conflicting metadata include `format` not matching, or the `role` in `source_collection` and `flow_collection` not matching. It may also be possible for store implementations to detect some instances where multiple Flows should not be considered of the same Source, such as audio Flows with different numbers of tracks. Further guidance on when Flows/Sources may be considered the same/different may be found in the [Practical Guidance for Media](https://specs.amwa.tv/ms-04/releases/v1.0.0/docs/3.0._Practical_Guidance_for_Media.html) section of AMWA MS-04.
+        Store implementations SHOULD verify that Flow metadata is compatible with the associated Source.
+        Store implementations MAY accept modification/addition of parameters, and reflect such changes in the Source, where it will not bring any Flows of the Source into conflict.
+        Where metadata would result in any Flow of the Source coming into conflict, the request SHOULD be rejected with a 400 response.
+        Examples of conflicting metadata include `format` not matching, or the `role` in `source_collection` and `flow_collection` not matching.
+        It may also be possible for store implementations to detect some instances where multiple Flows should not be considered of the same Source, such as audio Flows with different numbers of tracks.
+        Further guidance on when Flows/Sources may be considered the same/different may be found in the [Practical Guidance for Media](https://specs.amwa.tv/ms-04/releases/v1.0.0/docs/3.0._Practical_Guidance_for_Media.html) section of AMWA MS-04.
       operationId: PUT_flows-flowId
       tags:
         - Flows
@@ -980,9 +976,8 @@ paths:
     delete:
       summary: Delete Flow
       description: |
-        Deletes the flow and associated segments. If flow segment deletion
-        takes too long then this request will return 202 Accepted and the `Location` header will point to a
-        Flow Delete Request to monitor deletion progress
+        Deletes the flow and associated segments.
+        If flow segment deletion takes too long then this request will return 202 Accepted and the `Location` header will point to a Flow Delete Request to monitor deletion progress
       operationId: DELETE_flows-flowId
       tags:
         - Flows
@@ -1358,7 +1353,9 @@ paths:
       description: |
         Create or update the flow collection property.
 
-        Store implementations SHOULD verify that Flow metadata is compatible with the associated Source. Store implementations MAY accept modification/addition of parameters, and reflect such changes in the Source, where it will not bring any Flows of the Source into conflict. Where metadata would result in any Flow of the Source coming into conflict, the request SHOULD be rejected with a 400 response.
+        Store implementations SHOULD verify that Flow metadata is compatible with the associated Source.
+        Store implementations MAY accept modification/addition of parameters, and reflect such changes in the Source, where it will not bring any Flows of the Source into conflict.
+        Where metadata would result in any Flow of the Source coming into conflict, the request SHOULD be rejected with a 400 response.
       operationId: PUT_flows-flowId-flow-collection
       tags:
         - Flows
@@ -1582,8 +1579,7 @@ paths:
             Omitting `accept_get_urls` will result in no filtering of `get_urls`.
             An empty `accept_get_urls` results in an empty or no `get_urls` in the response.
             Flow segment `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
-            Without `get_urls`, the response from the service could be substantially faster if it is not required to
-            generate a large number of pre-signed URLs for example.
+            Without `get_urls`, the response from the service could be substantially faster if it is not required to generate a large number of pre-signed URLs for example.
             Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
           schema:
             $ref: 'schemas/url-label-list.json'
@@ -1603,8 +1599,7 @@ paths:
             If set to `true`, only presigned URLs (i.e. those whos `presigned` property is `true`) will be returned in `get_urls`.
             If set to `false`, only non-presigned URLs (i.e. those whos `presigned` property is `false`) will be returned in `get_urls`.
             If omitted, both presigned and non-presigned URLs will be returned.
-            If `presigned` is set to `false`, the response from the service could be substantially faster if it is not required to
-            generate a large number of pre-signed URLs.
+            If `presigned` is set to `false`, the response from the service could be substantially faster if it is not required to generate a large number of pre-signed URLs.
             Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
           schema:
             type: boolean
@@ -1651,30 +1646,22 @@ paths:
       description: |
         Returns the flow segments.
 
-        The flow segment provides information about the media object. The media store type, which is
-        indicated in the /service/storage-backends resource, determines the information that is included to allow the
-        flow segment's media object to be downloaded. The examples provided here are for the
-        "http_object_store" media store type which MUST include a `get_urls` property that contains the
-        HTTP URLs for downloading the media object - server implementations should generate this internally.
+        The flow segment provides information about the media object.
+        The media store type, which is indicated in the /service/storage-backends resource, determines the information that is included to allow the flow segment's media object to be downloaded.
+        The examples provided here are for the "http_object_store" media store type which MUST include a `get_urls` property that contains the HTTP URLs for downloading the media object - server implementations should generate this internally.
 
-        The flow segment may include timing adjustment information that the client needs to apply when extracting
-        the samples from the media object.
+        The flow segment may include timing adjustment information that the client needs to apply when extracting the samples from the media object.
         It may also use a subset of the samples in the media object.
         - The timestamp of a sample on the flow segment's timeline (`segment_ts`) is the timestamp of that sample embedded in or derived from the internal timing of the media object (`media_object_ts`) adjusted by `ts_offset`: `segment_ts = media_object_ts + ts_offset`.
         - In addition, the segment's `timerange` start MUST be at `sample_offset` samples from the start of the presentation timeline of the object, and `timerange` end MUST be at `sample_offset + sample_count` samples.
 
-        Use the pagination options to limit the results to a timerange and/or count. The list of flow
-        segments can be empty. A request for segments from a non-existent flow will return an empty
-        list, not a 404.
+        Use the pagination options to limit the results to a timerange and/or count.
+        The list of flow segments can be empty.
+        A request for segments from a non-existent flow will return an empty list, not a 404.
 
-        Note that for codecs with temporal re-ordering, the timerange representes the _presentation_
-        timeline, and clients may need to check the `key_frame_count` property and/or read backwards
-        from the start of the requested timerange to retrieve enough reference material to start
-        decoding.
+        Note that for codecs with temporal re-ordering, the timerange representes the _presentation_ timeline, and clients may need to check the `key_frame_count` property and/or read backwards from the start of the requested timerange to retrieve enough reference material to start decoding.
 
-        When making requests to the provided `get_urls`, clients should include credentials if the provided
-        URL is on the same origin as the API itself, akin to the `same-origin` mode in the
-        [WhatWG Fetch Standard](https://fetch.spec.whatwg.org/#concept-request-credentials-mode).
+        When making requests to the provided `get_urls`, clients should include credentials if the provided URL is on the same origin as the API itself, akin to the `same-origin` mode in the [WhatWG Fetch Standard](https://fetch.spec.whatwg.org/#concept-request-credentials-mode).
       operationId: GET_flows-flowId-segments
       tags:
         - FlowSegments
@@ -1710,8 +1697,7 @@ paths:
             Omitting `accept_get_urls` will result in no filtering of `get_urls`.
             An empty `accept_get_urls` results in an empty or no `get_urls` in the response.
             Flow segment `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
-            Without `get_urls`, the response from the service could be substantially faster if it is not required to
-            generate a large number of pre-signed URLs for example.
+            Without `get_urls`, the response from the service could be substantially faster if it is not required to generate a large number of pre-signed URLs for example.
             Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
           schema:
             $ref: 'schemas/url-label-list.json'
@@ -1731,8 +1717,7 @@ paths:
             If set to `true`, only presigned URLs (i.e. those whos `presigned` property is `true`) will be returned in `get_urls`.
             If set to `false`, only non-presigned URLs (i.e. those whos `presigned` property is `false`) will be returned in `get_urls`.
             If omitted, both presigned and non-presigned URLs will be returned.
-            If `presigned` is set to `false`, the response from the service could be substantially faster if it is not required to
-            generate a large number of pre-signed URLs.
+            If `presigned` is set to `false`, the response from the service could be substantially faster if it is not required to generate a large number of pre-signed URLs.
             Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
           schema:
             type: boolean
@@ -1788,8 +1773,7 @@ paths:
                   summary: Multiple URLs
                   description: |
                     This example shows how the media object for a Flow Segment could be accessed using multiple URLs.
-                    Clients are free to choose any of the URLs given (which return identical media objects), however the server has
-                    expressed a preference for the "pipeline-a" URLs by putting them first in the list.
+                    Clients are free to choose any of the URLs given (which return identical media objects), however the server has expressed a preference for the "pipeline-a" URLs by putting them first in the list.
                   value:
                     $ref: examples/flow-segments-get-200-multiple-urls.json
         "400":
@@ -1798,7 +1782,37 @@ paths:
           description: The flow ID in the path is invalid.
     post:
       summary: Create Flow Segments
-      description: "Register either a single new flow segment or an array of segments, attaching the object id given to a point in the flow timeline.\n\nThe segment may use a newly-written object, or re-use an existing object from another flow.\n\nFor newly-written objects, the client is responsible for ensuring that the segment written to the store obeys the following restrictions:\n- All samples in the object SHOULD be used by the segment.\n- The timestamps of each sample in the media object MUST equal its position on the Flow timeline, OR `ts_offset` MUST\n  be set such that `media_object_ts + ts_offset = segment_ts`\n- The timerange of the segment MUST NOT overlap any other segment in the same Flow. The behaviour is\n  undefined if there is an overlap with existing segments and a store may return a 400 error response.\n- The `sample_offset` SHOULD be zero.\n\nA TAMS SHOULD reject registrations of Flow Segments with a 400 error response if it references a newly created media object\nin the local TAMS storage that was not intended to be used for the Flow. A TAMS SHOULD accept Flow Segments that reference an\nexisting media object in the local TAMS storage that was originally created for another Flow.\n\nA TAMS MAY support media objects that are held in external storage in another TAMS or other media storage system. The Flow Segment\nmay in that case require the `get_urls` property to provide the information needed by clients to access the media object.\n\nIf a client needs to modify a Flow segment, e.g. to correct metadata such as the `key_frame_count` or add additional\nURLs to `get_urls`, then the client SHOULD first delete the existing segment and then write a new one. The behaviour is\nundefined if the segment exists and a store may return a 400 error response.\n\nFor successful creation of all segments in the request a 201 response should be provided.  If an error is detected when processing\na list of segments then processing should continue to try and process the remaining segments.  A 200 response should be returned \nlisting the failed segments.\n\nClients are expected to decide how to break content into media objects, however those objects SHOULD be large\nenough to avoid excessive round trip overheads in the underlying store (_e.g._ of the order of several megabytes)\nand where codecs with temporal re-ordering are used, object SHOULD contain complete GOPs or decodable units.\n\nFor objects that have been re-used from other flows, the `sample_offset` and `sample_count` MAY be used to\nspecify part of the object to use:\n- The `timerange` field indicates the new segment's position in the flow\n- The sample associated with the start of the `timerange` MUST be the one selected by `sample_offset`\n- Likewise, the sample associated with the end of the `timerange` MUST be the one selected by\n  `sample_offset + sample_count - 1`, unless `timerange` has an exclusive end, in which case it will be\n  `sample_offset + sample_count`.\n- The timerange of the segment MUST NOT overlap any other segment in the same Flow.\n"
+      description: |
+        Register either a single new flow segment or an array of segments, attaching the object id given to a point in the flow timeline.
+
+        The segment may use a newly-written object, or re-use an existing object from another flow.
+
+        For newly-written objects, the client is responsible for ensuring that the segment written to the store obeys the following restrictions:
+          - All samples in the object SHOULD be used by the segment.
+          - The timestamps of each sample in the media object MUST equal its position on the Flow timeline, OR `ts_offset` MUST be set such that `media_object_ts + ts_offset = segment_ts`
+          - The timerange of the segment MUST NOT overlap any other segment in the same Flow. The behaviour is undefined if there is an overlap with existing segments and a store may return a 400 error response.
+          - The `sample_offset` SHOULD be zero.
+
+        A TAMS SHOULD reject registrations of Flow Segments with a 400 error response if it references a newly created media object in the local TAMS storage that was not intended to be used for the Flow.
+        A TAMS SHOULD accept Flow Segments that reference an existing media object in the local TAMS storage that was originally created for another Flow.
+
+        A TAMS MAY support media objects that are held in external storage in another TAMS or other media storage system.
+        The Flow Segment may in that case require the `get_urls` property to provide the information needed by clients to access the media object.
+
+        If a client needs to modify a Flow segment, e.g. to correct metadata such as the `key_frame_count` or add additional URLs to `get_urls`, then the client SHOULD first delete the existing segment and then write a new one.
+        The behaviour is undefined if the segment exists and a store may return a 400 error response.
+
+        For successful creation of all segments in the request a 201 response should be provided.
+        If an error is detected when processing a list of segments then processing should continue to try and process the remaining segments.
+        A 200 response should be returned listing the failed segments.
+
+        Clients are expected to decide how to break content into media objects, however those objects SHOULD be large enough to avoid excessive round trip overheads in the underlying store (_e.g._ of the order of several megabytes) and where codecs with temporal re-ordering are used, object SHOULD contain complete GOPs or decodable units.
+
+        For objects that have been re-used from other flows, the `sample_offset` and `sample_count` MAY be used to specify part of the object to use:
+          - The `timerange` field indicates the new segment's position in the flow
+          - The sample associated with the start of the `timerange` MUST be the one selected by `sample_offset`
+          - Likewise, the sample associated with the end of the `timerange` MUST be the one selected by `sample_offset + sample_count - 1`, unless `timerange` has an exclusive end, in which case it will be  `sample_offset + sample_count`.
+          - The timerange of the segment MUST NOT overlap any other segment in the same Flow.
       operationId: POST_flows-flowId-segments
       tags:
         - FlowSegments
@@ -1834,8 +1848,7 @@ paths:
     delete:
       summary: Delete Flow Segment
       description: |
-        Deletes the flow segments. If the deletion takes too long then this request will return 202 Accepted and the `Location` header will point to a
-        Flow Delete Request to monitor deletion progress
+        Deletes the flow segments. If the deletion takes too long then this request will return 202 Accepted and the `Location` header will point to a Flow Delete Request to monitor deletion progress
       operationId: DELETE_flows-flowId-segments
       tags:
         - FlowSegments
@@ -1886,24 +1899,21 @@ paths:
       description: |
         Allocate storage locations for writing media objects.
 
-        The media store type, which is indicated in the /service resource, determines the information provided
-        in the response. The examples and description below are for the "http_object_store" media store type.
+        The media store type, which is indicated in the /service resource, determines the information provided in the response.
+        The examples and description below are for the "http_object_store" media store type.
         This media store type provides HTTP URLs for uploading and downloading media objects in buckets.
 
-        The response will include a PUT URL that a client uses to upload the media object. The client is expected
-        to register the flow segment using the /flows/{flowId}/segments endpoint once the upload is complete.
-        Implementations need to handle situations where objects were uploaded but no flow segment was registered
-        successfully.
+        The response will include a PUT URL that a client uses to upload the media object.
+        The client is expected to register the flow segment using the /flows/{flowId}/segments endpoint once the upload is complete.
+        Implementations need to handle situations where objects were uploaded but no flow segment was registered successfully.
 
-        The response may include PUT URLs for creating buckets for the media objects. These PUT URLs should
-        be used before uploading media objects. The object_id associated with each storage location has the
-        bucket name as its prefix.
+        The response may include PUT URLs for creating buckets for the media objects.
+        These PUT URLs should be used before uploading media objects.
+        The object_id associated with each storage location has the bucket name as its prefix.
 
         The response may include PUT URLs for setting the CORS properties for the buckets and media objects.
 
-        When making requests to the provided `put_url`, clients should include credentials if the provided
-        URL is on the same origin as the API itself, akin to the `same-origin` mode in the
-        [WhatWG Fetch Standard](https://fetch.spec.whatwg.org/#concept-request-credentials-mode).
+        When making requests to the provided `put_url`, clients should include credentials if the provided URL is on the same origin as the API itself, akin to the `same-origin` mode in the [WhatWG Fetch Standard](https://fetch.spec.whatwg.org/#concept-request-credentials-mode).
       operationId: POST_flows-flowId-storage
       tags:
         - MediaStorage
@@ -1982,8 +1992,7 @@ paths:
         Contains flows that references the media object and other information.
 
         The paging query parameters and headers are required for the list of flow references in the media object.
-        API implementations should return a complete list of flow references within reason and API clients should expect
-        paging to happen in some rare cases where a media object is used in many flows.
+        API implementations should return a complete list of flow references within reason and API clients should expect paging to happen in some rare cases where a media object is used in many flows.
       operationId: GET_objects
       tags:
         - Objects
@@ -2037,9 +2046,7 @@ paths:
       description: |
         List deletion requests currently being worked on, for monitoring in development.
 
-        This will not necessarily list all requests, nor return a consistent set in any particular order,
-        and should not be relied upon by clients. However if there are any requests in the system, it will
-        always return at least one.
+        This will not necessarily list all requests, nor return a consistent set in any particular order, and should not be relied upon by clients. However if there are any requests in the system, it will always return at least one.
       operationId: GET_flow-delete-requests
       tags:
         - FlowDeleteRequests
@@ -2077,8 +2084,8 @@ paths:
       description: |
         Get information about a timerange of FlowSegments that are being deleted.
 
-        A deletion request is created when a client DELETEs a long timeranges of segments, which takes longer than
-        a single HTTP request. Clients will be redirected here to monitor the request's progress.
+        A deletion request is created when a client DELETEs a long timeranges of segments, which takes longer than a single HTTP request.
+        Clients will be redirected here to monitor the request's progress.
       operationId: GET_flow-delete-requests-request-id
       tags:
         - FlowDeleteRequests
@@ -2375,9 +2382,7 @@ components:
       description: |
         HTTP basic authentication using a username and password.
 
-        This option should only be used in constrained cases where Bearer tokens are impractical, since the password is
-        intrinsically long-lived, and managing user credentials across systems is difficult compared to using
-        centralised auth (e.g. via OAuth2) with Bearer tokens
+        This option should only be used in constrained cases where Bearer tokens are impractical, since the password is intrinsically long-lived, and managing user credentials across systems is difficult compared to using centralised auth (e.g. via OAuth2) with Bearer tokens
     bearer_token_auth:
       type: http
       scheme: bearer
@@ -2385,14 +2390,11 @@ components:
       description: |
         HTTP bearer token authentication.
 
-        The method through which a client should acquire a bearer token is assumed to be an OAuth2 grant (either the
-        Authorization Code or Client Credentials grant), however the OpenAPI `OAuth Flow` object cannot be used because
-        it requires that the relevant URLs are known in advance.
+        The method through which a client should acquire a bearer token is assumed to be an OAuth2 grant (either the Authorization Code or Client Credentials grant), however the OpenAPI `OAuth Flow` object cannot be used because it requires that the relevant URLs are known in advance.
 
         Clients should provide options to allow one (or both) grant types to be configured, as appropriate.
 
-        Where tokens are not JWTs, or are acquired through some other mechanism, the API key method should be used
-        instead.
+        Where tokens are not JWTs, or are acquired through some other mechanism, the API key method should be used instead.
     url_token_auth:
       type: apiKey
       name: access_token
@@ -2400,11 +2402,9 @@ components:
       description: |
         URL token authentication.
 
-        The method through which a client should acquire the token is not specified: it is assumed this takes place in
-        another way, and a TAMS client may well be passed a URL to a store including the token.
+        The method through which a client should acquire the token is not specified: it is assumed this takes place in another way, and a TAMS client may well be passed a URL to a store including the token.
 
-        Clients should retain the token in the `access_token` query string parameter, and use it for subsequent store
-        requests in the same session.
+        Clients should retain the token in the `access_token` query string parameter, and use it for subsequent store requests in the same session.
 tags:
   - name: Service
     description: The service root and documentation about the service itself
