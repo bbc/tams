@@ -51,7 +51,7 @@
         },
         "generation":
         {
-            "description": "An indication of how many lossy encodings the flow content has been through. A flow with a higher generation may contain less of the original information than a flow with a lower generation.",
+            "description": "An indication of how many lossy encodings the flow content has been through. This parameter provides a hint to clients as to which is the \"highest qualty\" flow available to them. A flow with a higher generation may contain less of the original information than a flow with a lower generation. n flow captured straight from the orginating device (e.g. camera/microphone) in its highest quality, and there is no possibility of the content becoming available in a higher quality (e.g. via capture from ST2110 or SDI), it SHOULD have a `generation` of `0`. Where the originating device outputs multiple qualities of the Source, `generation` should represent the encoding processes each has been through as accurately as possible.",
             "type": "integer",
             "minimum": 0
         },
