@@ -1,0 +1,13 @@
+{
+    "title": "Content Format",
+    "description": "Identifies the content format for a flow or source using a URN string",
+    "type": "string",
+    "format": "uri",
+    "enum": [
+        "urn:x-nmos:format:video",
+        "urn:x-tam:format:image",
+        "urn:x-nmos:format:audio",
+        "urn:x-nmos:format:data",
+        "urn:x-nmos:format:multi"
+    ]
+ }
