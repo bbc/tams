@@ -671,7 +671,7 @@ paths:
           in: query
           description: Filter on flow codec.
           schema:
-            $ref: '#/components/schemas/mimetype'
+            $ref: 'schemas/mime-type.json'
         - name: label
           in: query
           description: Filter on flows that have the given label.
@@ -756,7 +756,7 @@ paths:
           in: query
           description: Filter on flow codec.
           schema:
-            $ref: '#/components/schemas/mimetype'
+            $ref: 'schemas/mime-type.json'
         - name: label
           in: query
           description: Filter on flows that have the given label.
@@ -2324,12 +2324,6 @@ webhooks:
                     source_id:
                       $ref: "schemas/uuid.json"
 components:
-  schemas:
-    mimetype:
-      title: MIME Type
-      pattern: .*/.*
-      description: MIME Type string.
-      type: string
   responses:
     trait_resource_listing_head_200:
       description: ""
