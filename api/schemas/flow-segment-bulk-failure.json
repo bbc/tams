@@ -20,11 +20,11 @@
                         "description": "The object ID of the segment which has failed to register with the TAMS API",
                         "type": "string"                },
                     "timerange": {
-                        "description": "The timerange of segment that has failed, as described by the [TimeRange](../schemas/timerange#top) type",
+                        "description": "The timerange of segment that has failed, as described by the [TimeRange](#/schemas/timerange) type",
                         "$ref": "timerange.json"
                     },
                     "error": {
-                        "description": "Provides more information for the error status, as described by the [Error](../schemas/error#top) type",
+                        "description": "Provides more information for the error status, as described by the [Error](#/schemas/error) type",
                         "$ref": "error.json"
                     }
                 }

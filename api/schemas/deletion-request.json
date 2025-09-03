@@ -19,11 +19,11 @@
             "$ref": "uuid.json"
         },
         "timerange_to_delete": {
-            "description": "The timerange of FlowSegments to be deleted in this request, as described by the [TimeRange](../schemas/timerange#top) type",
+            "description": "The timerange of FlowSegments to be deleted in this request, as described by the [TimeRange](#/schemas/timerange) type",
             "$ref": "timerange.json"
         },
         "timerange_remaining": {
-            "description": "The timerange of FlowSegments not yet deleted by this request, as described by the [TimeRange](../schemas/timerange#top) type",
+            "description": "The timerange of FlowSegments not yet deleted by this request, as described by the [TimeRange](#/schemas/timerange) type",
             "$ref": "timerange.json"
         },
         "delete_flow": {
@@ -60,7 +60,7 @@
             ]
         },
         "error": {
-            "description": "Provides more information for the error status, as described by the [Error](../schemas/error#top) type",
+            "description": "Provides more information for the error status, as described by the [Error](#/schemas/error) type",
             "$ref": "error.json"
         }
     }
