@@ -10,8 +10,8 @@
             "description": "The list of segments which have failed to register with the TAMS API",
             "type": "array",
             "items": {
-                "type": "object",
                 "description": "Failed segment details",
+                "type": "object",
                 "required": [
                     "object_id"
                 ],

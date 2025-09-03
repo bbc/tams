@@ -1,7 +1,7 @@
 {
-    "type": "object",
-    "description": "Describes a video Flow",
     "title": "Video Flow",
+    "description": "Describes a video Flow",
+    "type": "object",
     "allOf": [
         {
             "$ref": "flow-core.json"
@@ -22,9 +22,9 @@
                     ]
                 },
                 "essence_parameters": {
-                    "type": "object",
-                    "description": "Describes the parameters of the essence inside this video Flow",
                     "title": "Video Flow Essence Parameters",
+                    "description": "Describes the parameters of the essence inside this video Flow",
+                    "type": "object",
                     "required": [
                         "frame_width",
                         "frame_height"
@@ -154,8 +154,8 @@
                             "exclusiveMinimum": 0
                         },
                         "unc_parameters": {
-                            "type": "object",
                             "title": "Uncompressed Video Parameters",
+                            "type": "object",
                             "required": [
                                 "unc_type"
                             ],
@@ -185,8 +185,8 @@
                             }
                         },
                         "avc_parameters": {
-                            "type": "object",
                             "title": "AVC Codec Parameters",
+                            "type": "object",
                             "required": [
                                 "profile",
                                 "level",

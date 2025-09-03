@@ -1,7 +1,7 @@
 {
-    "type": "object",
-    "description": "Describes how an object (Source or Flow) is collected into another object of the same type",
     "title": "Collection Item",
+    "description": "Describes how an object (Source or Flow) is collected into another object of the same type",
+    "type": "object",
     "required": [
         "id",
         "role"

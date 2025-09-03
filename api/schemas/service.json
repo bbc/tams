@@ -1,39 +1,48 @@
 {
-  "type": "object",
-  "description": "Provides information about the store service",
-  "title": "Service",
-  "required": [
-    "type",
-    "api_version"
-  ],
-  "properties": {
-    "name": {
-      "description": "The service instance name",
-      "type": "string"
-    },
-    "description": {
-      "description": "The service instance description",
-      "type": "string"
-    },
-    "type": {
-      "description": "The type identifier for the service. The value must start with 'urn:x-tams:service'",
-      "type": "string"
-    },
-    "api_version": {
-      "description": "The version of the TAMS API specification this deployment implements",
-      "type": "string",
-      "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)$"
-    },
-    "service_version": {
-      "description": "The version of software providing this service. Note: Different implementations and software houses may use different conventions for their version identification. As such, this field is intentionally permissive and intended to be informative only. Implementations should avoid using this field to determine compatibility.",
-      "type": "string"
-    },
-    "event_stream_mechanisms": {
-      "type": "array",
-      "description": "List the types of event stream that this implementation supports",
-      "items": {
-        "$ref": "event-stream-common.json"
-      }
+    "title": "Service",
+    "description": "Provides information about the store service",
+    "type": "object",
+    "required":
+    [
+        "type",
+        "api_version"
+    ],
+    "properties":
+    {
+        "name":
+        {
+            "description": "The service instance name",
+            "type": "string"
+        },
+        "description":
+        {
+            "description": "The service instance description",
+            "type": "string"
+        },
+        "type":
+        {
+            "description": "The type identifier for the service. The value must start with 'urn:x-tams:service'",
+            "type": "string"
+        },
+        "api_version":
+        {
+            "description": "The version of the TAMS API specification this deployment implements",
+            "type": "string",
+            "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)$"
+        },
+        "service_version":
+        {
+            "description": "The version of software providing this service. Note: Different implementations and software houses may use different conventions for their version identification. As such, this field is intentionally permissive and intended to be informative only. Implementations should avoid using this field to determine compatibility.",
+            "type": "string"
+        },
+        "event_stream_mechanisms":
+        {
+            "description": "List the types of event stream that this implementation supports",
+            "type": "array",
+            "items":
+            {
+                "$ref": "event-stream-common.json"
+            }
+        }
     }
-  }
 }

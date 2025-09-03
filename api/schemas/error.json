@@ -1,4 +1,5 @@
 {
+    "title": "Error status metadata",
     "description": "Provides more information for the error status.",
     "type": "object",
     "required": [

@@ -1,7 +1,7 @@
 {
-    "type": "object",
-    "description": "Describes an still image Flow",
     "title": "Image Flow",
+    "description": "Describes an still image Flow",
+    "type": "object",
     "allOf": [
         {
             "$ref": "flow-core.json"
@@ -22,9 +22,9 @@
                     ]
                 },
                 "essence_parameters": {
-                    "type": "object",
-                    "description": "Describes the parameters of the essence inside this image Flow",
                     "title": "Image Flow Essence Parameters",
+                    "description": "Describes the parameters of the essence inside this image Flow",
+                    "type": "object",
                     "required": [
                         "frame_width",
                         "frame_height"

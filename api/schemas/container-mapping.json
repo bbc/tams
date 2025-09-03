@@ -1,7 +1,7 @@
 {
-    "type": "object",
-    "description": "Defines the location of Flow essence data in a container track",
     "title": "Container Mapping",
+    "description": "Defines the location of Flow essence data in a container track",
+    "type": "object",
     "properties": {
         "track_index": {
             "description": "A zero-based and sequential track index in the container. This assumes a reliable ordering of tracks",
