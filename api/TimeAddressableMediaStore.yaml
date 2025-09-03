@@ -359,7 +359,7 @@ paths:
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/uuid'
+          $ref: 'schemas/uuid.json'
         description: The Source identifier.
     head:
       summary: Source Details
@@ -403,7 +403,7 @@ paths:
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/uuid'
+          $ref: 'schemas/uuid.json'
         description: The Source identifier.
     head:
       summary: List Source Tags
@@ -445,7 +445,7 @@ paths:
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/uuid'
+          $ref: 'schemas/uuid.json'
         description: The Source identifier.
     head:
       summary: Source Tag Value
@@ -513,7 +513,7 @@ paths:
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/uuid'
+          $ref: 'schemas/uuid.json'
         description: The Source identifier.
     head:
       summary: Source Description
@@ -581,7 +581,7 @@ paths:
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/uuid'
+          $ref: 'schemas/uuid.json'
         description: The Source identifier.
     head:
       summary: Source Label
@@ -655,7 +655,7 @@ paths:
           in: query
           description: Filter on source identifier.
           schema:
-            $ref: '#/components/schemas/uuid'
+            $ref: 'schemas/uuid.json'
         - name: timerange
           in: query
           description: Filter on flows that overlap the given timerange.
@@ -740,7 +740,7 @@ paths:
           in: query
           description: Filter on source identifier.
           schema:
-            $ref: '#/components/schemas/uuid'
+            $ref: 'schemas/uuid.json'
         - name: timerange
           in: query
           description: Filter on flows that overlap the given timerange. An empty timerange returns flows with no content.
@@ -824,7 +824,7 @@ paths:
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/uuid'
+          $ref: 'schemas/uuid.json'
         description: The flow identifier.
     head:
       summary: Flow Details
@@ -998,7 +998,7 @@ paths:
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/uuid'
+          $ref: 'schemas/uuid.json'
         description: The flow identifier.
     head:
       summary: List Flow Tags
@@ -1040,7 +1040,7 @@ paths:
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/uuid'
+          $ref: 'schemas/uuid.json'
         description: The flow identifier.
     head:
       summary: Flow Tag Value
@@ -1112,7 +1112,7 @@ paths:
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/uuid'
+          $ref: 'schemas/uuid.json'
         description: The flow identifier.
     head:
       summary: Flow Description
@@ -1184,7 +1184,7 @@ paths:
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/uuid'
+          $ref: 'schemas/uuid.json'
         description: The flow identifier.
     head:
       summary: Flow Label
@@ -1254,7 +1254,7 @@ paths:
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/uuid'
+          $ref: 'schemas/uuid.json'
         description: The flow identifier.
     head:
       summary: Flow Read-Only
@@ -1309,7 +1309,7 @@ paths:
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/uuid'
+          $ref: 'schemas/uuid.json'
         description: The flow identifier.
     head:
       summary: Flow Collection
@@ -1384,7 +1384,7 @@ paths:
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/uuid'
+          $ref: 'schemas/uuid.json'
         description: The flow identifier.
     head:
       summary: Flow Maximum Bit Rate
@@ -1456,7 +1456,7 @@ paths:
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/uuid'
+          $ref: 'schemas/uuid.json'
         description: The flow identifier.
     head:
       summary: Flow Average Bit Rate
@@ -1528,7 +1528,7 @@ paths:
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/uuid'
+          $ref: 'schemas/uuid.json'
         description: The flow identifier.
     head:
       summary: List Flow Segments
@@ -1583,8 +1583,7 @@ paths:
             A full list of available `storage_id`s may be found at the `service/storage-backends` endpoint.
             Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
           schema:
-            type: string
-            pattern: ^([0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})(,[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})*$
+            $ref: 'schemas/uuid-list.json'
         - name: presigned
           in: query
           description: |
@@ -1713,8 +1712,7 @@ paths:
             A full list of available `storage_id`s may be found at the `service/storage-backends` endpoint.
             Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
           schema:
-            type: string
-            pattern: ^([0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})(,[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})*$
+            $ref: 'schemas/uuid-list.json'
         - name: presigned
           in: query
           description: |
@@ -1869,7 +1867,7 @@ paths:
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/uuid'
+          $ref: 'schemas/uuid.json'
         description: The flow identifier.
     post:
       summary: Allocate Flow Storage
@@ -2168,7 +2166,7 @@ webhooks:
                     - flow_id
                   properties:
                     flow_id:
-                      $ref: "#/components/schemas/uuid"
+                      $ref: "schemas/uuid.json"
   flows/segments_added:
     post:
       security:
@@ -2199,7 +2197,7 @@ webhooks:
                     - segments
                   properties:
                     flow_id:
-                      $ref: "#/components/schemas/uuid"
+                      $ref: "schemas/uuid.json"
                     segments:
                       type: array
                       items:
@@ -2234,7 +2232,7 @@ webhooks:
                     - timerange
                   properties:
                     flow_id:
-                      $ref: "#/components/schemas/uuid"
+                      $ref: "schemas/uuid.json"
                     timerange:
                       description: The timerange of segments that have been deleted. The timerange MUST intersect with a segment which has been deleted at both start and end (e.g. it cannot start or end in empty space).
                       $ref: 'schemas/timerange.json'
@@ -2324,13 +2322,9 @@ webhooks:
                     - source_id
                   properties:
                     source_id:
-                      $ref: "#/components/schemas/uuid"
+                      $ref: "schemas/uuid.json"
 components:
   schemas:
-    uuid:
-      title: UUID
-      pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
-      type: string
     contentformat:
       title: Content Format
       description: Identifies the content format for a flow or source using a URN string.

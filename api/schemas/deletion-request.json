@@ -12,13 +12,11 @@
     "properties": {
         "id": {
             "description": "Deletion Request ID",
-            "type": "string",
-            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            "$ref": "uuid.json"
         },
         "flow_id": {
             "description": "ID of the flow to which the deletion request relates",
-            "type": "string",
-            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            "$ref": "uuid.json"
         },
         "timerange_to_delete": {
             "description": "The timerange of FlowSegments to be deleted in this request, as described by the [TimeRange](../schemas/timerange#top) type",
