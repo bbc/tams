@@ -1,7 +1,7 @@
 {
-    "type": "object",
     "title": "Deletion Request",
     "description": "Describes an ongoing deletion request",
+    "type": "object",
     "required": [
         "id",
         "flow_id",

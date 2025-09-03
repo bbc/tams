@@ -1,5 +1,6 @@
 {
     "title": "Flow Collection",
+    "description": "Describes how Flows are collected into another Flow",
     "type": "array",
     "items": {
         "type": "object",

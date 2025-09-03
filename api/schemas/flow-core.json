@@ -1,123 +1,152 @@
 {
-  "type": "object",
-  "description": "Describes a Flow (common properties to all Flows, imported by type-specific specifications)",
-  "title": "Flow Core",
-  "required": [
-    "id",
-    "source_id"
-  ],
-  "properties": {
-    "id": {
-      "description": "Flow identifier",
+    "title": "Flow Core",
+    "description": "Describes a Flow (common properties to all Flows, imported by type-specific specifications)",
+    "type": "object",
+    "required":
+    [
+        "id",
+        "source_id"
+    ],
+    "properties":
+    {
+        "id":
+        {
+            "description": "Flow identifier",
             "$ref": "uuid.json"
-    },
-    "source_id": {
-      "description": "Source identifier",
+        },
+        "source_id":
+        {
+            "description": "Source identifier",
             "$ref": "uuid.json"
-    },
-    "label": {
-      "description": "Freeform string label for the flow",
-      "type": "string"
-    },
-    "description": {
-      "description": "Freeform text describing the flow",
-      "type": "string"
-    },
-    "created_by": {
-      "description": "A string identifier for the entity that created the flow. Implementations SHOULD set suitable default values for `created_by` based on the principal accessing the system, and MAY permit clients to edit the value, subject to suitable permissions-based limitations.",
-      "type": "string"
-    },
-    "updated_by": {
-      "description": "A string identifier for the entity that updated the flow metadata most recently. Implementations SHOULD set suitable default values for `updated_by` based on the principal accessing the system, and MAY permit clients to edit the value, subject to suitable permissions-based limitations.",
-      "type": "string"
-    },
-    "tags": {
-      "$ref": "tags.json"
-    },
-    "metadata_version": {
-      "description": "A change to the flow metadata, not including metadata_version, last_update or segments, results in a new version. If the metadata_version for flow instances is identical then the metadata is identical.",
-      "type": "string"
-    },
-    "generation": {
-      "description": "An indication of how many lossy encodings the flow content has been through. A flow with a higher generation may contain less of the original information than a flow with a lower generation.",
-      "type": "integer",
-      "minimum": 0
-    },
-    "created": {
-      "description": "The date-time the flow was created in a given context, e.g. in the store. Implementations SHOULD ignore this if given in a PUT request, and instead manage it internally",
-      "type": "string",
-      "format": "date-time"
-    },
-    "metadata_updated": {
-      "description": "The date-time the flow metadata was updated in a given context, e.g. in the store. Implementations SHOULD ignore this if given in a PUT request, and instead manage it internally",
-      "type": "string",
-      "format": "date-time"
-    },
-    "segments_updated": {
-      "description": "The date-time the flow segments were updated in a given context, e.g. in the store. Implementations SHOULD ignore this if given in a PUT request, and instead manage it internally",
-      "type": "string",
-      "format": "date-time"
-    },
-    "read_only": {
-      "description": "If set to 'true', implementations SHOULD reject client requests to update Flow metadata (other than the read_only property), Flow Segments and media objects",
-      "type": "boolean"
-    },
-    "codec": {
-      "description": "A MIME type identification of the (lossy or lossless) coding used for the flow content.",
-      "$ref": "mime-type.json"
-    },
-    "container": {
-      "description": "The container MIME type for flow segments.",
-      "$ref": "mime-type.json"
-    },
-    "avg_bit_rate": {
-      "description": "The average bit rate of the flow segments in 1000 bits/second. A precise definition can be found in the [Setting Flow Bit Rate Properties](https://github.com/bbc/tams/blob/main/docs/appnotes/0013-setting-flow-bit-rate-properties.md) AppNote.",
-      "type": "integer",
-      "minimum": 0
-    },
-    "max_bit_rate": {
-      "description": "The maximum bit rate of the flow segments in 1000 bits/second. A precise definition can be found in the [Setting Flow Bit Rate Properties](https://github.com/bbc/tams/blob/main/docs/appnotes/0013-setting-flow-bit-rate-properties.md) AppNote.",
-      "type": "integer",
-      "minimum": 0
-    },
-    "segment_duration": {
-      "description": "The target flow segment duration in seconds. The duration for each segment may vary around this target value. See also the [Setting Flow Bit Rate Properties](https://github.com/bbc/tams/blob/main/docs/appnotes/0013-setting-flow-bit-rate-properties.md) AppNote for how this property can be used to calculate buffer sizes.",
-      "type": "object",
-      "required": [
-          "numerator"
-      ],
-      "properties": {
-          "numerator": {
-              "description": "numerator",
-              "type": "integer",
-              "exclusiveMinimum": 0
-          },
-          "denominator": {
-              "description": "denominator",
-              "type": "integer",
-              "default": 1,
-              "exclusiveMinimum": 0
-          }
-      }
-    },
-    "timerange": {
-      "description": "The timerange of samples available in the flow, as described by the [TimeRange](#/schemas/timerange) type",
-      "$ref": "timerange.json"
-    },
-    "flow_collection": {
-        "description": "List of Flows that are collected together by this Flow.",
-        "$ref": "flow-collection.json"
-    },
-    "collected_by": {
-      "type": "array",
-      "description": "Flows that reference this Flow to include it in a collection. This attribute is intended to be read-only. Implementations SHOULD ignore this if given in a PUT request, and instead manage it internally",
-      "items": {
-        "$ref": "uuid.json"
-      }
-    },
-    "container_mapping": {
-        "description": "Describes the mapping of the Flow essence from the this Flow's container",
-        "$ref": "container-mapping.json"
+        },
+        "label":
+        {
+            "description": "Freeform string label for the flow",
+            "type": "string"
+        },
+        "description":
+        {
+            "description": "Freeform text describing the flow",
+            "type": "string"
+        },
+        "created_by":
+        {
+            "description": "A string identifier for the entity that created the flow. Implementations SHOULD set suitable default values for `created_by` based on the principal accessing the system, and MAY permit clients to edit the value, subject to suitable permissions-based limitations.",
+            "type": "string"
+        },
+        "updated_by":
+        {
+            "description": "A string identifier for the entity that updated the flow metadata most recently. Implementations SHOULD set suitable default values for `updated_by` based on the principal accessing the system, and MAY permit clients to edit the value, subject to suitable permissions-based limitations.",
+            "type": "string"
+        },
+        "tags":
+        {
+            "$ref": "tags.json"
+        },
+        "metadata_version":
+        {
+            "description": "A change to the flow metadata, not including metadata_version, last_update or segments, results in a new version. If the metadata_version for flow instances is identical then the metadata is identical.",
+            "type": "string"
+        },
+        "generation":
+        {
+            "description": "An indication of how many lossy encodings the flow content has been through. A flow with a higher generation may contain less of the original information than a flow with a lower generation.",
+            "type": "integer",
+            "minimum": 0
+        },
+        "created":
+        {
+            "description": "The date-time the flow was created in a given context, e.g. in the store. Implementations SHOULD ignore this if given in a PUT request, and instead manage it internally",
+            "type": "string",
+            "format": "date-time"
+        },
+        "metadata_updated":
+        {
+            "description": "The date-time the flow metadata was updated in a given context, e.g. in the store. Implementations SHOULD ignore this if given in a PUT request, and instead manage it internally",
+            "type": "string",
+            "format": "date-time"
+        },
+        "segments_updated":
+        {
+            "description": "The date-time the flow segments were updated in a given context, e.g. in the store. Implementations SHOULD ignore this if given in a PUT request, and instead manage it internally",
+            "type": "string",
+            "format": "date-time"
+        },
+        "read_only":
+        {
+            "description": "If set to 'true', implementations SHOULD reject client requests to update Flow metadata (other than the read_only property), Flow Segments and media objects",
+            "type": "boolean"
+        },
+        "codec":
+        {
+            "description": "A MIME type identification of the (lossy or lossless) coding used for the flow content.",
+            "$ref": "mime-type.json"
+        },
+        "container":
+        {
+            "description": "The container MIME type for flow segments.",
+            "$ref": "mime-type.json"
+        },
+        "avg_bit_rate":
+        {
+            "description": "The average bit rate of the flow segments in 1000 bits/second. A precise definition can be found in the [Setting Flow Bit Rate Properties](https://github.com/bbc/tams/blob/main/docs/appnotes/0013-setting-flow-bit-rate-properties.md) AppNote.",
+            "type": "integer",
+            "minimum": 0
+        },
+        "max_bit_rate":
+        {
+            "description": "The maximum bit rate of the flow segments in 1000 bits/second. A precise definition can be found in the [Setting Flow Bit Rate Properties](https://github.com/bbc/tams/blob/main/docs/appnotes/0013-setting-flow-bit-rate-properties.md) AppNote.",
+            "type": "integer",
+            "minimum": 0
+        },
+        "segment_duration":
+        {
+            "description": "The target flow segment duration in seconds. The duration for each segment may vary around this target value. See also the [Setting Flow Bit Rate Properties](https://github.com/bbc/tams/blob/main/docs/appnotes/0013-setting-flow-bit-rate-properties.md) AppNote for how this property can be used to calculate buffer sizes.",
+            "type": "object",
+            "required":
+            [
+                "numerator"
+            ],
+            "properties":
+            {
+                "numerator":
+                {
+                    "description": "numerator",
+                    "type": "integer",
+                    "exclusiveMinimum": 0
+                },
+                "denominator":
+                {
+                    "description": "denominator",
+                    "type": "integer",
+                    "default": 1,
+                    "exclusiveMinimum": 0
+                }
+            }
+        },
+        "timerange":
+        {
+            "description": "The timerange of samples available in the flow, as described by the [TimeRange](#/schemas/timerange) type",
+            "$ref": "timerange.json"
+        },
+        "flow_collection":
+        {
+            "description": "List of Flows that are collected together by this Flow.",
+            "$ref": "flow-collection.json"
+        },
+        "collected_by":
+        {
+            "type": "array",
+            "description": "Flows that reference this Flow to include it in a collection. This attribute is intended to be read-only. Implementations SHOULD ignore this if given in a PUT request, and instead manage it internally",
+            "items":
+            {
+                "$ref": "uuid.json"
+            }
+        },
+        "container_mapping":
+        {
+            "description": "Describes the mapping of the Flow essence from the this Flow's container",
+            "$ref": "container-mapping.json"
+        }
     }
-  }
 }

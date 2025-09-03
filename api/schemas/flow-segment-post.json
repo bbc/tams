@@ -1,59 +1,74 @@
 {
-  "type": "object",
-  "description": "Provides the location and metadata of the media files corresponding to timerange segments of a Flow.",
-  "title": "Flow Segment",
-  "required": [
-    "object_id",
-    "timerange"
-  ],
-  "properties": {
-    "object_id" : {
-      "description": "The object store identifier for the media object.",
-      "type": "string"
-    },
-    "ts_offset": {
-      "description": "The timestamp offset between the sample timestamps stored in the media file and the corresponding timestamp in the segment, ie. ts_offset = segment ts - media object ts. Assumed to be 0:0 if not set. Format as described by the [Timestamp](#/schemas/timestamp) type",
-      "$ref": "timestamp.json"
-    },
-    "timerange": {
-      "description": "The timerange for the samples contained in the segment. The timerange start is always inclusive. If samples have a duration then the timerange end is exclusive and covers at least the duration of the last sample. The exclusive timerange end will typically be set to the timestamp of the next sample. If the samples don't have a duration then the timerange end is inclusive. Format is described by the [TimeRange](#/schemas/timerange) type. Note that where temporal re-ordering is used, the timerange and samples refers to the presentation timeline.",
-      "$ref": "timerange.json"
-    },
-    "last_duration": {
-      "description": "The difference between the exclusive end of the `timerange` and the last sample timestamp. Format as described by the [Timestamp](#/schemas/timestamp) type, but cannot be negative",
-      "$ref": "timestamp.json"
-    },
-    "sample_offset": {
-      "description": "The start of the segment represented as a count of samples from the start of the object. Note that a sample is a video frame or audio sample. A (coded) audio frame has multiple audio samples. Assumed to be 0 if not set. Must be set if the Flow Segment doesn't start at the beginning of the media object.",
-      "type": "integer"
-    },
-    "sample_count": {
-      "description": "The count of samples in the segment (which may be fewer than in the object). The count could be less than expected given the segment duration and rate if there are gaps. If not set, every sample from sample_offset onwards is used. Must be set if the Flow Segment doesn't use the entire media object. Note that a sample is a video frame or audio sample. A (coded) audio frame has multiple audio samples",
-      "type": "integer"
-    },
-    "get_urls": {
-      "description": "A list of URLs to which a GET request can be made to directly retrieve the contents of the segment. This is required by the `http_object_store` media store type, which is the only one currently described. Clients may choose any URL in the list and treat them as identical, however servers may sort the list such that the preferred URL is first. `get_urls` should only be used to add uncontrolled URLs. URLs for the provided object_id controlled by the service instance will be populated automatically by the service instance.",
-      "type": "array",
-      "items": {
-        "type": "object",
-        "required": [
-          "url"
-        ],
-        "properties": {
-          "url": {
-            "description": "A URL to which a GET request can be made to directly retrieve the contents of the segment. Clients should include credentials if the provide URL is on the same origin as the API endpoint",
+    "title": "Flow Segment",
+    "description": "Provides the location and metadata of the media files corresponding to timerange segments of a Flow.",
+    "type": "object",
+    "required":
+    [
+        "object_id",
+        "timerange"
+    ],
+    "properties":
+    {
+        "object_id":
+        {
+            "description": "The object store identifier for the media object.",
             "type": "string"
-          },
-          "label": {
-            "description": "Label identifying this URL. Service implementations should reject any requests using labels that are already associated with Storage Backends. If the 'label' is not set then this URL can't be filtered for using the 'accept_get_urls' API query parameter.",
-            "type": "string"
-          }
+        },
+        "ts_offset":
+        {
+            "description": "The timestamp offset between the sample timestamps stored in the media file and the corresponding timestamp in the segment, ie. ts_offset = segment ts - media object ts. Assumed to be 0:0 if not set. Format as described by the [Timestamp](#/schemas/timestamp) type",
+            "$ref": "timestamp.json"
+        },
+        "timerange":
+        {
+            "description": "The timerange for the samples contained in the segment. The timerange start is always inclusive. If samples have a duration then the timerange end is exclusive and covers at least the duration of the last sample. The exclusive timerange end will typically be set to the timestamp of the next sample. If the samples don't have a duration then the timerange end is inclusive. Format is described by the [TimeRange](#/schemas/timerange) type. Note that where temporal re-ordering is used, the timerange and samples refers to the presentation timeline.",
+            "$ref": "timerange.json"
+        },
+        "last_duration":
+        {
+            "description": "The difference between the exclusive end of the `timerange` and the last sample timestamp. Format as described by the [Timestamp](#/schemas/timestamp) type, but cannot be negative",
+            "$ref": "timestamp.json"
+        },
+        "sample_offset":
+        {
+            "description": "The start of the segment represented as a count of samples from the start of the object. Note that a sample is a video frame or audio sample. A (coded) audio frame has multiple audio samples. Assumed to be 0 if not set. Must be set if the Flow Segment doesn't start at the beginning of the media object.",
+            "type": "integer"
+        },
+        "sample_count":
+        {
+            "description": "The count of samples in the segment (which may be fewer than in the object). The count could be less than expected given the segment duration and rate if there are gaps. If not set, every sample from sample_offset onwards is used. Must be set if the Flow Segment doesn't use the entire media object. Note that a sample is a video frame or audio sample. A (coded) audio frame has multiple audio samples",
+            "type": "integer"
+        },
+        "get_urls":
+        {
+            "description": "A list of URLs to which a GET request can be made to directly retrieve the contents of the segment. This is required by the `http_object_store` media store type, which is the only one currently described. Clients may choose any URL in the list and treat them as identical, however servers may sort the list such that the preferred URL is first. `get_urls` should only be used to add uncontrolled URLs. URLs for the provided object_id controlled by the service instance will be populated automatically by the service instance.",
+            "type": "array",
+            "items":
+            {
+                "type": "object",
+                "required":
+                [
+                    "url"
+                ],
+                "properties":
+                {
+                    "url":
+                    {
+                        "description": "A URL to which a GET request can be made to directly retrieve the contents of the segment. Clients should include credentials if the provide URL is on the same origin as the API endpoint",
+                        "type": "string"
+                    },
+                    "label":
+                    {
+                        "description": "Label identifying this URL. Service implementations should reject any requests using labels that are already associated with Storage Backends. If the 'label' is not set then this URL can't be filtered for using the 'accept_get_urls' API query parameter.",
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "key_frame_count":
+        {
+            "description": "The number of key frames in the segment. This should be set greater than zero when the segment contains key frames that serve as a stream access point",
+            "type": "integer"
         }
-      }
-    },
-    "key_frame_count": {
-      "description": "The number of key frames in the segment. This should be set greater than zero when the segment contains key frames that serve as a stream access point",
-      "type": "integer"
     }
-  }
 }

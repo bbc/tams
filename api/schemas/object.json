@@ -1,7 +1,7 @@
 {
-    "type": "object",
-    "description": "Describes a media object in the store.",
     "title": "Object",
+    "description": "Describes a media object in the store.",
+    "type": "object",
     "required": [
         "id",
         "referenced_by_flows"
@@ -12,8 +12,8 @@
             "type": "string"
         },
         "referenced_by_flows": {
-            "type": "array",
             "description": "List of Flows that reference this media object via Flow Segments in this store.",
+            "type": "array",
             "items": {
                 "$ref": "uuid.json"
             }
