@@ -121,6 +121,8 @@ paths:
           description: Success. The service info has been updated.
         "400":
           description: Bad request. Invalid service JSON.
+        "403":
+          description: Forbidden. You do not have permission to modify this resource.
   /service/storage-backends:
     head:
       summary: Storage Backend Information
@@ -228,6 +230,8 @@ paths:
           description: Success. The webhook has been removed
         "400":
           description: Bad request. Invalid parameters or unsupported event filtering or transformation.
+        "403":
+          description: Forbidden. You do not have permission to modify this resource.
         "404":
           description: "Webhooks are not supported by this API implementation"
   /sources:
@@ -494,6 +498,8 @@ paths:
           description: No content. The tag has been created or updated.
         "400":
           description: Bad request. Invalid Source tag value.
+        "403":
+          description: Forbidden. You do not have permission to modify this resource.
         "404":
           description: The requested Source does not exist, or the tag name in the path is invalid.
     delete:
@@ -562,6 +568,8 @@ paths:
           description: No content. The description has been created or updated.
         "400":
           description: Bad request. Invalid Source description.
+        "403":
+          description: Forbidden. You do not have permission to modify this resource.
         "404":
           description: The requested Source does not exist.
     delete:
@@ -573,6 +581,8 @@ paths:
       responses:
         "204":
           description: No content. The Source description property has been deleted.
+        "403":
+          description: Forbidden. You do not have permission to modify this resource.
         "404":
           description: The Source ID in the path is invalid.
   /sources/{sourceId}/label:
@@ -630,6 +640,8 @@ paths:
           description: No content. The label has been created or updated.
         "400":
           description: Bad request. Invalid Source label.
+        "403":
+          description: Forbidden. You do not have permission to modify this resource.
         "404":
           description: The requested Source does not exist.
     delete:
@@ -641,6 +653,8 @@ paths:
       responses:
         "204":
           description: No content. The Source label property has been deleted.
+        "403":
+          description: Forbidden. You do not have permission to modify this resource.
         "404":
           description: The requested Source ID in the path is invalid.
   /flows:
