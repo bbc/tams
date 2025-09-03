@@ -2035,7 +2035,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: schemas/deletion-requests-list.json
+                type: array
+                items:
+                  $ref: schemas/deletion-request.json
               example:
                 $ref: examples/deletion-requests-get-200.json
   /flow-delete-requests/{request-id}:
