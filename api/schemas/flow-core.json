@@ -21,12 +21,12 @@
         },
         "label":
         {
-            "description": "Freeform string label for the flow",
+            "description": "Freeform string label for the flow. This should be a very short, human-readable label that may be displayed in listings of Flows.",
             "type": "string"
         },
         "description":
         {
-            "description": "Freeform text describing the flow",
+            "description": "Freeform text describing the flow. This should be a human-readable description that may be showed in detailed views of Flows. The description should be longer and more detailed than `label`.",
             "type": "string"
         },
         "created_by":
