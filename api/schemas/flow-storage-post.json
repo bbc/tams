@@ -16,8 +16,7 @@
         },
         "storage_id": {
             "description": "The storage backend to allocate storage in. A storage backend identifier as advertised at the `/service` endpoint. If not set the default, as advertised at the `/service` endpoint, will be used if available. An invalid storage backend identifier will result in a 400 error.",
-            "type": "string",
-            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            "$ref": "uuid.json"
         }
     },
     "not": {

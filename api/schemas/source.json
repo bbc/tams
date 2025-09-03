@@ -9,8 +9,7 @@
     "properties": {
         "id": {
             "description": "Source identifier",
-            "type": "string",
-            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            "$ref": "uuid.json"
         },
         "format" : {
             "description": "The primary content type URN for the Source.",
@@ -63,10 +62,9 @@
         "collected_by": {
           "type": "array",
           "description": "Sources that reference this Source to include it in a collection. This attribute is intended to be read-only. Implementations SHOULD ignore this if given in a PUT request, and instead manage it internally. Source collections can be inferred from Flow collection definitions.",
-          "items": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
-           }
+            "items": {
+                "$ref": "uuid.json"
+            }
         }
     }
 }
