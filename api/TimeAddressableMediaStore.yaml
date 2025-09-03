@@ -265,7 +265,7 @@ paths:
           in: query
           description: Filter on source format.
           schema:
-            $ref: '#/components/schemas/contentformat'
+            $ref: 'schemas/content-format.json'
         - $ref: '#/components/parameters/trait_resource_paged_key'
         - $ref: '#/components/parameters/trait_paged_limit'
       responses:
@@ -324,7 +324,7 @@ paths:
           in: query
           description: Filter on source format.
           schema:
-            $ref: '#/components/schemas/contentformat'
+            $ref: 'schemas/content-format.json'
         - $ref: '#/components/parameters/trait_resource_paged_key'
         - $ref: '#/components/parameters/trait_paged_limit'
       responses:
@@ -666,7 +666,7 @@ paths:
           in: query
           description: Filter on flow format.
           schema:
-            $ref: '#/components/schemas/contentformat'
+            $ref: 'schemas/content-format.json'
         - name: codec
           in: query
           description: Filter on flow codec.
@@ -751,7 +751,7 @@ paths:
           in: query
           description: Filter on flow format.
           schema:
-            $ref: '#/components/schemas/contentformat'
+            $ref: 'schemas/content-format.json'
         - name: codec
           in: query
           description: Filter on flow codec.
@@ -2325,16 +2325,6 @@ webhooks:
                       $ref: "schemas/uuid.json"
 components:
   schemas:
-    contentformat:
-      title: Content Format
-      description: Identifies the content format for a flow or source using a URN string.
-      enum:
-        - urn:x-nmos:format:video
-        - urn:x-tam:format:image
-        - urn:x-nmos:format:audio
-        - urn:x-nmos:format:data
-        - urn:x-nmos:format:multi
-      type: string
     mimetype:
       title: MIME Type
       pattern: .*/.*

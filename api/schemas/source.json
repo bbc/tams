@@ -13,15 +13,7 @@
         },
         "format" : {
             "description": "The primary content type URN for the Source.",
-            "type": "string",
-            "enum": [
-                "urn:x-nmos:format:video",
-                "urn:x-tam:format:image",
-                "urn:x-nmos:format:audio",
-                "urn:x-nmos:format:data",
-                "urn:x-nmos:format:multi"
-            ],
-            "format": "uri"
+            "$ref": "content-format.json"
         },
         "label": {
             "description": "Freeform string label for the Source",
