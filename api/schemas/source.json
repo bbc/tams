@@ -16,11 +16,11 @@
             "$ref": "content-format.json"
         },
         "label": {
-            "description": "Freeform string label for the Source",
+            "description": "Freeform string label for the Source. This should be a very short, human-readable label that may be displayed in listings of Sources.",
             "type": "string"
         },
         "description": {
-            "description": "Freeform text describing the Source",
+            "description": "Freeform text describing the Source. This should be a human-readable description that may be showed in detailed views of Sources. The description should be longer and more detailed than `label`.",
             "type": "string"
         },
         "created_by": {

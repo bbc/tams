@@ -11,12 +11,12 @@
     {
         "name":
         {
-            "description": "The service instance name",
+            "description": "The service instance name. This should be a very short, human-readable name that may be displayed in listings of Service instances.",
             "type": "string"
         },
         "description":
         {
-            "description": "The service instance description",
+            "description": "The service instance description. This should be a human-readable description that may be showed in detailed views of Services. The description should be longer and more detailed than `name`.",
             "type": "string"
         },
         "type":
