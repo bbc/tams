@@ -127,7 +127,7 @@
         },
         "timerange":
         {
-            "description": "The timerange of samples available in the flow, as described by the [TimeRange](#/schemas/timerange) type",
+            "description": "The timerange of samples available in the flow, as described by the [TimeRange](#/schemas/timerange) type. Implementations MUST ignore this if given in a PUT request, and instead manage it internally.",
             "$ref": "timerange.json"
         },
         "flow_collection":
