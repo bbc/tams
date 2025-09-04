@@ -31,12 +31,12 @@
         },
         "created_by":
         {
-            "description": "A string identifier for the entity that created the flow. Implementations SHOULD set suitable default values for `created_by` based on the principal accessing the system, and MAY permit clients to edit the value, subject to suitable permissions-based limitations.",
+            "description": "A string identifier for the entity that created the flow. Service implementations SHOULD set suitable default values for `created_by` based on the principal accessing the system, and MAY permit clients to edit the value, subject to suitable permissions-based limitations.",
             "type": "string"
         },
         "updated_by":
         {
-            "description": "A string identifier for the entity that updated the flow metadata most recently. Implementations SHOULD set suitable default values for `updated_by` based on the principal accessing the system, and MAY permit clients to edit the value, subject to suitable permissions-based limitations.",
+            "description": "A string identifier for the entity that updated the flow metadata most recently. Service implementations SHOULD set suitable default values for `updated_by` based on the principal accessing the system, and MAY permit clients to edit the value, subject to suitable permissions-based limitations.",
             "type": "string"
         },
         "tags":
@@ -46,36 +46,36 @@
         },
         "metadata_version":
         {
-            "description": "A change to the flow metadata, not including metadata_version, metadata_updated, segments_updated, or segments, results in a new version. If the metadata_version for flow instances is identical then the metadata is identical. Implementations SHOULD set suitable default values for `metadata_version` whenever flow metadata is changed and `metadata_version` is either not set by the client, or set to it's existing value. Implementations MAY permit clients to edit the value, subject to suitable permissions-based limitations. Where media is transfered between stores without changing the Flow metadata, clients SHOULD maintain the `metadata_version`. To support this, implementations SHOULD always accept the setting of `metadata_version` by the client on initial Flow creation. Implementations SHOULD update this field where metadata is updated via child endpoints. Note that this specification places no requirements on incremental versioning. Implementations may, for example, choose to use hashes or date-time version identifiers.",
+            "description": "A change to the flow metadata, not including metadata_version, metadata_updated, segments_updated, or segments, results in a new version. If the metadata_version for flow instances is identical then the metadata is identical. Service implementations SHOULD set suitable default values for `metadata_version` whenever flow metadata is changed and `metadata_version` is either not set by the client, or set to it's existing value. Service implementations MAY permit clients to edit the value, subject to suitable permissions-based limitations. Where media is transfered between stores without changing the Flow metadata, clients SHOULD maintain the `metadata_version`. To support this, service implementations SHOULD always accept the setting of `metadata_version` by the client on initial Flow creation. Service implementations SHOULD update this field where metadata is updated via child endpoints. Note that this specification places no requirements on incremental versioning. Service implementations may, for example, choose to use hashes or date-time version identifiers.",
             "type": "string"
         },
         "generation":
         {
-            "description": "An indication of how many lossy encodings the flow content has been through. This parameter provides a hint to clients as to which is the \"highest qualty\" flow available to them. A flow with a higher generation may contain less of the original information than a flow with a lower generation. n flow captured straight from the orginating device (e.g. camera/microphone) in its highest quality, and there is no possibility of the content becoming available in a higher quality (e.g. via capture from ST2110 or SDI), it SHOULD have a `generation` of `0`. Where the originating device outputs multiple qualities of the Source, `generation` should represent the encoding processes each has been through as accurately as possible.",
+            "description": "An indication of how many lossy encodings the flow content has been through. This parameter provides a hint to clients as to which is the \"highest qualty\" flow available to them. A flow with a higher generation may contain less of the original information than a flow with a lower generation. Where a flow is captured straight from the orginating device (e.g. camera/microphone) in its highest quality, and there is no possibility of the content becoming available in a higher quality (e.g. via capture from ST2110 or SDI), it SHOULD have a `generation` of `0`. Where the originating device outputs multiple qualities of the Source, `generation` should represent the encoding processes each has been through as accurately as possible.",
             "type": "integer",
             "minimum": 0
         },
         "created":
         {
-            "description": "The date-time the flow was created in a given context, e.g. in the store. Implementations SHOULD ignore this if given in a PUT request, and instead manage it internally",
+            "description": "The date-time the flow was created in a given context, e.g. in the store. Service implementations SHOULD ignore this if given in a PUT request, and instead manage it internally",
             "type": "string",
             "format": "date-time"
         },
         "metadata_updated":
         {
-            "description": "The date-time the flow metadata was updated in a given context, e.g. in the store. Implementations SHOULD ignore this if given in a PUT request, and instead manage it internally",
+            "description": "The date-time the flow metadata was updated in a given context, e.g. in the store. Service implementations SHOULD ignore this if given in a PUT request, and instead manage it internally",
             "type": "string",
             "format": "date-time"
         },
         "segments_updated":
         {
-            "description": "The date-time the flow segments were updated in a given context, e.g. in the store. Implementations SHOULD ignore this if given in a PUT request, and instead manage it internally",
+            "description": "The date-time the flow segments were updated in a given context, e.g. in the store. Service implementations SHOULD ignore this if given in a PUT request, and instead manage it internally",
             "type": "string",
             "format": "date-time"
         },
         "read_only":
         {
-            "description": "If set to 'true', implementations SHOULD reject client requests to update Flow metadata (other than the read_only property), Flow Segments and media objects",
+            "description": "If set to 'true', service implementations SHOULD reject client requests to update Flow metadata (other than the read_only property), Flow Segments and media objects",
             "type": "boolean"
         },
         "codec":
@@ -127,7 +127,7 @@
         },
         "timerange":
         {
-            "description": "The timerange of samples available in the flow, as described by the [TimeRange](#/schemas/timerange) type. Implementations MUST ignore this if given in a PUT request, and instead manage it internally.",
+            "description": "The timerange of samples available in the flow, as described by the [TimeRange](#/schemas/timerange) type. Service implementations MUST ignore this if given in a PUT request, and instead manage it internally.",
             "$ref": "timerange.json"
         },
         "flow_collection":
@@ -138,7 +138,7 @@
         "collected_by":
         {
             "type": "array",
-            "description": "Flows that reference this Flow to include it in a collection. This attribute is intended to be read-only. Implementations SHOULD ignore this if given in a PUT request, and instead manage it internally",
+            "description": "Flows that reference this Flow to include it in a collection. This attribute is intended to be read-only. Service implementations SHOULD ignore this if given in a PUT request, and instead manage it internally",
             "items":
             {
                 "$ref": "uuid.json"

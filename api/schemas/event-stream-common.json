@@ -1,6 +1,6 @@
 {
     "title": "Event Stream Mechanism",
-    "description": "Describes an event stream mechanism available in this implementation of TAMS",
+    "description": "Describes an event stream mechanism available in this service instance",
     "type": "object",
     "required": [
         "name"

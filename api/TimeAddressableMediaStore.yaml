@@ -157,12 +157,12 @@ paths:
         "200":
           $ref: '#/components/responses/trait_resource_listing_head_200'
         "404":
-          description: "Webhooks are not supported by this API implementation"
+          description: "Webhooks are not supported by this service implementation"
     get:
       summary: List Webhook URLs
       description: |
         Get the list of registered webhook URLs.
-        Implementations SHOULD take steps to avoid displaying URLs to users other than those who have suitable permissions (e.g. the owning user).
+        Service implementations SHOULD take steps to avoid displaying URLs to users other than those who have suitable permissions (e.g. the owning user).
         Availability of this endpoint is indicated by the name "webhooks" appearing in the `event_stream_mechanisms` list on the service endpoint.
       operationId: GET_webhooks
       tags:
@@ -184,7 +184,7 @@ paths:
                 items:
                   $ref: "schemas/webhook.json"
         "404":
-          description: "Webhooks are not supported by this API implementation"
+          description: "Webhooks are not supported by this service implementation"
     post:
       summary: Register Webhook URL
       description: |
@@ -195,13 +195,13 @@ paths:
         Making a POST request to this endpoint with the same URL, API key name and value but a different list of `events` SHOULD update the existing registration.
         POSTing an empty list of events SHOULD remove the registration.
 
-        HTTP requests from the service SHOULD include a `api_key_name` header with the 'api_key_value' value.
+        HTTP events sent by the service to a client webhook's endpoint SHOULD include a `api_key_name` header with the 'api_key_value' value.
         Clients SHOULD verify this against the value they provided when registering the webhook.
 
-        API implementations MAY partially support event filtering and transformations.
-        API implementations SHALL return a 400 response code if the filtering or transformation specified in the request is not supported.
+        Service implementations MAY partially support event filtering and transformations.
+        Service implementations SHALL return a 400 response code if the filtering or transformation specified in the request is not supported.
 
-        API implementations SHOULD consider the security implementations of providing webhooks, and include appropriate mitigations against Server Side Request Forgery (SSRF) attacks and similar.
+        Service implementations SHOULD consider the security implications of providing webhooks, and include appropriate mitigations against Server Side Request Forgery (SSRF) attacks and similar.
       operationId: POST_webhooks
       tags:
         - Webhooks
@@ -228,7 +228,7 @@ paths:
         "403":
           description: Forbidden. You do not have permission to modify this resource.
         "404":
-          description: "Webhooks are not supported by this API implementation"
+          description: "Webhooks are not supported by this service implementation"
   /sources:
     head:
       summary: List Sources
@@ -275,7 +275,7 @@ paths:
               schema:
                 type: string
             X-Paging-Limit:
-              description: Identifies the current limit being used for paging. This may not match the requested value if the requested value was too high for the implementation
+              description: Identifies the current limit being used for paging. This may not match the requested value if the requested value was too high for the service implementation
               schema:
                 type: integer
             X-Paging-NextKey:
@@ -290,7 +290,7 @@ paths:
           $ref: '#/components/responses/trait_resource_info_head_400'
     get:
       summary: List Sources
-      description: List the Sources registered in the store and their details.
+      description: List the Sources registered in the TAMS service instance and their details.
       operationId: GET_sources
       tags:
         - Sources
@@ -333,7 +333,7 @@ paths:
               schema:
                 type: string
             X-Paging-Limit:
-              description: Identifies the current limit being used for paging. This may not match the requested value if the requested value was too high for the implementation
+              description: Identifies the current limit being used for paging. This may not match the requested value if the requested value was too high for the service implementation
               schema:
                 type: integer
             X-Paging-NextKey:
@@ -722,7 +722,7 @@ paths:
               schema:
                 type: string
             X-Paging-Limit:
-              description: Identifies the current limit being used for paging. This may not match the requested value if the requested value was too high for the implementation
+              description: Identifies the current limit being used for paging. This may not match the requested value if the requested value was too high for the service implementation
               schema:
                 type: integer
             X-Paging-NextKey:
@@ -737,7 +737,7 @@ paths:
           description: Bad request. Invalid query options.
     get:
       summary: List Flows
-      description: List the flows registered in the store.
+      description: List the flows registered in the TAMS service instance.
       operationId: GET_flows
       tags:
         - Flows
@@ -806,7 +806,7 @@ paths:
               schema:
                 type: string
             X-Paging-Limit:
-              description: Identifies the current limit being used for paging. This may not match the requested value if the requested value was too high for the implementation
+              description: Identifies the current limit being used for paging. This may not match the requested value if the requested value was too high for the service implementation
               schema:
                 type: integer
             X-Paging-NextKey:
@@ -934,13 +934,13 @@ paths:
 
         Clients should aim to populate as many of the Flow metadata fields as possible and practical. The fewer parameters that are set, the higher the likelihood that reading clients will have to retrieve the media to determine technical metadata to e.g. configure decoders.
 
-        Some parameters may be ignored/overridden by store implementations. This is to enable the Flow json-blob to be re-used with no/minimal editing in various use cases. Such parameters are called out in their description.
+        Some parameters may be ignored/overridden by service implementations. This is to enable the Flow json-blob to be re-used with no/minimal editing in various use cases. Such parameters are called out in their description.
 
-        Store implementations SHOULD verify that Flow metadata is compatible with the associated Source.
-        Store implementations MAY accept modification/addition of parameters, and reflect such changes in the Source, where it will not bring any Flows of the Source into conflict.
+        Service implementations SHOULD verify that Flow metadata is compatible with the associated Source.
+        Service implementations MAY accept modification/addition of parameters, and reflect such changes in the Source, where it will not bring any Flows of the Source into conflict.
         Where metadata would result in any Flow of the Source coming into conflict, the request SHOULD be rejected with a 400 response.
         Examples of conflicting metadata include `format` not matching, or the `role` in `source_collection` and `flow_collection` not matching.
-        It may also be possible for store implementations to detect some instances where multiple Flows should not be considered of the same Source, such as audio Flows with different numbers of tracks.
+        It may also be possible for service implementations to detect some instances where multiple Flows should not be considered of the same Source, such as audio Flows with different numbers of tracks.
         Further guidance on when Flows/Sources may be considered the same/different may be found in the [Practical Guidance for Media](https://specs.amwa.tv/ms-04/releases/v1.0.0/docs/3.0._Practical_Guidance_for_Media.html) section of AMWA MS-04.
       operationId: PUT_flows-flowId
       tags:
@@ -1357,8 +1357,8 @@ paths:
       description: |
         Create or update the flow collection property.
 
-        Store implementations SHOULD verify that Flow metadata is compatible with the associated Source.
-        Store implementations MAY accept modification/addition of parameters, and reflect such changes in the Source, where it will not bring any Flows of the Source into conflict.
+        Service implementations SHOULD verify that Flow metadata is compatible with the associated Source.
+        Service implementations MAY accept modification/addition of parameters, and reflect such changes in the Source, where it will not bring any Flows of the Source into conflict.
         Where metadata would result in any Flow of the Source coming into conflict, the request SHOULD be rejected with a 400 response.
       operationId: PUT_flows-flowId-flow-collection
       tags:
@@ -1571,7 +1571,7 @@ paths:
         - name: verbose_storage
           in: query
           description: |
-            Include storage metadata in `get_urls`.
+            Include storage metadata in `get_urls` in the response.
             When `verbose_storage` is `false` only `url`, `presigned`, and `label` will be included in `get_urls`.
           schema:
             default: false
@@ -1600,7 +1600,7 @@ paths:
         - name: presigned
           in: query
           description: |
-            If set to `true`, only presigned URLs (i.e. those whos `presigned` property is `true`) will be returned in `get_urls`.
+            If set to `true`, only presigned URLs (i.e. those whos `presigned` property is `true`) will be returned in `get_urls` in the response.
             If set to `false`, only non-presigned URLs (i.e. those whos `presigned` property is `false`) will be returned in `get_urls`.
             If omitted, both presigned and non-presigned URLs will be returned.
             If `presigned` is set to `false`, the response from the service could be substantially faster if it is not required to generate a large number of pre-signed URLs.
@@ -1618,7 +1618,7 @@ paths:
               schema:
                 type: string
             X-Paging-Limit:
-              description: Identifies the current limit being used for paging. This may not match the requested value if the requested value was too high for the implementation
+              description: Identifies the current limit being used for paging. This may not match the requested value if the requested value was too high for the service implementation
               schema:
                 type: integer
             X-Paging-Timerange:
@@ -1651,15 +1651,17 @@ paths:
         Returns the flow segments.
 
         The flow segment provides information about the media object.
-        The media store type, which is indicated in the /service/storage-backends resource, determines the information that is included to allow the flow segment's media object to be downloaded.
-        The examples provided here are for the "http_object_store" media store type which MUST include a `get_urls` property that contains the HTTP URLs for downloading the media object - server implementations should generate this internally.
+        The media store type, which is indicated in the /service/storage-backends resource, determines the information that is included in the response to allow the flow segment's media object to be downloaded by the client.
+        The examples provided here are for the "http_object_store" media store type which MUST include a `get_urls` property that contains the HTTP URLs for downloading the media object - service implementations should generate this internally.
 
         The flow segment may include timing adjustment information that the client needs to apply when extracting the samples from the media object.
         It may also use a subset of the samples in the media object.
         - The timestamp of a sample on the flow segment's timeline (`segment_ts`) is the timestamp of that sample embedded in or derived from the internal timing of the media object (`media_object_ts`) adjusted by `ts_offset`: `segment_ts = media_object_ts + ts_offset`.
         - In addition, the segment's `timerange` start MUST be at `sample_offset` samples from the start of the presentation timeline of the object, and `timerange` end MUST be at `sample_offset + sample_count` samples.
 
-        Use the pagination options to limit the results to a timerange and/or count.
+        Clients should use the pagination options to limit the results to a timerange and/or count.
+        Service implementations may also limit the results returned.
+        This will be signaled via the paging headers in the response.
         The list of flow segments can be empty.
         A request for segments from a non-existent flow will return an empty list, not a 404.
 
@@ -1689,7 +1691,7 @@ paths:
         - name: verbose_storage
           in: query
           description: |
-            Include storage metadata in `get_urls`.
+            Include storage metadata in `get_urls` in the response.
             When `verbose_storage` is `false` only `url`, `presigned`, and `label` will be included in `get_urls`.
           schema:
             default: false
@@ -1736,7 +1738,7 @@ paths:
               schema:
                 type: string
             X-Paging-Limit:
-              description: Identifies the current limit being used for paging. This may not match the requested value if the requested value was too high for the implementation
+              description: Identifies the current limit being used for paging. This may not match the requested value if the requested value was too high for the service implementation
               schema:
                 type: integer
             X-Paging-Timerange:
@@ -1777,7 +1779,7 @@ paths:
                   summary: Multiple URLs
                   description: |
                     This example shows how the media object for a Flow Segment could be accessed using multiple URLs.
-                    Clients are free to choose any of the URLs given (which return identical media objects), however the server has expressed a preference for the "pipeline-a" URLs by putting them first in the list.
+                    Clients are free to choose any of the URLs given (which return identical media objects), however the service has expressed a preference for the "pipeline-a" URLs by putting them first in the list.
                   value:
                     $ref: examples/flow-segments-get-200-multiple-urls.json
         "400":
@@ -1791,20 +1793,20 @@ paths:
 
         The segment may use a newly-written object, or re-use an existing object from another flow.
 
-        For newly-written objects, the client is responsible for ensuring that the segment written to the store obeys the following restrictions:
+        For newly-written objects, the client is responsible for ensuring that the segment written to the TAMS service instance obeys the following restrictions:
           - All samples in the object SHOULD be used by the segment.
           - The timestamps of each sample in the media object MUST equal its position on the Flow timeline, OR `ts_offset` MUST be set such that `media_object_ts + ts_offset = segment_ts`
-          - The timerange of the segment MUST NOT overlap any other segment in the same Flow. The behaviour is undefined if there is an overlap with existing segments and a store may return a 400 error response.
+          - The timerange of the segment MUST NOT overlap any other segment in the same Flow. The behaviour is undefined if there is an overlap with existing segments and a service may return a 400 error response.
           - The `sample_offset` SHOULD be zero.
 
-        A TAMS SHOULD reject registrations of Flow Segments with a 400 error response if it references a newly created media object in the local TAMS storage that was not intended to be used for the Flow.
-        A TAMS SHOULD accept Flow Segments that reference an existing media object in the local TAMS storage that was originally created for another Flow.
+        A service instance SHOULD reject registrations of Flow Segments with a 400 error response if it references a newly created media object in the local TAMS storage that was not intended to be used for the Flow.
+        A service instance SHOULD accept Flow Segments that reference an existing media object in the local TAMS storage that was originally created for another Flow.
 
-        A TAMS MAY support media objects that are held in external storage in another TAMS or other media storage system.
+        A service instance MAY support media objects that are held in external storage in another TAMS or other media storage system.
         The Flow Segment may in that case require the `get_urls` property to provide the information needed by clients to access the media object.
 
         If a client needs to modify a Flow segment, e.g. to correct metadata such as the `key_frame_count` or add additional URLs to `get_urls`, then the client SHOULD first delete the existing segment and then write a new one.
-        The behaviour is undefined if the segment exists and a store may return a 400 error response.
+        The behaviour is undefined if the segment exists and the service may return a 400 error response.
 
         For successful creation of all segments in the request a 201 response should be provided.
         If an error is detected when processing a list of segments then processing should continue to try and process the remaining segments.
@@ -1909,7 +1911,7 @@ paths:
 
         The response will include a PUT URL that a client uses to upload the media object.
         The client is expected to register the flow segment using the /flows/{flowId}/segments endpoint once the upload is complete.
-        Implementations need to handle situations where objects were uploaded but no flow segment was registered successfully.
+        Service implementations need to handle situations where objects were uploaded but no flow segment was registered successfully.
 
         The response may include PUT URLs for creating buckets for the media objects.
         These PUT URLs should be used before uploading media objects.
@@ -1975,7 +1977,7 @@ paths:
               schema:
                 type: string
             X-Paging-Limit:
-              description: Identifies the current limit being used for paging. This may not match the requested value if the requested value was too high for the implementation
+              description: Identifies the current limit being used for paging. This may not match the requested value if the requested value was too high for the service implementation
               schema:
                 type: integer
             X-Paging-NextKey:
@@ -1996,7 +1998,7 @@ paths:
         Contains flows that references the media object and other information.
 
         The paging query parameters and headers are required for the list of flow references in the media object.
-        API implementations should return a complete list of flow references within reason and API clients should expect paging to happen in some rare cases where a media object is used in many flows.
+        Service implementations should return a complete list of flow references within reason and API clients should expect paging to happen in some rare cases where a media object is used in many flows.
       operationId: GET_objects
       tags:
         - Objects
@@ -2018,7 +2020,7 @@ paths:
               schema:
                 type: string
             X-Paging-Limit:
-              description: Identifies the current limit being used for paging. This may not match the requested value if the requested value was too high for the implementation
+              description: Identifies the current limit being used for paging. This may not match the requested value if the requested value was too high for the service implementation
               schema:
                 type: integer
             X-Paging-NextKey:
@@ -2088,7 +2090,7 @@ paths:
       description: |
         Get information about a timerange of FlowSegments that are being deleted.
 
-        A deletion request is created when a client DELETEs a long timeranges of segments, which takes longer than a single HTTP request.
+        A deletion request is created when a client DELETEs a long timerange of segments, which takes longer than a single HTTP request.
         Clients will be redirected here to monitor the request's progress.
       operationId: GET_flow-delete-requests-request-id
       tags:
@@ -2114,7 +2116,7 @@ webhooks:
           application/json:
             schema:
               title: Flow Created Notification
-              description: Information about a Flow which has been newly created in this store instance
+              description: Information about a Flow which has been newly created in this service instance
               required:
                 - event_timestamp
                 - event_type
@@ -2270,7 +2272,7 @@ webhooks:
           application/json:
             schema:
               title: Source Created Notification
-              description: Information about a Source which has been newly created in this store instance
+              description: Information about a Source which has been newly created in this service instance
               required:
                 - event_timestamp
                 - event_type
@@ -2370,13 +2372,13 @@ components:
     trait_paged_limit:
       name: limit
       in: query
-      description: Restrict the response to the specified number of results. Implementations may specify their own default and maximum for the limit
+      description: Restrict the response to the specified number of results. Service implementations may specify their own default and maximum for the limit
       schema:
         type: integer
     trait_resource_paged_key:
       name: page
       in: query
-      description: Opaque string used by backend to access a specific page of results. Clients should read the next URL from the `Link` header returned with responses, or use value of the returned X-Paging-NextKey header. If not supplied, the first page is accessed. Implementations should ensure a consistent sort order is applied to pages of results.
+      description: Opaque string used by backend to access a specific page of results. Clients should read the next URL from the `Link` header returned with responses, or use value of the returned X-Paging-NextKey header. If not supplied, the first page is accessed. Service implementations should ensure a consistent sort order is applied to pages of results.
       schema:
         type: string
   securitySchemes:
@@ -2406,9 +2408,9 @@ components:
       description: |
         URL token authentication.
 
-        The method through which a client should acquire the token is not specified: it is assumed this takes place in another way, and a TAMS client may well be passed a URL to a store including the token.
+        The method through which a client should acquire the token is not specified: it is assumed this takes place in another way, and a TAMS client may well be passed a URL to a TAMS service instance including the token.
 
-        Clients should retain the token in the `access_token` query string parameter, and use it for subsequent store requests in the same session.
+        Clients should retain the token in the `access_token` query string parameter, and use it for subsequent requests to the TAMS service instance in the same session.
 tags:
   - name: Service
     description: The service root and documentation about the service itself

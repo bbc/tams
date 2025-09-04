@@ -11,7 +11,7 @@
     {
         "object_id":
         {
-            "description": "The object store identifier for the media object.",
+            "description": "The object identifier for the media object.",
             "type": "string"
         },
         "ts_offset":
@@ -41,7 +41,7 @@
         },
         "get_urls":
         {
-            "description": "A list of URLs to which a GET request can be made to directly retrieve the contents of the segment. This is required by the `http_object_store` media store type, which is the only one currently described. Clients may choose any URL in the list and treat them as identical, however servers may sort the list such that the preferred URL is first. `get_urls` should only be used to add uncontrolled URLs. URLs for the provided object_id controlled by the service instance will be populated automatically by the service instance.",
+            "description": "A list of URLs to which a GET request can be made to directly retrieve the contents of the segment. This is required by the `http_object_store` media store type, which is the only one currently described. Clients may choose any URL in the list and treat them as identical, however service instances may sort the list such that the preferred URL is first. `get_urls` should only be used to add uncontrolled URLs. URLs for the provided object_id controlled by the service instance will be populated automatically by the service instance.",
             "type": "array",
             "items":
             {

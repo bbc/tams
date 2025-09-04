@@ -59,7 +59,7 @@
                 {
                     "object_id":
                     {
-                        "description": "The object store identifier for the media object.",
+                        "description": "The object identifier for the media object.",
                         "type": "string"
                     },
                     "put_url":
