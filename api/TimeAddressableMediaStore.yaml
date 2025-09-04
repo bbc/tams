@@ -1814,7 +1814,7 @@ paths:
 
         Clients are expected to decide how to break content into media objects, however those objects SHOULD be large enough to avoid excessive round trip overheads in the underlying store (_e.g._ of the order of several megabytes) and where codecs with temporal re-ordering are used, object SHOULD contain complete GOPs or decodable units.
 
-        For objects that have been re-used from other flows, the `sample_offset` and `sample_count` MAY be used to specify part of the object to use:
+        For media objects that have been re-used from other flows, the `sample_offset` and `sample_count` MAY be used to specify part of the media object to use:
           - The `timerange` field indicates the new segment's position in the flow
           - The sample associated with the start of the `timerange` MUST be the one selected by `sample_offset`
           - Likewise, the sample associated with the end of the `timerange` MUST be the one selected by `sample_offset + sample_count - 1`, unless `timerange` has an exclusive end, in which case it will be  `sample_offset + sample_count`.
