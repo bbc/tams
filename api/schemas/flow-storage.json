@@ -1,6 +1,6 @@
 {
-    "title": "Media Bucket Object Store",
-    "description": "Gives information on storage for media objects. This schema is for the `http_object_store` media store type which provides URLs for storing media objects in bucket, and is the only store type currently implemented.",
+    "title": "Storage Allocation",
+    "description": "Gives information on storage for media objects. This schema is for the `http_object_store` media store type which provides URLs for storing media objects in object store buckets, and is the only store type currently implemented.",
     "type": "object",
     "properties":
     {

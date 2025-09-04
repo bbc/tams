@@ -2426,9 +2426,9 @@ tags:
       url: 'https://specs.amwa.tv/ms-04/releases/v1.0.0/docs/2.3._Explanation_-_Flow.html'
   - name: FlowSegments
     description: |
-      A timerange segment of a Flow that references a media object in the object store.
+      A timerange segment of a Flow that references a media object
   - name: Objects
-    description: The object in the object store that contains the media essence.
+    description: The object in the backing store(s) that contains the media essence.
   - name: MediaStorage
     description: The system that stores the media objects referenced by flow segments.
   - name: FlowDeleteRequests
