@@ -19,7 +19,7 @@
             }
         },
         "first_referenced_by_flow": {
-            "description": "The first Flow that had a Flow Segment reference the media object in this store. This Flow is also present in 'referenced_by_flows' if it is still referenced by the Flow. This property is optional and may in some implementations become unset if the Flow no longer references the media object, e.g. because it was deleted.",
+            "description": "The first Flow that had a Flow Segment reference the media object in this store. This Flow is also present in 'referenced_by_flows' if it is still referenced by the Flow. This property is optional and may, in some service implementations, become unset if the Flow no longer references the media object, e.g. because it was deleted.",
             "$ref": "uuid.json"
         }
     }

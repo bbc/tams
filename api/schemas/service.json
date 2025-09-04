@@ -1,6 +1,6 @@
 {
     "title": "Service",
-    "description": "Provides information about the store service",
+    "description": "Provides information about the service instance",
     "type": "object",
     "required":
     [
@@ -16,28 +16,28 @@
         },
         "description":
         {
-            "description": "The service instance description. This should be a human-readable description that may be showed in detailed views of Services. The description should be longer and more detailed than `name`.",
+            "description": "The service instance description. This should be a human-readable description that may be showed in detailed views of Service instances. The description should be longer and more detailed than `name`.",
             "type": "string"
         },
         "type":
         {
-            "description": "The type identifier for the service. The value must start with 'urn:x-tams:service'",
+            "description": "The type identifier for the service instance. The value must start with 'urn:x-tams:service'",
             "type": "string"
         },
         "api_version":
         {
-            "description": "The version of the TAMS API specification this deployment implements",
+            "description": "The version of the TAMS API specification this service instance implements",
             "type": "string",
             "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)$"
         },
         "service_version":
         {
-            "description": "The version of software providing this service. Note: Different implementations and software houses may use different conventions for their version identification. As such, this field is intentionally permissive and intended to be informative only. Implementations should avoid using this field to determine compatibility.",
+            "description": "The version of software providing this service. Note: Different implementations and software houses may use different conventions for their version identification. As such, this field is intentionally permissive and intended to be informative only. Client implementations should avoid using this field to determine compatibility.",
             "type": "string"
         },
         "event_stream_mechanisms":
         {
-            "description": "List the types of event stream that this implementation supports",
+            "description": "List the types of event stream that this service implementation supports",
             "type": "array",
             "items":
             {

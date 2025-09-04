@@ -36,7 +36,7 @@
             "format": "date-time"
         },
         "created_by": {
-            "description": "A string identifier for the entity that created the deletion request. Implementations SHOULD set suitable default values for `created_by` based on the principal accessing the system, and MAY permit clients to edit the value, subject to suitable permissions-based limitations.",
+            "description": "A string identifier for the entity that created the deletion request. Service implementations SHOULD set suitable default values for `created_by` based on the principal accessing the system.",
             "type": "string"
         },
         "updated": {

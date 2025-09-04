@@ -7,7 +7,7 @@
     ],
     "properties": {
         "failed_segments": {
-            "description": "The list of segments which have failed to register with the TAMS API",
+            "description": "The list of segments which have failed to register with the service instance",
             "type": "array",
             "items": {
                 "description": "Failed segment details",
@@ -17,7 +17,7 @@
                 ],
                 "properties": {
                     "object_id": {
-                        "description": "The object ID of the segment which has failed to register with the TAMS API",
+                        "description": "The object ID of the segment which has failed to register with the service instance",
                         "type": "string"                },
                     "timerange": {
                         "description": "The timerange of segment that has failed, as described by the [TimeRange](#/schemas/timerange) type",

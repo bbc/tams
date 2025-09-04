@@ -8,7 +8,7 @@
     ],
     "properties": {
         "url": {
-            "description": "The URL to which the API should make HTTP POST requests with event data",
+            "description": "The URL to which the service instance should make HTTP POST requests with event data",
             "type": "string"
         },
         "api_key_name": {

@@ -27,7 +27,7 @@
                         "type": "string"
                     },
                     "default_storage": {
-                        "description": "If set to `true`, this is the default storage backend. The default storage backend will be used if the client does not specify a storage backend id when requesting the allocation of storage. If this parameter is not set, assume `false`. Instances may either set one storage backend as default, or none - indicating that clients must always specify a storage backend.",
+                        "description": "If set to `true`, this is the default storage backend. The default storage backend will be used if the client does not specify a storage backend id when requesting the allocation of storage. If this parameter is not set, assume `false`. Service instances may either set one storage backend as default, or none - indicating that clients must always specify a storage backend.",
                         "type": "boolean"
                     }
                 }
