@@ -527,7 +527,7 @@ paths:
           $ref: '#/components/responses/trait_resource_info_head_404'
     get:
       summary: Source Description
-      description: Returns the Source description property.
+      description: Returns the Source description property. This should be a human-readable description that may be showed in detailed views of Sources. The description should be longer and more detailed than `label`.
       operationId: GET_sources-sourceId-description
       tags:
         - Sources
@@ -544,7 +544,7 @@ paths:
           description: The requested Source does not exist.
     put:
       summary: Create or Update Source Description
-      description: Create or update the description property.
+      description: Create or update the description property. This should be a human-readable description that may be showed in detailed views of Sources. The description should be longer and more detailed than `label`.
       operationId: PUT_sources-sourceId-description
       tags:
         - Sources
@@ -599,7 +599,7 @@ paths:
           description: The requested Source does not exist, or does not have a label set.
     get:
       summary: Source Label
-      description: Returns the Source label property.
+      description: Returns the Source label property. This should be a very short, human-readable label that may be displayed in listings of Sources.
       operationId: GET_sources-sourceId-label
       tags:
         - Sources
@@ -616,7 +616,7 @@ paths:
           description: The requested Source does not exist, or does not have a label set.
     put:
       summary: Create or Update Source Label
-      description: Create or update the label property.
+      description: Create or update the label property. This should be a very short, human-readable label that may be displayed in listings of Sources.
       operationId: PUT_sources-sourceId-label
       tags:
         - Sources
@@ -1140,7 +1140,7 @@ paths:
           $ref: '#/components/responses/trait_resource_info_head_404'
     get:
       summary: Flow Description
-      description: Returns the flow description property.
+      description: Returns the flow description property. This should be a human-readable description that may be showed in detailed views of Flows. The description should be longer and more detailed than `label`.
       operationId: GET_flows-flowId-description
       tags:
         - Flows
@@ -1157,7 +1157,7 @@ paths:
           description: The requested flow does not exist.
     put:
       summary: Create or Update Flow Description
-      description: Create or update the description property.
+      description: Create or update the description property. This should be a human-readable description that may be showed in detailed views of Flows. The description should be longer and more detailed than `label`.
       operationId: PUT_flows-flowId-description
       tags:
         - Flows
@@ -1212,7 +1212,7 @@ paths:
           description: The requested Flow does not exist, or does not have a label set.
     get:
       summary: Flow Label
-      description: Returns the Flow label property.
+      description: Returns the Flow label property. This should be a very short, human-readable label that may be displayed in listings of Flows.
       operationId: GET_flows-flowId-label
       tags:
         - Flows
@@ -1229,7 +1229,7 @@ paths:
           description: The requested Flow does not exist, or does not have a label set.
     put:
       summary: Create or Update Flow Label
-      description: Create or update the label property.
+      description: Create or update the label property. This should be a very short, human-readable label that may be displayed in listings of Flows.
       operationId: PUT_flows-flowId-label
       tags:
         - Flows
@@ -1282,7 +1282,7 @@ paths:
           $ref: '#/components/responses/trait_resource_info_head_404'
     get:
       summary: Flow Read-Only
-      description: Returns the flow read_only property.
+      description: Returns the flow read_only property. If set to 'true', service implementations SHOULD reject client requests to update Flow metadata (other than the read_only property), Flow Segments and media objects.
       operationId: GET_flows-flowId-read-only
       tags:
         - Flows
@@ -1298,7 +1298,7 @@ paths:
           description: The requested flow does not exist.
     put:
       summary: Set Flow Read-Only
-      description: Set the read-only property.
+      description: Set the read-only property. If set to 'true', service implementations SHOULD reject client requests to update Flow metadata (other than the read_only property), Flow Segments and media objects.
       operationId: PUT_flows-flowId-read-only
       tags:
         - Flows
@@ -1337,7 +1337,7 @@ paths:
           $ref: '#/components/responses/trait_resource_info_head_404'
     get:
       summary: Flow Collection
-      description: Returns the flow collection property.
+      description: Returns the flow collection property. A list of Flows that are collected together by this Flow.
       operationId: GET_flows-flowId-flow-collection
       tags:
         - Flows
@@ -1355,7 +1355,7 @@ paths:
     put:
       summary: Create or Update Flow Collection
       description: |
-        Create or update the flow collection property.
+        Create or update the flow collection property. A list of Flows that are collected together by this Flow.
 
         Service implementations SHOULD verify that Flow metadata is compatible with the associated Source.
         Service implementations MAY accept modification/addition of parameters, and reflect such changes in the Source, where it will not bring any Flows of the Source into conflict.
@@ -1414,7 +1414,11 @@ paths:
           $ref: '#/components/responses/trait_resource_info_head_404'
     get:
       summary: Flow Maximum Bit Rate
-      description: Returns the flow max bit rate property.
+      description: |
+        Returns the flow max bit rate property.
+
+        The maximum bit rate of the flow segments in 1000 bits/second.
+        A precise definition can be found in the [Setting Flow Bit Rate Properties](https://github.com/bbc/tams/blob/main/docs/appnotes/0013-setting-flow-bit-rate-properties.md) AppNote.
       operationId: GET_flows-flowId-max-bit-rate
       tags:
         - Flows
@@ -1431,7 +1435,11 @@ paths:
           description: The requested flow does not exist.
     put:
       summary: Create or Update Flow Maximum Bit Rate
-      description: Create or update the max bit rate property.
+      description: |
+        Create or update the max bit rate property.
+
+        The maximum bit rate of the flow segments in 1000 bits/second.
+        A precise definition can be found in the [Setting Flow Bit Rate Properties](https://github.com/bbc/tams/blob/main/docs/appnotes/0013-setting-flow-bit-rate-properties.md) AppNote.
       operationId: PUT_flows-flowId-max-bit-rate
       tags:
         - Flows
@@ -1486,7 +1494,11 @@ paths:
           $ref: '#/components/responses/trait_resource_info_head_404'
     get:
       summary: Flow Average Bit Rate
-      description: Returns the flow average bit rate property.
+      description: |
+        Returns the flow average bit rate property.
+
+        The average bit rate of the flow segments in 1000 bits/second.
+        A precise definition can be found in the [Setting Flow Bit Rate Properties](https://github.com/bbc/tams/blob/main/docs/appnotes/0013-setting-flow-bit-rate-properties.md) AppNote.
       operationId: GET_flows-flowId-avg-bit-rate
       tags:
         - Flows
@@ -1503,7 +1515,11 @@ paths:
           description: The requested flow does not exist.
     put:
       summary: Create or Update Flow Average Bit Rate
-      description: Create or update the average bit rate property.
+      description: |
+        Create or update the average bit rate property.
+
+        The average bit rate of the flow segments in 1000 bits/second.
+        A precise definition can be found in the [Setting Flow Bit Rate Properties](https://github.com/bbc/tams/blob/main/docs/appnotes/0013-setting-flow-bit-rate-properties.md) AppNote.
       operationId: PUT_flows-flowId-avg-bit-rate
       tags:
         - Flows
