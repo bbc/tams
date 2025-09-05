@@ -112,7 +112,8 @@ Various scenarios are explored in the [Practical Guidance for Media](https://spe
 
 Flows exist on an infinite timeline (the "Flow timeline"), and the position of content on this timeline is defined by the `timerange` attribute in each Flow Segment of that Flow.
 A timerange is represented in JSON and text using the [TimeRange string pattern](https://bbc.github.io/tams/5.1/index.html#/schemas/timerange).
-Separately the media objects have a timeline (the "media timeline") defined by the container format itself: the timestamps recorded inside the media object for each grain in the natural format for that container (e.g. the PTS timing for MPEG-TS).
+Separately the media objects have a timeline (the "media timeline") defined by, or implied by, the container format itself: the timestamps recorded inside the media object for each grain in the natural format for that container.
+For example in MPEG-TS that would be the presentation timestamp (PTS), or for a container without timing it may be derived from a frame count and rate.
 The Flow Segment attributes describe how to map the media timeline onto the Flow timeline.
 For Flows using codecs with temporal re-ordering, both of these timelines represent the presentation timeline of the media.
 Note that no explicit relationship is defined between the Flow timelines of different Flows, although a mechanism to define that may be added in future.
@@ -140,25 +141,35 @@ In the diagram below, portions of Flow X and Flow Y are combined to form Flow Z,
 
 In practice a client may need to read (and potentially decode, in the case of inter-frame video codecs) the entire object, discarding the unwanted grains and returning those selected by the segment to the consumer.
 This can be handled by mapping the object's timeline into the Flow timeline by adding `ts_offset` to each timestamp inside the media object, and then discarding grains when the resulting timestamp falls outside the given `timerange` for the segment.
-Alternatively if `sample_offset` and `sample_count` are set on the segment, a client may count the samples read from the object and discard accordingly, although care must be taken with temporal re-ordering, since the `sample_offset` and `sample_count` refer to the presentation timeline, rather than the decode timeline.
+Alternatively if `sample_offset` and `sample_count` are set on the segment, a client may count the samples read from the object and discard accordingly, although care must be taken with codecs that use temporal re-ordering, since the `sample_offset` and `sample_count` refer to the presentation timeline, rather than the decode timeline.
 
 ![Graphic showing the objects making up Flow Z (above) and their segments, along with the selected grains](./docs/images/Flow%20and%20Media%20Timelines-Flow%20XYZ-subsegments.drawio.png)
 
-The diagram above shows three of the objects used by Flow Z and a smaller portion of the Flow Z timeline considered previously, with both the media object timeline (and `media_ts`) and Flow timeline (`grain_ts`) of each grain in the object along the bottom.
+The diagram above shows three of the objects used by Flow Z and a smaller portion of the Flow Z timeline considered previously, with both the media object timeline (and `media_ts`) and Flow timeline (`segment_ts`) of each grain in the object along the bottom.
 The `timerange`/`ts_offset` approach is illustrated by the following pseudocode, which shows how a client might apply the `ts_offset` to each `media_ts`, then validate whether it is inside the given `timerange`.
 Note that the `media_ts` may be a different precision or timebase to the nanosecond timestamps used by TAMS, so some conversion may be required.
 
 ```python
-grain_ts = media_ts_to_timestamp(media_ts)         # `4:0` for `media_ts = 4.0`
-grain_ts_in_flow_timeline = grain_ts + ts_offset   # `4:0 + -0:700000000 = 3:300000000`
-if (grain_ts_in_flow_timeline < timerange.start or
-    grain_ts_in_flow_timeline >= timerange.end):   # `3:300000000 is less than 3:500000000`
-    discard_grain()                                # So this grain is discarded
+media_ts = to_timestamp(ts)          # `4:0` for `ts = 4.0sec`
+segment_ts = media_ts + ts_offset    # `4:0 + -0:700000000 = 3:300000000` (in Flow timeline)
+if (segment_ts < timerange.start or
+      segment_ts >= timerange.end):  # `3:300000000 is less than 3:500000000`
+    discard_grain()                  # So this grain is discarded
 else:
-    keep_grain()                                   # `media_ts = 4.2` will be retained, with `grain_ts = 3:500000000 (or 3.5sec)`
+    keep_grain()                     # The first grain to be retained will have `media_ts = 4.2`
+                                     # (and `segment_ts = 3:500000000 or 3.5sec)`
 ```
 
-The diagram below also shows both approaches: by `timerange` and `ts_offset`, and by selecting samples using `sample_offset` and `sample_count`.
+The `sample_offset` and `sample_count` approach can be applied using FFmpeg's `-ss` and `-t` options (after converting them into durations), and the resulting output timeline produced by setting `-output_ts_offset` to the start of the segment.
+Note however that for this to be frame-accurate in codecs using temporal re-ordering, the input must be transcoded.
+For example for object Y05 in Flow Z above:
+
+```bash
+ffmpeg -i segment -ss 0.3 -t 0.5 -output_ts_offset 3.5 -muxpreload 0 -muxdelay 0 \
+  -vcodec libx264 output_segment.ts
+```
+
+The diagram below also shows how both approaches might be applied to a Flow using an MPEG-TS container: by using `timerange` and `ts_offset`, and by selecting samples using `sample_offset` and `sample_count`.
 
 ![Graphic showing media units being drawn from Flow Z's objects using their timestamps](./docs/images/Flow%20and%20Media%20Timelines-Flow%20XYZ-selecting-units.drawio.png)
 
