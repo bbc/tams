@@ -1,6 +1,6 @@
 {
     "title": "Image Flow",
-    "description": "Describes an still image Flow",
+    "description": "Describes a still image Flow, for use by thumbnail tracks etc",
     "type": "object",
     "allOf": [
         {

@@ -8,7 +8,7 @@
     ],
     "properties": {
         "id": {
-            "description": "Source or Flow Identifier of the member of this collection. Sources must only collect Sources, and Flows must only collect Flows. Must already be registered in this service instance",
+            "description": "Source or Flow Identifier of the member of this collection. Sources MUST only collect Sources, and Flows MUST only collect Flows. Must already be registered in this service instance",
             "$ref": "uuid.json"
         },
         "role": {

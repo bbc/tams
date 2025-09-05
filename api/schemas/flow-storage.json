@@ -1,6 +1,6 @@
 {
     "title": "Storage Allocation",
-    "description": "Gives information on storage for Media Objects. This schema is for the `http_object_store` Storage Backend type which provides URLs for storing Media Objects in object store buckets, and is the only Storage Backend type currently implemented.",
+    "description": "Gives information on storage for Media Objects. This schema is for the `http_object_store` Storage Backend type which provides URLs for storing Media Objects in object store buckets, and is the only Storage Backend type currently implemented. It may also be used for other HTTP-based storage backends which use a compatible pattern of PUT and GET requests.",
     "type": "object",
     "properties":
     {

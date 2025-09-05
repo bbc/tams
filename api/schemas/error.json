@@ -1,6 +1,6 @@
 {
     "title": "Error status metadata",
-    "description": "Provides more information for the error status.",
+    "description": "Provides more information for an error status.",
     "type": "object",
     "required": [
         "type", "summary", "time"
