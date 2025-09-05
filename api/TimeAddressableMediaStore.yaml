@@ -246,14 +246,14 @@ paths:
           in: query
           description: |
             Filter on Sources that have a tag named {name} and with the given value.
-            The {name} could contain escaped characters to allow it to be used in a URL.
+            {name} and the value MUST be URL encoded where special characters are present.
           schema:
             type: string
         - name: tag_exists.{name}
           in: query
           description: |
             Filter on Sources that have a tag named {name} regardless of value.
-            The {name} could contain escaped characters to allow it to be used in a URL.
+            {name} MUST be URL encoded where special characters are present.
             If set to true then the presence of the tag is filtered for.
             If set to false then its absence is.
             If left out then no filtering on tag presence is performed.
@@ -304,14 +304,14 @@ paths:
           in: query
           description: |
             Filter on Sources that have a tag named {name} and with the given value.
-            The {name} could contain escaped characters to allow it to be used in a URL.
+            {name} and the value MUST be URL encoded where special characters are present.
           schema:
             type: string
         - name: tag_exists.{name}
           in: query
           description: |
             Filter on Sources that have a tag named {name} regardless of value.
-            The {name} could contain escaped characters to allow it to be used in a URL.
+            {name} MUST be URL encoded where special characters are present.
             If set to true then the presence of the tag is filtered for.
             If set to false then its absence is.
             If left out then no filtering on tag presence is performed.
@@ -437,7 +437,7 @@ paths:
         required: true
         schema:
           type: string
-        description: The tag name.
+        description: The tag name. {name} MUST be URL encoded where special characters are present.
       - name: sourceId
         in: path
         required: true
@@ -688,14 +688,14 @@ paths:
           in: query
           description: |
             Filter on flows that have a tag named {name} and with the given value.
-            The {name} could contain escaped characters to allow it to be used in a URL.
+            {name} and the value MUST be URL encoded where special characters are present.
           schema:
             type: string
         - name: tag_exists.{name}
           in: query
           description: |
             Filter on flows that have a tag named {name} regardless of value.
-            The {name} could contain escaped characters to allow it to be used in a URL.
+            {name} MUST be URL encoded where special characters are present.
             If set to true then the presence of the tag is filtered for.
             If set to false then its absence is.
             If left out then no filtering on tag presence is performed.
@@ -772,14 +772,14 @@ paths:
           in: query
           description: |
             Filter on flows that have a tag named {name} and with the given value.
-            The {name} could contain escaped characters to allow it to be used in a URL.
+            {name} and the value MUST be URL encoded where special characters are present.
           schema:
             type: string
         - name: tag_exists.{name}
           in: query
           description: |
             Filter on flows that have a tag named {name} regardless of value.
-            The {name} could contain escaped characters to allow it to be used in a URL.
+            {name} MUST be URL encoded where special characters are present.
             If set to true then the presence of the tag is filtered for.
             If set to false then its absence is.
             If left out then no filtering on tag presence is performed.
@@ -1048,7 +1048,7 @@ paths:
         required: true
         schema:
           type: string
-        description: The tag name.
+        description: The tag name. {name} MUST be URL encoded where special characters are present.
       - name: flowId
         in: path
         required: true
