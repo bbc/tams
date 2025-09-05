@@ -1667,7 +1667,7 @@ paths:
         Returns the Flow Segments.
 
         The Flow Segment provides information about the Media Object.
-        The media store type, which is indicated in the /service/storage-backends resource, determines the information that is included in the response to allow the Flow Segment's Media Object to be downloaded by the client.
+        The media store type, which is indicated in the [/service/storage-backends](#/operations/GET_storage-backends) resource, determines the information that is included in the response to allow the Flow Segment's Media Object to be downloaded by the client.
         The examples provided here are for the "http_object_store" media store type which MUST include a `get_urls` property that contains the HTTP URLs for downloading the Media Object - service implementations should generate this internally.
 
         The flow segment may include timing adjustment information that the client needs to apply when extracting the samples from the media object.
@@ -1920,7 +1920,7 @@ paths:
       description: |
         Allocate storage locations for writing Media Objects.
 
-        The media store type, which is indicated in the /service resource, determines the information provided in the response.
+        The media store type, which is indicated in the [/service](#/operations/GET_service) resource, determines the information provided in the response.
         The examples and description below are for the "http_object_store" media store type.
         This media store type provides HTTP URLs for uploading and downloading Media Objects in buckets.
 
