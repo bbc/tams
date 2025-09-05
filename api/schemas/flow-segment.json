@@ -11,7 +11,7 @@
     {
         "object_id":
         {
-            "description": "The object identifier for the media object.",
+            "description": "The Object identifier for the Media Object.",
             "type": "string"
         },
         "ts_offset":
@@ -41,7 +41,7 @@
         },
         "get_urls":
         {
-            "description": "A list of URLs to which a GET request can be made to directly retrieve the contents of the Segment. This is required by the `http_object_store` media store type, which is the only one currently described. Clients may choose any URL in the list and treat the content returned as identical, however service instances may sort the list such that the preferred URL is first. Storage backend metadata for controlled URLs should be populated by the service instance based on the storage backend the media object copy resides in.",
+            "description": "A list of URLs to which a GET request can be made to directly retrieve the contents of the Segment. This is required by the `http_object_store` media store type, which is the only one currently described. Clients may choose any URL in the list and treat the content returned as identical, however service instances may sort the list such that the preferred URL is first. Storage backend metadata for controlled URLs should be populated by the service instance based on the storage backend the Media Object copy resides in.",
             "type": "array",
             "items":
             {

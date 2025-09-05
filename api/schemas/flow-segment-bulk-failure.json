@@ -17,7 +17,7 @@
                 ],
                 "properties": {
                     "object_id": {
-                        "description": "The object ID of the Segment which has failed to register with the service instance",
+                        "description": "The Object ID of the Segment which has failed to register with the service instance",
                         "type": "string"                },
                     "timerange": {
                         "description": "The timerange of Segment that has failed, as described by the [TimeRange](#/schemas/timerange) type",
