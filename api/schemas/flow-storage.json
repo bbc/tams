@@ -1,12 +1,12 @@
 {
     "title": "Storage Allocation",
-    "description": "Gives information on storage for media objects. This schema is for the `http_object_store` media store type which provides URLs for storing media objects in object store buckets, and is the only store type currently implemented.",
+    "description": "Gives information on storage for Media Objects. This schema is for the `http_object_store` media store type which provides URLs for storing Media Objects in object store buckets, and is the only store type currently implemented.",
     "type": "object",
     "properties":
     {
         "pre":
         {
-            "description": "Actions that need to be taken before the media object can be written",
+            "description": "Actions that need to be taken before the Media Object can be written",
             "type": "array",
             "items":
             {
@@ -44,11 +44,11 @@
         },
         "media_objects":
         {
-            "description": "List of information for identifying and uploading media objects",
+            "description": "List of information for identifying and uploading Media Objects",
             "type": "array",
             "items":
             {
-                "description": "Information for a media object",
+                "description": "Information for a Media Object",
                 "type": "object",
                 "required":
                 [
@@ -59,7 +59,7 @@
                 {
                     "object_id":
                     {
-                        "description": "The object identifier for the media object.",
+                        "description": "The Object identifier for the Media Object.",
                         "type": "string"
                     },
                     "put_url":

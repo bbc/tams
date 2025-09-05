@@ -1,6 +1,6 @@
 {
     "title": "Object",
-    "description": "Describes a media object in the store.",
+    "description": "Describes a Media Object in the store.",
     "type": "object",
     "required": [
         "id",
@@ -8,18 +8,18 @@
     ],
     "properties": {
         "id": {
-            "description": "The media object identifier.",
+            "description": "The Media Object identifier.",
             "type": "string"
         },
         "referenced_by_flows": {
-            "description": "List of Flows that reference this media object via Flow Segments in this store.",
+            "description": "List of Flows that reference this Media Object via Flow Segments in this store.",
             "type": "array",
             "items": {
                 "$ref": "uuid.json"
             }
         },
         "first_referenced_by_flow": {
-            "description": "The first Flow that had a Flow Segment reference the media object in this store. This Flow is also present in 'referenced_by_flows' if it is still referenced by the Flow. This property is optional and may, in some service implementations, become unset if the Flow no longer references the media object, e.g. because it was deleted.",
+            "description": "The first Flow that had a Flow Segment reference the Media Object in this store. This Flow is also present in 'referenced_by_flows' if it is still referenced by the Flow. This property is optional and may, in some service implementations, become unset if the Flow no longer references the Media Object, e.g. because it was deleted.",
             "$ref": "uuid.json"
         }
     }

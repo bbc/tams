@@ -1000,7 +1000,7 @@ paths:
               example:
                 $ref: examples/deletion-request-get-200.json
         "204":
-          description: No content. The Flow has been deleted and the Flow Segments have been or will be deleted. Media objects referenced in other Flows will not be deleted. Media objects that are no longer referenced by any Segments will be deleted.
+          description: No content. The Flow has been deleted and the Flow Segments have been or will be deleted. Media Objects referenced in other Flows will not be deleted. Media Objects that are no longer referenced by any Segments will be deleted.
         "403":
           description: Forbidden. You do not have permission to modify this Flow. It may be marked read-only.
         "404":
@@ -1282,7 +1282,7 @@ paths:
           $ref: '#/components/responses/trait_resource_info_head_404'
     get:
       summary: Flow Read-Only
-      description: Returns the Flow read_only property. If set to 'true', service implementations SHOULD reject client requests to update Flow metadata (other than the read_only property), Flow Segments and media objects.
+      description: Returns the Flow read_only property. If set to 'true', service implementations SHOULD reject client requests to update Flow metadata (other than the read_only property), Flow Segments and Media Objects.
       operationId: GET_flows-flowId-read-only
       tags:
         - Flows
@@ -1298,7 +1298,7 @@ paths:
           description: The requested Flow does not exist.
     put:
       summary: Set Flow Read-Only
-      description: Set the read-only property. If set to 'true', service implementations SHOULD reject client requests to update Flow metadata (other than the read_only property), Flow Segments and media objects.
+      description: Set the read-only property. If set to 'true', service implementations SHOULD reject client requests to update Flow metadata (other than the read_only property), Flow Segments and Media Objects.
       operationId: PUT_flows-flowId-read-only
       tags:
         - Flows
@@ -1570,7 +1570,7 @@ paths:
       parameters:
         - name: object_id
           in: query
-          description: Filter on object identifier.
+          description: Filter on Object identifier.
           schema:
             type: string
         - name: timerange
@@ -1666,9 +1666,9 @@ paths:
       description: |
         Returns the Flow Segments.
 
-        The Flow Segment provides information about the media object.
-        The media store type, which is indicated in the /service/storage-backends resource, determines the information that is included in the response to allow the Flow Segment's media object to be downloaded by the client.
-        The examples provided here are for the "http_object_store" media store type which MUST include a `get_urls` property that contains the HTTP URLs for downloading the media object - service implementations should generate this internally.
+        The Flow Segment provides information about the Media Object.
+        The media store type, which is indicated in the /service/storage-backends resource, determines the information that is included in the response to allow the Flow Segment's Media Object to be downloaded by the client.
+        The examples provided here are for the "http_object_store" media store type which MUST include a `get_urls` property that contains the HTTP URLs for downloading the Media Object - service implementations should generate this internally.
 
         The flow segment may include timing adjustment information that the client needs to apply when extracting the samples from the media object.
         It may also use a subset of the samples in the media object.
@@ -1690,7 +1690,7 @@ paths:
       parameters:
         - name: object_id
           in: query
-          description: Filter on object identifier.
+          description: Filter on Object identifier.
           schema:
             type: string
         - name: timerange
@@ -1793,8 +1793,8 @@ paths:
                 multiple_urls:
                   summary: Multiple URLs
                   description: |
-                    This example shows how the media object for a Flow Segment could be accessed using multiple URLs.
-                    Clients are free to choose any of the URLs given (which return identical media objects), however the service has expressed a preference for the "pipeline-a" URLs by putting them first in the list.
+                    This example shows how the Media Object for a Flow Segment could be accessed using multiple URLs.
+                    Clients are free to choose any of the URLs given (which return identical Media Objects), however the service has expressed a preference for the "pipeline-a" URLs by putting them first in the list.
                   value:
                     $ref: examples/flow-segments-get-200-multiple-urls.json
         "400":
@@ -1804,21 +1804,21 @@ paths:
     post:
       summary: Create Flow Segments
       description: |
-        Register either a single new Flow Segment or an array of Segments, attaching the object id given to a point in the Flow timeline.
+        Register either a single new Flow Segment or an array of Segments, attaching the Object id given to a point in the Flow timeline.
 
-        The Segment may use a newly-written object, or re-use an existing object from another Flow.
+        The Segment may use a newly-written Media Object, or re-use an existing Media Object from another Flow.
 
-        For newly-written objects, the client is responsible for ensuring that the Segment written to the TAMS service instance obeys the following restrictions:
-          - All samples in the object SHOULD be used by the Segment.
-          - The timestamps of each sample in the media object MUST equal its position on the Flow timeline, OR `ts_offset` MUST be set such that `media_object_ts + ts_offset = segment_ts`
+        For newly-written Media Objects, the client is responsible for ensuring that the Segment written to the TAMS service instance obeys the following restrictions:
+          - All samples in the Object SHOULD be used by the Segment.
+          - The timestamps of each sample in the Media Object MUST equal its position on the Flow timeline, OR `ts_offset` MUST be set such that `media_object_ts + ts_offset = segment_ts`
           - The timerange of the Segment MUST NOT overlap any other Segment in the same Flow. The behaviour is undefined if there is an overlap with existing Segments and a service may return a 400 error response.
           - The `sample_offset` SHOULD be zero.
 
-        A service instance SHOULD reject registrations of Flow Segments with a 400 error response if it references a newly created media object in the local TAMS storage that was not intended to be used for the Flow.
-        A service instance SHOULD accept Flow Segments that reference an existing media object in the local TAMS storage that was originally created for another Flow.
+        A service instance SHOULD reject registrations of Flow Segments with a 400 error response if it references a newly created Media Object in the local TAMS storage that was not intended to be used for the Flow.
+        A service instance SHOULD accept Flow Segments that reference an existing Media Object in the local TAMS storage that was originally created for another Flow.
 
-        A service instance MAY support media objects that are held in external storage in another TAMS or other media storage system.
-        The Flow Segment may in that case require the `get_urls` property to provide the information needed by clients to access the media object.
+        A service instance MAY support Media Objects that are held in external storage in another TAMS or other media storage system.
+        The Flow Segment may in that case require the `get_urls` property to provide the information needed by clients to access the Media Object.
 
         If a client needs to modify a Flow Segment, e.g. to correct metadata such as the `key_frame_count` or add additional URLs to `get_urls`, then the client SHOULD first delete the existing Segment and then write a new one.
         The behaviour is undefined if the Segment exists and the service may return a 400 error response.
@@ -1827,9 +1827,9 @@ paths:
         If an error is detected when processing a list of Segments then processing should continue to try and process the remaining Segments.
         A 200 response should be returned listing the failed Segments.
 
-        Clients are expected to decide how to break content into media objects, however those objects SHOULD be large enough to avoid excessive round trip overheads in the underlying store (_e.g._ of the order of several megabytes) and where codecs with temporal re-ordering are used, object SHOULD contain complete GOPs or decodable units.
+        Clients are expected to decide how to break content into Media Objects, however those Objects SHOULD be large enough to avoid excessive round trip overheads in the underlying store (_e.g._ of the order of several megabytes) and where codecs with temporal re-ordering are used, Object SHOULD contain complete GOPs or decodable units.
 
-        For media objects that have been re-used from other Flows, the `sample_offset` and `sample_count` MAY be used to specify part of the media object to use:
+        For Media Objects that have been re-used from other Flows, the `sample_offset` and `sample_count` MAY be used to specify part of the Media Object to use:
           - The `timerange` field indicates the new Segment's position in the Flow
           - The sample associated with the start of the `timerange` MUST be the one selected by `sample_offset`
           - Likewise, the sample associated with the end of the `timerange` MUST be the one selected by `sample_offset + sample_count - 1`, unless `timerange` has an exclusive end, in which case it will be  `sample_offset + sample_count`.
@@ -1882,7 +1882,7 @@ paths:
             $ref: 'schemas/timerange.json'
         - name: object_id
           in: query
-          description: Filter on object identifier.
+          description: Filter on Object identifier.
           schema:
             type: string
       responses:
@@ -1900,7 +1900,7 @@ paths:
               example:
                 $ref: examples/deletion-request-get-200.json
         "204":
-          description: No content. The Flow Segments have been or will be deleted. Media objects referenced in other Segments will not be deleted. Media objects that are no longer referenced by any Segments will be deleted.
+          description: No content. The Flow Segments have been or will be deleted. Media Objects referenced in other Segments will not be deleted. Media Objects that are no longer referenced by any Segments will be deleted.
         "400":
           description: Bad request. Invalid query options.
         "403":
@@ -1918,21 +1918,21 @@ paths:
     post:
       summary: Allocate Flow Storage
       description: |
-        Allocate storage locations for writing media objects.
+        Allocate storage locations for writing Media Objects.
 
         The media store type, which is indicated in the /service resource, determines the information provided in the response.
         The examples and description below are for the "http_object_store" media store type.
-        This media store type provides HTTP URLs for uploading and downloading media objects in buckets.
+        This media store type provides HTTP URLs for uploading and downloading Media Objects in buckets.
 
-        The response will include a PUT URL that a client uses to upload the media object.
+        The response will include a PUT URL that a client uses to upload the Media Object.
         The client is expected to register the Flow Segment using the [/flows/{flowId}/segments](#/operations/POST_flows-flowId-segments) endpoint once the upload is complete.
-        Service implementations need to handle situations where objects were uploaded but no Flow Segment was registered successfully.
+        Service implementations need to handle situations where Objects were uploaded but no Flow Segment was registered successfully.
 
-        The response may include PUT URLs for creating buckets for the media objects.
-        These PUT URLs should be used before uploading media objects.
+        The response may include PUT URLs for creating buckets for the Media Objects.
+        These PUT URLs should be used before uploading Media Objects.
         The object_id associated with each storage location has the bucket name as its prefix.
 
-        The response may include PUT URLs for setting the CORS properties for the buckets and media objects.
+        The response may include PUT URLs for setting the CORS properties for the buckets and Media Objects.
 
         When making requests to the provided `put_url`, clients should include credentials if the provided URL is on the same origin as the API itself, akin to the `same-origin` mode in the [WhatWG Fetch Standard](https://fetch.spec.whatwg.org/#concept-request-credentials-mode).
       operationId: POST_flows-flowId-storage
@@ -1954,7 +1954,7 @@ paths:
               $ref: schemas/flow-storage-post.json
       responses:
         "201":
-          description: Storage locations for writing media objects.
+          description: Storage locations for writing Media Objects.
           content:
             application/json:
               schema:
@@ -1970,14 +1970,14 @@ paths:
   /objects/{objectId}:
     head:
       summary: Media Object Information
-      description: Return Flow references and other information about media objects.
+      description: Return Flow references and other information about Media Objects.
       operationId: HEAD_objects
       tags:
         - Objects
       parameters:
         - name: objectId
           in: path
-          description: The media object identifier.
+          description: The Media Object identifier.
           required: true
           schema:
             type: string
@@ -2006,21 +2006,21 @@ paths:
         "400":
           $ref: '#/components/responses/trait_resource_info_head_400'
         "404":
-          description: The requested media object does not exist.
+          description: The requested Media Object does not exist.
     get:
       summary: Media Object Information
       description: |
         Contains Flows that references the media object and other information.
 
-        The paging query parameters and headers are required for the list of Flow references in the media object.
-        Service implementations should return a complete list of Flow references within reason and API clients should expect paging to happen in some rare cases where a media object is used in many Flows.
+        The paging query parameters and headers are required for the list of Flow references in the Media Object.
+        Service implementations should return a complete list of Flow references within reason and API clients should expect paging to happen in some rare cases where a Media Object is used in many Flows.
       operationId: GET_objects
       tags:
         - Objects
       parameters:
         - name: objectId
           in: path
-          description: The media object identifier.
+          description: The Media Object identifier.
           required: true
           schema:
             type: string
@@ -2051,7 +2051,7 @@ paths:
         "400":
           description: Bad request. Invalid query options.
         "404":
-          description: The requested media object does not exist.
+          description: The requested Media Object does not exist.
   /flow-delete-requests:
     head:
       summary: List Flow Delete Requests
@@ -2441,11 +2441,11 @@ tags:
       url: 'https://specs.amwa.tv/ms-04/releases/v1.0.0/docs/2.3._Explanation_-_Flow.html'
   - name: FlowSegments
     description: |
-      A timerange Segment of a Flow that references a media object
+      A timerange Segment of a Flow that references a Media Object
   - name: Objects
-    description: The object in the backing store(s) that contains the media essence.
+    description: The Object in the backing store(s) that contains the media essence.
   - name: MediaStorage
-    description: The system that stores the media objects referenced by Flow Segments.
+    description: The system that stores the Media Objects referenced by Flow Segments.
   - name: FlowDeleteRequests
     description: Resource for monitoring long running deletion of Flows and Flow Segments.
   - name: Webhooks

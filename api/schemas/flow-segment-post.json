@@ -11,7 +11,7 @@
     {
         "object_id":
         {
-            "description": "The object identifier for the media object.",
+            "description": "The Object identifier for the Media Object.",
             "type": "string"
         },
         "ts_offset":

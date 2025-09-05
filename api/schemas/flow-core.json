@@ -75,7 +75,7 @@
         },
         "read_only":
         {
-            "description": "If set to 'true', service implementations SHOULD reject client requests to update Flow metadata (other than the read_only property), Flow Segments and media objects",
+            "description": "If set to 'true', service implementations SHOULD reject client requests to update Flow metadata (other than the read_only property), Flow Segments and Media Objects",
             "type": "boolean"
         },
         "codec":
