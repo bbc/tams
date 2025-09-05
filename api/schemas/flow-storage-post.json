@@ -4,7 +4,7 @@
     "type": "object",
     "properties": {
         "limit": {
-            "description": "Limit the number of storage segments in each response page. Service implementations may specify their own default and maximum for the limit",
+            "description": "Limit the number of storage Segments in each response page. Service implementations may specify their own default and maximum for the limit",
             "type": "integer"
         },
         "object_ids": {
