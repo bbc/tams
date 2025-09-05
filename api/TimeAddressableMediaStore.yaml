@@ -18,14 +18,14 @@ info:
   title: Time-addressable Media Store
   description: |
     The Time-addressable Media Store (TAMS) is used for storing segmented media flows.
-    The TAMS consists of a media store for the media Flow Segment Objects and a service providing a database index of the Flow Segments.
+    The TAMS consists of one or more Storage Backend for the media Flow Segment Objects and a service providing a database index of the Flow Segments.
     This document is a specification of the service API.
 
     See the [bbc/tams](https://github.com/bbc/tams) repository for more background on TAMS.
 
-    **Note**: the examples provided in this specification are for a system which uses a media store that provides HTTP URLs for uploading and downloading media objects in buckets.
+    **Note**: the examples provided in this specification are for a system which uses a Storage Backend that provides HTTP URLs for uploading and downloading media objects in buckets.
     This could for example be implemented using an AWS S3 compatible store using presigned URLs or by a simple file system storage with an HTTP frontend.
-    Clients should parse the [/service](#/operations/GET_service) endpoint and handle the media store type in use appropriately.
+    Clients should parse the [/service](#/operations/GET_service) endpoint and handle the Storage Backend type in use appropriately.
   version: "7.0"
   contact:
     name: 'BBC R&D - Cloud-Fit Production Team'
@@ -1667,8 +1667,8 @@ paths:
         Returns the Flow Segments.
 
         The Flow Segment provides information about the Media Object.
-        The media store type, which is indicated in the [/service/storage-backends](#/operations/GET_storage-backends) resource, determines the information that is included in the response to allow the Flow Segment's Media Object to be downloaded by the client.
-        The examples provided here are for the "http_object_store" media store type which MUST include a `get_urls` property that contains the HTTP URLs for downloading the Media Object - service implementations should generate this internally.
+        The Storage Backend type, which is indicated in the [/service/storage-backends](#/operations/GET_storage-backends) resource, determines the information that is included in the response to allow the Flow Segment's Media Object to be downloaded by the client.
+        The examples provided here are for the "http_object_store" Storage Backend type which MUST include a `get_urls` property that contains the HTTP URLs for downloading the Media Object - service implementations should generate this internally.
 
         The flow segment may include timing adjustment information that the client needs to apply when extracting the samples from the media object.
         It may also use a subset of the samples in the media object.
@@ -1920,9 +1920,9 @@ paths:
       description: |
         Allocate storage locations for writing Media Objects.
 
-        The media store type, which is indicated in the [/service](#/operations/GET_service) resource, determines the information provided in the response.
-        The examples and description below are for the "http_object_store" media store type.
-        This media store type provides HTTP URLs for uploading and downloading Media Objects in buckets.
+        The Storage Backend type, which is indicated in the [/service](#/operations/GET_service) resource, determines the information provided in the response.
+        The examples and description below are for the "http_object_store" Storage Backend type.
+        This Storage Backend type provides HTTP URLs for uploading and downloading Media Objects in buckets.
 
         The response will include a PUT URL that a client uses to upload the Media Object.
         The client is expected to register the Flow Segment using the [/flows/{flowId}/segments](#/operations/POST_flows-flowId-segments) endpoint once the upload is complete.
@@ -2443,7 +2443,7 @@ tags:
     description: |
       A timerange Segment of a Flow that references a Media Object
   - name: Objects
-    description: The Object in the backing store(s) that contains the media essence.
+    description: The Object in the Storage Backend(s) that contains the media essence.
   - name: MediaStorage
     description: The system that stores the Media Objects referenced by Flow Segments.
   - name: FlowDeleteRequests
