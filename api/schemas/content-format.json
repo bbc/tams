@@ -1,6 +1,6 @@
 {
     "title": "Content Format",
-    "description": "Identifies the content format for a Flow or source using a URN string",
+    "description": "Identifies the content format for a Flow or Source using a URN string",
     "type": "string",
     "format": "uri",
     "enum": [

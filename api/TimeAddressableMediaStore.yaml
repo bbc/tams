@@ -261,7 +261,7 @@ paths:
             type: boolean
         - name: format
           in: query
-          description: Filter on source format.
+          description: Filter on Source format.
           schema:
             $ref: 'schemas/content-format.json'
         - $ref: '#/components/parameters/trait_resource_paged_key'
@@ -319,7 +319,7 @@ paths:
             type: boolean
         - name: format
           in: query
-          description: Filter on source format.
+          description: Filter on Source format.
           schema:
             $ref: 'schemas/content-format.json'
         - $ref: '#/components/parameters/trait_resource_paged_key'
@@ -660,7 +660,7 @@ paths:
       parameters:
         - name: source_id
           in: query
-          description: Filter on source identifier.
+          description: Filter on Source identifier.
           schema:
             $ref: 'schemas/uuid.json'
         - name: timerange
@@ -744,7 +744,7 @@ paths:
       parameters:
         - name: source_id
           in: query
-          description: Filter on source identifier.
+          description: Filter on Source identifier.
           schema:
             $ref: 'schemas/uuid.json'
         - name: timerange
