@@ -46,7 +46,7 @@
         },
         "metadata_version":
         {
-            "description": "A change to the Flow metadata, not including metadata_version, metadata_updated, segments_updated, or segments, results in a new version. If the metadata_version for Flow instances is identical then the metadata is identical. Service implementations SHOULD set suitable default values for `metadata_version` whenever Flow metadata is changed and `metadata_version` is either not set by the client, or set to it's existing value. Service implementations MAY permit clients to edit the value, subject to suitable permissions-based limitations. Where media is transfered between stores without changing the Flow metadata, clients SHOULD maintain the `metadata_version`. To support this, service implementations SHOULD always accept the setting of `metadata_version` by the client on initial Flow creation. Service implementations SHOULD update this field where metadata is updated via child endpoints. Note that this specification places no requirements on incremental versioning. Service implementations may, for example, choose to use hashes or date-time version identifiers.",
+            "description": "A change to the Flow metadata, not including metadata_version, metadata_updated, segments_updated, or Segments, results in a new version. If the metadata_version for Flow instances is identical then the metadata is identical. Service implementations SHOULD set suitable default values for `metadata_version` whenever Flow metadata is changed and `metadata_version` is either not set by the client, or set to it's existing value. Service implementations MAY permit clients to edit the value, subject to suitable permissions-based limitations. Where media is transfered between stores without changing the Flow metadata, clients SHOULD maintain the `metadata_version`. To support this, service implementations SHOULD always accept the setting of `metadata_version` by the client on initial Flow creation. Service implementations SHOULD update this field where metadata is updated via child endpoints. Note that this specification places no requirements on incremental versioning. Service implementations may, for example, choose to use hashes or date-time version identifiers.",
             "type": "string"
         },
         "generation":
@@ -69,7 +69,7 @@
         },
         "segments_updated":
         {
-            "description": "The date-time the Flow segments were updated in a given context, e.g. in the store. Service implementations SHOULD ignore this if given in a PUT request, and instead manage it internally",
+            "description": "The date-time the Flow Segments were updated in a given context, e.g. in the store. Service implementations SHOULD ignore this if given in a PUT request, and instead manage it internally",
             "type": "string",
             "format": "date-time"
         },
@@ -85,24 +85,24 @@
         },
         "container":
         {
-            "description": "The container MIME type for Flow segments. Note that the `type` component of the container MIME type (i.e. the component before the `/`) may be different to the `type` component of the codec MIME type. e.g. An audio Flow may have `audio/aac` coded content may be wrapped in a `video/mp2t` container. Where multiple types exist for a subtype (e.g. `video/mp4`, `audio/mp4`, `application/mp4`), the closest MIME type to the Flow `format` should be used (e.g. `audio/mp4` for a Flow `format` of `urn:x-nmos:format:audio`). Mime types from the [IANA registry](https://www.iana.org/assignments/media-types/media-types.xhtml) should be preferred. Where multiple MIME types are possible, the most common should be preferred. Where this is insufficient, the maintainers of the TAMS repository may create an application note advising which MIME type to use.",
+            "description": "The container MIME type for Flow Segments. Note that the `type` component of the container MIME type (i.e. the component before the `/`) may be different to the `type` component of the codec MIME type. e.g. An audio Flow may have `audio/aac` coded content may be wrapped in a `video/mp2t` container. Where multiple types exist for a subtype (e.g. `video/mp4`, `audio/mp4`, `application/mp4`), the closest MIME type to the Flow `format` should be used (e.g. `audio/mp4` for a Flow `format` of `urn:x-nmos:format:audio`). Mime types from the [IANA registry](https://www.iana.org/assignments/media-types/media-types.xhtml) should be preferred. Where multiple MIME types are possible, the most common should be preferred. Where this is insufficient, the maintainers of the TAMS repository may create an application note advising which MIME type to use.",
             "$ref": "mime-type.json"
         },
         "avg_bit_rate":
         {
-            "description": "The average bit rate of the Flow segments in 1000 bits/second. A precise definition can be found in the [Setting Flow Bit Rate Properties](https://github.com/bbc/tams/blob/main/docs/appnotes/0013-setting-flow-bit-rate-properties.md) AppNote.",
+            "description": "The average bit rate of the Flow Segments in 1000 bits/second. A precise definition can be found in the [Setting Flow Bit Rate Properties](https://github.com/bbc/tams/blob/main/docs/appnotes/0013-setting-flow-bit-rate-properties.md) AppNote.",
             "type": "integer",
             "minimum": 0
         },
         "max_bit_rate":
         {
-            "description": "The maximum bit rate of the Flow segments in 1000 bits/second. A precise definition can be found in the [Setting Flow Bit Rate Properties](https://github.com/bbc/tams/blob/main/docs/appnotes/0013-setting-flow-bit-rate-properties.md) AppNote.",
+            "description": "The maximum bit rate of the Flow Segments in 1000 bits/second. A precise definition can be found in the [Setting Flow Bit Rate Properties](https://github.com/bbc/tams/blob/main/docs/appnotes/0013-setting-flow-bit-rate-properties.md) AppNote.",
             "type": "integer",
             "minimum": 0
         },
         "segment_duration":
         {
-            "description": "The target Flow segment duration in seconds. The duration for each segment may vary around this target value. See also the [Setting Flow Bit Rate Properties](https://github.com/bbc/tams/blob/main/docs/appnotes/0013-setting-flow-bit-rate-properties.md) AppNote for how this property can be used to calculate buffer sizes.",
+            "description": "The target Flow Segment duration in seconds. The duration for each Segment may vary around this target value. See also the [Setting Flow Bit Rate Properties](https://github.com/bbc/tams/blob/main/docs/appnotes/0013-setting-flow-bit-rate-properties.md) AppNote for how this property can be used to calculate buffer sizes.",
             "type": "object",
             "required":
             [

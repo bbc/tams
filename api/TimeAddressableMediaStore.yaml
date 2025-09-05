@@ -18,7 +18,7 @@ info:
   title: Time-addressable Media Store
   description: |
     The Time-addressable Media Store (TAMS) is used for storing segmented media flows.
-    The TAMS consists of a media store for the media flow segment objects and a service providing a database index of the flow segments.
+    The TAMS consists of a media store for the media Flow Segment Objects and a service providing a database index of the Flow Segments.
     This document is a specification of the service API.
 
     See the [bbc/tams](https://github.com/bbc/tams) repository for more background on TAMS.
@@ -840,13 +840,13 @@ paths:
       parameters:
         - name: include_timerange
           in: query
-          description: Include the available segment timerange in the response.
+          description: Include the available Segment timerange in the response.
           schema:
             default: false
             type: boolean
         - name: timerange
           in: query
-          description: Limit the returned available segment timerange to this timerange.
+          description: Limit the returned available Segment timerange to this timerange.
           schema:
             default: _
             $ref: 'schemas/timerange.json'
@@ -866,13 +866,13 @@ paths:
       parameters:
         - name: include_timerange
           in: query
-          description: Include the available segment timerange in the response.
+          description: Include the available Segment timerange in the response.
           schema:
             default: false
             type: boolean
         - name: timerange
           in: query
-          description: Limit the returned available segment timerange to this timerange.
+          description: Limit the returned available Segment timerange to this timerange.
           schema:
             default: _
             $ref: 'schemas/timerange.json'
@@ -980,8 +980,8 @@ paths:
     delete:
       summary: Delete Flow
       description: |
-        Deletes the Flow and associated segments.
-        If Flow segment deletion takes too long then this request will return 202 Accepted and the `Location` header will point to a Flow Delete Request to monitor deletion progress
+        Deletes the Flow and associated Segments.
+        If Flow Segment deletion takes too long then this request will return 202 Accepted and the `Location` header will point to a Flow Delete Request to monitor deletion progress
       operationId: DELETE_flows-flowId
       tags:
         - Flows
@@ -1000,7 +1000,7 @@ paths:
               example:
                 $ref: examples/deletion-request-get-200.json
         "204":
-          description: No content. The Flow has been deleted and the Flow segments have been or will be deleted. Media objects referenced in other Flows will not be deleted. Media objects that are no longer referenced by any segments will be deleted.
+          description: No content. The Flow has been deleted and the Flow Segments have been or will be deleted. Media objects referenced in other Flows will not be deleted. Media objects that are no longer referenced by any Segments will be deleted.
         "403":
           description: Forbidden. You do not have permission to modify this Flow. It may be marked read-only.
         "404":
@@ -1417,7 +1417,7 @@ paths:
       description: |
         Returns the Flow max bit rate property.
 
-        The maximum bit rate of the Flow segments in 1000 bits/second.
+        The maximum bit rate of the Flow Segments in 1000 bits/second.
         A precise definition can be found in the [Setting Flow Bit Rate Properties](https://github.com/bbc/tams/blob/main/docs/appnotes/0013-setting-flow-bit-rate-properties.md) AppNote.
       operationId: GET_flows-flowId-max-bit-rate
       tags:
@@ -1438,7 +1438,7 @@ paths:
       description: |
         Create or update the max bit rate property.
 
-        The maximum bit rate of the Flow segments in 1000 bits/second.
+        The maximum bit rate of the Flow Segments in 1000 bits/second.
         A precise definition can be found in the [Setting Flow Bit Rate Properties](https://github.com/bbc/tams/blob/main/docs/appnotes/0013-setting-flow-bit-rate-properties.md) AppNote.
       operationId: PUT_flows-flowId-max-bit-rate
       tags:
@@ -1497,7 +1497,7 @@ paths:
       description: |
         Returns the Flow average bit rate property.
 
-        The average bit rate of the Flow segments in 1000 bits/second.
+        The average bit rate of the Flow Segments in 1000 bits/second.
         A precise definition can be found in the [Setting Flow Bit Rate Properties](https://github.com/bbc/tams/blob/main/docs/appnotes/0013-setting-flow-bit-rate-properties.md) AppNote.
       operationId: GET_flows-flowId-avg-bit-rate
       tags:
@@ -1518,7 +1518,7 @@ paths:
       description: |
         Create or update the average bit rate property.
 
-        The average bit rate of the Flow segments in 1000 bits/second.
+        The average bit rate of the Flow Segments in 1000 bits/second.
         A precise definition can be found in the [Setting Flow Bit Rate Properties](https://github.com/bbc/tams/blob/main/docs/appnotes/0013-setting-flow-bit-rate-properties.md) AppNote.
       operationId: PUT_flows-flowId-avg-bit-rate
       tags:
@@ -1563,7 +1563,7 @@ paths:
         description: The Flow identifier.
     head:
       summary: List Flow Segments
-      description: Return Flow segments path headers
+      description: Return Flow Segments path headers
       operationId: HEAD_flows-flowId-segments
       tags:
         - FlowSegments
@@ -1580,7 +1580,7 @@ paths:
             $ref: 'schemas/timerange.json'
         - name: reverse_order
           in: query
-          description: Return segments in reverse time order.
+          description: Return Segments in reverse time order.
           schema:
             default: false
             type: boolean
@@ -1595,10 +1595,10 @@ paths:
         - name: accept_get_urls
           in: query
           description: |
-            A comma separated list of labels of Flow segment `get_urls` to include in the response.
+            A comma separated list of labels of Flow Segment `get_urls` to include in the response.
             Omitting `accept_get_urls` will result in no filtering of `get_urls`.
             An empty `accept_get_urls` results in an empty or no `get_urls` in the response.
-            Flow segment `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
+            Flow Segment `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
             Without `get_urls`, the response from the service could be substantially faster if it is not required to generate a large number of pre-signed URLs for example.
             Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
           schema:
@@ -1606,9 +1606,9 @@ paths:
         - name: accept_storage_ids
           in: query
           description: |
-            A comma separated list of `storage_id`s of Flow segment `get_urls` to include in the response.
+            A comma separated list of `storage_id`s of Flow Segment `get_urls` to include in the response.
             Omitting `accept_storage_ids`, or providing an empty `accept_storage_ids` will result in no filtering of `get_urls`.
-            Flow segment `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
+            Flow Segment `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
             A full list of available `storage_id`s may be found at the [/service/storage-backends](#/operations/GET_storage-backends) endpoint.
             Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
           schema:
@@ -1664,10 +1664,10 @@ paths:
     get:
       summary: List Flow Segments
       description: |
-        Returns the Flow segments.
+        Returns the Flow Segments.
 
-        The Flow segment provides information about the media object.
-        The media store type, which is indicated in the /service/storage-backends resource, determines the information that is included in the response to allow the Flow segment's media object to be downloaded by the client.
+        The Flow Segment provides information about the media object.
+        The media store type, which is indicated in the /service/storage-backends resource, determines the information that is included in the response to allow the Flow Segment's media object to be downloaded by the client.
         The examples provided here are for the "http_object_store" media store type which MUST include a `get_urls` property that contains the HTTP URLs for downloading the media object - service implementations should generate this internally.
 
         The flow segment may include timing adjustment information that the client needs to apply when extracting the samples from the media object.
@@ -1678,8 +1678,8 @@ paths:
         Clients should use the pagination options to limit the results to a timerange and/or count.
         Service implementations may also limit the results returned.
         This will be signaled via the paging headers in the response.
-        The list of Flow segments can be empty.
-        A request for segments from a non-existent Flow will return an empty list, not a 404.
+        The list of Flow Segments can be empty.
+        A request for Segments from a non-existent Flow will return an empty list, not a 404.
 
         Note that for codecs with temporal re-ordering, the timerange representes the _presentation_ timeline, and clients may need to check the `key_frame_count` property and/or read backwards from the start of the requested timerange to retrieve enough reference material to start decoding.
 
@@ -1700,7 +1700,7 @@ paths:
             $ref: 'schemas/timerange.json'
         - name: reverse_order
           in: query
-          description: Return segments in reverse time order.
+          description: Return Segments in reverse time order.
           schema:
             default: false
             type: boolean
@@ -1715,10 +1715,10 @@ paths:
         - name: accept_get_urls
           in: query
           description: |
-            A comma separated list of labels of Flow segment `get_urls` to include in the response.
+            A comma separated list of labels of Flow Segment `get_urls` to include in the response.
             Omitting `accept_get_urls` will result in no filtering of `get_urls`.
             An empty `accept_get_urls` results in an empty or no `get_urls` in the response.
-            Flow segment `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
+            Flow Segment `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
             Without `get_urls`, the response from the service could be substantially faster if it is not required to generate a large number of pre-signed URLs for example.
             Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
           schema:
@@ -1726,9 +1726,9 @@ paths:
         - name: accept_storage_ids
           in: query
           description: |
-            A comma separated list of `storage_id`s of Flow segment `get_urls` to include in the response.
+            A comma separated list of `storage_id`s of Flow Segment `get_urls` to include in the response.
             Omitting `accept_storage_ids`, or providing an empty `accept_storage_ids` will result in no filtering of `get_urls`.
-            Flow segment `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
+            Flow Segment `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
             A full list of available `storage_id`s may be found at the [/service/storage-backends](#/operations/GET_storage-backends) endpoint.
             Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
           schema:
@@ -1787,8 +1787,7 @@ paths:
                 sample_count:
                   summary: Partial Segment
                   description: |
-                    This example takes part of an existing segment, offsets it with `ts_offset` and then selects a
-                    subset of the samples within using `ts_offset` for the second segment in the sequence.
+                    This example takes part of an existing Segment, offsets it with `ts_offset` and then selects a subset of the samples within using `ts_offset` for the second Segment in the sequence.
                   value:
                     $ref: examples/flow-segments-get-200-sample-offset.json
                 multiple_urls:
@@ -1805,14 +1804,14 @@ paths:
     post:
       summary: Create Flow Segments
       description: |
-        Register either a single new Flow segment or an array of segments, attaching the object id given to a point in the Flow timeline.
+        Register either a single new Flow Segment or an array of Segments, attaching the object id given to a point in the Flow timeline.
 
-        The segment may use a newly-written object, or re-use an existing object from another Flow.
+        The Segment may use a newly-written object, or re-use an existing object from another Flow.
 
-        For newly-written objects, the client is responsible for ensuring that the segment written to the TAMS service instance obeys the following restrictions:
-          - All samples in the object SHOULD be used by the segment.
+        For newly-written objects, the client is responsible for ensuring that the Segment written to the TAMS service instance obeys the following restrictions:
+          - All samples in the object SHOULD be used by the Segment.
           - The timestamps of each sample in the media object MUST equal its position on the Flow timeline, OR `ts_offset` MUST be set such that `media_object_ts + ts_offset = segment_ts`
-          - The timerange of the segment MUST NOT overlap any other segment in the same Flow. The behaviour is undefined if there is an overlap with existing segments and a service may return a 400 error response.
+          - The timerange of the Segment MUST NOT overlap any other Segment in the same Flow. The behaviour is undefined if there is an overlap with existing Segments and a service may return a 400 error response.
           - The `sample_offset` SHOULD be zero.
 
         A service instance SHOULD reject registrations of Flow Segments with a 400 error response if it references a newly created media object in the local TAMS storage that was not intended to be used for the Flow.
@@ -1821,20 +1820,20 @@ paths:
         A service instance MAY support media objects that are held in external storage in another TAMS or other media storage system.
         The Flow Segment may in that case require the `get_urls` property to provide the information needed by clients to access the media object.
 
-        If a client needs to modify a Flow segment, e.g. to correct metadata such as the `key_frame_count` or add additional URLs to `get_urls`, then the client SHOULD first delete the existing segment and then write a new one.
-        The behaviour is undefined if the segment exists and the service may return a 400 error response.
+        If a client needs to modify a Flow Segment, e.g. to correct metadata such as the `key_frame_count` or add additional URLs to `get_urls`, then the client SHOULD first delete the existing Segment and then write a new one.
+        The behaviour is undefined if the Segment exists and the service may return a 400 error response.
 
-        For successful creation of all segments in the request a 201 response should be provided.
-        If an error is detected when processing a list of segments then processing should continue to try and process the remaining segments.
-        A 200 response should be returned listing the failed segments.
+        For successful creation of all Segments in the request a 201 response should be provided.
+        If an error is detected when processing a list of Segments then processing should continue to try and process the remaining Segments.
+        A 200 response should be returned listing the failed Segments.
 
         Clients are expected to decide how to break content into media objects, however those objects SHOULD be large enough to avoid excessive round trip overheads in the underlying store (_e.g._ of the order of several megabytes) and where codecs with temporal re-ordering are used, object SHOULD contain complete GOPs or decodable units.
 
         For media objects that have been re-used from other Flows, the `sample_offset` and `sample_count` MAY be used to specify part of the media object to use:
-          - The `timerange` field indicates the new segment's position in the Flow
+          - The `timerange` field indicates the new Segment's position in the Flow
           - The sample associated with the start of the `timerange` MUST be the one selected by `sample_offset`
           - Likewise, the sample associated with the end of the `timerange` MUST be the one selected by `sample_offset + sample_count - 1`, unless `timerange` has an exclusive end, in which case it will be  `sample_offset + sample_count`.
-          - The timerange of the segment MUST NOT overlap any other segment in the same Flow.
+          - The timerange of the Segment MUST NOT overlap any other Segment in the same Flow.
       operationId: POST_flows-flowId-segments
       tags:
         - FlowSegments
@@ -1852,7 +1851,7 @@ paths:
         required: true
       responses:
         "200":
-          description: Partial success creating segments returning list of failed segments.
+          description: Partial success creating Segments returning list of failed Segments.
           content:
             application/json:
               schema:
@@ -1860,9 +1859,9 @@ paths:
               example:
                 $ref: examples/flow-segment-partial-failure.json
         "201":
-          description: created. The flow segment or list of segments has been created.
+          description: created. The flow Segment or list of Segments has been created.
         "400":
-          description: Bad request. Invalid Flow segment JSON or the Flow 'container' is not set.
+          description: Bad request. Invalid Flow Segment JSON or the Flow 'container' is not set.
         "403":
           description: Forbidden. You do not have permission to modify this Flow. It may be marked read-only.
         "404":
@@ -1870,14 +1869,14 @@ paths:
     delete:
       summary: Delete Flow Segment
       description: |
-        Deletes the Flow segments. If the deletion takes too long then this request will return 202 Accepted and the `Location` header will point to a Flow Delete Request to monitor deletion progress
+        Deletes the Flow Segments. If the deletion takes too long then this request will return 202 Accepted and the `Location` header will point to a Flow Delete Request to monitor deletion progress
       operationId: DELETE_flows-flowId-segments
       tags:
         - FlowSegments
       parameters:
         - name: timerange
           in: query
-          description: Only delete Flow segments that are completely covered by the given timerange.
+          description: Only delete Flow Segments that are completely covered by the given timerange.
           schema:
             default: _
             $ref: 'schemas/timerange.json'
@@ -1901,7 +1900,7 @@ paths:
               example:
                 $ref: examples/deletion-request-get-200.json
         "204":
-          description: No content. The Flow segments have been or will be deleted. Media objects referenced in other segments will not be deleted. Media objects that are no longer referenced by any segments will be deleted.
+          description: No content. The Flow Segments have been or will be deleted. Media objects referenced in other Segments will not be deleted. Media objects that are no longer referenced by any Segments will be deleted.
         "400":
           description: Bad request. Invalid query options.
         "403":
@@ -1926,8 +1925,8 @@ paths:
         This media store type provides HTTP URLs for uploading and downloading media objects in buckets.
 
         The response will include a PUT URL that a client uses to upload the media object.
-        The client is expected to register the Flow segment using the [/flows/{flowId}/segments](#/operations/POST_flows-flowId-segments) endpoint once the upload is complete.
-        Service implementations need to handle situations where objects were uploaded but no Flow segment was registered successfully.
+        The client is expected to register the Flow Segment using the [/flows/{flowId}/segments](#/operations/POST_flows-flowId-segments) endpoint once the upload is complete.
+        Service implementations need to handle situations where objects were uploaded but no Flow Segment was registered successfully.
 
         The response may include PUT URLs for creating buckets for the media objects.
         These PUT URLs should be used before uploading media objects.
@@ -2104,9 +2103,9 @@ paths:
     get:
       summary: Flow Delete Request Details
       description: |
-        Get information about a timerange of FlowSegments that are being deleted.
+        Get information about a timerange of Flow Segments that are being deleted.
 
-        A deletion request is created when a client DELETEs a long timerange of segments, which takes longer than a single HTTP request.
+        A deletion request is created when a client DELETEs a long timerange of Segments, which takes longer than a single HTTP request.
         Clients will be redirected here to monitor the request's progress.
       operationId: GET_flow-delete-requests-request-id
       tags:
@@ -2220,14 +2219,14 @@ webhooks:
             schema:
               title: Flow Segments Added
               description: |
-                Notification that new segments have been added to a Flow.
+                Notification that new Segments have been added to a Flow.
               required:
                 - event_timestamp
                 - event_type
                 - event
               properties:
                 event_timestamp:
-                  description: Timestamp at which the most recent segment in the timerange was added (and the message generated)
+                  description: Timestamp at which the most recent Segment in the timerange was added (and the message generated)
                   type: string
                   format: date-time
                 event_type:
@@ -2255,14 +2254,14 @@ webhooks:
             schema:
               title: Flow Segments Deleted
               description: |
-                Notification that segments have been deleted from a Flow.
+                Notification that Segments have been deleted from a Flow.
               required:
                 - event_timestamp
                 - event_type
                 - event
               properties:
                 event_timestamp:
-                  description: Timestamp at which the most recent segment in the timerange was added (and the message generated)
+                  description: Timestamp at which the most recent Segment in the timerange was added (and the message generated)
                   type: string
                   format: date-time
                 event_type:
@@ -2277,7 +2276,7 @@ webhooks:
                     flow_id:
                       $ref: "schemas/uuid.json"
                     timerange:
-                      description: The timerange of segments that have been deleted. The timerange MUST intersect with a segment which has been deleted at both start and end (e.g. it cannot start or end in empty space).
+                      description: The timerange of Segments that have been deleted. The timerange MUST intersect with a Segment which has been deleted at both start and end (e.g. it cannot start or end in empty space).
                       $ref: 'schemas/timerange.json'
   sources/created:
     post:
@@ -2442,12 +2441,12 @@ tags:
       url: 'https://specs.amwa.tv/ms-04/releases/v1.0.0/docs/2.3._Explanation_-_Flow.html'
   - name: FlowSegments
     description: |
-      A timerange segment of a Flow that references a media object
+      A timerange Segment of a Flow that references a media object
   - name: Objects
     description: The object in the backing store(s) that contains the media essence.
   - name: MediaStorage
-    description: The system that stores the media objects referenced by Flow segments.
+    description: The system that stores the media objects referenced by Flow Segments.
   - name: FlowDeleteRequests
-    description: Resource for monitoring long running deletion of Flows and Flow segments.
+    description: Resource for monitoring long running deletion of Flows and Flow Segments.
   - name: Webhooks
     description: Configures webhooks to deliver notifications externally. Optional, and may not be implemented
