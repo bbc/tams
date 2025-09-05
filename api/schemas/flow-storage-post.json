@@ -1,6 +1,6 @@
 {
     "title": "Flow Storage Post",
-    "description": "Post data for the flow storage endpoint",
+    "description": "Post data for the Flow storage endpoint",
     "type": "object",
     "properties": {
         "limit": {

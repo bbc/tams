@@ -19,7 +19,7 @@
             {
                 "format":
                 {
-                    "description": "The primary content type URN for the flow.",
+                    "description": "The primary content type URN for the Flow.",
                     "type": "string",
                     "enum":
                     [
@@ -36,7 +36,7 @@
                     {
                         "data_type":
                         {
-                            "description": "The type of information encoded in the flow, identified using a URN. e.g. The data_type may be urn:x-tams:data:bounding-box, and the codec `application/json`.",
+                            "description": "The type of information encoded in the Flow, identified using a URN. e.g. The data_type may be urn:x-tams:data:bounding-box, and the codec `application/json`.",
                             "type": "string"
                         }
                     }

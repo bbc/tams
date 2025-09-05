@@ -19,7 +19,7 @@
             {
                 "format":
                 {
-                    "description": "The primary content type URN for the flow.",
+                    "description": "The primary content type URN for the Flow.",
                     "type": "string",
                     "enum":
                     [
