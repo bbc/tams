@@ -25,7 +25,7 @@ info:
 
     **Note**: the examples provided in this specification are for a system which uses a media store that provides HTTP URLs for uploading and downloading media objects in buckets.
     This could for example be implemented using an AWS S3 compatible store using presigned URLs or by a simple file system storage with an HTTP frontend.
-    Clients should parse the /service endpoint and handle the media store type in use appropriately.
+    Clients should parse the [/service](#/operations/GET_service) endpoint and handle the media store type in use appropriately.
   version: "7.0"
   contact:
     name: 'BBC R&D - Cloud-Fit Production Team'
@@ -163,7 +163,7 @@ paths:
       description: |
         Get the list of registered webhook URLs.
         Service implementations SHOULD take steps to avoid displaying URLs to users other than those who have suitable permissions (e.g. the owning user).
-        Availability of this endpoint is indicated by the name "webhooks" appearing in the `event_stream_mechanisms` list on the service endpoint.
+        Availability of this endpoint is indicated by the name "webhooks" appearing in the `event_stream_mechanisms` list on the [/service](#/operations/GET_service) endpoint.
       operationId: GET_webhooks
       tags:
         - Webhooks
@@ -190,7 +190,7 @@ paths:
       description: |
         Register to receive event notifications as webhooks on a specified URL.
         Webhook messages will conform to the format in the `webhooks` section of the API docs, depending on the event type (as defined in the same section).
-        Availability of this endpoint is indicated by the name "webhooks" appearing in the `event_stream_mechanisms` list on the service endpoint.
+        Availability of this endpoint is indicated by the name "webhooks" appearing in the `event_stream_mechanisms` list on the [/service](#/operations/GET_service) endpoint.
 
         Making a POST request to this endpoint with the same URL, API key name and value but a different list of `events` SHOULD update the existing registration.
         POSTing an empty list of events SHOULD remove the registration.
@@ -653,7 +653,7 @@ paths:
   /flows:
     head:
       summary: List Flows
-      description: Return flows path headers
+      description: Return Flows path headers
       operationId: HEAD_flows
       tags:
         - Flows
@@ -665,36 +665,36 @@ paths:
             $ref: 'schemas/uuid.json'
         - name: timerange
           in: query
-          description: Filter on flows that overlap the given timerange.
+          description: Filter on Flows that overlap the given timerange.
           schema:
             default: _
             $ref: 'schemas/timerange.json'
         - name: format
           in: query
-          description: Filter on flow format.
+          description: Filter on Flow format.
           schema:
             $ref: 'schemas/content-format.json'
         - name: codec
           in: query
-          description: Filter on flow codec.
+          description: Filter on Flow codec.
           schema:
             $ref: 'schemas/mime-type.json'
         - name: label
           in: query
-          description: Filter on flows that have the given label.
+          description: Filter on Flows that have the given label.
           schema:
             type: string
         - name: tag.{name}
           in: query
           description: |
-            Filter on flows that have a tag named {name} and with the given value.
+            Filter on Flows that have a tag named {name} and with the given value.
             {name} and the value MUST be URL encoded where special characters are present.
           schema:
             type: string
         - name: tag_exists.{name}
           in: query
           description: |
-            Filter on flows that have a tag named {name} regardless of value.
+            Filter on Flows that have a tag named {name} regardless of value.
             {name} MUST be URL encoded where special characters are present.
             If set to true then the presence of the tag is filtered for.
             If set to false then its absence is.
@@ -703,12 +703,12 @@ paths:
             type: boolean
         - name: frame_width
           in: query
-          description: Filter on video flows that have the given frame width.
+          description: Filter on video Flows that have the given frame width.
           schema:
             type: integer
         - name: frame_height
           in: query
-          description: Filter on video flows that have the given frame height.
+          description: Filter on video Flows that have the given frame height.
           schema:
             type: integer
         - $ref: '#/components/parameters/trait_resource_paged_key'
@@ -737,7 +737,7 @@ paths:
           description: Bad request. Invalid query options.
     get:
       summary: List Flows
-      description: List the flows registered in the TAMS service instance.
+      description: List the Flows registered in the TAMS service instance.
       operationId: GET_flows
       tags:
         - Flows
@@ -749,36 +749,36 @@ paths:
             $ref: 'schemas/uuid.json'
         - name: timerange
           in: query
-          description: Filter on flows that overlap the given timerange. An empty timerange returns flows with no content.
+          description: Filter on Flows that overlap the given timerange. An empty timerange returns Flows with no content.
           schema:
             default: _
             $ref: 'schemas/timerange.json'
         - name: format
           in: query
-          description: Filter on flow format.
+          description: Filter on Flow format.
           schema:
             $ref: 'schemas/content-format.json'
         - name: codec
           in: query
-          description: Filter on flow codec.
+          description: Filter on Flow codec.
           schema:
             $ref: 'schemas/mime-type.json'
         - name: label
           in: query
-          description: Filter on flows that have the given label.
+          description: Filter on Flows that have the given label.
           schema:
             type: string
         - name: tag.{name}
           in: query
           description: |
-            Filter on flows that have a tag named {name} and with the given value.
+            Filter on Flows that have a tag named {name} and with the given value.
             {name} and the value MUST be URL encoded where special characters are present.
           schema:
             type: string
         - name: tag_exists.{name}
           in: query
           description: |
-            Filter on flows that have a tag named {name} regardless of value.
+            Filter on Flows that have a tag named {name} regardless of value.
             {name} MUST be URL encoded where special characters are present.
             If set to true then the presence of the tag is filtered for.
             If set to false then its absence is.
@@ -787,12 +787,12 @@ paths:
             type: boolean
         - name: frame_width
           in: query
-          description: Filter on video flows that have the given frame width.
+          description: Filter on video Flows that have the given frame width.
           schema:
             type: integer
         - name: frame_height
           in: query
-          description: Filter on video flows that have the given frame height.
+          description: Filter on video Flows that have the given frame height.
           schema:
             type: integer
         - $ref: '#/components/parameters/trait_resource_paged_key'
@@ -830,10 +830,10 @@ paths:
         required: true
         schema:
           $ref: 'schemas/uuid.json'
-        description: The flow identifier.
+        description: The Flow identifier.
     head:
       summary: Flow Details
-      description: Return flow path headers
+      description: Return Flow path headers
       operationId: HEAD_flows-flowId
       tags:
         - Flows
@@ -859,7 +859,7 @@ paths:
           $ref: '#/components/responses/trait_resource_info_head_404'
     get:
       summary: Flow Details
-      description: Returns flow metadata.
+      description: Returns Flow metadata.
       operationId: GET_flows-flowId
       tags:
         - Flows
@@ -924,13 +924,13 @@ paths:
                   value:
                     $ref: examples/flow-get-200-audio-aac-multi.json
         "404":
-          description: The requested flow does not exist.
+          description: The requested Flow does not exist.
         "400":
           description: Bad request. Invalid query options.
     put:
       summary: Create or Replace Flow
       description: |
-        Create or replace the flow metadata.
+        Create or replace the Flow metadata.
 
         Clients should aim to populate as many of the Flow metadata fields as possible and practical. The fewer parameters that are set, the higher the likelihood that reading clients will have to retrieve the media to determine technical metadata to e.g. configure decoders.
 
@@ -962,7 +962,7 @@ paths:
         required: true
       responses:
         "201":
-          description: The flow has been created.
+          description: The Flow has been created.
           content:
             application/json:
               example:
@@ -970,18 +970,18 @@ paths:
               schema:
                 $ref: schemas/flow.json
         "204":
-          description: No content. The flow has been updated.
+          description: No content. The Flow has been updated.
         "400":
-          description: Bad request. Invalid flow JSON.
+          description: Bad request. Invalid Flow JSON.
         "403":
-          description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
+          description: Forbidden. You do not have permission to modify this Flow. It may be marked read-only.
         "404":
           description: The requested Flow ID in the path is invalid.
     delete:
       summary: Delete Flow
       description: |
-        Deletes the flow and associated segments.
-        If flow segment deletion takes too long then this request will return 202 Accepted and the `Location` header will point to a Flow Delete Request to monitor deletion progress
+        Deletes the Flow and associated segments.
+        If Flow segment deletion takes too long then this request will return 202 Accepted and the `Location` header will point to a Flow Delete Request to monitor deletion progress
       operationId: DELETE_flows-flowId
       tags:
         - Flows
@@ -1000,9 +1000,9 @@ paths:
               example:
                 $ref: examples/deletion-request-get-200.json
         "204":
-          description: No content. The flow has been deleted and the flow segments have been or will be deleted. Media objects referenced in other flows will not be deleted. Media objects that are no longer referenced by any segments will be deleted.
+          description: No content. The Flow has been deleted and the Flow segments have been or will be deleted. Media objects referenced in other Flows will not be deleted. Media objects that are no longer referenced by any segments will be deleted.
         "403":
-          description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
+          description: Forbidden. You do not have permission to modify this Flow. It may be marked read-only.
         "404":
           description: The requested Flow ID in the path is invalid.
   /flows/{flowId}/tags:
@@ -1012,10 +1012,10 @@ paths:
         required: true
         schema:
           $ref: 'schemas/uuid.json'
-        description: The flow identifier.
+        description: The Flow identifier.
     head:
       summary: List Flow Tags
-      description: Return flow tags path headers
+      description: Return Flow tags path headers
       operationId: HEAD_flows-flowId-tags
       tags:
         - Flows
@@ -1023,10 +1023,10 @@ paths:
         "200":
           $ref: '#/components/responses/trait_resource_listing_head_200'
         "404":
-          description: The requested flow does not exist.
+          description: The requested Flow does not exist.
     get:
       summary: List Flow Tags
-      description: Returns the flow tags.
+      description: Returns the Flow tags.
       operationId: GET_flows-flowId-tags
       tags:
         - Flows
@@ -1040,7 +1040,7 @@ paths:
               schema:
                 $ref: schemas/tags.json
         "404":
-          description: The requested flow does not exist.
+          description: The requested Flow does not exist.
   /flows/{flowId}/tags/{name}:
     parameters:
       - name: name
@@ -1054,10 +1054,10 @@ paths:
         required: true
         schema:
           $ref: 'schemas/uuid.json'
-        description: The flow identifier.
+        description: The Flow identifier.
     head:
       summary: Flow Tag Value
-      description: Return flow tag path headers
+      description: Return Flow tag path headers
       operationId: HEAD_flows-flowId-tags-name
       tags:
         - Flows
@@ -1065,7 +1065,7 @@ paths:
         "200":
           $ref: '#/components/responses/trait_resource_info_head_200'
         "404":
-          description: The requested flow or tag does not exist.
+          description: The requested Flow or tag does not exist.
     get:
       summary: Flow Tag Value
       description: Return the tag value associated with the tag name.
@@ -1082,7 +1082,7 @@ paths:
               schema:
                 type: string
         "404":
-          description: The requested flow or tag does not exist.
+          description: The requested Flow or tag does not exist.
     put:
       summary: Create or Update Flow Tag
       description: Create or update the tag.
@@ -1101,11 +1101,11 @@ paths:
         "204":
           description: No content. The tag has been created or updated.
         "400":
-          description: Bad request. Invalid flow tag value.
+          description: Bad request. Invalid Flow tag value.
         "403":
-          description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
+          description: Forbidden. You do not have permission to modify this Flow. It may be marked read-only.
         "404":
-          description: The requested flow does not exist.
+          description: The requested Flow does not exist.
     delete:
       summary: Delete Flow Tag
       description: Delete the tag.
@@ -1114,11 +1114,11 @@ paths:
         - Flows
       responses:
         "204":
-          description: No content. The flow tag has been deleted.
+          description: No content. The Flow tag has been deleted.
         "403":
-          description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
+          description: Forbidden. You do not have permission to modify this Flow. It may be marked read-only.
         "404":
-          description: The requested flow ID in the path is invalid.
+          description: The requested Flow ID in the path is invalid.
   /flows/{flowId}/description:
     parameters:
       - name: flowId
@@ -1126,10 +1126,10 @@ paths:
         required: true
         schema:
           $ref: 'schemas/uuid.json'
-        description: The flow identifier.
+        description: The Flow identifier.
     head:
       summary: Flow Description
-      description: Return flow description path headers
+      description: Return Flow description path headers
       operationId: HEAD_flows-flowId-description
       tags:
         - Flows
@@ -1140,7 +1140,7 @@ paths:
           $ref: '#/components/responses/trait_resource_info_head_404'
     get:
       summary: Flow Description
-      description: Returns the flow description property. This should be a human-readable description that may be showed in detailed views of Flows. The description should be longer and more detailed than `label`.
+      description: Returns the Flow description property. This should be a human-readable description that may be showed in detailed views of Flows. The description should be longer and more detailed than `label`.
       operationId: GET_flows-flowId-description
       tags:
         - Flows
@@ -1154,7 +1154,7 @@ paths:
               schema:
                 type: string
         "404":
-          description: The requested flow does not exist.
+          description: The requested Flow does not exist.
     put:
       summary: Create or Update Flow Description
       description: Create or update the description property. This should be a human-readable description that may be showed in detailed views of Flows. The description should be longer and more detailed than `label`.
@@ -1173,11 +1173,11 @@ paths:
         "204":
           description: No content. The description has been created or updated.
         "400":
-          description: Bad request. Invalid flow description.
+          description: Bad request. Invalid Flow description.
         "403":
-          description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
+          description: Forbidden. You do not have permission to modify this Flow. It may be marked read-only.
         "404":
-          description: The requested flow does not exist.
+          description: The requested Flow does not exist.
     delete:
       summary: Delete Flow Description
       description: Delete the description property.
@@ -1186,11 +1186,11 @@ paths:
         - Flows
       responses:
         "204":
-          description: No content. The flow description property has been deleted.
+          description: No content. The Flow description property has been deleted.
         "403":
-          description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
+          description: Forbidden. You do not have permission to modify this Flow. It may be marked read-only.
         "404":
-          description: The requested flow ID in the path is invalid.
+          description: The requested Flow ID in the path is invalid.
   /flows/{flowId}/label:
     parameters:
       - name: flowId
@@ -1198,7 +1198,7 @@ paths:
         required: true
         schema:
           $ref: 'schemas/uuid.json'
-        description: The flow identifier.
+        description: The Flow identifier.
     head:
       summary: Flow Label
       description: Return Flow label path headers
@@ -1247,7 +1247,7 @@ paths:
         "400":
           description: Bad request. Invalid Flow label.
         "403":
-          description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
+          description: Forbidden. You do not have permission to modify this Flow. It may be marked read-only.
         "404":
           description: The requested Flow does not exist.
     delete:
@@ -1268,10 +1268,10 @@ paths:
         required: true
         schema:
           $ref: 'schemas/uuid.json'
-        description: The flow identifier.
+        description: The Flow identifier.
     head:
       summary: Flow Read-Only
-      description: Return flow read_only path headers
+      description: Return Flow read_only path headers
       operationId: HEAD_flows-flowId-read-only
       tags:
         - Flows
@@ -1282,7 +1282,7 @@ paths:
           $ref: '#/components/responses/trait_resource_info_head_404'
     get:
       summary: Flow Read-Only
-      description: Returns the flow read_only property. If set to 'true', service implementations SHOULD reject client requests to update Flow metadata (other than the read_only property), Flow Segments and media objects.
+      description: Returns the Flow read_only property. If set to 'true', service implementations SHOULD reject client requests to update Flow metadata (other than the read_only property), Flow Segments and media objects.
       operationId: GET_flows-flowId-read-only
       tags:
         - Flows
@@ -1295,7 +1295,7 @@ paths:
               schema:
                 type: boolean
         "404":
-          description: The requested flow does not exist.
+          description: The requested Flow does not exist.
     put:
       summary: Set Flow Read-Only
       description: Set the read-only property. If set to 'true', service implementations SHOULD reject client requests to update Flow metadata (other than the read_only property), Flow Segments and media objects.
@@ -1313,9 +1313,9 @@ paths:
         "204":
           description: No content. The read_only property has been set to the given value.
         "400":
-          description: Bad request. Invalid flow read_only value. Value must be boolean.
+          description: Bad request. Invalid Flow read_only value. Value must be boolean.
         "404":
-          description: The requested flow does not exist.
+          description: The requested Flow does not exist.
   /flows/{flowId}/flow_collection:
     parameters:
       - name: flowId
@@ -1323,10 +1323,10 @@ paths:
         required: true
         schema:
           $ref: 'schemas/uuid.json'
-        description: The flow identifier.
+        description: The Flow identifier.
     head:
       summary: Flow Collection
-      description: Returns the flow collection path headers
+      description: Returns the Flow collection path headers
       operationId: HEAD_flows-flowId-flow-collection
       tags:
         - Flows
@@ -1337,7 +1337,7 @@ paths:
           $ref: '#/components/responses/trait_resource_info_head_404'
     get:
       summary: Flow Collection
-      description: Returns the flow collection property. A list of Flows that are collected together by this Flow.
+      description: Returns the Flow collection property. A list of Flows that are collected together by this Flow.
       operationId: GET_flows-flowId-flow-collection
       tags:
         - Flows
@@ -1351,11 +1351,11 @@ paths:
               schema:
                 $ref: schemas/flow-collection.json
         "404":
-          description: The requested flow does not exist.
+          description: The requested Flow does not exist.
     put:
       summary: Create or Update Flow Collection
       description: |
-        Create or update the flow collection property. A list of Flows that are collected together by this Flow.
+        Create or update the Flow collection property. A list of Flows that are collected together by this Flow.
 
         Service implementations SHOULD verify that Flow metadata is compatible with the associated Source.
         Service implementations MAY accept modification/addition of parameters, and reflect such changes in the Source, where it will not bring any Flows of the Source into conflict.
@@ -1373,26 +1373,26 @@ paths:
         required: true
       responses:
         "204":
-          description: No content. The flow collection has been created or updated.
+          description: No content. The Flow collection has been created or updated.
         "400":
-          description: Bad request. Invalid flow collection.
+          description: Bad request. Invalid Flow collection.
         "403":
-          description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
+          description: Forbidden. You do not have permission to modify this Flow. It may be marked read-only.
         "404":
-          description: The requested flow does not exist.
+          description: The requested Flow does not exist.
     delete:
       summary: Delete Flow Collection
-      description: Delete the flow collection property.
+      description: Delete the Flow collection property.
       operationId: DELETE_flows-flowId-flow-collection
       tags:
         - Flows
       responses:
         "204":
-          description: No content. The flow collection property has been deleted.
+          description: No content. The Flow collection property has been deleted.
         "403":
-          description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
+          description: Forbidden. You do not have permission to modify this Flow. It may be marked read-only.
         "404":
-          description: The requested flow ID in the path is invalid.
+          description: The requested Flow ID in the path is invalid.
   /flows/{flowId}/max_bit_rate:
     parameters:
       - name: flowId
@@ -1400,10 +1400,10 @@ paths:
         required: true
         schema:
           $ref: 'schemas/uuid.json'
-        description: The flow identifier.
+        description: The Flow identifier.
     head:
       summary: Flow Maximum Bit Rate
-      description: Returns the flow max bit rate path headers
+      description: Returns the Flow max bit rate path headers
       operationId: HEAD_flows-flowId-max-bit-rate
       tags:
         - Flows
@@ -1415,9 +1415,9 @@ paths:
     get:
       summary: Flow Maximum Bit Rate
       description: |
-        Returns the flow max bit rate property.
+        Returns the Flow max bit rate property.
 
-        The maximum bit rate of the flow segments in 1000 bits/second.
+        The maximum bit rate of the Flow segments in 1000 bits/second.
         A precise definition can be found in the [Setting Flow Bit Rate Properties](https://github.com/bbc/tams/blob/main/docs/appnotes/0013-setting-flow-bit-rate-properties.md) AppNote.
       operationId: GET_flows-flowId-max-bit-rate
       tags:
@@ -1432,13 +1432,13 @@ paths:
                 type: integer
                 minimum: 0
         "404":
-          description: The requested flow does not exist.
+          description: The requested Flow does not exist.
     put:
       summary: Create or Update Flow Maximum Bit Rate
       description: |
         Create or update the max bit rate property.
 
-        The maximum bit rate of the flow segments in 1000 bits/second.
+        The maximum bit rate of the Flow segments in 1000 bits/second.
         A precise definition can be found in the [Setting Flow Bit Rate Properties](https://github.com/bbc/tams/blob/main/docs/appnotes/0013-setting-flow-bit-rate-properties.md) AppNote.
       operationId: PUT_flows-flowId-max-bit-rate
       tags:
@@ -1455,24 +1455,24 @@ paths:
         "204":
           description: No content. The max bit rate has been created or updated.
         "400":
-          description: Bad request. Invalid flow max bit rate.
+          description: Bad request. Invalid Flow max bit rate.
         "403":
-          description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
+          description: Forbidden. You do not have permission to modify this Flow. It may be marked read-only.
         "404":
-          description: The requested flow does not exist.
+          description: The requested Flow does not exist.
     delete:
       summary: Delete Flow Maximum Bit Rate
-      description: Delete the flow max bit rate property.
+      description: Delete the Flow max bit rate property.
       operationId: DELETE_flows-flowId-max-bit-rate
       tags:
         - Flows
       responses:
         "204":
-          description: No content. The flow max bit rate property has been deleted.
+          description: No content. The Flow max bit rate property has been deleted.
         "403":
-          description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
+          description: Forbidden. You do not have permission to modify this Flow. It may be marked read-only.
         "404":
-          description: The requested flow ID in the path is invalid.
+          description: The requested Flow ID in the path is invalid.
   /flows/{flowId}/avg_bit_rate:
     parameters:
       - name: flowId
@@ -1480,10 +1480,10 @@ paths:
         required: true
         schema:
           $ref: 'schemas/uuid.json'
-        description: The flow identifier.
+        description: The Flow identifier.
     head:
       summary: Flow Average Bit Rate
-      description: Returns the flow average bit rate path headers
+      description: Returns the Flow average bit rate path headers
       operationId: HEAD_flows-flowId-avg-bit-rate
       tags:
         - Flows
@@ -1495,9 +1495,9 @@ paths:
     get:
       summary: Flow Average Bit Rate
       description: |
-        Returns the flow average bit rate property.
+        Returns the Flow average bit rate property.
 
-        The average bit rate of the flow segments in 1000 bits/second.
+        The average bit rate of the Flow segments in 1000 bits/second.
         A precise definition can be found in the [Setting Flow Bit Rate Properties](https://github.com/bbc/tams/blob/main/docs/appnotes/0013-setting-flow-bit-rate-properties.md) AppNote.
       operationId: GET_flows-flowId-avg-bit-rate
       tags:
@@ -1512,13 +1512,13 @@ paths:
                 type: integer
                 minimum: 0
         "404":
-          description: The requested flow does not exist.
+          description: The requested Flow does not exist.
     put:
       summary: Create or Update Flow Average Bit Rate
       description: |
         Create or update the average bit rate property.
 
-        The average bit rate of the flow segments in 1000 bits/second.
+        The average bit rate of the Flow segments in 1000 bits/second.
         A precise definition can be found in the [Setting Flow Bit Rate Properties](https://github.com/bbc/tams/blob/main/docs/appnotes/0013-setting-flow-bit-rate-properties.md) AppNote.
       operationId: PUT_flows-flowId-avg-bit-rate
       tags:
@@ -1535,24 +1535,24 @@ paths:
         "204":
           description: No content. The average bit rate has been created or updated.
         "400":
-          description: Bad request. Invalid flow avg bit rate.
+          description: Bad request. Invalid Flow avg bit rate.
         "403":
-          description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
+          description: Forbidden. You do not have permission to modify this Flow. It may be marked read-only.
         "404":
-          description: The requested flow does not exist.
+          description: The requested Flow does not exist.
     delete:
       summary: Delete Flow Average Bit Rate
-      description: Delete the flow average bit rate property.
+      description: Delete the Flow average bit rate property.
       operationId: DELETE_flows-flowId-avg-bit-rate
       tags:
         - Flows
       responses:
         "204":
-          description: No content. The flow average bit rate property has been deleted.
+          description: No content. The Flow average bit rate property has been deleted.
         "403":
-          description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
+          description: Forbidden. You do not have permission to modify this Flow. It may be marked read-only.
         "404":
-          description: The requested flow ID in the path is invalid.
+          description: The requested Flow ID in the path is invalid.
   /flows/{flowId}/segments:
     parameters:
       - name: flowId
@@ -1560,10 +1560,10 @@ paths:
         required: true
         schema:
           $ref: 'schemas/uuid.json'
-        description: The flow identifier.
+        description: The Flow identifier.
     head:
       summary: List Flow Segments
-      description: Return flow segments path headers
+      description: Return Flow segments path headers
       operationId: HEAD_flows-flowId-segments
       tags:
         - FlowSegments
@@ -1595,7 +1595,7 @@ paths:
         - name: accept_get_urls
           in: query
           description: |
-            A comma separated list of labels of flow segment `get_urls` to include in the response.
+            A comma separated list of labels of Flow segment `get_urls` to include in the response.
             Omitting `accept_get_urls` will result in no filtering of `get_urls`.
             An empty `accept_get_urls` results in an empty or no `get_urls` in the response.
             Flow segment `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
@@ -1606,10 +1606,10 @@ paths:
         - name: accept_storage_ids
           in: query
           description: |
-            A comma separated list of `storage_id`s of flow segment `get_urls` to include in the response.
+            A comma separated list of `storage_id`s of Flow segment `get_urls` to include in the response.
             Omitting `accept_storage_ids`, or providing an empty `accept_storage_ids` will result in no filtering of `get_urls`.
             Flow segment `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
-            A full list of available `storage_id`s may be found at the `service/storage-backends` endpoint.
+            A full list of available `storage_id`s may be found at the [/service/storage-backends](#/operations/GET_storage-backends) endpoint.
             Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
           schema:
             $ref: 'schemas/uuid-list.json'
@@ -1660,14 +1660,14 @@ paths:
         "400":
           description: Bad request. Invalid query options.
         "404":
-          description: The flow ID in the path is invalid.
+          description: The Flow ID in the path is invalid.
     get:
       summary: List Flow Segments
       description: |
-        Returns the flow segments.
+        Returns the Flow segments.
 
-        The flow segment provides information about the media object.
-        The media store type, which is indicated in the /service/storage-backends resource, determines the information that is included in the response to allow the flow segment's media object to be downloaded by the client.
+        The Flow segment provides information about the media object.
+        The media store type, which is indicated in the /service/storage-backends resource, determines the information that is included in the response to allow the Flow segment's media object to be downloaded by the client.
         The examples provided here are for the "http_object_store" media store type which MUST include a `get_urls` property that contains the HTTP URLs for downloading the media object - service implementations should generate this internally.
 
         The flow segment may include timing adjustment information that the client needs to apply when extracting the samples from the media object.
@@ -1678,8 +1678,8 @@ paths:
         Clients should use the pagination options to limit the results to a timerange and/or count.
         Service implementations may also limit the results returned.
         This will be signaled via the paging headers in the response.
-        The list of flow segments can be empty.
-        A request for segments from a non-existent flow will return an empty list, not a 404.
+        The list of Flow segments can be empty.
+        A request for segments from a non-existent Flow will return an empty list, not a 404.
 
         Note that for codecs with temporal re-ordering, the timerange representes the _presentation_ timeline, and clients may need to check the `key_frame_count` property and/or read backwards from the start of the requested timerange to retrieve enough reference material to start decoding.
 
@@ -1715,7 +1715,7 @@ paths:
         - name: accept_get_urls
           in: query
           description: |
-            A comma separated list of labels of flow segment `get_urls` to include in the response.
+            A comma separated list of labels of Flow segment `get_urls` to include in the response.
             Omitting `accept_get_urls` will result in no filtering of `get_urls`.
             An empty `accept_get_urls` results in an empty or no `get_urls` in the response.
             Flow segment `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
@@ -1726,10 +1726,10 @@ paths:
         - name: accept_storage_ids
           in: query
           description: |
-            A comma separated list of `storage_id`s of flow segment `get_urls` to include in the response.
+            A comma separated list of `storage_id`s of Flow segment `get_urls` to include in the response.
             Omitting `accept_storage_ids`, or providing an empty `accept_storage_ids` will result in no filtering of `get_urls`.
             Flow segment `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
-            A full list of available `storage_id`s may be found at the `service/storage-backends` endpoint.
+            A full list of available `storage_id`s may be found at the [/service/storage-backends](#/operations/GET_storage-backends) endpoint.
             Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
           schema:
             $ref: 'schemas/uuid-list.json'
@@ -1801,13 +1801,13 @@ paths:
         "400":
           description: Bad request. Invalid query options.
         "404":
-          description: The flow ID in the path is invalid.
+          description: The Flow ID in the path is invalid.
     post:
       summary: Create Flow Segments
       description: |
-        Register either a single new flow segment or an array of segments, attaching the object id given to a point in the flow timeline.
+        Register either a single new Flow segment or an array of segments, attaching the object id given to a point in the Flow timeline.
 
-        The segment may use a newly-written object, or re-use an existing object from another flow.
+        The segment may use a newly-written object, or re-use an existing object from another Flow.
 
         For newly-written objects, the client is responsible for ensuring that the segment written to the TAMS service instance obeys the following restrictions:
           - All samples in the object SHOULD be used by the segment.
@@ -1830,8 +1830,8 @@ paths:
 
         Clients are expected to decide how to break content into media objects, however those objects SHOULD be large enough to avoid excessive round trip overheads in the underlying store (_e.g._ of the order of several megabytes) and where codecs with temporal re-ordering are used, object SHOULD contain complete GOPs or decodable units.
 
-        For media objects that have been re-used from other flows, the `sample_offset` and `sample_count` MAY be used to specify part of the media object to use:
-          - The `timerange` field indicates the new segment's position in the flow
+        For media objects that have been re-used from other Flows, the `sample_offset` and `sample_count` MAY be used to specify part of the media object to use:
+          - The `timerange` field indicates the new segment's position in the Flow
           - The sample associated with the start of the `timerange` MUST be the one selected by `sample_offset`
           - Likewise, the sample associated with the end of the `timerange` MUST be the one selected by `sample_offset + sample_count - 1`, unless `timerange` has an exclusive end, in which case it will be  `sample_offset + sample_count`.
           - The timerange of the segment MUST NOT overlap any other segment in the same Flow.
@@ -1862,22 +1862,22 @@ paths:
         "201":
           description: created. The flow segment or list of segments has been created.
         "400":
-          description: Bad request. Invalid flow segment JSON or the flow 'container' is not set.
+          description: Bad request. Invalid Flow segment JSON or the Flow 'container' is not set.
         "403":
-          description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
+          description: Forbidden. You do not have permission to modify this Flow. It may be marked read-only.
         "404":
-          description: The flow does not exist.
+          description: The Flow does not exist.
     delete:
       summary: Delete Flow Segment
       description: |
-        Deletes the flow segments. If the deletion takes too long then this request will return 202 Accepted and the `Location` header will point to a Flow Delete Request to monitor deletion progress
+        Deletes the Flow segments. If the deletion takes too long then this request will return 202 Accepted and the `Location` header will point to a Flow Delete Request to monitor deletion progress
       operationId: DELETE_flows-flowId-segments
       tags:
         - FlowSegments
       parameters:
         - name: timerange
           in: query
-          description: Only delete flow segments that are completely covered by the given timerange.
+          description: Only delete Flow segments that are completely covered by the given timerange.
           schema:
             default: _
             $ref: 'schemas/timerange.json'
@@ -1901,13 +1901,13 @@ paths:
               example:
                 $ref: examples/deletion-request-get-200.json
         "204":
-          description: No content. The flow segments have been or will be deleted. Media objects referenced in other segments will not be deleted. Media objects that are no longer referenced by any segments will be deleted.
+          description: No content. The Flow segments have been or will be deleted. Media objects referenced in other segments will not be deleted. Media objects that are no longer referenced by any segments will be deleted.
         "400":
           description: Bad request. Invalid query options.
         "403":
-          description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
+          description: Forbidden. You do not have permission to modify this Flow. It may be marked read-only.
         "404":
-          description: The requested flow ID in the path is invalid.
+          description: The requested Flow ID in the path is invalid.
   /flows/{flowId}/storage:
     parameters:
       - name: flowId
@@ -1915,7 +1915,7 @@ paths:
         required: true
         schema:
           $ref: 'schemas/uuid.json'
-        description: The flow identifier.
+        description: The Flow identifier.
     post:
       summary: Allocate Flow Storage
       description: |
@@ -1926,8 +1926,8 @@ paths:
         This media store type provides HTTP URLs for uploading and downloading media objects in buckets.
 
         The response will include a PUT URL that a client uses to upload the media object.
-        The client is expected to register the flow segment using the /flows/{flowId}/segments endpoint once the upload is complete.
-        Service implementations need to handle situations where objects were uploaded but no flow segment was registered successfully.
+        The client is expected to register the Flow segment using the [/flows/{flowId}/segments](#/operations/POST_flows-flowId-segments) endpoint once the upload is complete.
+        Service implementations need to handle situations where objects were uploaded but no Flow segment was registered successfully.
 
         The response may include PUT URLs for creating buckets for the media objects.
         These PUT URLs should be used before uploading media objects.
@@ -1963,15 +1963,15 @@ paths:
               example:
                 $ref: examples/flow-storage-post-201.json
         "400":
-          description: Bad request. Invalid flow storage request JSON or the flow 'container' is not set. If object_ids supplied, some or all already exist.
+          description: Bad request. Invalid Flow storage request JSON or the Flow 'container' is not set. If object_ids supplied, some or all already exist.
         "403":
-          description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
+          description: Forbidden. You do not have permission to modify this Flow. It may be marked read-only.
         "404":
-          description: The requested flow does not exist.
+          description: The requested Flow does not exist.
   /objects/{objectId}:
     head:
       summary: Media Object Information
-      description: Return flow references and other information about media objects.
+      description: Return Flow references and other information about media objects.
       operationId: HEAD_objects
       tags:
         - Objects
@@ -2011,10 +2011,10 @@ paths:
     get:
       summary: Media Object Information
       description: |
-        Contains flows that references the media object and other information.
+        Contains Flows that references the media object and other information.
 
-        The paging query parameters and headers are required for the list of flow references in the media object.
-        Service implementations should return a complete list of flow references within reason and API clients should expect paging to happen in some rare cases where a media object is used in many flows.
+        The paging query parameters and headers are required for the list of Flow references in the media object.
+        Service implementations should return a complete list of Flow references within reason and API clients should expect paging to happen in some rare cases where a media object is used in many Flows.
       operationId: GET_objects
       tags:
         - Objects
@@ -2092,7 +2092,7 @@ paths:
           type: string
     head:
       summary: Flow Delete Request Details
-      description: Return flow delete request path headers
+      description: Return Flow delete request path headers
       operationId: HEAD_flow-delete-requests-request-id
       tags:
         - FlowDeleteRequests
@@ -2121,7 +2121,7 @@ paths:
               example:
                 $ref: examples/deletion-request-get-200.json
         "404":
-          description: The requested flow delete request does not exist.
+          description: The requested Flow delete request does not exist.
 webhooks:
   flows/created:
     post:
@@ -2446,8 +2446,8 @@ tags:
   - name: Objects
     description: The object in the backing store(s) that contains the media essence.
   - name: MediaStorage
-    description: The system that stores the media objects referenced by flow segments.
+    description: The system that stores the media objects referenced by Flow segments.
   - name: FlowDeleteRequests
-    description: Resource for monitoring long running deletion of flows and flow segments.
+    description: Resource for monitoring long running deletion of Flows and Flow segments.
   - name: Webhooks
     description: Configures webhooks to deliver notifications externally. Optional, and may not be implemented
