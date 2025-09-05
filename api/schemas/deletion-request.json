@@ -15,7 +15,7 @@
             "$ref": "uuid.json"
         },
         "flow_id": {
-            "description": "ID of the flow to which the deletion request relates",
+            "description": "ID of the Flow to which the deletion request relates",
             "$ref": "uuid.json"
         },
         "timerange_to_delete": {
