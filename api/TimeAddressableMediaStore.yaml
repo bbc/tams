@@ -1000,7 +1000,7 @@ paths:
               example:
                 $ref: examples/deletion-request-get-200.json
         "204":
-          description: No content. The flow has been deleted and the flow segments have been or will be deleted.
+          description: No content. The flow has been deleted and the flow segments have been or will be deleted. Media objects referenced in other flows will not be deleted. Media objects that are no longer referenced by any segments will be deleted.
         "403":
           description: Forbidden. You do not have permission to modify this flow. It may be marked read-only.
         "404":
@@ -1885,7 +1885,7 @@ paths:
               example:
                 $ref: examples/deletion-request-get-200.json
         "204":
-          description: No content. The flow segments have been or will be deleted.
+          description: No content. The flow segments have been or will be deleted. Media objects referenced in other segments will not be deleted. Media objects that are no longer referenced by any segments will be deleted.
         "400":
           description: Bad request. Invalid query options.
         "403":
