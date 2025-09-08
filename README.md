@@ -54,9 +54,9 @@ The Flow Segment has a list of S3 download urls which are the location of the me
 If multiple URLs are returned in the list, they are assumed to return identical media data.
 When writing to the store, the S3 URLs can be passed to a client permitting them to upload media data directly.
 
-Another advantage of separating the media data and metadata planes in this way is that a particular Flow Segment can be referenced by multiple flows.
-On the metadata side, the Flow Segment is just an object ID, so any number of flows can record that same ID against other `<flow_id, timestamp>` tuples.
-This allows for copy-on-write semantics: immutability means a new Flow must be created to make changes to existing parts of the timeline, but for unmodified portions of the timeline the new `<flow_id, timestamp>` tuple points to the existing object ID or a part of it.
+Another advantage of separating the media data and metadata planes in this way is that a particular Media Object can be referenced by multiple flows.
+On the metadata side, the Flow Segment is just a mapping of a Media Object's ID to a Flow's Timeline, so any number of flows can record that same ID against other `<flow_id, timestamp>` tuples.
+This allows for copy-on-write semantics: immutability means a new Flow must be created to make changes to existing parts of the timeline, but for unmodified portions of the timeline the new `<flow_id, timestamp>` tuple points to the existing Media Object or a part of it.
 See [Flow And Media Timelines](#flow-and-media-timelines) for a description of how that works in practice.
 
 The Flow model is aligned with the principles and schemas of [AMWA NMOS IS-04](https://specs.amwa.tv/is-04/releases/v1.3.2/APIs/schemas/) to facilitate easy integration of NMOS-compliant media devices.
