@@ -28,10 +28,10 @@ Users of TAMS are insulated from the details of the underlying storage.
 
 ## Documentation
 
-- OpenAPI Specification: [TimeAddressableMediaStore.yaml](./api/TimeAddressableMediaStore.yaml)
-- Rendered Documentation: [https://bbc.github.io/tams](https://bbc.github.io/tams)
-- Supporting Documentation: [docs/README.md](./docs/README.md)
-- Example API Usage Scripts: [examples/README](./examples/README.md)
+- [OpenAPI Specification](./api/TimeAddressableMediaStore.yaml)
+- [Rendered Specification](https://bbc.github.io/tams)
+- [Supporting Documentation (Application notes and Decision Records)](./docs/README.md)
+- [Example API Usage Scripts](./examples/README.md)
 
 This repo contains some automation to run a mock version of the API using [Stoplight Prism](https://stoplight.io/open-source/prism).
 To run the mock server using Docker, try something like the command below (or run `make mock-server-up`):
