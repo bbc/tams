@@ -33,17 +33,6 @@ Users of TAMS are insulated from the details of the underlying storage.
 - [Supporting Documentation (Application notes and Decision Records)](./docs/README.md)
 - [Example API Usage Scripts](./examples/README.md)
 
-## Mock TAMS Service
-
-This repo contains some automation to run a mock version of the API using [Stoplight Prism](https://stoplight.io/open-source/prism).
-To run the mock server using Docker, try something like the command below (or run `make mock-server-up`):
-
-```shell
-docker run --rm --init --name mock-tams -v "$(pwd)":/data:ro -p 4010:4010 stoplight/prism mock /data/TimeAddressableMediaStore.yaml -h 0.0.0.0
-```
-
-A mock API server will start at <http://localhost:4010>
-
 ## Design
 
 The store handles Flows which exist on an infinite timeline, are immutable, and can be grouped by Sources (based on the Flows and Sources in the [AMWA NMOS MS-04 model](https://specs.amwa.tv/ms-04/releases/v1.0.0/docs/2.1._Summary_and_Definitions.html)).
@@ -213,6 +202,17 @@ The TAMS specification stipulates authentication methods that a client should su
 The authorisation model (the rules by which authenticated requests are allowed or denied) is not part of the TAMS specification, and is up to individual implementers and organisations depending on their exact rules, needs and threat model.
 
 It is assumed that implementations will apply other IT and cloud infrastructure security best practices, notably including the use of TLS (e.g. HTTPS connections) within and between their systems.
+
+## Mock TAMS Service
+
+This repo contains some automation to run a mock version of the API using [Stoplight Prism](https://stoplight.io/open-source/prism).
+To run the mock server using Docker, try something like the command below (or run `make mock-server-up`):
+
+```shell
+docker run --rm --init --name mock-tams -v "$(pwd)":/data:ro -p 4010:4010 stoplight/prism mock /data/TimeAddressableMediaStore.yaml -h 0.0.0.0
+```
+
+A mock API server will start at <http://localhost:4010>
 
 ## Proposals, Decisions and Architecture Changes
 
