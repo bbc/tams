@@ -1,5 +1,10 @@
 # Timing in MPEG-TS
 
+> [!NOTE]
+> TAMS is highly agnostic to the container format used for media.
+> MPEG-TS has, however, emerged as a common choice due to its ease of concatenation and wide support.
+> While the information in this application notes refers to MPEG-TS concepts, much of its content will be applicable to other formats.
+
 ## MPEG2-TS Packetised Elementary Stream (PES)
 
 In MPEG2-TS, the data 'quantum' is the Packetised Elementary Stream (PES) packet, whose structure is described in [ISO/IEC 13818-1](https://www.iso.org/obp/ui/en/#iso:std:iso-iec:13818:-1:ed-9:v1:en).
