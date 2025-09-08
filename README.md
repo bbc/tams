@@ -33,6 +33,8 @@ Users of TAMS are insulated from the details of the underlying storage.
 - [Supporting Documentation (Application notes and Decision Records)](./docs/README.md)
 - [Example API Usage Scripts](./examples/README.md)
 
+## Mock TAMS Service
+
 This repo contains some automation to run a mock version of the API using [Stoplight Prism](https://stoplight.io/open-source/prism).
 To run the mock server using Docker, try something like the command below (or run `make mock-server-up`):
 
