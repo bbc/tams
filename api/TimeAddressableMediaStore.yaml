@@ -1670,10 +1670,10 @@ paths:
         The Storage Backend type, which is indicated in the [/service/storage-backends](#/operations/GET_storage-backends) resource, determines the information that is included in the response to allow the Flow Segment's Media Object to be downloaded by the client.
         The examples provided here are for the "http_object_store" Storage Backend type which MUST include a `get_urls` property that contains the HTTP URLs for downloading the Media Object - service implementations should generate this internally.
 
-        The flow segment may include timing adjustment information that the client needs to apply when extracting the samples from the media object.
-        It may also use a subset of the samples in the media object.
-        - The timestamp of a sample on the flow segment's timeline (`segment_ts`) is the timestamp of that sample embedded in or derived from the internal timing of the media object (`media_object_ts`) adjusted by `ts_offset`: `segment_ts = media_object_ts + ts_offset`.
-        - In addition, the segment's `timerange` start MUST be at `sample_offset` samples from the start of the presentation timeline of the object, and `timerange` end MUST be at `sample_offset + sample_count` samples.
+        The Flow Segment may include timing adjustment information that the client needs to apply when extracting the samples from the Media Object.
+        It may also use a subset of the samples in the Media Object.
+        - The timestamp of a sample on the Flow Segment's timeline (`segment_ts`) is the timestamp of that sample embedded in or derived from the internal timing of the Media Object (`media_object_ts`) adjusted by `ts_offset`: `segment_ts = media_object_ts + ts_offset`.
+        - In addition, the Segment's `timerange` start MUST be at `sample_offset` samples from the start of the presentation timeline of the Media Object, and `timerange` end MUST be at `sample_offset + sample_count` samples.
 
         Clients should use the pagination options to limit the results to a timerange and/or count.
         Service implementations may also limit the results returned.
