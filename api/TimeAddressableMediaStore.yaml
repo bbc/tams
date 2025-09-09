@@ -1885,12 +1885,6 @@ paths:
         Implementations need to handle situations where objects were uploaded but no flow segment was registered
         successfully.
 
-        The response may include PUT URLs for creating buckets for the media objects. These PUT URLs should
-        be used before uploading media objects. The object_id associated with each storage location has the
-        bucket name as its prefix.
-
-        The response may include PUT URLs for setting the CORS properties for the buckets and media objects.
-
         When making requests to the provided `put_url`, clients should include credentials if the provided
         URL is on the same origin as the API itself, akin to the `same-origin` mode in the
         [WhatWG Fetch Standard](https://fetch.spec.whatwg.org/#concept-request-credentials-mode).
