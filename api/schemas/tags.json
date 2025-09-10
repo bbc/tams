@@ -1,8 +1,18 @@
 {
     "title": "Tags",
-    "description": "Key value is a freeform string.",
+    "description": "Key is a freeform string. Value is a freeform string, or an array of freeform strings.",
     "type": "object",
     "additionalProperties": {
-            "type": "string"
+        "anyOf": [
+            {
+                "type": "string"
+            },
+            {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            }
+        ]
     }
 }
