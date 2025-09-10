@@ -15,15 +15,21 @@
             "description": "The HTTP header name that is added to the event POST",
             "type": "string"
         },
-        "api_key_value": {
-            "description": "The value that the HTTP header 'api_key_name' will be set to",
-            "type": "string"
-        },
         "events": {
             "description": "List of event types to receive",
             "type": "array",
             "items": {
-                "type": "string"
+                "type": "string",
+                "enum": [
+                    "flows/created",
+                    "flows/updated",
+                    "flows/deleted",
+                    "flows/segments_added",
+                    "flows/segments_deleted",
+                    "sources/created",
+                    "sources/updated",
+                    "sources/deleted"
+                ]
             }
         },
         "flow_ids": {
