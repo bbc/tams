@@ -2,7 +2,7 @@
 
 ## Application Notes
 
-Application notes are informatative documents describing the recommended usage of the API.
+Application notes are informative documents describing the recommended usage of the API.
 For more information on how we use application notes, see [here](./appnotes/README.md).
 
 | Application Note Number                                              | Title                                                           |

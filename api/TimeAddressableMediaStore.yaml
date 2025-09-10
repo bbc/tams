@@ -18,7 +18,7 @@ info:
   title: Time-addressable Media Store
   description: |
     The Time-addressable Media Store (TAMS) is used for storing segmented media flows.
-    The TAMS consists of one or more Storage Backend for the media Flow Segment Objects and a service providing a database index of the Flow Segments.
+    The TAMS consists of one or more Storage Backends for the media Flow Segment Objects and a service providing a database index of the Flow Segments.
     This document is a specification of the service API.
 
     See the [bbc/tams](https://github.com/bbc/tams) repository for more background on TAMS.
@@ -1677,7 +1677,7 @@ paths:
 
         Clients should use the pagination options to limit the results to a timerange and/or count.
         Service implementations may also limit the results returned.
-        This will be signaled via the paging headers in the response.
+        This will be signalled via the paging headers in the response.
         The list of Flow Segments can be empty.
         A request for Segments from a non-existent Flow will return an empty list, not a 404.
 
