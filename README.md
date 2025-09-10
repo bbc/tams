@@ -45,7 +45,7 @@ Grains are grouped into Flow Segments, containing for example one second of cont
 The store provides a mechanism to upload and register new Flow Segments, and an interface to request all the Flow Segments covering a particular timerange and their download URLs; an approach inspired by chunked streaming protocols like HTTP Live Streaming.
 
 > [!NOTE]
-> TAMS is not opinionated about what container format is used.
+> TAMS does not specify which container format should be used.
 > But conventions are emerging for common technical profiles used in interoperable implementations.
 
 The media data contained within Flow Segments may be stored separately from the metadata linking them to a position on the timeline, separating the media data and metadata planes.
