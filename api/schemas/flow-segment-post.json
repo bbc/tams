@@ -1,5 +1,5 @@
 {
-    "title": "Flow Segment",
+    "title": "Flow Segment Post",
     "description": "Provides the location and metadata of the media files corresponding to timerange Segments of a Flow.",
     "type": "object",
     "required":
