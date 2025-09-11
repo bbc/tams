@@ -36,7 +36,7 @@ Users of TAMS are insulated from the details of the underlying storage.
 ## Design
 
 The store handles Flows which exist on an infinite timeline, are immutable, and can be grouped by Sources (based on the Flows and Sources in the [AMWA NMOS MS-04 model](https://specs.amwa.tv/ms-04/releases/v1.0.0/docs/2.1._Summary_and_Definitions.html)).
-A flow ID and timerange refers to a sequence of grains (_e.g._ frames of video or set of audio samples) and any point in a Flow can be uniquely addressed by a `<flow_id, timestamp>` tuple.
+A Flow ID and timerange refers to a sequence of grains (_e.g._ frames of video or set of audio samples) and any point in a Flow can be uniquely addressed by a `<flow_id, timestamp>` tuple.
 This unique address is guaranteed to refer to a specific frame, or set of audio samples, so it can be safely passed around other tools or programs.
 At any time the unique address can be exchanged for the media data by an API call.
 But if that is not needed, media work can be done purely by reference.
@@ -50,13 +50,13 @@ The store provides a mechanism to upload and register new Flow Segments, and an 
 
 The media data contained within Flow Segments may be stored separately from the metadata linking them to a position on the timeline, separating the media data and metadata planes.
 For example our implementation uses a database (_e.g._ Amazon DynamoDB) to store Flow Segment metadata and an object store (_e.g._ AWS S3) to store the media data for Flow Segments.
-We refer to media data stored in the object store as 'media objects'.
-The Flow Segment has a list of S3 download urls which are the location of the media object(s) that contains the stored media data for the Flow Segment.
+We refer to media data stored in the object store as 'Media Objects'.
+The Flow Segment has a list of S3 download urls which are the location of the Media Object(s) that contains the stored media data for the Flow Segment.
 If multiple URLs are returned in the list, they are assumed to return identical media data.
 When writing to the store, the S3 URLs can be passed to a client permitting them to upload media data directly.
 
-Another advantage of separating the media data and metadata planes in this way is that a particular Media Object can be referenced by multiple flows.
-On the metadata side, the Flow Segment is just a mapping of a Media Object's ID to a Flow's Timeline, so any number of flows can record that same ID against other `<flow_id, timestamp>` tuples.
+Another advantage of separating the media data and metadata planes in this way is that a particular Media Object can be referenced by multiple Flows.
+On the metadata side, the Flow Segment is just a mapping of a Media Object's ID to a Flow's Timeline, so any number of Flows can record that same ID against other `<flow_id, timestamp>` tuples.
 This allows for copy-on-write semantics: immutability means a new Flow must be created to make changes to existing parts of the timeline, but for unmodified portions of the timeline the new `<flow_id, timestamp>` tuple points to the existing Media Object or a part of it.
 See [Flow And Media Timelines](#flow-and-media-timelines) for a description of how that works in practice.
 
@@ -107,7 +107,7 @@ Various scenarios are explored in the [Practical Guidance for Media](https://spe
 
 Flows exist on an infinite timeline (the "Flow timeline"), and the position of content on this timeline is defined by the `timerange` attribute in each Flow Segment of that Flow.
 A timerange is represented in JSON and text using the [TimeRange string pattern](https://bbc.github.io/tams/5.1/index.html#/schemas/timerange).
-Separately the media objects have a timeline (the "media timeline") defined by, or implied by, the container format itself: the timestamps recorded inside the media object for each grain in the natural format for that container.
+Separately the Media Objects have a timeline (the "media timeline") defined by, or implied by, the container format itself: the timestamps recorded inside the Media Object for each grain in the natural format for that container.
 For example in MPEG-TS that would be the presentation timestamp (PTS), or for a container without timing it may be derived from a frame count and rate.
 The Flow Segment attributes describe how to map the media timeline onto the Flow timeline.
 For Flows using codecs with temporal re-ordering, both of these timelines represent the presentation timeline of the media.
@@ -116,31 +116,31 @@ Note that no explicit relationship is defined between the Flow timelines of diff
 For brevity these diagrams start at `0:0`, however it is likely a practical system would stick closer to wall-clock time or TAI, such as starting at `1709634568:0`.
 A timestamp is represented in JSON and text using the [Timestamp string pattern](https://bbc.github.io/tams/5.1/index.html#/schemas/timestamp).
 
-![Graphic showing the Flow timeline and 3 Flow Segments in Flow A, with a media timeline showing 10 samples in each object](./docs/images/Flow%20and%20Media%20Timelines-Flow%20A.drawio.png)
+![Graphic showing the Flow timeline and 3 Flow Segments in Flow A, with a media timeline showing 10 samples in each Media Object](./docs/images/Flow%20and%20Media%20Timelines-Flow%20A.drawio.png)
 
 In the case of Flow A in the diagram above, this is a 1:1 mapping.
-However, in the diagram below the media timeline and Flow timeline differ, because the objects in Flow B have been re-used from Flow A (note the use of the same object ID).
-These re-used objects have their original media timeline, and each grain's position on the Flow timeline can be calculated as `media_timeline + ts_offset`.
+However, in the diagram below the media timeline and Flow timeline differ, because the Media Objects in Flow B have been re-used from Flow A (note the use of the same Media Object ID).
+These re-used Media Objects have their original media timeline, and each grain's position on the Flow timeline can be calculated as `media_timeline + ts_offset`.
 
-![Graphic showing the Flow timeline and 2 Flow Segments in Flow B, where the objects have been re-used from Flow A and the ts_offset set to -1:0](./docs/images/Flow%20and%20Media%20Timelines-Flow%20B.drawio.png)
+![Graphic showing the Flow timeline and 2 Flow Segments in Flow B, where the Media Objects have been re-used from Flow A and the ts_offset set to -1:0](./docs/images/Flow%20and%20Media%20Timelines-Flow%20B.drawio.png)
 
-Flow Segments can also re-use parts of a media object, as in Flow C in the diagram below.
-Notice that the `timerange` still refers to the Flow timeline (and `0:50...` etc. is used as shorthand for `0:500000000`), however a reduced number of grains have been selected, taking only part of the first object and part of the last object.
+Flow Segments can also re-use parts of a Media Object, as in Flow C in the diagram below.
+Notice that the `timerange` still refers to the Flow timeline (and `0:50...` etc. is used as shorthand for `0:500000000`), however a reduced number of grains have been selected, taking only part of the first Media Object and part of the last Media Object.
 
-![Graphic showing the Flow timeline and 3 Flow Segments in Flow C, where the objects have been re-used from Flow A however only half of the first and last object has been used](./docs/images/Flow%20and%20Media%20Timelines-Flow%20C.drawio.png)
+![Graphic showing the Flow timeline and 3 Flow Segments in Flow C, where the Media Objects have been re-used from Flow A however only half of the first and last Media Object has been used](./docs/images/Flow%20and%20Media%20Timelines-Flow%20C.drawio.png)
 
-In this way a simple copy-on-write mechanic can be applied to the store, for example when taking "clips" from multiple Flows and assembling them, the original media objects (and therefore essence) can be referenced, and new media objects are only required to handle changes, for example transitions.
-In the diagram below, portions of Flow X and Flow Y are combined to form Flow Z, along with some rendered transitions which are "new" media, and new objects accordingly.
+In this way a simple copy-on-write mechanic can be applied to the store, for example when taking "clips" from multiple Flows and assembling them, the original Media Objects (and therefore essence) can be referenced, and new Media Objects are only required to handle changes, for example transitions.
+In the diagram below, portions of Flow X and Flow Y are combined to form Flow Z, along with some rendered transitions which are "new" media, and new Media Objects accordingly.
 
 ![Graphic showing the Flow timeline and Flow Segments of Flows X, Y and Z, where Z is composed of a mix of re-used segments and new media](./docs/images/Flow%20and%20Media%20Timelines-Flow%20XYZ.drawio.png)
 
-In practice a client may need to read (and potentially decode, in the case of inter-frame video codecs) the entire object, discarding the unwanted grains and returning those selected by the segment to the consumer.
-This can be handled by mapping the object's timeline into the Flow timeline by adding `ts_offset` to each timestamp inside the media object, and then discarding grains when the resulting timestamp falls outside the given `timerange` for the segment.
-Alternatively if `sample_offset` and `sample_count` are set on the segment, a client may count the samples read from the object and discard accordingly, although care must be taken with codecs that use temporal re-ordering, since the `sample_offset` and `sample_count` refer to the presentation timeline, rather than the decode timeline.
+In practice a client may need to read (and potentially decode, in the case of inter-frame video codecs) the entire Object, discarding the unwanted grains and returning those selected by the segment to the consumer.
+This can be handled by mapping the Object's timeline into the Flow timeline by adding `ts_offset` to each timestamp inside the Media Object, and then discarding grains when the resulting timestamp falls outside the given `timerange` for the segment.
+Alternatively if `sample_offset` and `sample_count` are set on the segment, a client may count the samples read from the Object and discard accordingly, although care must be taken with codecs that use temporal re-ordering, since the `sample_offset` and `sample_count` refer to the presentation timeline, rather than the decode timeline.
 
-![Graphic showing the objects making up Flow Z (above) and their segments, along with the selected grains](./docs/images/Flow%20and%20Media%20Timelines-Flow%20XYZ-subsegments.drawio.png)
+![Graphic showing the Media Objects making up Flow Z (above) and their segments, along with the selected grains](./docs/images/Flow%20and%20Media%20Timelines-Flow%20XYZ-subsegments.drawio.png)
 
-The diagram above shows three of the objects used by Flow Z and a smaller portion of the Flow Z timeline considered previously, with both the media object timeline (and `media_ts`) and Flow timeline (`segment_ts`) of each grain in the object along the bottom.
+The diagram above shows three of the Media Objects used by Flow Z and a smaller portion of the Flow Z timeline considered previously, with both the Media Object timeline (and `media_ts`) and Flow timeline (`segment_ts`) of each grain in the Media Object along the bottom.
 The `timerange`/`ts_offset` approach is illustrated by the following pseudocode, which shows how a client might apply the `ts_offset` to each `media_ts`, then validate whether it is inside the given `timerange`.
 Note that the `media_ts` may be a different precision or timebase to the nanosecond timestamps used by TAMS, so some conversion may be required.
 
@@ -157,7 +157,7 @@ else:
 
 The `sample_offset` and `sample_count` approach can be applied using FFmpeg's `-ss` and `-t` options (after converting them into durations), and the resulting output timeline produced by setting `-output_ts_offset` to the start of the segment.
 Note however that for this to be frame-accurate in codecs using temporal re-ordering, the input must be transcoded.
-For example for object Y05 in Flow Z above:
+For example for Media Object Y05 in Flow Z above:
 
 ```bash
 ffmpeg -i segment -ss 0.3 -t 0.5 -output_ts_offset 3.5 -muxpreload 0 -muxdelay 0 \
@@ -166,7 +166,7 @@ ffmpeg -i segment -ss 0.3 -t 0.5 -output_ts_offset 3.5 -muxpreload 0 -muxdelay 0
 
 The diagram below also shows how both approaches might be applied to a Flow using an MPEG-TS container: by using `timerange` and `ts_offset`, and by selecting samples using `sample_offset` and `sample_count`.
 
-![Graphic showing media units being drawn from Flow Z's objects using their timestamps](./docs/images/Flow%20and%20Media%20Timelines-Flow%20XYZ-selecting-units.drawio.png)
+![Graphic showing media units being drawn from Flow Z's Media Objects using their timestamps](./docs/images/Flow%20and%20Media%20Timelines-Flow%20XYZ-selecting-units.drawio.png)
 
 ### Events from the API
 
