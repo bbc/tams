@@ -13,8 +13,7 @@
         "updated_by": "tams-dev",
         "tags":
         {
-            "input_quality": "contribution",
-            "_tams_segmentation_rate": "10"
+            "input_quality": "contribution"
         },
         "codec": "video/h264",
         "container": "video/mp2t",
@@ -67,8 +66,7 @@
         "updated_by": "tams-dev",
         "tags":
         {
-            "input_quality": "web",
-            "_tams_segmentation_rate": "375/8"
+            "input_quality": "web"
         },
         "codec": "audio/aac",
         "container": "video/mp2t",
@@ -99,8 +97,7 @@
         "updated_by": "tams-dev",
         "tags":
         {
-            "input_quality": "intermediate",
-            "_tams_segmentation_rate": "25"
+            "input_quality": "intermediate"
         },
         "codec": "video/raw",
         "container": "video/quicktime",

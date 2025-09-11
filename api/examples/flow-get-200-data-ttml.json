@@ -4,9 +4,6 @@
     "format": "urn:x-nmos:format:data",
     "generation": 0,
     "created": "2023-12-14T16:34:58.131620",
-    "tags": {
-        "_tams_segmentation_rate": "200"
-    },
     "codec": "application/ttml+xml",
     "container": "application/ttml+xml",
     "essence_parameters": {

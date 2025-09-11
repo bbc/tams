@@ -12,8 +12,7 @@
     "updated_by": "tams-dev",
     "tags":
     {
-        "input_quality": "contribution",
-        "_tams_segmentation_rate": "10"
+        "input_quality": "contribution"
     },
     "codec": "video/h264",
     "container": "video/mp2t",
