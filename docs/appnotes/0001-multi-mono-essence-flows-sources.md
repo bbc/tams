@@ -17,8 +17,8 @@ In most cases, these identifiers are coined when media is placed in the store (e
 Future implementations of stream handling infrastructure may choose to embrace the TAMS content model more fully, adding identity and timing information that could be captured into the store, providing consistency between the streamed and stored domains.
 
 Each media element is given a `Flow ID`, which is used to reference the content via the API.
-The media segments are indexed by time.
-Once the media is in the store, it is never modified directly, and its `Flow ID` and relationship to the timeline never changes, ensuring that when you request a particular `Flow ID` and timerange via the API, you always get the same media segments back.
+The media Segments are indexed by time.
+Once the media is in the store, it is never modified directly, and its `Flow ID` and relationship to the timeline never changes, ensuring that when you request a particular `Flow ID` and timerange via the API, you always get the same media Segments back.
 
 `Sources` provide another layer of identity that groups together editorially-equivalent `Flows`, making it easy to find different representations of the same content.
 For example, consider two `Flows`, comprising an H264 bitstream and a JPEG2000 bitstream respectively, representing the same sequence of pictures.
@@ -39,7 +39,7 @@ Let's consider how the TAMS content model is used in practice through some simpl
 
 ### Simple Mono-essence Stream Ingest (stereo audio)
 
-Ingest of a LPCM audio stream (for example an AES67 or SMPTE ST2110-30 stream) requires the creation of a new `Flow ID` to identify the sequence of segments containing the audio samples, and a new `Source ID` as an editorial entity to support the linking of this media with other representations.
+Ingest of a LPCM audio stream (for example an AES67 or SMPTE ST2110-30 stream) requires the creation of a new `Flow ID` to identify the sequence of Segments containing the audio samples, and a new `Source ID` as an editorial entity to support the linking of this media with other representations.
 
 ![Graphic showing ingest of an LPCM audio stream to create a TAMS Flow with its Source](./images/0001-multi-mono-essence-flows-sources-fig1.png)
 
@@ -50,14 +50,14 @@ If required, separate identifiers can be assigned to channels in an interleaved 
 ### Creation of Proxy Representations
 
 The audio Flow created in the previous example is encoded to produce a new AAC representation of the media.
-A new `Flow ID` is coined to identify the new sequence of segments.
+A new `Flow ID` is coined to identify the new sequence of Segments.
 The correspondence of the underlying samples to the timeline is inherited from the original media.
 The new `Flow ID` is linked to the same `Source ID` as the original audio `Flow`.
 Handling of alternative representations of video (and other types of media) follow the same pattern.
 
 ![Graphic showing creation of a proxy TAMS audio Flow from the LPCM representation, linked to the original via a common Source](./images/0001-multi-mono-essence-flows-sources-fig2.png)
-> ![NOTE:](../images/NOTE.svg) The duration of the segments in the derived `Flow` may differ due to technical constraints of the encoding algorithm or other reasons.
-In this case, segment timestamps will be remapped so the relationship between the timeline and the underlying media samples is preserved.
+> ![NOTE:](../images/NOTE.svg) The duration of the Segments in the derived `Flow` may differ due to technical constraints of the encoding algorithm or other reasons.
+In this case, Segment timestamps will be remapped so the relationship between the timeline and the underlying media samples is preserved.
 
 ### Ingest of SRT Stream (video + stereo audio)
 
