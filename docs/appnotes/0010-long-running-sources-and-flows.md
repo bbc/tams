@@ -29,15 +29,15 @@ It may be necessary for this port to be continuously recorded to satisfy complia
 
 In this case it may make more sense to assign a Source ID/Flow ID pair to the record port itself, which could be labelled something like "Studio A output" (Flow X/Source X in the diagram below).
 Once the editorial meaning for a period of time in that recording is known, a further Source ID/Flow ID pair can be assigned to the relevant timerange: for example by the studio booking manager, by manual markup by an operator, or a combination of methods.
-The system managing the mapping of record port Flow onto editorially meaningful Flow could start this copy as soon as it has the relevant information, creating copied Flow Segments for those that exist already, then listening to [events](https://github.com/bbc/tams/tree/main?tab=readme-ov-file#events-from-the-api) to add new segments as more of the original Flow timerange is added.
+The system managing the mapping of record port Flow onto editorially meaningful Flow could start this copy as soon as it has the relevant information, creating copied Flow Segments for those that exist already, then listening to [events](https://github.com/bbc/tams/tree/main?tab=readme-ov-file#events-from-the-api) to add new Segments as more of the original Flow timerange is added.
 If the precise timings are known (through consistent timing and accurate metadata) this mapping may be very precise, however in cases where timings can only be approximated (e.g. due to unkown signal path delays) it may be necessary to start slightly earlier, finish slightly later and accept some content overlap, which could be trimmed later.
 
 In the example below, the studio booking system and media management system interact to create "Flow Y: John Doe's Late Night Show", containing the output of the studio during that particular booking.
 This Flow may also have different access control rules, for example Flow X may be restricted to MCR and facility engineers, while Flow Y is made available to the editors for the show, for example to generate clips for other platforms.
 
-TAMS allows multiple Flow Segments to use the same media object, providing a metadata-only copy functionality: the essence is stored once and pointed to by multiple parts of multiple Flows which allows these copies to have negligible storage requirements.
-Media objects are reference counted, which means parts of the original Flow can be deleted while preserving the objects referenced by another Flow.
+TAMS allows multiple Flow Segments to use the same Media Object, providing a metadata-only copy functionality: the essence is stored once and pointed to by multiple parts of multiple Flows which allows these copies to have negligible storage requirements.
+Media Objects are reference counted, which means parts of the original Flow can be deleted while preserving the Objects referenced by another Flow.
 For example, "Studio A Output" - Flow X - may be retained for 7 days by default, with a periodic task calling `DELETE /flows/<flowX_ID>/segments` with a timerange ending 7 days ago, with no start.
-However, "John Doe's Late Night Show" - Flow Y - may have a 30 day retention, in which case the 7-day deletion above will not delete the underlying objects, merely reduce the reference count to one.
+However, "John Doe's Late Night Show" - Flow Y - may have a 30 day retention, in which case the 7-day deletion above will not delete the underlying Objects, merely reduce the reference count to one.
 
 ![Diagram showing a hypothetical studio record system, that generates new Flows for each booking](./images/0010-long-running-sources-and-flows-fig2-on-prem-rec.png)

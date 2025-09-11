@@ -17,13 +17,13 @@ openapi: 3.1.0
 info:
   title: Time-addressable Media Store
   description: |
-    The Time-addressable Media Store (TAMS) is used for storing segmented media flows.
+    The Time-addressable Media Store (TAMS) is used for storing segmented media Flows.
     The TAMS consists of one or more Storage Backends for the media Flow Segment Objects and a service providing a database index of the Flow Segments.
     This document is a specification of the service API.
 
     See the [bbc/tams](https://github.com/bbc/tams) repository for more background on TAMS.
 
-    **Note**: the examples provided in this specification are for a system which uses a Storage Backend that provides HTTP URLs for uploading and downloading media objects in buckets.
+    **Note**: the examples provided in this specification are for a system which uses a Storage Backend that provides HTTP URLs for uploading and downloading Media Objects in buckets.
     This could for example be implemented using an AWS S3 compatible store using presigned URLs or by a simple file system storage with an HTTP frontend.
     Clients should parse the [/service](#/operations/GET_service) endpoint and handle the Storage Backend type in use appropriately.
   version: "7.0"
@@ -2016,7 +2016,7 @@ paths:
     get:
       summary: Media Object Information
       description: |
-        Contains Flows that references the media object and other information.
+        Contains Flows that references the Media Object and other information.
 
         The paging query parameters and headers are required for the list of Flow references in the Media Object.
         Service implementations should return a complete list of Flow references within reason and API clients should expect paging to happen in some rare cases where a Media Object is used in many Flows.

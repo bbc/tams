@@ -39,8 +39,8 @@ In TAMS, we must be able to reconstruct the absolute timestamp of any given PES 
 To facilitate this, each Flow Segment in a TAM store which carries MPEG2-TS media contains a `ts_offset` field.
 As stated in the above section, we can imagine that the PTS/DTS fields are simply the lower 33 bits of some absolute timestamp, so if we can carry the upper bits we can use those to generate the absolute timestamp.
 
-This is initially done when generating the flow segments, where the absolute timestamp is known.
-For the earliest **presentation** timestamp in a segment, an 'absolute' PTS is generated, which can then be used to calculate a 'base' sample count for that segment:
+This is initially done when generating the Flow Segments, where the absolute timestamp is known.
+For the earliest **presentation** timestamp in a Segment, an 'absolute' PTS is generated, which can then be used to calculate a 'base' sample count for that Segment:
 
 $$ C_{offset} = C_{PTS_{0}} - (C_{PTS_{0}} \cdot \text{0x1 FFFF FFFF}) $$
 

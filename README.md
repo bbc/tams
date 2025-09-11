@@ -132,13 +132,13 @@ Notice that the `timerange` still refers to the Flow timeline (and `0:50...` etc
 In this way a simple copy-on-write mechanic can be applied to the store, for example when taking "clips" from multiple Flows and assembling them, the original Media Objects (and therefore essence) can be referenced, and new Media Objects are only required to handle changes, for example transitions.
 In the diagram below, portions of Flow X and Flow Y are combined to form Flow Z, along with some rendered transitions which are "new" media, and new Media Objects accordingly.
 
-![Graphic showing the Flow timeline and Flow Segments of Flows X, Y and Z, where Z is composed of a mix of re-used segments and new media](./docs/images/Flow%20and%20Media%20Timelines-Flow%20XYZ.drawio.png)
+![Graphic showing the Flow timeline and Flow Segments of Flows X, Y and Z, where Z is composed of a mix of re-used Segments and new media](./docs/images/Flow%20and%20Media%20Timelines-Flow%20XYZ.drawio.png)
 
-In practice a client may need to read (and potentially decode, in the case of inter-frame video codecs) the entire Object, discarding the unwanted grains and returning those selected by the segment to the consumer.
-This can be handled by mapping the Object's timeline into the Flow timeline by adding `ts_offset` to each timestamp inside the Media Object, and then discarding grains when the resulting timestamp falls outside the given `timerange` for the segment.
-Alternatively if `sample_offset` and `sample_count` are set on the segment, a client may count the samples read from the Object and discard accordingly, although care must be taken with codecs that use temporal re-ordering, since the `sample_offset` and `sample_count` refer to the presentation timeline, rather than the decode timeline.
+In practice a client may need to read (and potentially decode, in the case of inter-frame video codecs) the entire Object, discarding the unwanted grains and returning those selected by the Segment to the consumer.
+This can be handled by mapping the Object's timeline into the Flow timeline by adding `ts_offset` to each timestamp inside the Media Object, and then discarding grains when the resulting timestamp falls outside the given `timerange` for the Segment.
+Alternatively if `sample_offset` and `sample_count` are set on the Segment, a client may count the samples read from the Object and discard accordingly, although care must be taken with codecs that use temporal re-ordering, since the `sample_offset` and `sample_count` refer to the presentation timeline, rather than the decode timeline.
 
-![Graphic showing the Media Objects making up Flow Z (above) and their segments, along with the selected grains](./docs/images/Flow%20and%20Media%20Timelines-Flow%20XYZ-subsegments.drawio.png)
+![Graphic showing the Media Objects making up Flow Z (above) and their Segments, along with the selected grains](./docs/images/Flow%20and%20Media%20Timelines-Flow%20XYZ-subsegments.drawio.png)
 
 The diagram above shows three of the Media Objects used by Flow Z and a smaller portion of the Flow Z timeline considered previously, with both the Media Object timeline (and `media_ts`) and Flow timeline (`segment_ts`) of each grain in the Media Object along the bottom.
 The `timerange`/`ts_offset` approach is illustrated by the following pseudocode, which shows how a client might apply the `ts_offset` to each `media_ts`, then validate whether it is inside the given `timerange`.
@@ -155,7 +155,7 @@ else:
                                      # (and `segment_ts = 3:500000000 or 3.5sec)`
 ```
 
-The `sample_offset` and `sample_count` approach can be applied using FFmpeg's `-ss` and `-t` options (after converting them into durations), and the resulting output timeline produced by setting `-output_ts_offset` to the start of the segment.
+The `sample_offset` and `sample_count` approach can be applied using FFmpeg's `-ss` and `-t` options (after converting them into durations), and the resulting output timeline produced by setting `-output_ts_offset` to the start of the Segment.
 Note however that for this to be frame-accurate in codecs using temporal re-ordering, the input must be transcoded.
 For example for Media Object Y05 in Flow Z above:
 

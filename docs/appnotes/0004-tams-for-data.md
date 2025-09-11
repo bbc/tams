@@ -29,7 +29,7 @@ Typically, the content being stored should be larger than the metadata stored al
 Timed text, such as closed captions, is relatively low data rate.
 But it is often used alongside audio and video, using similar workflows.
 Existing live workflows in television broadcast facilities may make use of [SMPTE 2110-43](https://ieeexplore.ieee.org/document/9521125)/[RFC8759](https://www.rfc-editor.org/rfc/rfc8759.html) to carry small independently decodable XML documents containing the captions.
-The usage patterns, recommended frequency, and likely size of these documents lend themselves well to storage in a TAMS store, however care should be taken to balance the flexibility of shorter segments (and smaller XML documents) against the increased metadata storage overhead.
+The usage patterns, recommended frequency, and likely size of these documents lend themselves well to storage in a TAMS store, however care should be taken to balance the flexibility of shorter Segments (and smaller XML documents) against the increased metadata storage overhead.
 
 ### Time-based metadata
 
@@ -42,18 +42,18 @@ But it is not within the scope of this repository or specification.
 ### Logging/metering
 
 Consider a system which records loudness levels of audio a small number of times a second.
-If a segment length of ~1 second was used, common for media stored in TAMS to enable efficient random access, then the segment metadata may be many times larger than the segment content.
+If a Segment length of ~1 second was used, common for media stored in TAMS to enable efficient random access, then the Segment metadata may be many times larger than the Segment content.
 The underlying file object store may end up storing a large number of very small objects.
 This is often inefficient both in resources, and cost.
-Using larger segments would bring about different issues.
+Using larger Segments would bring about different issues.
 Segments normally only become available once they are complete.
-A large segment size will, therefore, increase the latency in segments becoming available.
+A large Segment size will, therefore, increase the latency in Segments becoming available.
 TAMS would not be appropriate for such low rate data.
 
 ### High data rate production data
 
 Consider an alpha mask, such as those produced by a chroma-key process.
-Carrying the alpha channel in it's related video flow would increase it's data rate significantly.
+Carrying the alpha channel in it's related video Flow would increase it's data rate significantly.
 But the alpha channel likely wouldn't be used by many parts of your production workflow.
 Carrying the alpha channel in a separate Flow would make it available to parts of the production workflow that need it, without wasting bandwidth for those which don't.
 Usage patterns, and data rates for this video-like Flow would lend itself well to storage in TAMS.
