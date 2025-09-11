@@ -504,6 +504,8 @@ paths:
       responses:
         "204":
           description: No content. The Source tag has been deleted.
+        "403":
+          description: Forbidden. You do not have permission to modify this resource.
         "404":
           description: The requested Source ID or tag in the path is invalid.
   /sources/{sourceId}/description:
@@ -1259,6 +1261,8 @@ paths:
       responses:
         "204":
           description: No content. The Flow label property has been deleted.
+        "403":
+          description: Forbidden. You do not have permission to modify this Flow. It may be marked read-only.
         "404":
           description: The requested Flow ID in the path is invalid.
   /flows/{flowId}/read_only:
@@ -1314,6 +1318,8 @@ paths:
           description: No content. The read_only property has been set to the given value.
         "400":
           description: Bad request. Invalid Flow read_only value. Value must be boolean.
+        "403":
+          description: Forbidden. You do not have permission to modify this Flow.
         "404":
           description: The requested Flow does not exist.
   /flows/{flowId}/flow_collection:
