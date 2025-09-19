@@ -85,6 +85,7 @@
         "status": {
             "description": "Status of the Webhook. A disabled webhook will not POST events.",
             "type": "string",
+            "default": "enabled",
             "enum": [
                 "enabled",
                 "disabled"
