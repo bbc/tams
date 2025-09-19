@@ -214,7 +214,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "schemas/webhook-with-id.json"
+                  $ref: "schemas/webhook-get.json"
         "404":
           description: "Webhooks are not supported by this API implementation"
     post:
@@ -250,7 +250,7 @@ paths:
               example:
                 $ref: "examples/webhook-get-200.json"
               schema:
-                $ref: schemas/webhook-with-id.json
+                $ref: schemas/webhook-get.json
         "400":
           description: Bad request. Invalid parameters or unsupported event filtering or transformation.
         "404":
@@ -292,7 +292,7 @@ paths:
               example:
                 $ref: "examples/webhook-get-200.json"
               schema:
-                $ref: "schemas/webhook-with-id.json"
+                $ref: "schemas/webhook-get.json"
         "404":
           description: The requested Webhook ID in the path is invalid, or Webhooks are not supported by this API implementation
     put:
@@ -330,7 +330,7 @@ paths:
               example:
                 $ref: "examples/webhook-get-200.json"
               schema:
-                $ref: schemas/webhook.json
+                $ref: schemas/webhook-get.json
         "400":
           description: Bad request. Invalid parameters or unsupported event filtering or transformation.
         "404":
