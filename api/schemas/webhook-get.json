@@ -1,0 +1,19 @@
+{
+    "title": "Webhook Detail",
+    "description": "Describes a Webhook",
+    "type": "object",
+    "allOf": [
+        {
+            "$ref": "webhook-with-id.json"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "description": "Provides more information for the error status, as described by the [Error](../schemas/error#top) type",
+                    "$ref": "error.json"
+                }
+            }
+        }
+    ]
+}
