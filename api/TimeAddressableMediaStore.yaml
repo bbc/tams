@@ -260,7 +260,7 @@ paths:
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/uuid'
+          $ref: 'schemas/uuid.json'
         description: The Webhook identifier.
     head:
       summary: Webhook details
@@ -272,7 +272,7 @@ paths:
         "200":
           $ref: '#/components/responses/trait_resource_listing_head_200'
         "404":
-          description: The requested Webhook ID in the path is invalid, or Webhooks are not supported by this API implementation
+          description: The requested Webhook ID in the path is invalid, or Webhooks are not supported by this service implementation
     get:
       summary: Webhook details
       description: |
