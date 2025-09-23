@@ -309,7 +309,7 @@ paths:
         Service implementations SHOULD consider the security implications of providing webhooks, and include appropriate mitigations against Server Side Request Forgery (SSRF) attacks and similar.
         Service implementations SHOULD take appropriate steps to authorize the modification of existing webhooks. 
         This may take the form of RBAC, or ABAC.
-      operationId: POST_webhooks
+      operationId: PUT_webhooks
       tags:
         - Webhooks
       requestBody:
