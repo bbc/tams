@@ -1286,7 +1286,7 @@ paths:
           $ref: '#/components/responses/trait_resource_info_head_404'
     get:
       summary: Flow Read-Only
-      description: Returns the Flow read_only property. If set to 'true', service implementations SHOULD reject client requests to update Flow metadata (other than the read_only property), Flow Segments and Media Objects.
+      description: Returns the Flow read_only property. If set to 'true', service implementations SHOULD reject client requests to update Flow metadata (other than the read_only property), and Flow Segments. Service implementations should also reject requests to the [`/flows/{flowId}/storage`](#/operations/POST_flows-flowId-storage) endpoint for the Flow, and requests to delete the Flow.
       operationId: GET_flows-flowId-read-only
       tags:
         - Flows
@@ -1302,7 +1302,7 @@ paths:
           description: The requested Flow does not exist.
     put:
       summary: Set Flow Read-Only
-      description: Set the read-only property. If set to 'true', service implementations SHOULD reject client requests to update Flow metadata (other than the read_only property), Flow Segments and Media Objects.
+      description: Set the read-only property. If set to 'true', service implementations SHOULD reject client requests to update Flow metadata (other than the read_only property), and Flow Segments. Service implementations should also reject requests to the [`/flows/{flowId}/storage`](#/operations/POST_flows-flowId-storage) endpoint for the Flow, and requests to delete the Flow.
       operationId: PUT_flows-flowId-read-only
       tags:
         - Flows

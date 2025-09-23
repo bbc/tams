@@ -75,7 +75,7 @@
         },
         "read_only":
         {
-            "description": "If set to 'true', service implementations SHOULD reject client requests to update Flow metadata (other than the read_only property), Flow Segments and Media Objects",
+            "description": "If set to 'true', service implementations SHOULD reject client requests to update Flow metadata (other than the read_only property), and Flow Segments. Service implementations should also reject requests to the [`/flows/{flowId}/storage`](#/operations/POST_flows-flowId-storage) endpoint for the Flow, and requests to delete the Flow.",
             "type": "boolean"
         },
         "codec":
