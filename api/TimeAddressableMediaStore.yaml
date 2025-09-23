@@ -1827,7 +1827,7 @@ paths:
         The Flow Segment may in that case require the `get_urls` property to provide the information needed by clients to access the Media Object.
 
         Clients MAY modify Flow Segments, but this should only be done in exceptional circumstances to correct metadata as such operations will likely break the idempotency of Segments.
-        Properties of Media Objects, such as `get_urls`, SHOULD be modified via the `/objects` endpoints. 
+        Properties of Media Objects, such as `get_urls`, SHOULD be modified via the [`/objects`](#/operations/GET_objects) endpoints.
         They SHOULD NOT be modified at this endpoint, and TAMS instences SHOULD reject such requests with a `400` error.
 
         If a client needs to modify a Flow Segment, e.g. to correct metadata such as the `key_frame_count` or add additional URLs to `get_urls`, then the client SHOULD first delete the existing Segment and then write a new one.
@@ -2004,8 +2004,7 @@ paths:
             generate a large number of pre-signed URLs for example.
             Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
           schema:
-            type: string
-            pattern: ^([^,]+(,[^,]+)*)?$
+            $ref: 'schemas/url-label-list.json'
         - name: accept_storage_ids
           in: query
           description: |
@@ -2090,8 +2089,7 @@ paths:
             generate a large number of pre-signed URLs for example.
             Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
           schema:
-            type: string
-            pattern: ^([^,]+(,[^,]+)*)?$
+            $ref: 'schemas/url-label-list.json'
         - name: accept_storage_ids
           in: query
           description: |
@@ -2146,26 +2144,26 @@ paths:
     post:
       summary: Register a Media Object instance
       description: |
-        Request the service to create an object instance on a new storage backend. Or add a new uncontrolled URL to `get_urls`.
+        Request the service to create an Object instance on a new Storage Backend. Or add a new uncontrolled URL to `get_urls`.
 
-        To request the duplication of the Object to a new storage backend, clients POST a `storage_id` to this endpoint that does not currently have an instance of the Object. The API will then:
+        To request the duplication of the Object to a new Storage Backend, clients POST a `storage_id` to this endpoint that does not currently have an instance of the Object. The API will then:
 
-        - Allocate storage for media object `objectId` on storage backend `storage_id`
-        - Copy the media object from an existing location to the newly allocated storage
+        - Allocate storage for Media Object `objectId` on Storage Backend `storage_id`
+        - Copy the Media Object from an existing location to the newly allocated storage
         - Start advertising the new copy in `get_urls` once ready
 
         The API instances SHOULD be capable of handling the case where the only existant instances are uncontrolled.
 
-        Where a client has written a new uncontrolled object instance, the client is responsible for ensuring that the object written is complete and correct before registering it with this method.
+        Where a client has written a new uncontrolled Object instance, the client is responsible for ensuring that the Object written is complete and correct before registering it with this method.
 
-        All instances of an object MUST be identical.
+        All instances of an Object MUST be identical.
       operationId: POST_objects-instances
       tags:
         - Objects
       parameters:
         - name: objectId
           in: path
-          description: The media object identifier. The Object ID may include special characters such as `/` which should be URL encoded.
+          description: The Media Object identifier. The Object ID may include special characters such as `/` which should be URL encoded.
           required: true
           schema:
             type: string
@@ -2192,15 +2190,15 @@ paths:
         "403":
           description: Forbidden. You do not have permission to modify this Media Object.
         "404":
-          description: The media object does not exist.
+          description: The Media Object does not exist.
     delete:
       summary: Delete a Media Object instance
       description: |
-        Delete an instance of a media object.
+        Delete an instance of a Media Object.
 
         One of `storage_id` or `label` MUST be specified in the query parameters. `storage_id` SHOULD be used where `controlled` is `True` for the instance.
 
-        API instances should remove the Media Object instance from the `get_urls` list and then, if the instance is controlled, delete the object instance from storage.
+        API instances should remove the Media Object instance from the `get_urls` list and then, if the instance is controlled, delete the Object instance from storage.
 
         API instances SHOULD prevent clients from deleting all Object instances. Additionally, API instances MAY prevent clients from deleting all controlled Object instances. Where clients wish to remove all copies of an Object from the store, they should do so by deleting all Flows or Flow Segments which reference the Object.
       operationId: DELETE_objects-instances
@@ -2231,7 +2229,7 @@ paths:
         "403":
           description: Forbidden. You do not have permission to modify this Media Object.
         "404":
-          description: The requested object ID in the path is invalid.
+          description: The requested Object ID in the path is invalid.
 
   /flow-delete-requests:
     head:

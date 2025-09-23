@@ -1,10 +1,10 @@
 {
   "type": "object",
-  "description": "Provides the location and metadata of the media files corresponding to a media Object.",
+  "description": "Provides the location and metadata of the media files corresponding to a Media Object.",
   "title": "Object",
   "properties": {
     "get_urls": {
-      "description": "A list of URLs to which a GET request can be made to directly retrieve the contents of the media object. This is required by the `http_object_store` media store type, which is the only one currently described. Clients may choose any URL in the list and treat the content returned as identical, however servers may sort the list such that the preferred URL is first. Storage backend metadata for controlled URLs should be populated by the TAMS instance based on the storage backend the object copy resides in.",
+      "description": "A list of URLs to which a GET request can be made to directly retrieve the contents of the Media Object. This is required by the `http_object_store` Storage Backend type, which is the only one currently described. Clients may choose any URL in the list and treat the content returned as identical, however servers may sort the list such that the preferred URL is first. Storage Backend metadata for controlled URLs should be populated by the TAMS instance based on the Storage Backend the Meda Object instance resides in.",
       "type": "array",
       "items": {
         "type": "object",
@@ -20,9 +20,8 @@
             ],
             "properties": {
               "storage_id": {
-                  "description": "Storage backend identifier",
-                  "type": "string",
-                  "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+                  "description": "Storage Backend identifier",
+                  "$ref": "uuid.json"
               },
               "url": {
                 "description": "A URL to which a GET request can be made to directly retrieve the contents of the media object. Clients should include credentials if the provide URL is on the same origin as the API endpoint",
@@ -37,7 +36,7 @@
                 "type": "string"
               },
               "controlled": {
-                "description": "If `true`, this URL is on a storage backend controlled by this service instance. If `false`, this URL is uncontrolled and does not have it's lifecycle managed by this instance. If this parameter is unset, assume `true`.",
+                "description": "If `true`, this URL is on a Storage Backend controlled by this service instance. If `false`, this URL is uncontrolled and does not have it's lifecycle managed by this instance. If this parameter is unset, assume `true`.",
                 "type": "boolean"
               }
             }
@@ -46,7 +45,7 @@
       }
     },
     "key_frame_count": {
-      "description": "The number of key frames in the media object. This should be set greater than zero when the media object contains key frames that serve as a stream access point",
+      "description": "The number of key frames in the Media Object. This should be set greater than zero when the Media Object contains key frames that serve as a stream access point",
       "type": "integer"
     }
   }
