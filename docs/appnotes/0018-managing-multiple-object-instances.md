@@ -30,16 +30,6 @@ Example response:
 
 ```json
 {
-  "pre": [
-    {
-      "action": "create_bucket",
-      "bucket_id": "tams-e2b89b02-21e7-5f9d-aa2d-db38b01453c9",
-      "put_url": {
-        "url": "https://example.store.com/tams-e2b89b02-21e7-5f9d-aa2d-db38b01453c9?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=0&X-Amz-Date=20230316T120329Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&X-Amz-Signature=0",
-        "body": "<CreateBucketConfiguration xmlns=\"http://s3.amazonaws.com/doc/2006-03-01/\">\n    <LocationConstraint>default</LocationConstraint>\n</CreateBucketConfiguration >\n"
-      }
-    }
-  ],
   "media_objects": [
     {
       "object_id": "tams-e2b89b02-21e7-5f9d-aa2d-db38b01453c9/846023d3-612d-5014-bc47-88f6eb2d04bb",
@@ -52,19 +42,10 @@ Example response:
 }
 ```
 
-In the response above, you can see a "pre" action alongside the the Media Object.
-This may be returned where a service implementation maintains multiple buckets on a storage backend.
 There is no requirement for a client to use all Media Objects they request.
 This allows a client to request allocation of Objects in bulk, improving efficiency.
-But it also means that a bucket could be created and not used.
-This could result in users incurring unnecessary costs.
-A service may therefore require the client to trigger its creation.
-Note that the request may include pre-actions for multiple buckets.
-The bucket a Media Object is associated with is pre-fixed to the `object_id`.
-As such, the client should only run the pre-action for a given bucket when it first wishes to populate a Media Object in that bucket.
 
-In the example above, a client would first trigger the creation of the bucket by a PUT request to the specified pre-signed URL with the specified body.
-The client would then PUT the Media Object's file to the `put_url` for one of the Media Object's in the list, with the `content-type` on the request set to the specified value.
+In the example above, a client would PUT the Media Object's file to the `put_url` for one of the Media Object's in the list, with the `content-type` on the request set to the specified value.
 
 Once the media Object has been uploaded, it should be registered on the Flow's timeline via a Segment.
 The appropriate Object ID from the requests above, and the Timerange it covers should be registered via a POST request to the [`/flows/{flowId}/segments`](https://bbc.github.io/tams/7.0/index.html#/operations/POST_flows-flowId-segments) endpoint.
