@@ -1,5 +1,5 @@
 ---
-status: "proposed"
+status: "accepted"
 ---
 # Proposal to remove pre-actions from storage allocation responses
 
