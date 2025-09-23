@@ -6,6 +6,7 @@
         "events": [
             "flows/created",
             "flows/updated"
-        ]
+        ],
+        "status": "started"
     }
 ]

@@ -8,10 +8,22 @@
         },
         {
             "type": "object",
+            "required":
+            [
+                "status"
+            ],
             "properties": {
                 "api_key_value": {
                     "description": "The value that the HTTP header 'api_key_name' will be set to",
                     "type": "string"
+                },
+                "status": {
+                    "description": "Status of the Webhook. `created` will register the webhook in the created state and the service instance will attempt to start sending events. `disabled` will register the webhook in a disabled state and will not send events.",
+                    "type": "string",
+                    "enum": [
+                        "created",
+                        "disabled"
+                    ]
                 }
             }
         }
