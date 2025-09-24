@@ -214,7 +214,7 @@ This may be done via the `/sources/{sourceId}/tags/auth_classes` endpoint.
 Read, write, and delete permissions on individual objects may be determined by filtering returned flows on the object.
 This may be done by setting `flow_tag.auth_classes` to relevant claimed auth classes (e.g. auth classes with read permissions if read permissions on the object are to be verified).
 If `referenced_by_flows` in the returned data is empty, the request DOES NOT have the relevant permissions.
-If `referenced_by_flows` in the returned data is empty, the request DOES have the relevant permissions.
+If `referenced_by_flows` in the returned data is not empty, the request DOES have the relevant permissions.
 
 #### Webhooks
 
