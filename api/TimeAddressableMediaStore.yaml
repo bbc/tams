@@ -158,22 +158,20 @@ paths:
           in: query
           description: |
             Filter on webhooks that have a tag named {name} with a value in the given comma-seperated list of values.
-            The {name} could contain escaped characters to allow it to be used in a
-            URL.
+            The {name} could contain escaped characters to allow it to be used in a URL.
             Where the tag's value is a string, at least one of the given values will match.
             Where the tag's value is an array, at least one value in the array will match at least one of the given values.
             Partial string matches of the values are not valid.
           schema:
-            type: string
-            pattern: ^([^,]+(,[^,]+)*)?$
+            $ref: 'schemas/url-tag-list.json'
         - name: tag_exists.{name}
           in: query
           description: |
-            Filter on webhooks that have a tag named {name} regardless of value. The
-            {name} could contain escaped characters to allow it to be used in a
-            URL. If set to true then the presence of the tag is filtered for. If set
-            to false then its absence is. If left out then no filtering on tag presence
-            is performed.
+            Filter on webhooks that have a tag named {name} regardless of value.
+            The {name} could contain escaped characters to allow it to be used in a URL.
+            If set to true then the presence of the tag is filtered for.
+            If set to false then its absence is.
+            If left out then no filtering on tag presence is performed.
           schema:
             type: boolean
         - $ref: '#/components/parameters/trait_resource_paged_key'
@@ -214,22 +212,20 @@ paths:
           in: query
           description: |
             Filter on webhooks that have a tag named {name} with a value in the given comma-seperated list of values.
-            The {name} could contain escaped characters to allow it to be used in a
-            URL.
+            The {name} could contain escaped characters to allow it to be used in a URL.
             Where the tag's value is a string, at least one of the given values will match.
             Where the tag's value is an array, at least one value in the array will match at least one of the given values.
             Partial string matches of the values are not valid.
           schema:
-            type: string
-            pattern: ^([^,]+(,[^,]+)*)?$
+            $ref: 'schemas/url-tag-list.json'
         - name: tag_exists.{name}
           in: query
           description: |
-            Filter on webhooks that have a tag named {name} regardless of value. The
-            {name} could contain escaped characters to allow it to be used in a
-            URL. If set to true then the presence of the tag is filtered for. If set
-            to false then its absence is. If left out then no filtering on tag presence
-            is performed.
+            Filter on webhooks that have a tag named {name} regardless of value.
+            The {name} could contain escaped characters to allow it to be used in a URL.
+            If set to true then the presence of the tag is filtered for.
+            If set to false then its absence is.
+            If left out then no filtering on tag presence is performed.
           schema:
             type: boolean
         - $ref: '#/components/parameters/trait_resource_paged_key'
@@ -420,8 +416,7 @@ paths:
             Where the tag's value is an array, at least one value in the array will match at least one of the given values.
             Partial string matches of the values are not valid.
           schema:
-            type: string
-            pattern: ^([^,]+(,[^,]+)*)?$
+            $ref: 'schemas/url-tag-list.json'
         - name: tag_exists.{name}
           in: query
           description: |
@@ -482,8 +477,7 @@ paths:
             Where the tag's value is an array, at least one value in the array will match at least one of the given values.
             Partial string matches of the values are not valid.
           schema:
-            type: string
-            pattern: ^([^,]+(,[^,]+)*)?$
+            $ref: 'schemas/url-tag-list.json'
         - name: tag_exists.{name}
           in: query
           description: |
@@ -872,8 +866,7 @@ paths:
             Where the tag's value is an array, at least one value in the array will match at least one of the given values.
             Partial string matches of the values are not valid.
           schema:
-            type: string
-            pattern: ^([^,]+(,[^,]+)*)?$
+            $ref: 'schemas/url-tag-list.json'
         - name: tag_exists.{name}
           in: query
           description: |
@@ -960,8 +953,7 @@ paths:
             Where the tag's value is an array, at least one value in the array will match at least one of the given values.
             Partial string matches of the values are not valid.
           schema:
-            type: string
-            pattern: ^([^,]+(,[^,]+)*)?$
+            $ref: 'schemas/url-tag-list.json'
         - name: tag_exists.{name}
           in: query
           description: |
@@ -2249,7 +2241,7 @@ paths:
         "400":
           $ref: '#/components/responses/trait_resource_info_head_400'
         "404":
-          description: The requested Media Object does not exist. 404 MUST be returned if the ID has been assigned via the storage endpoint, but not yet registered against a Flow Segment.
+          description: The requested Media Object does not exist. 404 MUST be returned if the ID has been assigned via the [`/flows/{flowId}/storage`](#/operations/POST_flows-flowId-storage), but not yet registered against a Flow Segment.
     get:
       summary: Media Object Information
       description: |
@@ -2348,7 +2340,7 @@ paths:
         "400":
           description: Bad request. Invalid query options.
         "404":
-          description: The requested media object does not exist. 404 MUST be returned if the ID has been assigned via the storage endpoint, but not yet registered against a segment.
+          description: The requested media object does not exist. 404 MUST be returned if the ID has been assigned via the [`/flows/{flowId}/storage`](#/operations/POST_flows-flowId-storage), but not yet registered against a Flow Segment.
   /objects/{objectId}/instances:
     post:
       summary: Register a Media Object instance
@@ -2399,7 +2391,7 @@ paths:
         "403":
           description: Forbidden. You do not have permission to modify this Media Object.
         "404":
-          description: The Media Object does not exist. 404 MUST be returned if the ID has been assigned via the storage endpoint, but not yet registered against a segment.
+          description: The Media Object does not exist. 404 MUST be returned if the ID has been assigned via the [`/flows/{flowId}/storage`](#/operations/POST_flows-flowId-storage), but not yet registered against a Flow Segment.
     delete:
       summary: Delete a Media Object instance
       description: |
@@ -2438,7 +2430,7 @@ paths:
         "403":
           description: Forbidden. You do not have permission to modify this Media Object.
         "404":
-          description: The requested Object ID in the path is invalid. 404 MUST be returned if the ID has been assigned via the storage endpoint, but not yet registered against a segment.
+          description: The requested Object ID in the path is invalid. 404 MUST be returned if the ID has been assigned via the [`/flows/{flowId}/storage`](#/operations/POST_flows-flowId-storage), but not yet registered against a Flow Segment.
 
   /flow-delete-requests:
     head:

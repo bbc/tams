@@ -4,14 +4,14 @@
 
 Media workflows often contain sensitive or high-value content, and media organisations need to effectively manage access to that content across their estate.
 That requires suitable approaches across both authentication (identifying the user) as discussed in [ADR0028](../adr/0028-authentication-methods.md), and also authorisation (deciding what the user can do), which is discussed in [ADR035](../adr/0035-fine-grained-auth.md) and implemented here.
-In general, store implementations, and the organisations that deploy them, are free to define how the authorisation model works based on their needs, however this Application Note provides some guidelines and a starting point.
+In general, service implementations, and the organisations that deploy them, are free to define how the authorisation model works based on their needs, however this Application Note provides some guidelines and a starting point.
 It is recommended to follow these guidelines where possible to aid in interoperability between TAMS components.
 
 ## Overall Principles
 
 Implementers should consider the material they need to protect, the nature of their business and their threat model when deciding how to build authorisation into TAMS-based media workflows.
 
-For some organisations a coarse-grained approach is sufficient: for example allowing groups of users to have read- or write-access to a store or large blocks of content.
+For some organisations a coarse-grained approach is sufficient: for example allowing groups of users to have read- or write-access to a service instance or large blocks of content.
 This might be appropriate for example in a newsroom, where staff are deliberately enabled to work together and access each other's material.
 
 Conversely a finer-grained approach may be required, where specific rules and policies are applied to each piece of content, and groups of users are carefully managed.
@@ -119,7 +119,7 @@ Future iterations of these proposals may elevate ABAC attributes to a specific f
 In practical TAMS solutions, ABAC could look like defining an `auth_classes` tag.
 A permissions system then defines policies that evaluates permissions based on to those `auth_classes` and a request's claimed OAuth scopes.
 
-For example, consider a store shared by multiple teams from the News and Sport production teams of an organisation.
+For example, consider a service instance shared by multiple teams from the News and Sport production teams of an organisation.
 Each team have the ability to read and write their own content, and no access to the other team's content.
 However in some cases it is necessary to share a particular Source (e.g. to work on a shared story) to the other team.
 
@@ -198,7 +198,7 @@ For example - hiding collection relationships may result in clients deciding to 
 |                                      | `PUT`        | Request must have write permissions on {flowId}. Otherwise reject.                      |
 |                                      | `DELETE`     | Request must have write permissions on {flowId}. Otherwise reject.                      |
 | `/flows/{flowId}/segments`           | `HEAD`/`GET` | Request must have read permissions on {flowId}. Otherwise reject.                       |
-|                                      | `POST`       | Request must have write permissions on {flowId}, and either this must be the first registration of the object(s) (i.e. `/objects/{objectId}` returns 404) or the request must have read access to the object(s) being written. Otherwise reject.    |
+|                                      | `POST`       | Request must have write permissions on {flowId}, and either this must be the first registration of the Media Object(s) (i.e. `/objects/{objectId}` returns 404) or the request must have read access to the Media Object(s) being written. Otherwise reject.    |
 |                                      | `DELETE`     | Request must have write permissions on {flowId}. Otherwise reject.                      |
 | `/flows/{flowId}/storage`            | `POST`       | Request must have write permissions on {flowId}. Otherwise reject.                      |
 | `/objects/{objectId}`                | `HEAD`/`GET` | Restrict returned data in `referenced_by_flows` property by adding list of claimed auth classes to `flow_tag.auth_classes`. If the incoming request has `flow_tag.auth_classes` set, the request must be processed with `flow_tag.auth_classes` set to the intersection of the claimed auth classes and the provided list in `flow_tag.auth_classes`. |
@@ -211,18 +211,18 @@ For example - hiding collection relationships may result in clients deciding to 
 
 #### Flows
 
-Read, write, and delete permissions on individual flows may be determined via auth classes listed in the `auth_classes` tag on the flow.
+Read, write, and delete permissions on individual Flows may be determined via auth classes listed in the `auth_classes` tag on the Flow.
 This may be done via the `/flows/{flowId}/tags/auth_classes` endpoint.
 
 #### Sources
 
-Read, write, and delete permissions on individual sources may be determined via auth classes listed in the `auth_classes` tag on the source.
+Read, write, and delete permissions on individual Sources may be determined via auth classes listed in the `auth_classes` tag on the Source.
 This may be done via the `/sources/{sourceId}/tags/auth_classes` endpoint.
 
-#### Objects
+#### Media Objects
 
-Read, write, and delete permissions on individual objects may be determined by filtering returned flows on the object.
-This may be done by setting `flow_tag.auth_classes` to relevant claimed auth classes (e.g. auth classes with read permissions if read permissions on the object are to be verified).
+Read, write, and delete permissions on individual Media Objects may be determined by filtering returned Flows on the Media Object.
+This may be done by setting `flow_tag.auth_classes` to relevant claimed auth classes (e.g. auth classes with read permissions if read permissions on the Media Object are to be verified).
 If `referenced_by_flows` in the returned data is empty, the request DOES NOT have the relevant permissions.
 If `referenced_by_flows` in the returned data is not empty, the request DOES have the relevant permissions.
 
@@ -278,14 +278,14 @@ As a result, the process of authorising a request is:
 2. Read the user's claimed scopes from their provided token
 3. Request a decision from the permissions system based on those data
 4. (Write requests only): Check whether the request would modify the special `auth_classes` tag, and confirm the user has permission to make that modification
-5. (Flow segment write requests only): Check if the object already exists in the store using the `/objects` endpoint, and if it does, confirm the user would have access to read it
+5. (Flow Segment write requests only): Check if the Media Object already exists in the service instance using the `/objects` endpoint, and if it does, confirm the user would have access to read it
 6. (Write requests only): Propagate any changes to the `auth_classes` tag to Flows and Sources collected by this one
 
 ## Where to Enforce Authorisation
 
 Some consideration should be given for where to apply the authorisation step, depending on how TAMS is deployed and integrated.
 For example a TAMS instance could be deployed with fine-grained authorisation support, and used directly by systems across an organisation.
-In this case it would make sense to treat all clients of that TAMS instance as identical from an authentication/authorisation perspective: for example a user operating an NLE would be expected to provide suitable authorised credentials, but so too would the organisations MAM when it wants access to the store.
+In this case it would make sense to treat all clients of that TAMS instance as identical from an authentication/authorisation perspective: for example a user operating an NLE would be expected to provide suitable authorised credentials, but so too would the organisations MAM when it wants access to the service instance.
 
 Another deployment approach might see a MAM or other tool expose a TAMS API interface itself, which is proxied through to some simpler backing store.
 In this case the MAM might manage and enforce other policies and rules around access to content, so it would make more sense to do the same in the TAMS API interface, and then use the MAM's own credentials to access the backing TAMS instance.
@@ -296,13 +296,13 @@ In this case the MAM might manage and enforce other policies and rules around ac
 
 The model described above allows access control at the Source/Flow level.
 Some use cases may require finer grained control.
-This may be achieved by creating a new flow with the relevant permissions that refers to the Objects of interest.
+This may be achieved by creating a new Flow with the relevant permissions that refers to the Objects of interest.
 Caution should be taken where the boundary timestamps land partway through an Object.
 Where the material around the boundaries is sensitive, new trimmed Objects should be created at the boundaries that remove content outside the permitted range.
 
 ### Global read access
 
-Some organisations/implementations may choose to provide read access to all Sources and Flows to promote content re-use, and reduce the writing of duplicate content to the store.
+Some organisations/implementations may choose to provide read access to all Sources and Flows to promote content re-use, and reduce the writing of duplicate content to the service instance.
 Implementations may provide this feature by either adding default groups to Sources and Flows that provide appropriate read access to users, or by using more permissive auth logic.
 
 ### Permissions propagation
@@ -326,7 +326,7 @@ In these cases, a matching "deny" class takes precedent over an "allow" class.
 
 ## Future Work
 
-The model described above allows for more use cases than coarse-grained RBAC: especially use cases where multiple tenants share a single store.
+The model described above allows for more use cases than coarse-grained RBAC: especially use cases where multiple tenants share a single service instance.
 However it would be useful to allow more attributes to be used in rules: for example allowing write access to the tags of Sources/Flows but not other properties.
 
 One of the areas noted in [ADR0028: Authentication Methods](../adr/0028-authentication-methods.md) is being able to issue credentials restricted to a limited subset of Sources or Flows, which must also be supported by the authorisation system.
