@@ -1,5 +1,5 @@
 ---
-status: "proposed"
+status: "accepted"
 ---
 # Proposal for improvements to the Webhooks endpoints
 
