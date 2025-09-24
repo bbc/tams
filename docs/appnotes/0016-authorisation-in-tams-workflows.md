@@ -36,6 +36,9 @@ These are the recommended permissions (or "scopes" in OAuth 2.0):
 | `/service/storage-backends`          | `HEAD`/`GET` ⚠️ | ✅               | ✅              | ✅               | ✅               |
 | `/service/webhooks`                  | `HEAD`/`GET`    | ✅               | ✅              |                  |                  |
 |                                      | `POST`          | ✅               |                 | ✅               |                  |
+| `/service/webhooks/{webhookId}`      | `HEAD`/`GET`    | ✅               | ✅              |                  |                  |
+|                                      | `PUT`           | ✅               |                 | ✅               |                  |
+|                                      | `DELETE`     ⚠️ | ✅               |                 | ✅               |                  |
 | `/sources`                           | `HEAD`/`GET`    | ✅               | ✅              |                  |                  |
 | `/sources/{sourceId}`                | `HEAD`/`GET`    | ✅               | ✅              |                  |                  |
 | `/sources/{sourceId}/tags`           | `HEAD`/`GET`    | ✅               | ✅              |                  |                  |
@@ -78,6 +81,8 @@ These are the recommended permissions (or "scopes" in OAuth 2.0):
 |                                      | `DELETE`        | ✅               |                 |                  | ✅               |
 | `/flows/{flowId}/storage`            | `POST`          | ✅               |                 | ✅               |                  |
 | `/objects/{objectId}`                | `HEAD`/`GET`    | ✅               | ✅              |                  |                  |
+| `/objects/{objectId}/instances`      | `POST`          | ✅               |                 | ✅               |                  |
+|                                      | `DELETE`        | ✅               |                 | ✅               |                  |
 | `/flow-delete-requests`              | `HEAD`/`GET` ⚠️ | ✅               |                 |                  |                  |
 | `/flow-delete-requests/{request-id}` | `HEAD`/`GET` ⚠️ | ✅               |                 |                  | ✅               |
 
@@ -152,6 +157,9 @@ For example - hiding collection relationships may result in clients deciding to 
 | `/service/storage-backends`          | `HEAD`/`GET` | Available to all                                                                        |
 | `/service/webhooks`                  | `HEAD`/`GET` | Restrict returned data by adding list of claimed auth classes to `tag.auth_classes`. If the incoming request has `tag.auth_classes` set, the request must be processed with `tag.auth_classes` set to the intersection of the claimed auth classes and the provided list in `tag.auth_classes`. |
 |                                      | `POST`       | Request must have write permissions on the webhook being edited. If the request edits the `auth_classes` tag of a webhook, the request must have the permissions being edited. i.e. If the request adds or removes delete permissions for any group, it must have delete permissions on the webhook. If the request includes Source or Flow filters, the request must have read permissions on all Source or Flow IDs requested. Otherwise, reject. |
+| `/service/webhooks/{webhookId}`      | `HEAD`/`GET` | Request must have read permissions on {webhookId}. Otherwise reject.                    |
+|                                      | `PUT`        | Request must have write permissions on {webhookId}. Otherwise, reject.                  |
+|                                      | `DELETE`     | Request must have delete permissions on {webhookId}. Otherwise, reject.                 |
 | `/sources`                           | `HEAD`/`GET` | Restrict returned data by adding list of claimed auth classes to `tag.auth_classes`. If the incoming request has `tag.auth_classes` set, the request must be processed with `tag.auth_classes` set to the intersection of the claimed auth classes and the provided list in `tag.auth_classes`. |
 | `/sources/{sourceId}`                | `HEAD`/`GET` | Request must have read permissions on {sourceId}. Otherwise reject.                     |
 | `/sources/{sourceId}/tags`           | `HEAD`/`GET` | Request must have read permissions on {sourceId}. Otherwise reject.                     |
@@ -194,6 +202,8 @@ For example - hiding collection relationships may result in clients deciding to 
 |                                      | `DELETE`     | Request must have write permissions on {flowId}. Otherwise reject.                      |
 | `/flows/{flowId}/storage`            | `POST`       | Request must have write permissions on {flowId}. Otherwise reject.                      |
 | `/objects/{objectId}`                | `HEAD`/`GET` | Restrict returned data in `referenced_by_flows` property by adding list of claimed auth classes to `flow_tag.auth_classes`. If the incoming request has `flow_tag.auth_classes` set, the request must be processed with `flow_tag.auth_classes` set to the intersection of the claimed auth classes and the provided list in `flow_tag.auth_classes`. |
+| `/objects/{objectId}/instances`      | `POST`       | Request must have write permissions on {objectId}. Otherwise reject.                    |
+|                                      | `DELETE`     | Request must have write permissions on {objectId}. Otherwise reject.                    |
 | `/flow-delete-requests`              | `HEAD`/`GET` | Request must have admin permissions. Otherwise reject.                                  |
 | `/flow-delete-requests/{request-id}` | `HEAD`/`GET` | Request must have delete permissions on the Delete Request's Flow ID. Otherwise reject. |
 
