@@ -37,8 +37,8 @@ These are the recommended permissions (or "scopes" in OAuth 2.0):
 | `/service/webhooks`                  | `HEAD`/`GET`    | ✅               | ✅              |                  |                  |
 |                                      | `POST`          | ✅               |                 | ✅               |                  |
 | `/service/webhooks/{webhookId}`      | `HEAD`/`GET`    | ✅               | ✅              |                  |                  |
-|                                      | `PUT`           | ✅               |                 | ✅               |                  |
-|                                      | `DELETE`     ⚠️ | ✅               |                 | ✅               |                  |
+|                                      | `PUT`        ⚠️ | ✅               | ✅              |                  |                  |
+|                                      | `DELETE`     ⚠️ | ✅               | ✅              |                  |                  |
 | `/sources`                           | `HEAD`/`GET`    | ✅               | ✅              |                  |                  |
 | `/sources/{sourceId}`                | `HEAD`/`GET`    | ✅               | ✅              |                  |                  |
 | `/sources/{sourceId}/tags`           | `HEAD`/`GET`    | ✅               | ✅              |                  |                  |
@@ -156,9 +156,9 @@ For example - hiding collection relationships may result in clients deciding to 
 |                                      | `POST`       | Request must have admin permissions. Otherwise reject.                                  |
 | `/service/storage-backends`          | `HEAD`/`GET` | Available to all                                                                        |
 | `/service/webhooks`                  | `HEAD`/`GET` | Restrict returned data by adding list of claimed auth classes to `tag.auth_classes`. If the incoming request has `tag.auth_classes` set, the request must be processed with `tag.auth_classes` set to the intersection of the claimed auth classes and the provided list in `tag.auth_classes`. |
-|                                      | `POST`       | Request must have write permissions on the webhook being edited. If the request edits the `auth_classes` tag of a webhook, the request must have the permissions being edited. i.e. If the request adds or removes delete permissions for any group, it must have delete permissions on the webhook. If the request includes Source or Flow filters, the request must have read permissions on all Source or Flow IDs requested. Otherwise, reject. |
+|                                      | `POST`       | If the request includes Source or Flow filters, the request must have read permissions on all Source or Flow IDs requested. Otherwise, reject. Note that this endpoint only allows creation, not modification, of webhooks. |
 | `/service/webhooks/{webhookId}`      | `HEAD`/`GET` | Request must have read permissions on {webhookId}. Otherwise reject.                    |
-|                                      | `PUT`        | Request must have write permissions on {webhookId}. Otherwise, reject.                  |
+|                                      | `PUT`        | Request must have write permissions on {webhookId}. If the request edits the `auth_classes` tag of a webhook, the request must have the permissions being edited. i.e. If the request adds or removes delete permissions for any group, it must have delete permissions on the webhook. Otherwise, reject. |
 |                                      | `DELETE`     | Request must have delete permissions on {webhookId}. Otherwise, reject.                 |
 | `/sources`                           | `HEAD`/`GET` | Restrict returned data by adding list of claimed auth classes to `tag.auth_classes`. If the incoming request has `tag.auth_classes` set, the request must be processed with `tag.auth_classes` set to the intersection of the claimed auth classes and the provided list in `tag.auth_classes`. |
 | `/sources/{sourceId}`                | `HEAD`/`GET` | Request must have read permissions on {sourceId}. Otherwise reject.                     |
