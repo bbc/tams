@@ -1,5 +1,5 @@
 ---
-status: "{proposed | rejected | accepted | deprecated | … | superseded by [ADR-0005](0005-example.md)}"
+status: proposed
 ---
 # Require Explicit Framerate
 
@@ -26,12 +26,12 @@ In particular, it should be considered whether the special case of Variable Fram
 
 ## Decision Outcome
 
-Chosen option: "{title of option 1}", because
-{Justification, e.g., only option which resolves requirements, or comes out best (see below)}.
+Option 2 (add a separate VFR flag) because it makes much clearer the presence of VFR content, and makes it easier for tools and users to detect it.
+Additionally no known use case has been identified for unknown frame rates in video (Option 2a) - note that this does not apply to Data Flows, which can have data points at unspecified rates.
 
 ### Implementation
 
-A draft implementation is present alongside the PR that added this ADR.
+Implemented by <https://github.com/bbc/tams/pull/143>.
 
 ## Pros and Cons of the Options
 
