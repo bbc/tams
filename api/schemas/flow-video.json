@@ -27,29 +27,49 @@
                     "type": "object",
                     "required": [
                         "frame_width",
-                        "frame_height"
+                        "frame_height",
+                        "frame_rate"
                     ],
                     "additionalProperties": false,
                     "properties": {
                         "frame_rate": {
-                            "description": "The fixed number of frames per second. If this parameter is unset, the frame_rate is either unknown or variable.",
+                            "description": "The fixed number of frames per second, or the vfr flag indicating this Flow is variable rate",
                             "type": "object",
-                            "required": [
-                                "numerator"
-                            ],
-                            "properties": {
-                                "numerator": {
-                                    "description": "numerator",
-                                    "type": "integer",
-                                    "exclusiveMinimum": 0
+                            "oneOf": [
+                                {
+                                    "title": "Fixed Frame Rate",
+                                    "description": "Fixed video frame rate, represented as a fraction",
+                                    "required": [
+                                        "numerator"
+                                    ],
+                                    "properties": {
+                                        "numerator": {
+                                            "description": "numerator",
+                                            "type": "integer",
+                                            "exclusiveMinimum": 0
+                                        },
+                                        "denominator": {
+                                            "description": "denominator",
+                                            "type": "integer",
+                                            "default": 1,
+                                            "exclusiveMinimum": 0
+                                        }
+                                    }
                                 },
-                                "denominator": {
-                                    "description": "denominator",
-                                    "type": "integer",
-                                    "default": 1,
-                                    "exclusiveMinimum": 0
+                                {
+                                    "title": "Variable Frame Rate",
+                                    "description": "Flag indicating content has a variable frame rate",
+                                    "required": [
+                                        "vfr"
+                                    ],
+                                    "properties": {
+                                        "vfr": {
+                                            "description": "If set, the Flow has a variable frame rate",
+                                            "const": true
+                                        }
+                                    }
                                 }
-                            }
+                            ]
                         },
                         "frame_width": {
                             "description": "The width of the picture in pixels.",
