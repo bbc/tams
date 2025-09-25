@@ -72,17 +72,17 @@ In that case the media object timestamp for the first grain is `0:0`, so when th
 ### Option 3a: Store timerange of media object and use time-based selection with skip and duration
 
 Instead of using `sample_offset` and `sample_count`, provide `skip` and `duration` fields on each Flow Segment, describing how much time to skip from the beginning of the media object, and the duration after that of the Flow Segment.
-When a media object is registered to a Flow for the first time, clients can optionally provide a `media_timerange`: the timerange contained within the object (e.g. the timerange of a Flow Segment consuming the entire object if `ts_offset=0`).
-This field can be made optional, because the specification already expects that for newly-written media objects "all samples in the object SHOULD be used by the Segment", therefore if not set at first registration, it can be assumed the `media_timerange = segment.timerange`.
+When a media object is registered to a Flow for the first time, clients can optionally provide a `object_timerange`: the timerange contained within the object (e.g. the timerange of a Flow Segment consuming the entire object if `ts_offset=0`).
+This field can be made optional, because the specification already expects that for newly-written media objects "all samples in the object SHOULD be used by the Segment", therefore if not set at first registration, it can be assumed the `object_timerange = segment.timerange`.
 
-A TAMS API implementation can calculate the correct values for `skip` and `duration` by transforming the Flow Segment `timerange` into the media timeline (`timerange - ts_offset`) and then comparing it to the `media_timerange`.
+A TAMS API implementation can calculate the correct values for `skip` and `duration` by transforming the Flow Segment `timerange` into the media timeline (`timerange - ts_offset`) and then comparing it to the `object_timerange`.
 
 * Good, because implementations tend to work in terms of time, not samples
 * Good, because it makes sub-segment handling much easier for readers that cannot inspect the media timing
 * Good, because it avoids writers needing to re-calculate offsets and counts
 * Good, because it handles gaps without requiring even more work from writers
 * Good, because readers don't need to convert offsets and counts to time (with potential edge cases around Flows with no rate)
-* Good, because it ties the required piece of information about the media object (the `media_timerange`) to the object itself
+* Good, because it ties the required piece of information about the media object (the `object_timerange`) to the object itself
 * Neutral, because it will be a breaking change, but a relatively easy one to account for
 * Neutral, because it forces the use of either containers with some kind of internal timing or Flows with a rate and no gaps inside the objects (although gaps between segments is still possible)
 * Bad, because it creates more work for the API implementation to handle each Flow Segment request
@@ -99,7 +99,7 @@ Is replaced with:
 
 ### Option 3c: Store timerange of media object, optionally provide it on Flow Segments
 
-As Option 3a, except `skip` and `duration` are removed and `media_timerange` is returned directly on a Flow Segment when `include_media_timerange=true` is set.
+As Option 3a, except `skip` and `duration` are removed and `object_timerange` is returned directly on a Flow Segment when `include_object_timerange=true` is set.
 
 Benefits and drawbacks as Option 3a, except the following item:
 > Bad, because it creates more work for the API implementation to handle each Flow Segment request
