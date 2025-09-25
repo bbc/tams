@@ -175,30 +175,7 @@ This is intended to reduce the amount of polling required by clients to keep up 
 However the specification is deliberately left open-ended; only the message bodies are specified, but not the protocol by which they are carried nor the method by which clients subscribe.
 It is assumed that implementations will provide a suitable mechanism, such as a call to allow clients to subscribe to webhooks, or details of an event bus to connect to and receive the messages.
 
-### Security
-
-The TAMS specification stipulates authentication methods that a client should support in order to identify themselves and provide credentials to the server, using standard HTTP approaches.
-The authorisation model (the rules by which authenticated requests are allowed or denied) is not part of the TAMS specification, and is up to individual implementers and organisations depending on their exact rules, needs and threat model.
-
-It is assumed that implementations will apply other IT and cloud infrastructure security best practices, notably including the use of TLS (e.g. HTTPS connections) within and between their systems.
-
-## Mock TAMS Service
-
-This repo contains some automation to run a mock version of the API using [Stoplight Prism](https://stoplight.io/open-source/prism).
-To run the mock server using Docker, try something like the command below (or run `make mock-server-up`):
-
-```shell
-docker run --rm --init --name mock-tams -v "$(pwd)":/data:ro -p 4010:4010 stoplight/prism mock /data/TimeAddressableMediaStore.yaml -h 0.0.0.0
-```
-
-A mock API server will start at <http://localhost:4010>
-
-## Proposals, Decisions and Architecture Changes
-
-This repository uses [(M)ADR documents](https://adr.github.io/madr/) to propose significant changes, facilitate discussions and decision making, and to store a record of options that were considered.
-These documents may be found in the [docs/adr](./docs/adr/) directory, and are managed as described by the [ADR Readme](./docs/adr/README.md).
-
-## API Versioning
+### API Versioning
 
 The API is versioned using a major and minor version number.
 A breaking change - such as removal of a feature, or renaming of properties in such a way that would break compatibility (including fixing a typo) - results in a major version increment and the minor version is reset to 0.
@@ -218,7 +195,20 @@ Otherwise, the version will not change.
 
 It is possible to see what the version would be if a release was made at the current commit by running `make next-version` in the top directory of this repository.
 
-### Making a release
+### Security
+
+The TAMS specification stipulates authentication methods that a client should support in order to identify themselves and provide credentials to the server, using standard HTTP approaches.
+The authorisation model (the rules by which authenticated requests are allowed or denied) is not part of the TAMS specification, and is up to individual implementers and organisations depending on their exact rules, needs and threat model.
+However some principles and suggestions are discussed in [AppNote0016: Authorisation in TAMS workflows](./docs/appnotes/0016-authorisation-in-tams-workflows.md).
+
+It is assumed that implementations will apply other IT and cloud infrastructure security best practices, notably including the use of TLS (e.g. HTTPS connections) within and between their systems.
+
+## Proposals, Decisions and Architecture Changes
+
+This repository uses [(M)ADR documents](https://adr.github.io/madr/) to propose significant changes, facilitate discussions and decision making, and to store a record of options that were considered.
+These documents may be found in the [docs/adr](./docs/adr/) directory, and are managed as described by the [ADR Readme](./docs/adr/README.md).
+
+## Making a release
 
 Run the `release` workflow under the `Actions` tab on this repository on GitHub against the `main` branch.
 This workflow requires approval.
