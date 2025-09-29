@@ -2164,6 +2164,18 @@ paths:
             Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
           schema:
             type: boolean
+        - name: flow_tag.{name}
+          in: query
+          description: |
+            Filter `referenced_by_flows` on tag values. This option is the same as the `tag.{name}` query parameter on the `/flows/` API endpoint.
+          schema:
+            type: string
+        - name: flow_tag_exists.{name}
+          in: query
+          description: |
+            Filter `referenced_by_flows` on tag names. This option is the same as the `tag_exists.{name}` query parameter on the `/flows/` API endpoint.
+          schema:
+            type: boolean
         - $ref: '#/components/parameters/trait_resource_paged_key'
         - $ref: '#/components/parameters/trait_paged_limit'
       responses:
@@ -2247,6 +2259,18 @@ paths:
             If `presigned` is set to `false`, the response from the service could be substantially faster if it is not required to
             generate a large number of pre-signed URLs.
             Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
+          schema:
+            type: boolean
+        - name: flow_tag.{name}
+          in: query
+          description: |
+            Filter `referenced_by_flows` on tag values. This option is the same as the `tag.{name}` query parameter on the `/flows/` API endpoint.
+          schema:
+            type: string
+        - name: flow_tag_exists.{name}
+          in: query
+          description: |
+            Filter `referenced_by_flows` on tag names. This option is the same as the `tag_exists.{name}` query parameter on the `/flows/` API endpoint.
           schema:
             type: boolean
         - $ref: '#/components/parameters/trait_resource_paged_key'
