@@ -71,5 +71,6 @@ For more information on how we use ADRs, see [here](./adr/README.md).
 | [0037](./adr/0037-improve-webhooks.md)                             | Proposal for improvements to the Webhooks endpoints                        |
 | [0038](./adr/0038-improved-storage-management.md)                  | Improved Storage Management                                                |
 | [0039](./adr/0039-remove-pre-actions.md)                           | Proposal to remove pre-actions from storage allocation response            |
+| [0040](./adr/0040-tag-usability-enhancements.md)                   | Tag Usability Enhancements |
 
 \* Note: ADR 0004a was the unintended result of a number clash in the early development of TAMS which wasn't caught before publication
