@@ -108,12 +108,13 @@ Example POST body to `/objects/{objectId}/instances`:
 
 ### Deleting an Object Instance
 
-Specific instances of a Media Object can be deleted by a DELETE request to `/objects/{objectId}/get_urls` with the relevant `storage_id` in the query string.
+Specific instances of a Media Object can be deleted by a DELETE request to `/objects/{objectId}/instances` with the relevant `storage_id` in the query string.
+However attempting to delete the last instance of a media object should be rejected: this requires deleting the referencing Flow Segments instead.
 
 Example DELETE request:
 
 ```text
-http://tams.example.com/objects/846023d3-612d-5014-bc47-88f6eb2d04bb/get_urls?storage_id=323367fd-21bb-4f2e-ad38-faf048c4ccfc
+http://tams.example.com/objects/846023d3-612d-5014-bc47-88f6eb2d04bb/instances?storage_id=323367fd-21bb-4f2e-ad38-faf048c4ccfc
 ```
 
 Once deleted, this instance will no longer be advertised in `get_urls` on the `/objects/{objectId}` endpoint or on the `/flows/{flowId}/segments` for Flow Segments which use the Media Object.
