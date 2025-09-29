@@ -370,10 +370,13 @@ paths:
         - name: tag.{name}
           in: query
           description: |
-            Filter on Sources that have a tag named {name} and with the given value.
-            {name} and the value MUST be URL encoded where special characters are present.
+            Filter on Sources that have a tag named {name} with a value in the given comma-seperated list of values.
+            The {name} and the value MUST be URL encoded where special characters are present.
+            Where the tag's value is a string, at least one of the given values will match.
+            Where the tag's value is an array, at least one value in the array will match at least one of the given values.
+            Partial string matches of the values are not valid.
           schema:
-            type: string
+            $ref: 'schemas/url-tag-list.json'
         - name: tag_exists.{name}
           in: query
           description: |
@@ -428,10 +431,13 @@ paths:
         - name: tag.{name}
           in: query
           description: |
-            Filter on Sources that have a tag named {name} and with the given value.
-            {name} and the value MUST be URL encoded where special characters are present.
+            Filter on Sources that have a tag named {name} with a value in the given comma-seperated list of values.
+            The {name} and the value MUST be URL encoded where special characters are present.
+            Where the tag's value is a string, at least one of the given values will match.
+            Where the tag's value is an array, at least one value in the array will match at least one of the given values.
+            Partial string matches of the values are not valid.
           schema:
-            type: string
+            $ref: 'schemas/url-tag-list.json'
         - name: tag_exists.{name}
           in: query
           description: |
@@ -814,10 +820,13 @@ paths:
         - name: tag.{name}
           in: query
           description: |
-            Filter on Flows that have a tag named {name} and with the given value.
-            {name} and the value MUST be URL encoded where special characters are present.
+            Filter on flows that have a tag named {name} with a value in the given comma-seperated list of values.
+            The {name} and the value MUST be URL encoded where special characters are present.
+            Where the tag's value is a string, at least one of the given values will match.
+            Where the tag's value is an array, at least one value in the array will match at least one of the given values.
+            Partial string matches of the values are not valid.
           schema:
-            type: string
+            $ref: 'schemas/url-tag-list.json'
         - name: tag_exists.{name}
           in: query
           description: |
@@ -898,10 +907,13 @@ paths:
         - name: tag.{name}
           in: query
           description: |
-            Filter on Flows that have a tag named {name} and with the given value.
-            {name} and the value MUST be URL encoded where special characters are present.
+            Filter on flows that have a tag named {name} with a value in the given comma-seperated list of values.
+            The {name} and the value MUST be URL encoded where special characters are present.
+            Where the tag's value is a string, at least one of the given values will match.
+            Where the tag's value is an array, at least one value in the array will match at least one of the given values.
+            Partial string matches of the values are not valid.
           schema:
-            type: string
+            $ref: 'schemas/url-tag-list.json'
         - name: tag_exists.{name}
           in: query
           description: |
