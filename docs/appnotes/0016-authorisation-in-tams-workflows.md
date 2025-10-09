@@ -158,7 +158,7 @@ For example - hiding collection relationships may result in clients deciding to 
 |                                      | `DELETE`     | Request must have write permissions on {sourceId}. |
 | `/flows`                             | `HEAD`/`GET` | Restrict returned data to only the Flows that the request has read permission on. |
 | `/flows/{flowId}`                    | `HEAD`/`GET` | Request must have read permissions on {flowID}. |
-|                                      | `PUT`        | If {flowId} does not currently exist, request must have write permissions on the Flow's Source ID if it already exists in this TAMS instance. If neither {flowId} nor the Source ID exist, allow if the request has create permission (see below). If {flowId} already exists, request must have write permissions on {flowId}. |
+|                                      | `PUT`        | If {flowId} does not currently exist, request must have write permissions on the Flow's Source ID if it already exists in this TAMS instance. If neither {flowId} nor the Source ID exist, allow if the request has create permission (see [Creating new Flows and Sources](#creating-new-flows-and-sources)). If {flowId} already exists, request must have write permissions on {flowId}. |
 |                                      | `DELETE`     | Request must have delete permissions on {flowId}. |
 | `/flows/{flowId}/tags`               | `HEAD`/`GET` | Request must have read permissions on {flowId}. |
 | `/flows/{flowId}/tags/{name}`        | `HEAD`/`GET` | Request must have read permissions on {flowId}. |
@@ -204,7 +204,7 @@ Along with granting access to existing Flows and Sources, some method needs to e
 Depending on the model in use, it may be a requirement to specify the permissions of that resource at creation time: for example setting an `auth_classes` tag to a subset of the user's own groups, and rejecting requests that do not include one.
 Alternatively an implementation may provide some signalling of a default set of permissions that should be applied when none is given: for example a user could have a default group or project, or an approach where users can own content themselves, and then share it as needed.
 
-For systems that create resources on behalf of a user, the same approach could be taken, or placeholder resources could be created and assigned to that system: for example creating an empty Flow and then specifying the Flow ID to an ingester.
+For systems that create resources on behalf of a user, the same approach could be taken, or placeholder resources could be created by the user with permissions assigned to that system: for example creating an empty Flow and then specifying the Flow ID to an ingester.
 
 #### Adding Flows to existing Sources
 
@@ -235,7 +235,7 @@ Implementations may provide this feature by either adding default groups to Sour
 Implementations must evaluate permissions against webhook events themselves as well as the API's HTTP endpoints.
 A basic implementation may enumerate Flows and Sources a user has access to when creating/updating the webhook and use this to filter events.
 This approach is strongly discouraged as permissions may change over time.
-It is recommended that implementations assess permissions on a per-event basis, and cache this information as necessary in their internal implementation.
+It is recommended that implementations assess permissions on a per-event basis, and cache this information (with an appropriately short cache expiry time) in their internal implementation.
 
 ### Permissions propagation
 
@@ -284,15 +284,21 @@ However in some cases it is necessary to share a particular Source (e.g. to work
 | Source News X  | `news`, `sport_ro` | News have full access. Sport have read access only. |
 | Source News Y  | `news`             | News have full access. Sport have no access.        |
 
-As a result, the process of authorising a request is:
+As a result, the process of authorising a request to a resource is:
 
 1. Authenticate the user's token using standard OAuth2 techniques (e.g. online, or using JWKS)
 2. Read the user's claimed groups from their provided token
 3. Read the list of auth classes assigned to the resource
 4. Request a decision from the permissions system based on those data
-5. (Write requests only): Check whether the request would modify the special `auth_classes` tag, and confirm the user has permission to make that modification
-6. (Flow Segment write requests only): Check if the Media Object already exists in the service instance using the `/objects` endpoint, and if it does, confirm the user would have access to read it
+5. (Write requests only): Check whether the request would modify the special `auth_classes` tag, and confirm the user has permission to make that modification.
+6. (Flow Segment write requests only): Check if the Media Object is already referenced by a Flow Segment in the service instance using the `/objects` endpoint, and if it does, confirm the user would have access to read it
 7. (Write requests only): Propagate any changes to the `auth_classes` tag to Flows and Sources collected by this one
+
+For listing endpoints (e.g. `GET /flows`) it may be possible to add a `tag.auth_classes` query parameter to the request, and have the upstream API filter Flows returned accordingly.
+In cases where the incoming request already filters on the same tag, it will need to be rewritten to prevent returning content the user should not have access to.
+
+> [!CAUTION]
+> Write request handling should be carefully designed and analysed to ensure that user's cannot modify the `auth_classes` tag in such a way to execute a permission elevation attack.
 
 Note that in some circumstances, requests may have to claim more permissions than may initially be assumed.
 For example - when editing the `auth_classes` tag on a Source/Flow/webhook, requests must claim both write permissions and the permission they are changing.
