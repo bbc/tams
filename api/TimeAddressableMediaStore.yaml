@@ -158,7 +158,7 @@ paths:
           in: query
           description: |
             Filter on webhooks that have a tag named {name} with a value in the given comma-seperated list of values.
-            The {name} could contain escaped characters to allow it to be used in a URL.
+            The {name} and the value MUST be URL encoded where special characters are present.
             Where the tag's value is a string, at least one of the given values will match.
             Where the tag's value is an array, at least one value in the array will match at least one of the given values.
             Partial string matches of the values are not valid.
@@ -168,7 +168,7 @@ paths:
           in: query
           description: |
             Filter on webhooks that have a tag named {name} regardless of value.
-            The {name} could contain escaped characters to allow it to be used in a URL.
+            The {name} MUST be URL encoded where special characters are present.
             If set to true then the presence of the tag is filtered for.
             If set to false then its absence is.
             If left out then no filtering on tag presence is performed.
@@ -212,7 +212,7 @@ paths:
           in: query
           description: |
             Filter on webhooks that have a tag named {name} with a value in the given comma-seperated list of values.
-            The {name} could contain escaped characters to allow it to be used in a URL.
+            The {name} and the value MUST be URL encoded where special characters are present.
             Where the tag's value is a string, at least one of the given values will match.
             Where the tag's value is an array, at least one value in the array will match at least one of the given values.
             Partial string matches of the values are not valid.
@@ -222,7 +222,7 @@ paths:
           in: query
           description: |
             Filter on webhooks that have a tag named {name} regardless of value.
-            The {name} could contain escaped characters to allow it to be used in a URL.
+            The {name} MUST be URL encoded where special characters are present.
             If set to true then the presence of the tag is filtered for.
             If set to false then its absence is.
             If left out then no filtering on tag presence is performed.
