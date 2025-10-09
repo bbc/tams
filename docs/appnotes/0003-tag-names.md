@@ -202,8 +202,6 @@ Status: **Experimental**
 Suggested as a way to build lightweight Attribute-based Access Control in [AppNote0016: Authorisation in TAMS workflows](./0016-authorisation-in-tams-workflows.md).
 A comma seperated list of auth classes used to derive permissions on the Flow.
 
-No known implementations yet.
-
 ## Known Source Tags
 
 ### hls_exclude
@@ -222,5 +220,3 @@ Status: **Experimental**
 
 Suggested as a way to build lightweight Attribute-based Access Control in [AppNote0016: Authorisation in TAMS workflows](./0016-authorisation-in-tams-workflows.md).
 A comma seperated list of auth classes used to derive permissions on the Source.
-
-No known implementations yet.
