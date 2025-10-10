@@ -134,12 +134,24 @@ In the diagram below, portions of Flow X and Flow Y are combined to form Flow Z,
 ![Graphic showing the Flow timeline and Flow Segments of Flows X, Y and Z, where Z is composed of a mix of re-used Segments and new media](./docs/images/Flow%20and%20Media%20Timelines-Flow%20XYZ.drawio.png)
 
 In practice a client may need to read (and potentially decode, in the case of inter-frame video codecs) the entire Object, discarding the unwanted grains and returning those selected by the Segment to the consumer.
-This can be handled by mapping the Object's timeline into the Flow timeline by adding `ts_offset` to each timestamp inside the Media Object, and then discarding grains when the resulting timestamp falls outside the given `timerange` for the Segment.
-Alternatively if `sample_offset` and `sample_count` are set on the Segment, a client may count the samples read from the Object and discard accordingly, although care must be taken with codecs that use temporal re-ordering, since the `sample_offset` and `sample_count` refer to the presentation timeline, rather than the decode timeline.
+This can be handled by mapping the Object's timeline into the Flow timeline by adding `include_media_timerange=true` to the segment request, and then adding `ts_offset` to the start of that timerange.
+Then the reader can compare the segment and object timeranges to work out how much to skip at the beginning.
+
+Alternatively `ts_offset` can be added to each timestamp inside the Media Object, and then grains can be discarded when the resulting timestamp falls outside the given `timerange` for the Segment.
 
 ![Graphic showing the Media Objects making up Flow Z (above) and their Segments, along with the selected grains](./docs/images/Flow%20and%20Media%20Timelines-Flow%20XYZ-subsegments.drawio.png)
 
 The diagram above shows three of the Media Objects used by Flow Z and a smaller portion of the Flow Z timeline considered previously, with both the Media Object timeline (and `media_ts`) and Flow timeline (`segment_ts`) of each grain in the Media Object along the bottom.
+
+The `media_timerange` approach can be applied by calculating `skip = timerange.start - (media_timerange.start + ts_offset)` using FFmpeg's `-ss` and `-t` options, and the resulting output timeline produced by setting `-output_ts_offset` to the start of the Segment.
+Note however that for this to be frame-accurate in codecs using temporal re-ordering, the input must be transcoded.
+For example for Media Object Y05 in Flow Z above:
+
+```bash
+ffmpeg -i segment -ss 0.3 -t 0.5 -output_ts_offset 3.5 -muxpreload 0 -muxdelay 0 \
+  -vcodec libx264 output_segment.ts
+```
+
 The `timerange`/`ts_offset` approach is illustrated by the following pseudocode, which shows how a client might apply the `ts_offset` to each `media_ts`, then validate whether it is inside the given `timerange`.
 Note that the `media_ts` may be a different precision or timebase to the nanosecond timestamps used by TAMS, so some conversion may be required.
 
@@ -154,16 +166,7 @@ else:
                                      # (and `segment_ts = 3:500000000 or 3.5sec)`
 ```
 
-The `sample_offset` and `sample_count` approach can be applied using FFmpeg's `-ss` and `-t` options (after converting them into durations), and the resulting output timeline produced by setting `-output_ts_offset` to the start of the Segment.
-Note however that for this to be frame-accurate in codecs using temporal re-ordering, the input must be transcoded.
-For example for Media Object Y05 in Flow Z above:
-
-```bash
-ffmpeg -i segment -ss 0.3 -t 0.5 -output_ts_offset 3.5 -muxpreload 0 -muxdelay 0 \
-  -vcodec libx264 output_segment.ts
-```
-
-The diagram below also shows how both approaches might be applied to a Flow using an MPEG-TS container: by using `timerange` and `ts_offset`, and by selecting samples using `sample_offset` and `sample_count`.
+The diagram below also shows how both approaches might be applied to a Flow using an MPEG-TS container: by using `timerange` and `ts_offset`, and by working out how much to skip using `object_timerange`.
 
 ![Graphic showing media units being drawn from Flow Z's Media Objects using their timestamps](./docs/images/Flow%20and%20Media%20Timelines-Flow%20XYZ-selecting-units.drawio.png)
 
