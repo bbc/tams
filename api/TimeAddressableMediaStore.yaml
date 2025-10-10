@@ -2015,11 +2015,13 @@ paths:
 
         Clients are expected to decide how to break content into Media Objects, however those Objects SHOULD be large enough to avoid excessive round trip overheads in the underlying store (_e.g._ of the order of several megabytes) and where codecs with temporal re-ordering are used, Object SHOULD contain complete GOPs or decodable units.
 
-        For Media Objects that have been re-used from other Flows, the `sample_offset` and `sample_count` MAY be used to specify part of the Media Object to use:
+        For Media Objects that have been re-used from elsewhere, the `sample_offset` and `sample_count` MAY be used to specify part of the Media Object to use:
           - The `timerange` field indicates the new Segment's position in the Flow
           - The sample associated with the start of the `timerange` MUST be the one selected by `sample_offset`
           - Likewise, the sample associated with the end of the `timerange` MUST be the one selected by `sample_offset + sample_count - 1`, unless `timerange` has an exclusive end, in which case it will be  `sample_offset + sample_count`.
           - The timerange of the Segment MUST NOT overlap any other Segment in the same Flow.
+
+        When re-using Media Objects, requests which change object properties (e.g. `key_frame_count`) SHOULD be rejected.
       operationId: POST_flows-flowId-segments
       tags:
         - FlowSegments
