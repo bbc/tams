@@ -1810,6 +1810,13 @@ paths:
             Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
           schema:
             type: boolean
+        - name: include_object_timerange
+          in: query
+          description: |
+            Whether the underlying object's timerange should appear in the response (if it differs from the segment timerange).
+            Service instances MAY choose not to include it when the object timerange and segment timerange are the same.
+          schema:
+            type: boolean
         - $ref: '#/components/parameters/trait_resource_paged_key'
         - $ref: '#/components/parameters/trait_paged_limit'
       responses:
@@ -1858,9 +1865,9 @@ paths:
         The examples provided here are for the "http_object_store" Storage Backend type which MUST include a `get_urls` property that contains the HTTP URLs for downloading the Media Object - service implementations should generate this internally.
 
         The Flow Segment may include timing adjustment information that the client needs to apply when extracting the samples from the Media Object.
-        It may also use a subset of the samples in the Media Object.
-        - The timestamp of a sample on the Flow Segment's timeline (`segment_ts`) is the timestamp of that sample embedded in or derived from the internal timing of the Media Object (`media_object_ts`) adjusted by `ts_offset`: `segment_ts = media_object_ts + ts_offset`.
-        - In addition, the Segment's `timerange` start MUST be at `sample_offset` samples from the start of the presentation timeline of the Media Object, and `timerange` end MUST be at `sample_offset + sample_count` samples.
+        The timestamp of a sample on the Flow Segment's timeline (`segment_ts`) is the timestamp of that sample embedded in or derived from the internal timing of the Media Object (`media_object_ts`) adjusted by `ts_offset`: `segment_ts = media_object_ts + ts_offset`.
+
+        It may also use a subset of the samples in the Media Object, and if the `include_object_timerange=true` parameter is set, the object's timerange will also be returned to aid identifying which samples to skip.
 
         Clients should use the pagination options to limit the results to a timerange and/or count.
         Service implementations may also limit the results returned.
@@ -1930,6 +1937,13 @@ paths:
             Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
           schema:
             type: boolean
+        - name: include_object_timerange
+          in: query
+          description: |
+            Whether the underlying object's timerange should appear in the response (if it differs from the segment timerange).
+            Service instances MAY choose not to include it when the object timerange and segment timerange are the same.
+          schema:
+            type: boolean
         - $ref: '#/components/parameters/trait_resource_paged_key'
         - $ref: '#/components/parameters/trait_paged_limit'
       responses:
@@ -1974,9 +1988,9 @@ paths:
                 sample_count:
                   summary: Partial Segment
                   description: |
-                    This example takes part of an existing Segment, offsets it with `ts_offset` and then selects a subset of the samples within using `ts_offset` for the second Segment in the sequence.
+                    This example shows segments which may have been re-used elsewhere
                   value:
-                    $ref: examples/flow-segments-get-200-sample-offset.json
+                    $ref: examples/flow-segments-get-200-object-timerange.json
                 multiple_urls:
                   summary: Multiple URLs
                   description: |
@@ -1997,6 +2011,7 @@ paths:
 
         For newly-written Media Objects, the client is responsible for ensuring that the Segment written to the TAMS service instance obeys the following restrictions:
           - All samples in the Object SHOULD be used by the Segment.
+          - If the Segment does not use all samples in the Object, `object_timerange` MUST be set to the timerange of media in the object, on the media object's timeline
           - The timestamps of each sample in the Media Object MUST equal its position on the Flow timeline, OR `ts_offset` MUST be set such that `media_object_ts + ts_offset = segment_ts`
           - The timerange of the Segment MUST NOT overlap any other Segment in the same Flow. The behaviour is undefined if there is an overlap with existing Segments and a service may return a 400 error response.
 
@@ -2018,13 +2033,11 @@ paths:
 
         Clients are expected to decide how to break content into Media Objects, however those Objects SHOULD be large enough to avoid excessive round trip overheads in the underlying store (_e.g._ of the order of several megabytes) and where codecs with temporal re-ordering are used, Object SHOULD contain complete GOPs or decodable units.
 
-        For Media Objects that have been re-used from elsewhere, the `sample_offset` and `sample_count` MAY be used to specify part of the Media Object to use:
+        For Media Objects that have been re-used from other Flows, the `timerange` MAY specify only part of the duration of the object:
           - The `timerange` field indicates the new Segment's position in the Flow
-          - The sample associated with the start of the `timerange` MUST be the one selected by `sample_offset`
-          - Likewise, the sample associated with the end of the `timerange` MUST be the one selected by `sample_offset + sample_count - 1`, unless `timerange` has an exclusive end, in which case it will be  `sample_offset + sample_count`.
           - The timerange of the Segment MUST NOT overlap any other Segment in the same Flow.
 
-        When re-using Media Objects, requests which change object properties (e.g. `key_frame_count`) SHOULD be rejected.
+        When re-using Media Objects, requests which change object properties (e.g. `key_frame_count` or `object_timerange`) SHOULD be rejected.
       operationId: POST_flows-flowId-segments
       tags:
         - FlowSegments

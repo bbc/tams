@@ -47,6 +47,10 @@
     "key_frame_count": {
       "description": "The number of key frames in the Media Object. This should be set greater than zero when the Media Object contains key frames that serve as a stream access point",
       "type": "integer"
+    },
+    "object_timerange": {
+        "description": "The timerange found inside the media object itself, on the media object's timeline",
+        "$ref": "timerange.json"
     }
   }
 }
