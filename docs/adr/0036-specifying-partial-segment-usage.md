@@ -35,7 +35,7 @@ In addition, it avoids making this a breaking change and breaking existing imple
 
 ### Implementation
 
-{Once the proposal has been implemented, add a link to the relevant PRs here}
+Implemented by <https://github.com/bbc/tams/pull/147>
 
 ## Pros and Cons of the Options
 
