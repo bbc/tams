@@ -24,6 +24,11 @@
             "description": "The timerange for the samples contained in the Segment. The timerange start is always inclusive. If samples have a duration then the timerange end is exclusive and covers at least the duration of the last sample. The exclusive timerange end will typically be set to the timestamp of the next sample. If the samples don't have a duration then the timerange end is inclusive. Format is described by the [TimeRange](#/schemas/timerange) type. Note that where temporal re-ordering is used, the timerange and samples refers to the presentation timeline.",
             "$ref": "timerange.json"
         },
+        "object_timerange":
+        {
+            "description": "The timerange found inside the media object itself, on the media object's timeline. If not given at first registration of an object, defaults to `timerange - ts_offset` on the assumption that the Flow Segment uses the entire media object. Should not be given when media objects are re-used.",
+            "$ref": "timerange.json"
+        },
         "last_duration":
         {
             "description": "The difference between the exclusive end of the `timerange` and the last sample timestamp. Format as described by the [Timestamp](#/schemas/timestamp) type, but cannot be negative",

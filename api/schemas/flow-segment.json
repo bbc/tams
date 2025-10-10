@@ -33,6 +33,10 @@
                     "description": "The difference between the exclusive end of the `timerange` and the last sample timestamp. Format as described by the [Timestamp](../schemas/timestamp#top) type, but cannot be negative",
                     "$ref": "timestamp.json"
                 },
+                "object_timerange": {
+                    "description": "The timerange found inside the media object itself, on the media object's timeline",
+                    "$ref": "timerange.json"
+                },
                 "sample_offset":
                 {
                     "description": "The start of the Segment represented as a count of samples from the start of the Media Object. Note that a sample is a video frame or audio sample. A (coded) audio frame has multiple audio samples. Assumed to be 0 if not set. DEPRECATED: Use object_timerange instead - see AppNote 0036. Service implementations SHOULD continue to store and return it if set.",
