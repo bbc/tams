@@ -5,7 +5,9 @@ status: "proposed"
 
 ## Context and Problem Statement
 
-In [ADR0038](./0038-improved-storage-management.md), we added endpoints under `/objects` to facilitate the management of multiple Object Instances. Since accepting that ADR, we have received feedback that `label` being optional for uncontrolled Object Instances makes it unclear how such Object Instances should be managed. This ADR seeks to remedy that by making `label` mandatory when registering new uncontrolled Object Instances.
+In [ADR0038](./0038-improved-storage-management.md), we added endpoints under `/objects` to facilitate the management of multiple Object Instances.
+Since accepting that ADR, we have received feedback that `label` being optional for uncontrolled Object Instances makes it unclear how such Object Instances should be managed.
+This ADR seeks to remedy that by making `label` mandatory when registering new uncontrolled Object Instances.
 
 ## Considered Options
 
