@@ -22,7 +22,8 @@
             "title": "Uncontrolled instance",
             "type": "object",
             "required": [
-                "url"
+                "url",
+                "label"
             ],
             "properties": {
                 "url": {
@@ -30,7 +31,7 @@
                     "type": "string"
                 },
                 "label": {
-                    "description": "Label identifying this Media Object instance. Service implementations should reject any requests using labels that are already associated with Storage Backends. If the 'label' is not set then this instance can't be filtered for using the 'accept_get_urls' API query parameter.",
+                    "description": "Label identifying this Media Object instance. Service implementations should reject any requests using labels that are already associated with Storage Backends.",
                     "type": "string"
                 }
             }
