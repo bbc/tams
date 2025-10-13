@@ -72,6 +72,6 @@ For more information on how we use ADRs, see [here](./adr/README.md).
 | [0038](./adr/0038-improved-storage-management.md)                  | Improved Storage Management                                                |
 | [0039](./adr/0039-remove-pre-actions.md)                           | Proposal to remove pre-actions from storage allocation response            |
 | [0040](./adr/0040-tag-usability-enhancements.md)                   | Tag Usability Enhancements |
-| [0040](./adr/0040-require-explicit-framerate.md)                   | Requiring explicit frame rates |
+| [0041](./adr/0041-require-explicit-framerate.md)                   | Requiring explicit frame rates |
 
 \* Note: ADR 0004a was the unintended result of a number clash in the early development of TAMS which wasn't caught before publication
