@@ -18,9 +18,7 @@
   "container": "video/mp2t",
   "avg_bit_rate": 2479,
   "essence_parameters": {
-    "frame_rate": {
-      "vfr": true
-    },
+    "vfr": true,
     "frame_width": 1280,
     "frame_height": 720,
     "bit_depth": 8,

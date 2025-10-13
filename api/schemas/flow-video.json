@@ -27,50 +27,10 @@
                     "type": "object",
                     "required": [
                         "frame_width",
-                        "frame_height",
-                        "frame_rate"
+                        "frame_height"
                     ],
-                    "additionalProperties": false,
+                    "unevaluatedProperties": false,
                     "properties": {
-                        "frame_rate": {
-                            "description": "The fixed number of frames per second, or the vfr flag indicating this Flow is variable rate",
-                            "type": "object",
-                            "oneOf": [
-                                {
-                                    "title": "Fixed Frame Rate",
-                                    "description": "Fixed video frame rate, represented as a fraction",
-                                    "required": [
-                                        "numerator"
-                                    ],
-                                    "properties": {
-                                        "numerator": {
-                                            "description": "numerator",
-                                            "type": "integer",
-                                            "exclusiveMinimum": 0
-                                        },
-                                        "denominator": {
-                                            "description": "denominator",
-                                            "type": "integer",
-                                            "default": 1,
-                                            "exclusiveMinimum": 0
-                                        }
-                                    }
-                                },
-                                {
-                                    "title": "Variable Frame Rate",
-                                    "description": "Flag indicating content has a variable frame rate",
-                                    "required": [
-                                        "vfr"
-                                    ],
-                                    "properties": {
-                                        "vfr": {
-                                            "description": "If set, the Flow has a variable frame rate",
-                                            "const": true
-                                        }
-                                    }
-                                }
-                            ]
-                        },
                         "frame_width": {
                             "description": "The width of the picture in pixels.",
                             "type": "integer",
@@ -226,6 +186,47 @@
                                     "type": "integer"
                                 }
                             }
+                        },
+                        "frame_rate": {
+                            "title": "Fixed Frame Rate",
+                            "description": "The fixed number of frames per second. MUST be set if `vfr` is `false` or omitted. MUST NOT be set if `vfr` is `true`.",
+                            "type": "object",
+                            "required": [
+                                "numerator"
+                            ],
+                            "properties": {
+                                "numerator": {
+                                    "description": "numerator",
+                                    "type": "integer",
+                                    "exclusiveMinimum": 0
+                                },
+                                "denominator": {
+                                    "description": "denominator",
+                                    "type": "integer",
+                                    "default": 1,
+                                    "exclusiveMinimum": 0
+                                }
+                            }
+                        },
+                        "vfr": {
+                            "description": "If `true`, the frame rate of the Flow is variable and `frame_rate` MUST NOT be set. If `false` or omitted, the frame rate of the Flow is fixed and `frame_rate` MUST be set.",
+                            "type": "boolean",
+                            "default": false
+                        }
+                    },
+                    "if": {
+                        "properties": {
+                            "vfr": {
+                                "enum": [false, null]
+                            }
+                        }
+                    },
+                    "then": {
+                            "required": ["frame_rate"]
+                    },
+                    "else": {
+                        "not": {
+                            "required": ["frame_rate"]
                         }
                     }
                 }
