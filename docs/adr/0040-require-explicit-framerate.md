@@ -26,8 +26,9 @@ In particular, it should be considered whether the special case of Variable Fram
 
 ## Decision Outcome
 
-Option 2 (add a separate VFR flag) because it makes much clearer the presence of VFR content, and makes it easier for tools and users to detect it.
+Option 2b (add a separate VFR flag at the same level as `frame_rate`) because it makes much clearer the presence of VFR content, and makes it easier for tools and users to detect it.
 Additionally no known use case has been identified for unknown frame rates in video (Option 2a) - note that this does not apply to Data Flows, which can have data points at unspecified rates.
+Option 2b also allows for a level of backwards compatibility in consuming clients.
 
 ### Implementation
 
@@ -64,3 +65,14 @@ However enforcing that both are not set on the same Flow may have to either take
 * Good, because it allows for VFR average frame rate to be signalled
 * Bad, because invalid combinations have to be detected outside of the spec
 * Neutral, because it enables the possibility to create a non-VFR Video Flow without a frame rate (e.g. an unknown frame rate), however it is not clear there are valid use cases for this
+
+### Option 2b: Add a separate VFR flag at the same level as `frame_rate`, and use the schema to require either a frame_rate or that flag
+
+As with Option 2, but `vfr` is at the same level in the data structure as `frame_rate`.
+Build the schema such that when `vfr` is false (or omitted), `frame_rate` must be set.
+And when `vfr` is true, `frame_rate` must be omitted.
+
+Good/Neutral/Bad as for Option 2.
+Additionally:
+
+* Good, because existing consuming clients should still work as before when using the omitted `frame_rate` parameter to identify VFR content
