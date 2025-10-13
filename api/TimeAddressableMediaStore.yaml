@@ -1785,7 +1785,7 @@ paths:
             A comma separated list of labels of Flow Segment `get_urls` to include in the response.
             Omitting `accept_get_urls` will result in no filtering of `get_urls`.
             An empty `accept_get_urls` results in an empty or no `get_urls` in the response.
-            Flow Segment `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
+            Flow Segment `get_urls` with no label will only be returned if `accept_get_urls` is omitted.
             Without `get_urls`, the response from the service could be substantially faster if it is not required to generate a large number of pre-signed URLs for example.
             Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
           schema:
@@ -1795,7 +1795,7 @@ paths:
           description: |
             A comma separated list of `storage_id`s of Flow Segment `get_urls` to include in the response.
             Omitting `accept_storage_ids`, or providing an empty `accept_storage_ids` will result in no filtering of `get_urls`.
-            Flow Segment `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
+            Flow Segment `get_urls` with no storage ID will only be returned if `accept_storage_ids` is omitted or empty.
             A full list of available `storage_id`s may be found at the [/service/storage-backends](#/operations/GET_storage-backends) endpoint.
             Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
           schema:
@@ -1912,7 +1912,7 @@ paths:
             A comma separated list of labels of Flow Segment `get_urls` to include in the response.
             Omitting `accept_get_urls` will result in no filtering of `get_urls`.
             An empty `accept_get_urls` results in an empty or no `get_urls` in the response.
-            Flow Segment `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
+            Flow Segment `get_urls` with no label will only be returned if `accept_get_urls` is omitted.
             Without `get_urls`, the response from the service could be substantially faster if it is not required to generate a large number of pre-signed URLs for example.
             Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
           schema:
@@ -1922,7 +1922,7 @@ paths:
           description: |
             A comma separated list of `storage_id`s of Flow Segment `get_urls` to include in the response.
             Omitting `accept_storage_ids`, or providing an empty `accept_storage_ids` will result in no filtering of `get_urls`.
-            Flow Segment `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
+            Flow Segment `get_urls` with no storage ID will only be returned if `accept_storage_ids` is omitted or empty.
             A full list of available `storage_id`s may be found at the [/service/storage-backends](#/operations/GET_storage-backends) endpoint.
             Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
           schema:
@@ -2194,7 +2194,7 @@ paths:
             A comma separated list of labels of Media Object `get_urls` to include in the response.
             Omitting `accept_get_urls` will result in no filtering of `get_urls`.
             An empty `accept_get_urls` results in an empty or no `get_urls` in the response.
-            Media object `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
+            Media object `get_urls` with no label will only be returned if `accept_get_urls` is omitted.
             Without `get_urls`, the response from the service could be substantially faster if it is not required to
             generate a large number of pre-signed URLs for example.
             Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
@@ -2205,7 +2205,7 @@ paths:
           description: |
             A comma separated list of `storage_id`s of Media Object `get_urls` to include in the response.
             Omitting `accept_storage_ids`, or providing an empty `accept_storage_ids` will result in no filtering of `get_urls`.
-            Media object `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
+            Media object `get_urls` with no storage ID will only be returned if `accept_storage_ids` is omitted or empty.
             A full list of available `storage_id`s may be found at the `service/storage-backends` endpoint.
             Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
           schema:
@@ -2291,7 +2291,7 @@ paths:
             A comma separated list of labels of Media Object `get_urls` to include in the response.
             Omitting `accept_get_urls` will result in no filtering of `get_urls`.
             An empty `accept_get_urls` results in an empty or no `get_urls` in the response.
-            Media object `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
+            Media object `get_urls` with no label will only be returned if `accept_get_urls` is omitted.
             Without `get_urls`, the response from the service could be substantially faster if it is not required to
             generate a large number of pre-signed URLs for example.
             Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
@@ -2302,7 +2302,7 @@ paths:
           description: |
             A comma separated list of `storage_id`s of Media Object `get_urls` to include in the response.
             Omitting `accept_storage_ids`, or providing an empty `accept_storage_ids` will result in no filtering of `get_urls`.
-            Media object `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
+            Media object `get_urls` with no storage ID will only be returned if `accept_storage_ids` is omitted or empty.
             A full list of available `storage_id`s may be found at the `service/storage-backends` endpoint.
             Where multiple filter query parameters are provided, the returned `get_urls` will match all filters.
           schema:
