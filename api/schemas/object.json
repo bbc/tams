@@ -1,11 +1,13 @@
 {
     "title": "Object",
+    "unevaluatedProperties": false,
     "allOf": [
         {
             "type": "object",
             "required": [
                 "id",
-                "referenced_by_flows"
+                "referenced_by_flows",
+                "timerange"
             ],
             "properties": {
                 "id": {
