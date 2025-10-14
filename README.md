@@ -145,9 +145,9 @@ The diagram above shows three of the Media Objects used by Flow Z and a smaller 
 
 The `object_timerange` approach can be applied to ffmpeg by first calculating `skip = timerange.start - (object_timerange.start + ts_offset)`.
 
-* `-ss` should be set to the `skip` time in seconds.
-* `-t` should be set to the duration in seconds, derrived from the Segment timerange
-* `-output_ts_offset` should be set to the start time of the Segment in seconds, to re-map the timestamps embedded in the output segment onto the Flow timeline
+- `-ss` should be set to the `skip` time in seconds.
+- `-t` should be set to the duration in seconds, derrived from the Segment timerange
+- `-output_ts_offset` should be set to the start time of the Segment in seconds, to re-map the timestamps embedded in the output segment onto the Flow timeline
 
 Note however that for this to be frame-accurate in codecs using temporal re-ordering, the input must be transcoded.
 For example for Media Object Y05 in Flow Z above:
