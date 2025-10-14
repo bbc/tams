@@ -167,8 +167,8 @@ if (offset_object_ts < timerange.start or
       offset_object_ts >= timerange.end):  # `3:300000000 is less than 3:500000000`
     discard_grain()                  # So this grain is discarded
 else:
-    keep_grain()                     # The first grain to be retained will have `offset_object_ts = 4.2`
-                                     # (and `segment_ts = 3:500000000 or 3.5sec)`
+    keep_grain()                     # The first grain to be retained will have `object_ts = 4.2`
+                                     # (and `offset_object_ts = 3:500000000 or 3.5sec)`
 ```
 
 The diagram below also shows how both approaches might be applied to a Flow using an MPEG-TS container: by using `timerange` and `ts_offset`, and by working out how much to skip using `object_timerange`.
