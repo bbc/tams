@@ -171,7 +171,7 @@ else:
                                      # (and `offset_object_ts = 3:500000000 or 3.5sec)`
 ```
 
-The diagram below also shows how both approaches might be applied to a Flow using an MPEG-TS container: by using `timerange` and `ts_offset`, and by working out how much to skip using `object_timerange`.
+The diagram below also shows how both approaches might be applied to a Flow using an MPEG-TS container: by working out how much to skip using `object_timerange` and by using `timerange` and `ts_offset`.
 
 ![Graphic showing media units being drawn from Flow Z's Media Objects using their timestamps](./docs/images/Flow%20and%20Media%20Timelines-Flow%20XYZ-selecting-units.drawio.png)
 
