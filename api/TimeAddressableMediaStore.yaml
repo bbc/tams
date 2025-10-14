@@ -1813,8 +1813,8 @@ paths:
         - name: include_object_timerange
           in: query
           description: |
-            Whether the underlying object's timerange should appear in the response (if it differs from the segment timerange).
-            Service instances MAY choose not to include it when the object timerange and segment timerange are the same.
+            If set to `true`, the underlying object's timerange should appear in the response (if it differs from the segment timerange).
+            Assume `false` if omitted.
           schema:
             type: boolean
         - $ref: '#/components/parameters/trait_resource_paged_key'
@@ -1940,8 +1940,8 @@ paths:
         - name: include_object_timerange
           in: query
           description: |
-            Whether the underlying object's timerange should appear in the response (if it differs from the segment timerange).
-            Service instances MAY choose not to include it when the object timerange and segment timerange are the same.
+            If set to `true`, the underlying object's timerange should appear in the response (if it differs from the Flow Segment's `timerange`).
+            Assume `false` if omitted.
           schema:
             type: boolean
         - $ref: '#/components/parameters/trait_resource_paged_key'
@@ -1988,7 +1988,7 @@ paths:
                 sample_count:
                   summary: Partial Segment
                   description: |
-                    This example shows segments which may have been re-used elsewhere
+                    This example shows re-use of existing Media Objects
                   value:
                     $ref: examples/flow-segments-get-200-object-timerange.json
                 multiple_urls:
@@ -2011,7 +2011,7 @@ paths:
 
         For newly-written Media Objects, the client is responsible for ensuring that the Segment written to the TAMS service instance obeys the following restrictions:
           - All samples in the Object SHOULD be used by the Segment.
-          - If the Segment does not use all samples in the Object, `object_timerange` MUST be set to the timerange of media in the object, on the media object's timeline
+          - If the Segment does not use all samples in the Object, `object_timerange` MUST be set to the timerange of media in the object, on the Media Object's timeline
           - The timestamps of each sample in the Media Object MUST equal its position on the Flow timeline, OR `ts_offset` MUST be set such that `media_object_ts + ts_offset = segment_ts`
           - The timerange of the Segment MUST NOT overlap any other Segment in the same Flow. The behaviour is undefined if there is an overlap with existing Segments and a service may return a 400 error response.
 
@@ -2036,6 +2036,7 @@ paths:
         For Media Objects that have been re-used from other Flows, the `timerange` MAY specify only part of the duration of the object:
           - The `timerange` field indicates the new Segment's position in the Flow
           - The timerange of the Segment MUST NOT overlap any other Segment in the same Flow.
+          - The Flow Segment's `timerange` start and end, once offset by `ts_offset`, MUST be contained entirely within the Media Object's `timerange`
 
         When re-using Media Objects, requests which change object properties (e.g. `key_frame_count` or `object_timerange`) SHOULD be rejected.
       operationId: POST_flows-flowId-segments
@@ -2190,7 +2191,7 @@ paths:
         - name: accept_get_urls
           in: query
           description: |
-            A comma separated list of labels of media object `get_urls` to include in the response.
+            A comma separated list of labels of Media Object `get_urls` to include in the response.
             Omitting `accept_get_urls` will result in no filtering of `get_urls`.
             An empty `accept_get_urls` results in an empty or no `get_urls` in the response.
             Media object `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
@@ -2202,7 +2203,7 @@ paths:
         - name: accept_storage_ids
           in: query
           description: |
-            A comma separated list of `storage_id`s of media object `get_urls` to include in the response.
+            A comma separated list of `storage_id`s of Media Object `get_urls` to include in the response.
             Omitting `accept_storage_ids`, or providing an empty `accept_storage_ids` will result in no filtering of `get_urls`.
             Media object `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
             A full list of available `storage_id`s may be found at the `service/storage-backends` endpoint.
@@ -2287,7 +2288,7 @@ paths:
         - name: accept_get_urls
           in: query
           description: |
-            A comma separated list of labels of media object `get_urls` to include in the response.
+            A comma separated list of labels of Media Object `get_urls` to include in the response.
             Omitting `accept_get_urls` will result in no filtering of `get_urls`.
             An empty `accept_get_urls` results in an empty or no `get_urls` in the response.
             Media object `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
@@ -2299,7 +2300,7 @@ paths:
         - name: accept_storage_ids
           in: query
           description: |
-            A comma separated list of `storage_id`s of media object `get_urls` to include in the response.
+            A comma separated list of `storage_id`s of Media Object `get_urls` to include in the response.
             Omitting `accept_storage_ids`, or providing an empty `accept_storage_ids` will result in no filtering of `get_urls`.
             Media object `get_urls` with no label or storage ID cannot be filtered for; they will only be returned if `accept_get_urls` is omitted, and `accept_storage_ids` is omitted or empty.
             A full list of available `storage_id`s may be found at the `service/storage-backends` endpoint.
@@ -2357,7 +2358,7 @@ paths:
         "400":
           description: Bad request. Invalid query options.
         "404":
-          description: The requested media object does not exist.
+          description: The requested Media Object does not exist.
   /objects/{objectId}/instances:
     post:
       summary: Register a Media Object instance

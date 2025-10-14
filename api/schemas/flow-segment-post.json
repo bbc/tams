@@ -26,7 +26,7 @@
         },
         "object_timerange":
         {
-            "description": "The timerange found inside the media object itself, on the media object's timeline. If not given at first registration of an object, defaults to `timerange - ts_offset` on the assumption that the Flow Segment uses the entire media object. Should not be given when media objects are re-used.",
+            "description": "The timerange covering the sample timestamps embedded in or derived from the Media Object itself, on the Media Object's timeline. If not given at first registration of an Object, defaults to `timerange - ts_offset` on the assumption that the Flow Segment uses the entire Media Object. Clients should not set this when Media Objects are re-used. Service implementations should reject requests where `object_timerange` is set to a value that conflicts with the existing Media Object metadata.",
             "$ref": "timerange.json"
         },
         "last_duration":

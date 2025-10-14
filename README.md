@@ -134,16 +134,21 @@ In the diagram below, portions of Flow X and Flow Y are combined to form Flow Z,
 ![Graphic showing the Flow timeline and Flow Segments of Flows X, Y and Z, where Z is composed of a mix of re-used Segments and new media](./docs/images/Flow%20and%20Media%20Timelines-Flow%20XYZ.drawio.png)
 
 In practice a client may need to read (and potentially decode, in the case of inter-frame video codecs) the entire Object, discarding the unwanted grains and returning those selected by the Segment to the consumer.
-This can be handled by mapping the Object's timeline into the Flow timeline by adding `include_media_timerange=true` to the segment request, and then adding `ts_offset` to the start of that timerange.
-Then the reader can compare the segment and object timeranges to work out how much to skip at the beginning.
+This can be handled by mapping the Object's timeline into the Flow timeline by adding `include_object_timerange=true` to the Flow Segment request, and then adding `ts_offset` to the Object timeranges.
+Then the reader can compare the Segment and Object timeranges to work out how much to skip at the beginning and end of the Media Object, the `object_timerange` approach.
 
 Alternatively `ts_offset` can be added to each timestamp inside the Media Object, and then grains can be discarded when the resulting timestamp falls outside the given `timerange` for the Segment.
 
 ![Graphic showing the Media Objects making up Flow Z (above) and their Segments, along with the selected grains](./docs/images/Flow%20and%20Media%20Timelines-Flow%20XYZ-subsegments.drawio.png)
 
-The diagram above shows three of the Media Objects used by Flow Z and a smaller portion of the Flow Z timeline considered previously, with both the Media Object timeline (and `media_ts`) and Flow timeline (`segment_ts`) of each grain in the Media Object along the bottom.
+The diagram above shows three of the Media Objects used by Flow Z and a smaller portion of the Flow Z timeline considered previously, with both the Media Object timeline (and `object_ts`) and Flow timeline (`segment_ts`) of each grain in the Media Object along the bottom.
 
-The `media_timerange` approach can be applied by calculating `skip = timerange.start - (media_timerange.start + ts_offset)` using FFmpeg's `-ss` and `-t` options, and the resulting output timeline produced by setting `-output_ts_offset` to the start of the Segment.
+The `object_timerange` approach can be applied to ffmpeg by first calculating `skip = timerange.start - (object_timerange.start + ts_offset)`.
+
+* `-ss` should be set to the `skip` time in seconds.
+* `-t` should be set to the duration in seconds, derrived from the Segment timerange
+* `-output_ts_offset` should be set to the start time of the Segment in seconds, to re-map the timestamps embedded in the output segment onto the Flow timeline
+
 Note however that for this to be frame-accurate in codecs using temporal re-ordering, the input must be transcoded.
 For example for Media Object Y05 in Flow Z above:
 
@@ -152,17 +157,17 @@ ffmpeg -i segment -ss 0.3 -t 0.5 -output_ts_offset 3.5 -muxpreload 0 -muxdelay 0
   -vcodec libx264 output_segment.ts
 ```
 
-The `timerange`/`ts_offset` approach is illustrated by the following pseudocode, which shows how a client might apply the `ts_offset` to each `media_ts`, then validate whether it is inside the given `timerange`.
-Note that the `media_ts` may be a different precision or timebase to the nanosecond timestamps used by TAMS, so some conversion may be required.
+The `timerange`/`ts_offset` approach is illustrated by the following pseudocode, which shows how a client might apply the `ts_offset` to each `object_ts`, then validate whether it is inside the given `timerange`.
+Note that the `object_ts` may be a different precision or timebase to the nanosecond timestamps used by TAMS, so some conversion may be required.
 
 ```python
-media_ts = to_timestamp(ts)          # `4:0` for `ts = 4.0sec`
-segment_ts = media_ts + ts_offset    # `4:0 + -0:700000000 = 3:300000000` (in Flow timeline)
-if (segment_ts < timerange.start or
-      segment_ts >= timerange.end):  # `3:300000000 is less than 3:500000000`
+object_ts = to_timestamp(ts)          # `4:0` for `ts = 4.0sec`
+offset_object_ts = object_ts + ts_offset    # `4:0 + -0:700000000 = 3:300000000` (in Flow timeline)
+if (offset_object_ts < timerange.start or
+      offset_object_ts >= timerange.end):  # `3:300000000 is less than 3:500000000`
     discard_grain()                  # So this grain is discarded
 else:
-    keep_grain()                     # The first grain to be retained will have `media_ts = 4.2`
+    keep_grain()                     # The first grain to be retained will have `offset_object_ts = 4.2`
                                      # (and `segment_ts = 3:500000000 or 3.5sec)`
 ```
 
