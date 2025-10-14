@@ -20,14 +20,14 @@ Chosen Option 2: Make `label` mandatory when registering uncontrolled Object Ins
 
 ### Implementation
 
-{Once the proposal has been implemented, add a link to the relevant PRs here}
+Implemented by <https://github.com/bbc/tams/pull/155>
 
 ## Pros and Cons of the Options
 
 ### Option 1: Leave `label` as optional when registering uncontrolled Object Instances
 
 * Neutral, because this avoids a breaking change to a lesser used part of the API
-* Bad, because mechanisms for managing uncontrolled Object Instances without labels are undefined
+* Bad, because mechanisms for managing uncontrolled Object Instances without labels are undefined, because there is no natural key by which to identify a particular Object Instance - for example `DELETE /objects/{objectId}/instances` requires a label (or storage ID)
 
 ### Option 2: Make `label` mandatory when registering uncontrolled Object Instances
 
