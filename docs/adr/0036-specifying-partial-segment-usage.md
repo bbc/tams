@@ -111,7 +111,7 @@ Is replaced with:
 
 ### Option 3d: Store timerange of media object, optionally provide it on Flow Segments, deprecate offset/count
 
-As Option 3a, except `skip` and `duration` are removed and `media_timerange` is returned directly on a Flow Segment when `include_media_timerange=true` is set.
+As Option 3a, except `skip` and `duration` are removed and `object_timerange` is returned directly on a Flow Segment when `include_object_timerange=true` is set.
 Additionally unlike Option 3c, deprecate `sample_offset` and `sample_count` rather than removing outright, to avoid a breaking change.
 Instead if present/given, `sample_offset` and `sample_count` behave as before, however implementations should use the new timerange field.
 
