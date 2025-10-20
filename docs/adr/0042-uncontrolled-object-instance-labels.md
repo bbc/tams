@@ -1,5 +1,5 @@
 ---
-status: "proposed"
+status: "accepted"
 ---
 # Make `label` Mandatory for Uncontrolled Object Instances
 
