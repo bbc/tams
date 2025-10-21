@@ -26,7 +26,7 @@ info:
     **Note**: the examples provided in this specification are for a system which uses a Storage Backend that provides HTTP URLs for uploading and downloading Media Objects in buckets.
     This could for example be implemented using an AWS S3 compatible store using presigned URLs or by a simple file system storage with an HTTP frontend.
     Clients should parse the [/service](#/operations/GET_service) endpoint and handle the Storage Backend type in use appropriately.
-  version: "7.0"
+  version: "8.0"
   contact:
     name: 'BBC R&D - Cloud-Fit Production Team'
     email: 'cloudfit-opensource@rd.bbc.co.uk'
@@ -42,7 +42,7 @@ servers:
     variables:
       version:
         description: API version
-        default: v7.0
+        default: v8.0
 security:
   - bearer_token_auth: []
   - url_token_auth: []
@@ -334,21 +334,7 @@ paths:
           description: The requested Webhook ID in the path is invalid, or Webhooks are not supported by this service implementation
     put:
       summary: Update webhook details
-      description: |
-        Update the configuration of an existing webhook.
-
-        Webhook messages will conform to the format in the `webhooks` section of the API docs, depending on the event type (as defined in the same section).
-        Availability of this endpoint is indicated by the name "webhooks" appearing in the `event_stream_mechanisms` list on the [`/service`](#/operations/GET_service) endpoint.
-
-        HTTP events sent by the service to a client webhook's endpoint SHOULD include a `api_key_name` header with the 'api_key_value' value.
-        Clients SHOULD verify this against the value they provided when registering the webhook.
-
-        Service implementations MAY partially support event filtering and transformations.
-        Service implementations SHALL return a 400 response code if the filtering or transformation specified in the request is not supported.
-
-        Service implementations SHOULD consider the security implications of providing webhooks, and include appropriate mitigations against Server Side Request Forgery (SSRF) attacks and similar.
-        Service implementations SHOULD take appropriate steps to authorize the modification of existing webhooks. 
-        This may take the form of RBAC, or ABAC.
+      description: "Update the configuration of an existing webhook.\n\nWebhook messages will conform to the format in the `webhooks` section of the API docs, depending on the event type (as defined in the same section).\nAvailability of this endpoint is indicated by the name \"webhooks\" appearing in the `event_stream_mechanisms` list on the [`/service`](#/operations/GET_service) endpoint.\n\nHTTP events sent by the service to a client webhook's endpoint SHOULD include a `api_key_name` header with the 'api_key_value' value.\nClients SHOULD verify this against the value they provided when registering the webhook.\n\nService implementations MAY partially support event filtering and transformations.\nService implementations SHALL return a 400 response code if the filtering or transformation specified in the request is not supported.\n\nService implementations SHOULD consider the security implications of providing webhooks, and include appropriate mitigations against Server Side Request Forgery (SSRF) attacks and similar.\nService implementations SHOULD take appropriate steps to authorize the modification of existing webhooks. \nThis may take the form of RBAC, or ABAC.\n"
       operationId: PUT_webhooks
       tags:
         - Webhooks
@@ -377,13 +363,7 @@ paths:
           description: The requested Webhook ID in the path is invalid, or Webhooks are not supported by this service implementation
     delete:
       summary: Delete Webhook
-      description: |
-        Deletes the webhook. 
-        Availability of this endpoint is indicated by the name "webhooks" appearing in the `event_stream_mechanisms` list on the service endpoint.
-
-        Service implementations SHOULD consider the security implementations of providing webhooks, and include appropriate mitigations against Server Side Request Forgery (SSRF) attacks and similar. 
-        Service implementations SHOULD take appropriate steps to authorize the deleting of webhooks. 
-        This may take the form of RBAC, or ABAC.
+      description: "Deletes the webhook. \nAvailability of this endpoint is indicated by the name \"webhooks\" appearing in the `event_stream_mechanisms` list on the service endpoint.\n\nService implementations SHOULD consider the security implementations of providing webhooks, and include appropriate mitigations against Server Side Request Forgery (SSRF) attacks and similar. \nService implementations SHOULD take appropriate steps to authorize the deleting of webhooks. \nThis may take the form of RBAC, or ABAC.\n"
       operationId: DELETE_webhooks-webhookId
       tags:
         - Webhooks
@@ -2449,7 +2429,6 @@ paths:
           description: Forbidden. You do not have permission to modify this Media Object.
         "404":
           description: The requested Object ID in the path is invalid.
-
   /flow-delete-requests:
     head:
       summary: List Flow Delete Requests
