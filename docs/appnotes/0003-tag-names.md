@@ -218,6 +218,14 @@ Status: **Experimental**
 Suggested as a way to build lightweight Attribute-based Access Control in [AppNote0016: Authorisation in TAMS workflows](./0016-authorisation-in-tams-workflows.md).
 A comma separated list of auth classes used to derive permissions on the Flow.
 
+### loop_recorder_duration
+
+Status: **Implementation specific**
+
+Used in the AWS TAMS Tools loop recorder.
+The target duration of the Flow in seconds.
+Oldest Segments that take the duration over the specified duration will be deleted periodically.
+
 ## Known Source Tags
 
 ### hls_exclude
