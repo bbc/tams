@@ -226,6 +226,28 @@ Used in the AWS TAMS Tools loop recorder.
 The target duration of the Flow in seconds.
 Oldest Segments that take the duration over the specified duration will be deleted periodically.
 
+### flow_retention_offset
+
+Status: **Proposed**
+
+Proposed in [ADR0043 - Signalling Retention Time](../adr/0043-signalling-retention-time.md).
+
+Used to signal the retention time for a Flow.
+Specified as a TAMS-compatible [Timestamp](../appnotes/0008-timestamps-in-TAMS.md#timestamp-representation).
+The earliest time in [TAI](https://en.wikipedia.org/wiki/International_Atomic_Time) at which the Flow should be automatically deleted is calculated by adding this offset to the most recent of `metadata_updated` or `segments_updated`.
+Example: For a Flow with `metadata_updated` of `2023-09-14T09:45:26Z`, `segments_updated` of `2023-09-15T10:23:28Z`, and `flow_retention_offset` of `86400:0` (aka 24 hours) - the `segments_updated` shall be used and the Flow should be deleted a day later at `2023-09-16T10:23:28Z`.
+
+### segment_retention_offset
+
+Status: **Proposed**
+
+Proposed in [ADR0043 - Signalling Retention Time](../adr/0043-signalling-retention-time.md).
+
+Used to signal the retention time for Flow Segments.
+Specified as a TAMS-compatible [Timestamp](../appnotes/0008-timestamps-in-TAMS.md#timestamp-representation).
+The earliest time in [TAI](https://en.wikipedia.org/wiki/International_Atomic_Time) at which a given Segment should be automatically deleted is calculated by adding this offset to the end Timestamp component of the Segments TimeRange.
+Example: For a Flow using TAI for its timeline, a `segment_retention_offset` of `600:0` will result in Segments being deleted after 10 minutes (specifically, after the end of the Segment).
+
 ## Known Source Tags
 
 ### hls_exclude
