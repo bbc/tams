@@ -49,6 +49,29 @@ The tags below are marked with the following statuses:
 
 ## Known Flow Tags
 
+### auth_classes
+
+Status: **Experimental**
+
+Suggested as a way to build lightweight Attribute-based Access Control in [AppNote0016: Authorisation in TAMS workflows](./0016-authorisation-in-tams-workflows.md).
+A comma seperated list of auth classes used to derive permissions on the Flow.
+
+### c2pa-provenance
+
+Status: **Proposed**
+
+Proposed in [APPNOTE0011 - C2PA provenance across related Sources and Flows](../appnotes/0011-c2pa.md).
+
+Signals the presence of C2PA provenance data (a "manifest store") in a Flow or child Flow.
+
+Known values:
+
+* No Tag: A C2PA manifest has not been identified in this Flow
+* `none`: A C2PA manifest is not present inside this Flow
+* `embedded`: A C2PA manifest is present inside this multi-essence Flow
+* `detached`: A C2PA manifest has been copied from this multi-essence Flow into a collected mono-essence data Flow.
+  The Flow will have the role `c2pa` in the multi-essence Flow's `flow_collection` array.
+
 ### created_by
 
 Status: **Deprecated**
@@ -62,6 +85,17 @@ Status: **Deprecated**
 
 Replaced by the `created` field in Flow metadata.
 Contains the ISO formatted date-time when a Flow was created.
+
+### flow_retention_offset
+
+Status: **Proposed**
+
+Proposed in [ADR0043 - Signalling Retention Time](../adr/0043-signalling-retention-time.md).
+
+Used to signal the retention time for a Flow.
+Specified as a TAMS-compatible [Timestamp](../appnotes/0008-timestamps-in-TAMS.md#timestamp-representation).
+The earliest time in [TAI](https://en.wikipedia.org/wiki/International_Atomic_Time) at which the Flow should be automatically deleted is calculated by adding this offset to the most recent of `metadata_updated` or `segments_updated`.
+Example: For a Flow with `metadata_updated` of `2023-09-14T09:45:26Z`, `segments_updated` of `2023-09-15T10:23:28Z`, and `flow_retention_offset` of `86400:0` (aka 24 hours) - the `segments_updated` shall be used and the Flow should be deleted a day later at `2023-09-16T10:23:28Z`.
 
 ### flow_status
 
@@ -82,6 +116,46 @@ Known values:
 * `replication_in_progress` - Content is currently being ingested to this Flow from another store via a replication process
 * `closed_complete` - Flow is complete and will not receive any more content
 
+### hls_exclude
+
+Status: **Experimental**
+
+Used in the TAMS demonstration at NAB 2025.
+
+The type is a `boolean`.
+It is used to indictate the Flow should be excluded from HLS manifest generation.
+Defaults to `false` if the tag is not set.
+
+### hls_segments
+
+Status: **Experimental**
+
+Used in the TAMS demonstration at IBC 2024.
+
+The type is a `number`.
+It is used to limit the number of Segments presented in the HLS manifest.
+Defaults to `150` if the tag is not set.
+Use the value `inf` to list all Segments.
+However, listing all Segments may result in the generation of the HLS manifest timing out.
+
+### hls_segment_length
+
+Status: **Deprecated**
+
+Replaced by the `segment_duration` field in Flow metadata.
+
+### input_quality
+
+Status: **In use**
+
+A human readable string identifying the quality of the media.
+
+Known values:
+
+* `intermediate` - i-frame only
+* `contribution` - long-GOP
+* `web` - long-GOP, low bit-rate
+
 ### language_code
 
 Status: **Experimental**
@@ -97,6 +171,14 @@ Examples:
 * [`fra`](https://iso639-3.sil.org/code/fra) for audio containing French speech
 * [`deu`](https://iso639-3.sil.org/code/deu) for German captions
 * `["eng", "fra"]` for audio where both English and French are spoken
+
+### loop_recorder_duration
+
+Status: **Implementation specific**
+
+Used in the AWS TAMS Tools loop recorder.
+The target duration of the Flow in seconds.
+Oldest Segments that take the duration over the specified duration will be deleted periodically.
 
 ### originating_id
 
@@ -124,24 +206,23 @@ Used where this Flow is a proxy of another Flow.
 Contains the ID of the Flow this is a proxy of.
 Deprecated in favour of discovery via Flows of the same Source with appropriate metadata (e.g. lower generation, appropriate resolution, etc).
 
-### input_quality
-
-Status: **In use**
-
-A human readable string identifying the quality of the media.
-
-Known values:
-
-* `intermediate` - i-frame only
-* `contribution` - long-GOP
-* `web` - long-GOP, low bit-rate
-
 ### salmon_created_by_job
 
 Status: **Implementation specific**
 
 Used by BBC R&D's experimental internal stream ingest service named "Salmon".
 Records the Salmon job ID which created the Flow.
+
+### segment_retention_offset
+
+Status: **Proposed**
+
+Proposed in [ADR0043 - Signalling Retention Time](../adr/0043-signalling-retention-time.md).
+
+Used to signal the retention time for Flow Segments.
+Specified as a TAMS-compatible [Timestamp](../appnotes/0008-timestamps-in-TAMS.md#timestamp-representation).
+The earliest time in [TAI](https://en.wikipedia.org/wiki/International_Atomic_Time) at which a given Segment should be automatically deleted is calculated by adding this offset to the end Timestamp component of the Segments TimeRange.
+Example: For a Flow using TAI for its timeline, a `segment_retention_offset` of `600:0` will result in Segments being deleted after 10 minutes (specifically, after the end of the Segment).
 
 ### writing_flow_timing_temi_timestamps
 
@@ -167,88 +248,14 @@ A string representation of a Fraction, used to set the Segment rate (Segments pe
 This is an average rate.
 Actual Segment rates/durations may vary.
 
-### c2pa-provenance
-
-Status: **Proposed**
-
-Proposed in [APPNOTE0011 - C2PA provenance across related Sources and Flows](../appnotes/0011-c2pa.md).
-
-Signals the presence of C2PA provenance data (a "manifest store") in a Flow or child Flow.
-
-Known values:
-
-* No Tag: A C2PA manifest has not been identified in this Flow
-* `none`: A C2PA manifest is not present inside this Flow
-* `embedded`: A C2PA manifest is present inside this multi-essence Flow
-* `detached`: A C2PA manifest has been copied from this multi-essence Flow into a collected mono-essence data Flow.
-  The Flow will have the role `c2pa` in the multi-essence Flow's `flow_collection` array.
-
-### hls_segments
-
-Status: **Experimental**
-
-Used in the TAMS demonstration at IBC 2024.
-
-The type is a `number`.
-It is used to limit the number of Segments presented in the HLS manifest.
-Defaults to `150` if the tag is not set.
-Use the value `inf` to list all Segments.
-However, listing all Segments may result in the generation of the HLS manifest timing out.
-
-### hls_segment_length
-
-Status: **Deprecated**
-
-Replaced by the `segment_duration` field in Flow metadata.
-
-### hls_exclude
-
-Status: **Experimental**
-
-Used in the TAMS demonstration at NAB 2025.
-
-The type is a `boolean`.
-It is used to indicate the Flow should be excluded from HLS manifest generation.
-Defaults to `false` if the tag is not set.
+## Known Source Tags
 
 ### auth_classes
 
 Status: **Experimental**
 
 Suggested as a way to build lightweight Attribute-based Access Control in [AppNote0016: Authorisation in TAMS workflows](./0016-authorisation-in-tams-workflows.md).
-A comma separated list of auth classes used to derive permissions on the Flow.
-
-### loop_recorder_duration
-
-Status: **Implementation specific**
-
-Used in the AWS TAMS Tools loop recorder.
-The target duration of the Flow in seconds.
-Oldest Segments that take the duration over the specified duration will be deleted periodically.
-
-### flow_retention_offset
-
-Status: **Proposed**
-
-Proposed in [ADR0043 - Signalling Retention Time](../adr/0043-signalling-retention-time.md).
-
-Used to signal the retention time for a Flow.
-Specified as a TAMS-compatible [Timestamp](../appnotes/0008-timestamps-in-TAMS.md#timestamp-representation).
-The earliest time in [TAI](https://en.wikipedia.org/wiki/International_Atomic_Time) at which the Flow should be automatically deleted is calculated by adding this offset to the most recent of `metadata_updated` or `segments_updated`.
-Example: For a Flow with `metadata_updated` of `2023-09-14T09:45:26Z`, `segments_updated` of `2023-09-15T10:23:28Z`, and `flow_retention_offset` of `86400:0` (aka 24 hours) - the `segments_updated` shall be used and the Flow should be deleted a day later at `2023-09-16T10:23:28Z`.
-
-### segment_retention_offset
-
-Status: **Proposed**
-
-Proposed in [ADR0043 - Signalling Retention Time](../adr/0043-signalling-retention-time.md).
-
-Used to signal the retention time for Flow Segments.
-Specified as a TAMS-compatible [Timestamp](../appnotes/0008-timestamps-in-TAMS.md#timestamp-representation).
-The earliest time in [TAI](https://en.wikipedia.org/wiki/International_Atomic_Time) at which a given Segment should be automatically deleted is calculated by adding this offset to the end Timestamp component of the Segments TimeRange.
-Example: For a Flow using TAI for its timeline, a `segment_retention_offset` of `600:0` will result in Segments being deleted after 10 minutes (specifically, after the end of the Segment).
-
-## Known Source Tags
+A comma separated list of auth classes used to derive permissions on the Source.
 
 ### hls_exclude
 
@@ -259,13 +266,6 @@ Used in the TAMS demonstration at NAB 2025.
 The type is a `boolean`.
 It is used to indicate the Source should be excluded from HLS manifest generation.
 Defaults to `false` if the tag is not set.
-
-### auth_classes
-
-Status: **Experimental**
-
-Suggested as a way to build lightweight Attribute-based Access Control in [AppNote0016: Authorisation in TAMS workflows](./0016-authorisation-in-tams-workflows.md).
-A comma separated list of auth classes used to derive permissions on the Source.
 
 ### language_code
 
