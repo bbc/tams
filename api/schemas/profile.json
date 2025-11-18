@@ -12,11 +12,6 @@
       "type": "string",
       "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
     },
-    "urn": {
-      "description": "Namespaced identifier to the profile.  Centrally managed profiles will be prefixed with 'urn:x-tam:profile:'.  This MUST not be used for locally created profiles",
-      "type": "string",
-      "pattern": "^urn:[A-Za-z0-9][A-Za-z0-9-]{0,31}:profile:[a-z0-9()+,\\-.:=@;$_!*'%?#]*[a-z0-9+=@$]"
-    },
     "label": {
       "description": "Freeform string label for the profile",
       "type": "string"
