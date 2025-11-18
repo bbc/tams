@@ -72,6 +72,8 @@ This then simplifies the process of creating the required flows and sources for 
 The edit process could then process each input source in turn read the available flows and match them to the destination flows using the profile tag easily.
 If the source content has additional non standard flows then these could be ignored.
 
+From a flow created from a profile, it is possible to query via both profile ID and also the individual parameter of the flow that have been inheritied from the profile.
+
 ## Recommended TAMS profiles
 
 To aid interoperabity a set of recommended profiles is hosted as part of the API specification Github respository.
