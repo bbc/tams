@@ -333,7 +333,7 @@ paths:
         "400":
           description: Bad request. Invalid profile JSON or profile already exists.
         "404":
-          description: The requested Flow ID in the path is invalid.
+          description: The requested profile ID in the path is invalid.
   /service/webhooks:
     head:
       summary: List Webhook URLs
