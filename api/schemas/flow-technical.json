@@ -1,7 +1,7 @@
 {
   "type": "object",
-  "description": "Describes the technical characteristics of a Flow (common properties to all Flows, imported by type-specific specifications)",
-  "title": "Flow Core",
+  "description": "Describes the technical characteristics of a Flow (imported by type-specific specifications or as part of a profile)",
+  "title": "Flow Technical",
   "properties": {
 
     "codec": {

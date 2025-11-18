@@ -1,8 +1,8 @@
-# 00xx: DRAFT: Using Flow Profiles
+# 0018: Using Flow Profiles
 
 ## Abstract
 
-The TAMS API is deliberately agnostic to the format of the media which it is managing, to allow for future compatibility with new formats without needing to change the API specification. 
+The TAMS API is deliberately agnostic to the format of the media which it is managing, to allow for future compatibility with new formats without needing to change the API specification.
 This provides challenges for interoperability and workflows such as edit by reference where standard media formats are required across multiple sources.
 
 This document describes how flow profiles can be used within the TAMS API to simplify workflows while maintaining the flexibility of the core API.
@@ -11,7 +11,7 @@ This document describes how flow profiles can be used within the TAMS API to sim
 
 ### House formats
 
-Within a customer deployment of TAMS it is expected that there would be limited number of recommended formats for users to work in. 
+Within a customer deployment of TAMS it is expected that there would be limited number of recommended formats for users to work in.
 Typically this could include a target format for the high quality media and standardised formats for proxy media and images.
 These formats are typically refered to as House formats and do no preclude the storing of other content within the store, however it is likely to be normalised at some point to the house format.
 
@@ -22,7 +22,7 @@ House formats define one or more common formats for all the systems to utilise.
 
 For edit by reference workflows there is a need both to create new sources and flows for the new item and also combine the segments together to create the new edit.
 
-If the source content is only coming from a one source (potentially with multiple flows), for example a simple clip, then it is relatively easy to clone the technical parameters of the existing flows and then join the segments to the new flow.
+If the content to be referenced is only coming from a one source (potentially with multiple flows), for example a simple clip, then it is relatively easy to clone the technical parameters of the existing flows and then join the segments to the new flow.
 However if the content for the new edit is derived from multiple sources then there is a need to match the flows from the different sources based on the technical characteristics.
 Currently the TAMS API does not provide an easy method to do this, so it is necessary to compare all the flows in code to find the matches.
 The more sources involved in this process, the harder this becomes.
@@ -37,9 +37,13 @@ The TAMS profile model is split into a number of stages:
 
 ### Profiles endpoint
 
-It is possible to create, view, edit and delete profiles via the dedicated API calls under the TAMS service end point (/services/profiles).
+It is possible to create and view profiles via the dedicated API calls under the TAMS service end point (/services/profiles).
 These profiles hold all the technical parameters required to create a flow in a single location.
 A system looking to ingest standardised content into TAMS would create content matching one or more profiles as defined in the endpoint.
+
+A profile should be treated as immutable, so once created it cannot be updated.
+Updating a profile would cause mismatches with flows which have been already created using that profile and so breaks the model for profiles.
+To update a profile a new one with a new ID should be created.
 
 The profiles endpoint has been designed to provide extensibility of the metadata through the same tags model as for flows and sources.
 This would enable implementations to store additional metadata such as encoding parameters alongside the TAMS profile metadata
@@ -60,7 +64,8 @@ This differentiates them from the flows that have been created with the technica
 
 ### Query flows using a profile
 
-The get flows endpoint has the ability to query for flows with a given profile.  When combined with other query parameters such as source id then this means it is easy to start matching content formats.
+The get flows endpoint has the ability to query for flows with a given profile.  
+When combined with other query parameters such as source id then this means it is easy to start matching content formats.
 
 For example on an edit by reference workflow it would be possible to read the profile endpoint for the recommended profiles that content should have.
 This then simplifies the process of creating the required flows and sources for the new content item.
@@ -74,22 +79,3 @@ These are profiles which have been tested and used in real workflows and are rec
 It is recommended that tools which write to the TAMS API try and support as many of the recommended profiles of their target content types as possible.
 
 Additional recommened profiles will be added to the repository as new use cases are identified or new media formats added.
-
-## Suggested metadata fields in the profile end point
-
-- Identifier (format to be decided)
-- Type (video/audio/image/data)
-- Label
-- Description
-- Version (recommended to increment when changing)
-- Created/Created by
-- Modified/Modified by
-- Tags
-- Technical characteristics (first level flow properties such as codec, wrapper, target chunk length etc, plus essence parameters)
-- Preferred (needs thinking about how to indicate this is the prefered high res or prefered proxy etc)
-
-
-
-
-
-
