@@ -295,7 +295,7 @@ paths:
                   value:
                     $ref: examples/profile-get-200-image.json
         "404":
-          description: The requested flow does not exist.
+          description: The requested profile does not exist.
     post:
       summary: Create Profile
       description: |
