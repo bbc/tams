@@ -1,7 +1,7 @@
 {
   "type": "object",
-  "description": "Describes the core fields of a Flow (common properties to all Flows, imported by flow-get and flow-put specifications)",
-  "title": "Flow Core",
+  "description": "Describes the the core fields of a Flow (common properties to all Flows, imported by flow-get and flow-put specifications)",
+  "title": "Flow Common",
   "required": [
     "id",
     "source_id"

@@ -154,11 +154,6 @@ paths:
       tags:
         - Profiles
       parameters:
-        - name: profile_id
-          in: query
-          description: Filter on source identifier.
-          schema:
-            $ref: '#/components/schemas/uuid'
         - name: urn
           in: query
           description: Filter on profile that have the given urn.
@@ -210,11 +205,6 @@ paths:
       tags:
         - Profiles
       parameters:
-        - name: profile_id
-          in: query
-          description: Filter on source identifier.
-          schema:
-            $ref: '#/components/schemas/uuid'
         - name: urn
           in: query
           description: Filter on profile that have the given urn.
@@ -316,6 +306,10 @@ paths:
         with the updated information and new flows reference this new profile.  
         
         Attempting to update an existing profiles should return a 400 error.
+
+        Tags can be created at the profile level to hold information about the profile itself.  These do not form
+        part of the flow that is created.  These are tag/value format and could be used for tasks such as version 
+        tracking or holding encoding parameters.
       operationId: POST_profiles-profileId
       tags:
         - Profiles
@@ -1132,11 +1126,11 @@ paths:
         Create or replace the flow metadata.
 
         Flows can be created either by directly supplying all the required technical metadata or by referencing
-        an existing profile in the store.  When using a profile the store will combine the supplied flow metadata
-        with the profile metadata such that on reading the flow a complete set of flow metadata is supplied.  It
+        an existing profile in the store.  When using a profile, the store will use the technical details (format, 
+        codec, essence_parameters etc.) from that profile, along with the metadata provided.  It
         is up to the store implementation whether this is normalised on the flow creation or read-only.
 
-        When using a profile to create a flow it is not possible to override any specific fields as this would 
+        When creating a flow using a profile it is not possible to override any specific fields as this would 
         invalidate the link to the profile.  Supplying a profile ID and technical metadata should result in a 400 
         validation error
       operationId: PUT_flows-flowId

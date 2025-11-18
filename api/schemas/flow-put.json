@@ -10,6 +10,7 @@
       "oneOf": [
         {
           "type": "object",
+          "title": "Flow Profile",
           "required": [
               "profile_id"
           ],
@@ -21,17 +22,12 @@
               }
           }
         },
-        {
-          "oneOf": [
-            { "$ref": "flow-video.json" },
-            { "$ref": "flow-audio.json" },
-            { "$ref": "flow-image.json" },
-            { "$ref": "flow-data.json" },
-            { "$ref": "flow-multi.json" }
-          ]
-        }
+        { "$ref": "flow-video.json" },
+        { "$ref": "flow-audio.json" },
+        { "$ref": "flow-image.json" },
+        { "$ref": "flow-data.json" },
+        { "$ref": "flow-multi.json" }
       ]
     }
-  ],
-
+  ]
 }
