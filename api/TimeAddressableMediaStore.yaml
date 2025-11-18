@@ -327,7 +327,7 @@ paths:
           content:
             application/json:
               example:
-                $ref: examples/profile-put-200.json
+                $ref: examples/profile-post-201.json
               schema:
                 $ref: schemas/profile.json
         "400":
