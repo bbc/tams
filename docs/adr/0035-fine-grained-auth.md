@@ -1,5 +1,5 @@
 ---
-status: "proposed"
+status: "accepted"
 ---
 # Fine-grained Authorisation in TAMS Workflows
 
