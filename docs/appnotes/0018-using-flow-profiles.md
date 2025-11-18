@@ -74,10 +74,17 @@ If the source content has additional non standard flows then these could be igno
 
 From a flow created from a profile, it is possible to query via both profile ID and also the individual parameter of the flow that have been inheritied from the profile.
 
-## Recommended TAMS profiles
+## Multi-store working with profiles
 
-To aid interoperabity a set of recommended profiles is hosted as part of the API specification Github respository.
-These are profiles which have been tested and used in real workflows and are recommended as a starting point for implementors building a new store.
-It is recommended that tools which write to the TAMS API try and support as many of the recommended profiles of their target content types as possible.
+The UUID of a profile is assumed to be globally unique.
+This is the same model as for flow, source and object ID's which should be preserved when replicating content.
 
-Additional recommened profiles will be added to the repository as new use cases are identified or new media formats added.
+For workflows where replication of the same content formats are happening on a regular basis then it is recommended that the same profile is loaded into both stores using the same UUID.
+This will mean than when flows are replicated between the stores then the profile identifier will continue to link to the metadata.
+
+If the profile does not existing within the destination store then the profile ID should continue to be preserved.
+This will continue to allow the matching of content within the store by profile ID, plus the profile can be added later and will link to the existing content.
+
+For workflows including more than two orgnaisations it is recommended that one organisation takes responsibility for owning and publishing the profiles.
+These profiles can then be loaded into the destination stores.
+The organisation could be a single company or could be an industry body.

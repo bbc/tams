@@ -1,19 +1,9 @@
 {
-  "id": "329b98d6-adeb-418c-8eaf-eca14edc1706",
-  "urn": "urn:x-tam:profile:video_50m_1080p50_ts",
-  "label": "1080p50 TS Video 50Mpbs",
-  "description": "50Mbps HD video",
-  "tags": {
-    "_ffmpeg_command": "...."
-  },
-  "flow_metadata": {
-    "format": "urn:x-nmos:format:video",
-    "codec": "video/h264",
-    "container": "video/mp2t",
-    "avg_bit_rate": 2479,
-    "segment_duration": {
-      "numerator": 6,
-      "denominator": 1
+    "id": "329b98d6-adeb-418c-8eaf-eca14edc1706",
+    "label": "1080p50 TS Video 50Mpbs",
+    "description": "50Mbps HD video",
+    "tags": {
+        "_ffmpeg_command": "...."
     },
     "flow_metadata": {
         "format": "urn:x-nmos:format:video",
