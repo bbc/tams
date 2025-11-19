@@ -183,7 +183,7 @@ For example - hiding collection relationships may result in clients deciding to 
 |                                      | `DELETE`     | Request must have write permissions on {flowId}. |
 | `/flows/{flowId}/segments`           | `HEAD`/`GET` | Request must have read permissions on {flowId}. |
 |                                      | `POST`       | Request must have write permissions on {flowId}, and either this must be the first registration of the Media Object(s) (i.e. `/objects/{objectId}` returns 404) or the request must have read access to the Media Object(s) being written. Otherwise reject.    |
-|                                      | `DELETE`     | Request must have write permissions on {flowId}. |
+|                                      | `DELETE`     | Request must have delete permissions on {flowId}. |
 | `/flows/{flowId}/storage`            | `POST`       | Request must have write permissions on {flowId}. |
 | `/objects/{objectId}`                | `HEAD`/`GET` | Restrict returned data in `referenced_by_flows` property to only the Flows that the request has read access to. If the request has read access to no Flows of this object, return 404, however if the request has access but all of the Flows have been filtered out, return the response with an empty `referenced_by_flows` list. |
 | `/objects/{objectId}/instances`      | `POST`       | Request must have write permissions on {objectId}. |
