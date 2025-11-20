@@ -157,7 +157,7 @@ async def simple_edit(
             # The media timeline started at zero when the ingest started, so `ts_offset` indicates what must be
             # added to the media time to get the Flow time.
             # So we can calculate media time at the start of the segment
-            seg_offset = Timestamp.from_str(segment["ts_offset"])
+            seg_offset = Timestamp.from_str(segment.get("ts_offset", "0:0"))
             media_time = seg_tr.start - seg_offset
 
             # Now we want to know what to add to that media time to get the new start time
