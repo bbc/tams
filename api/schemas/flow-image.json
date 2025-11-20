@@ -1,7 +1,7 @@
 {
-    "type": "object",
-    "description": "Describes an still image Flow",
     "title": "Image Flow",
+    "description": "Describes a still image Flow, for use by thumbnail tracks etc",
+    "type": "object",
     "allOf": [
         {
             "$ref": "flow-technical.json"
@@ -15,16 +15,16 @@
             ],
             "properties": {
                 "format": {
-                    "description": "The primary content type URN for the flow.",
+                    "description": "The primary content type URN for the Flow.",
                     "type": "string",
                     "enum": [
                         "urn:x-tam:format:image"
                     ]
                 },
                 "essence_parameters": {
-                    "type": "object",
-                    "description": "Describes the parameters of the essence inside this image Flow",
                     "title": "Image Flow Essence Parameters",
+                    "description": "Describes the parameters of the essence inside this image Flow",
+                    "type": "object",
                     "required": [
                         "frame_width",
                         "frame_height"

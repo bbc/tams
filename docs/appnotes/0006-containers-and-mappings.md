@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Flows reference media content stored in media object containers in TAMS.
+Flows reference media content stored in Media Object containers in TAMS.
 The containers may have content for multiple Flows.
 This application note will describe how the `container` and `container_mapping` properties are used to reference the Flow content in containers.
 
@@ -16,24 +16,24 @@ This Application Note applies to TAMS v5.0+.
 ### Flow `container` Property
 
 The Flow `container` property serves 2 purposes.
-The `container` property identifies the container type for the media objects and its presence flags whether the Flow directly references media objects.
+The `container` property identifies the container type for the Media bjects and its presence flags whether the Flow directly references Media Objects.
 
 The `container` property is a [MIME type](https://datatracker.ietf.org/doc/html/rfc6838).
 Example values are `video/mp2t` for MPEG-TS, `video/mp4` for MP4 and `application/json` for JSON.
 
-A Flow references media objects either directly using Flow Segments associated with the Flow or via Flow Segments associated with a multi-essence Flow that collects (via the `flow_collection`) the Flow.
+A Flow references Media Objects either directly using Flow Segments associated with the Flow or via Flow Segments associated with a multi-essence Flow that collects (via the `flow_collection`) the Flow.
 
-The diagram below shows a sequence of MPEG-TS media objects that contains video for a Flow.
-The video Flow references the media objects via a sequence of Flow Segments.
+The diagram below shows a sequence of MPEG-TS Media Objects that contains video for a Flow.
+The video Flow references the Media Objects via a sequence of Flow Segments.
 The presence of the `container` property indicates that the Flow has Flow Segments (the list could be empty).
 
-![Diagram showing a Flow referencing media objects containing a video track only](./images/0006-containers-and-mappings-fig1.png)
+![Diagram showing a Flow referencing Media Objects containing a video track only](./images/0006-containers-and-mappings-fig1.png)
 
-The diagram below shows a sequence of MPEG-TS media objects that contains a multplex of audio and video.
+The diagram below shows a sequence of MPEG-TS Media Objects that contains a multplex of audio and video.
 The multi-essence Flow:
 
 - has a `container` property that indicates that this Flow has Flow Segments.
-- uses its sequence of Flow Segments to reference the media objects.
+- uses its sequence of Flow Segments to reference the Media Objects.
 
 The video and audio Flows:
 
@@ -42,16 +42,16 @@ The video and audio Flows:
 
 The media content for these Flows are accessed using the multi-essence Flow's Flow Segments.
 
-![Diagram showing a multi-essence Flow referencing media objects, video and audio collection items](./images/0006-containers-and-mappings-fig2.png)
+![Diagram showing a multi-essence Flow referencing Media Objects, video and audio collection items](./images/0006-containers-and-mappings-fig2.png)
 
-The diagram below shows a sequence of MPEG-TS media objects that contains a multiplex of audio, video and subtitles.
+The diagram below shows a sequence of MPEG-TS Media Objects that contains a multiplex of audio, video and subtitles.
 The subtitles in this example are very sparse compared to the audio and video.
-In addition to the multi-essence Flow, the subtitle Flow references the media objects via a sequence of Flow Segments and has a `container` property.
+In addition to the multi-essence Flow, the subtitle Flow references the Media Objects via a sequence of Flow Segments and has a `container` property.
 This allows for a more optimised access to the subtitle media content.
 The subtitle Flow Segments have different a `timerange` to the Flow Segments from the multi-essence Flow.
-The subtitle Flow Segments don't reference every media object because not every media object contains subtitles.
+The subtitle Flow Segments don't reference every Media Object because not every Media Object contains subtitles.
 
-![Diagram showing a multi-essence Flow and a subtitle Flow also referencing media objects](./images/0006-containers-and-mappings-fig3.png)
+![Diagram showing a multi-essence Flow and a subtitle Flow also referencing Media Objects](./images/0006-containers-and-mappings-fig3.png)
 
 ### Flow and Collection Item `container_mapping` Property
 
@@ -82,7 +82,7 @@ The diagram below illustrates this for a container with video and audio tracks.
 Only the Collection Item and Flow for the left audio channel in the `flow_collection` is shown.
 The `container_mapping` object has `track_index` 1 (video is 0), `format_track_index` 0 (the first audio) and a `mp2t_container` object with the PID for the audio elementary stream set to 257.
 
-![Diagram showing a container mapping to a multi-essence media objects](./images/0006-containers-and-mappings-fig4.png)
+![Diagram showing a container mapping to a multi-essence Media Objects](./images/0006-containers-and-mappings-fig4.png)
 
 #### Audio Track Channel Mapping
 
@@ -97,7 +97,7 @@ If a Flow is collected by a multi-essence Flow then the `container_mapping` shou
 If a Flow is not collected by a multi-essence Flow then the `container_mapping` in the Flow should be used.
 
 The diagram below shows a Flow referencing a stereo audio track in a media container that also includes an unused alternative stereo audio track.
-Only one of the stereo audio is of interest and therefore just a single audio Flow is defined to reference the media objects.
+Only one of the stereo audio is of interest and therefore just a single audio Flow is defined to reference the Media Objects.
 The audio Flow has `container` property to identify the container type and `container_mapping` to identify the target stereo audio track.
 There is no need to define a multi-essence Flow because only one of the container tracks is used.
 

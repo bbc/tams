@@ -1,7 +1,7 @@
 {
-    "type": "object",
-    "description": "Describes a Source: an abstract representation of a piece of media as defined in <https://specs.amwa.tv/ms-04/releases/v1.0.0/docs/2.2._Explanation_-_Source.html>\n\nSources may be elemental (and represented directly by a Flow), or may represent a collection of other Sources, e.g. a Source collecting video and audio together.",
     "title": "Source",
+    "description": "Describes a Source: an abstract representation of a piece of media as defined in <https://specs.amwa.tv/ms-04/releases/v1.0.0/docs/2.2._Explanation_-_Source.html>\n\nSources may be elemental (and represented directly by a Flow), or may represent a collection of other Sources, e.g. a Source collecting video and audio together.",
+    "type": "object",
     "required": [
         "id",
         "format"
@@ -9,44 +9,35 @@
     "properties": {
         "id": {
             "description": "Source identifier",
-            "type": "string",
-            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            "$ref": "uuid.json"
         },
         "format" : {
             "description": "The primary content type URN for the Source.",
-            "type": "string",
-            "enum": [
-                "urn:x-nmos:format:video",
-                "urn:x-tam:format:image",
-                "urn:x-nmos:format:audio",
-                "urn:x-nmos:format:data",
-                "urn:x-nmos:format:multi"
-            ],
-            "format": "uri"
+            "$ref": "content-format.json"
         },
         "label": {
-            "description": "Freeform string label for the Source",
+            "description": "Freeform string label for the Source. This should be a very short, human-readable label that may be displayed in listings of Sources.",
             "type": "string"
         },
         "description": {
-            "description": "Freeform text describing the Source",
+            "description": "Freeform text describing the Source. This should be a human-readable description that may be showed in detailed views of Sources. The description should be longer and more detailed than `label`.",
             "type": "string"
         },
         "created_by": {
-            "description": "A string identifier for the entity that created the Source. Implementations SHOULD set suitable default values for `created_by` based on the principal accessing the system, and MAY permit clients to edit the value, subject to suitable permissions-based limitations.",
+            "description": "A string identifier for the entity that created the Source. Service implementations SHOULD set suitable default values for `created_by` based on the principal accessing the systems.",
             "type": "string"
         },
         "updated_by": {
-            "description": "A string identifier for the entity that updated the Source metadata most recently. Implementations SHOULD set suitable default values for `updated_by` based on the principal accessing the system, and MAY permit clients to edit the value, subject to suitable permissions-based limitations.",
+            "description": "A string identifier for the entity that updated the Source metadata most recently. Service implementations SHOULD set suitable default values for `updated_by` based on the principal accessing the system.",
             "type": "string"
         },
         "created": {
-            "description": "The date-time the Source was created in a given context, e.g. in the store. Implementations SHOULD ignore this if given in a PUT request, and instead manage it internally",
+            "description": "The date-time the Source was created in a given context, e.g. in the service instance. Service implementations SHOULD ignore this if given in a PUT request, and instead manage it internally",
             "type": "string",
             "format": "date-time"
         },
         "updated": {
-            "description": "The date-time the Source metadata was last updated in a given context, e.g. in the store. Implementations SHOULD ignore this if given in a PUT request, and instead manage it internally",
+            "description": "The date-time the Source metadata was last updated in a given context, e.g. in the service instance. Service implementations SHOULD ignore this if given in a PUT request, and instead manage it internally",
             "type": "string",
             "format": "date-time"
         },
@@ -54,19 +45,18 @@
             "$ref": "tags.json"
         },
         "source_collection": {
+            "description": "List of Sources that are collected together by this Source. This attribute is intended to be read-only. Service implementations SHOULD ignore this if given in a PUT request, and instead manage it internally. Source collections can be inferred from Flow collection definitions.",
             "type": "array",
-            "description": "List of Sources that are collected together by this Source. This attribute is intended to be read-only. Implementations SHOULD ignore this if given in a PUT request, and instead manage it internally. Source collections can be inferred from Flow collection definitions.",
             "items": {
                 "$ref": "collection-item.json"
             }
         },
         "collected_by": {
-          "type": "array",
-          "description": "Sources that reference this Source to include it in a collection. This attribute is intended to be read-only. Implementations SHOULD ignore this if given in a PUT request, and instead manage it internally. Source collections can be inferred from Flow collection definitions.",
-          "items": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
-           }
+            "description": "Sources that reference this Source to include it in a collection. This attribute is intended to be read-only. Service implementations SHOULD ignore this if given in a PUT request, and instead manage it internally. Source collections can be inferred from Flow collection definitions.",
+            "type": "array",
+            "items": {
+                "$ref": "uuid.json"
+            }
         }
     }
 }

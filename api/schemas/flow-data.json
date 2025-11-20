@@ -1,10 +1,10 @@
 {
-  "type": "object",
-  "description": "Describes a data Flow",
   "title": "Data Flow",
+  "description": "Describes a data Flow",
+  "type": "object",
   "allOf": [
     {
-        "$ref": "flow-technical.json"
+      "$ref": "flow-technical.json"
     },
     {
       "type": "object",
@@ -22,13 +22,13 @@
           ]
         },
         "essence_parameters": {
-          "type": "object",
-          "description": "Describes the parameters of the essence inside this data Flow",
           "title": "Data Flow Essence Parameters",
+          "description": "Describes the parameters of the essence inside this data Flow",
+          "type": "object",
           "additionalProperties": false,
           "properties": {
             "data_type": {
-              "description": "The type of information encoded in the flow, identified using a URN. e.g. The data_type may be urn:x-tams:data:bounding-box, and the codec `application/json`.",
+              "description": "The type of information encoded in the Flow, identified using a URN. e.g. The data_type may be urn:x-tams:data:bounding-box, and the codec `application/json`.",
               "type": "string"
             }
           }

@@ -1,30 +1,30 @@
 {
-    "title": "Failed segments",
-    "description": "List of segments that have failed to register",
+    "title": "Failed Segments",
+    "description": "List of Segments that have failed to register",
     "type": "object",
     "required": [
         "failed_segments"
     ],
     "properties": {
         "failed_segments": {
-            "description": "The list of segments which have failed to register with the TAMS API",
+            "description": "The list of Segments which have failed to register with the service instance",
             "type": "array",
             "items": {
+                "description": "Failed Segment details",
                 "type": "object",
-                "description": "Failed segment details",
                 "required": [
                     "object_id"
                 ],
                 "properties": {
                     "object_id": {
-                        "description": "The object ID of the segment which has failed to register with the TAMS API",
+                        "description": "The Object ID of the Segment which has failed to register with the service instance",
                         "type": "string"                },
                     "timerange": {
-                        "description": "The timerange of segment that has failed, as described by the [TimeRange](../schemas/timerange#top) type",
+                        "description": "The timerange of Segment that has failed, as described by the [TimeRange](#/schemas/timerange) type",
                         "$ref": "timerange.json"
                     },
                     "error": {
-                        "description": "Provides more information for the error status, as described by the [Error](../schemas/error#top) type",
+                        "description": "Provides more information for the error status, as described by the [Error](#/schemas/error) type",
                         "$ref": "error.json"
                     }
                 }

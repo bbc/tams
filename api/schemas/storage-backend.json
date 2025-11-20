@@ -1,25 +1,25 @@
 {
-    "type": "object",
-    "description": "Provides technical, and logic metadata about a storage backend",
     "title": "Storage Backend",
+    "description": "Provides technical, and logic metadata about a storage backend",
+    "type": "object",
     "properties": {
         "store_type": {
-            "description": "The generic store type. Used to identify the required workflow for reading and writing media. Any `store_product` should be compatible, as much is required for basic interoperability between TAMS implementations, with their associated generic `store_type`.",
+            "description": "The generic Storage Backend type. Used to identify the required workflow for reading and writing media. Any `store_product` should be compatible, as much is required for basic interoperability between TAMS implementations, with their associated generic `store_type`.",
             "type": "string",
             "enum": [
                 "http_object_store"
             ]
         },
         "provider": {
-            "description": "The cloud (or other) provider of the storage",
+            "description": "The cloud (or other) provider of the Storage Backend",
             "type": "string"
         },
         "region": {
-            "description": "The region in the cloud this storage backend resides",
+            "description": "The region in the cloud this Storage Backend resides",
             "type": "string"
         },
         "availability_zone": {
-            "description": "The availability zone in the cloud region this storage backend resides. Note that many cloud providers randomize availability zone identifiers such that they are consistent within a cloud account, but not necessarily between accounts. Caution should be exercised when using this parameter.",
+            "description": "The availability zone in the cloud region this Storage Backend resides. Note that many cloud providers randomize availability zone identifiers such that they are consistent within a cloud account, but not necessarily between accounts. Caution should be exercised when using this parameter.",
             "type": "string"
         },
         "store_product": {

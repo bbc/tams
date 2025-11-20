@@ -1,0 +1,6 @@
+{
+    "title": "Query String Tag value list",
+    "description": "A list of tag values, formatted for use in query string parameters",
+    "type": "string",
+    "pattern": "^([^,]+(,[^,]+)*)?$"
+}

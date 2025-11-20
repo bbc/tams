@@ -2,8 +2,7 @@
 
 This repository contains API definitions for a Time-addressable Media Store (TAMS) server, which can be used to store, query and access segmented media - distinct from files and streams, but sharing characteristics of both.
 
-BBC R&D have demonstrated use of the TAMS approach as part of composable, software-defined workflows which can run in the cloud, on-premise or in a hybrid environment.
-We've built a prototype implementation of this API, along with services for movement and transformation of streams and files, which serve as the media backend for other projects such as our [remote wildlife camera](https://www.bbc.co.uk/rd/blog/2022-04-video-cloud-media-store-ingest-service) work.
+## Overview
 
 Time-addressable media is defined by a timeline, with media elements placed upon it, building upon concepts familiar from IMF.
 Media stored in TAMS are identified with UUIDs according to the scheme used in [AMWA NMOS IS-04](https://specs.amwa.tv/is-04/releases/v1.3.2/APIs/schemas/).
@@ -28,24 +27,16 @@ Users of TAMS are insulated from the details of the underlying storage.
 
 ## Documentation
 
-- OpenAPI Specification: [TimeAddressableMediaStore.yaml](./api/TimeAddressableMediaStore.yaml)
-- Rendered Documentation: [https://bbc.github.io/tams](https://bbc.github.io/tams)
-- Supporting Documentation: [docs/README.md](./docs/README.md)
-- Example API Usage Scripts: [examples/README](./examples/README.md)
-
-This repo contains some automation to run a mock version of the API using [Stoplight Prism](https://stoplight.io/open-source/prism).
-To run the mock server using Docker, try something like the command below (or run `make mock-server-up`):
-
-```shell
-docker run --rm --init --name mock-tams -v "$(pwd)":/data:ro -p 4010:4010 stoplight/prism mock /data/TimeAddressableMediaStore.yaml -h 0.0.0.0
-```
-
-A mock API server will start at <http://localhost:4010>
+- [TAMS Website](https://timeaddressablemediastore.org/)
+- [OpenAPI Specification](./api/TimeAddressableMediaStore.yaml)
+- [Rendered Specification](https://bbc.github.io/tams)
+- [Supporting Documentation (Application notes and Decision Records)](./docs/README.md)
+- [Example API Usage Scripts](./examples/README.md)
 
 ## Design
 
 The store handles Flows which exist on an infinite timeline, are immutable, and can be grouped by Sources (based on the Flows and Sources in the [AMWA NMOS MS-04 model](https://specs.amwa.tv/ms-04/releases/v1.0.0/docs/2.1._Summary_and_Definitions.html)).
-A flow ID and timerange refers to a sequence of grains (_e.g._ frames of video or set of audio samples) and any point in a Flow can be uniquely addressed by a `<flow_id, timestamp>` tuple.
+A Flow ID and timerange refers to a sequence of grains (_e.g._ frames of video or set of audio samples) and any point in a Flow can be uniquely addressed by a `<flow_id, timestamp>` tuple.
 This unique address is guaranteed to refer to a specific frame, or set of audio samples, so it can be safely passed around other tools or programs.
 At any time the unique address can be exchanged for the media data by an API call.
 But if that is not needed, media work can be done purely by reference.
@@ -53,16 +44,20 @@ But if that is not needed, media work can be done purely by reference.
 Grains are grouped into Flow Segments, containing for example one second of content, wrapped in a container format such as MPEG-TS.
 The store provides a mechanism to upload and register new Flow Segments, and an interface to request all the Flow Segments covering a particular timerange and their download URLs; an approach inspired by chunked streaming protocols like HTTP Live Streaming.
 
+> [!NOTE]
+> TAMS does not specify which container format should be used.
+> But conventions are emerging for common technical profiles used in interoperable implementations.
+
 The media data contained within Flow Segments may be stored separately from the metadata linking them to a position on the timeline, separating the media data and metadata planes.
 For example our implementation uses a database (_e.g._ Amazon DynamoDB) to store Flow Segment metadata and an object store (_e.g._ AWS S3) to store the media data for Flow Segments.
-We refer to media data stored in the object store as 'media objects'.
-The Flow Segment has a list of S3 download urls which are the location of the media object(s) that contains the stored media data for the Flow Segment.
+We refer to media data stored in the object store as 'Media Objects'.
+The Flow Segment has a list of S3 download urls which are the location of the Media Object(s) that contains the stored media data for the Flow Segment.
 If multiple URLs are returned in the list, they are assumed to return identical media data.
 When writing to the store, the S3 URLs can be passed to a client permitting them to upload media data directly.
 
-Another advantage of separating the media data and metadata planes in this way is that a particular Flow Segment can be referenced by multiple flows.
-On the metadata side, the Flow Segment is just an object ID, so any number of flows can record that same ID against other `<flow_id, timestamp>` tuples.
-This allows for copy-on-write semantics: immutability means a new Flow must be created to make changes to existing parts of the timeline, but for unmodified portions of the timeline the new `<flow_id, timestamp>` tuple points to the existing object ID or a part of it.
+Another advantage of separating the media data and metadata planes in this way is that a particular Media Object can be referenced by multiple Flows.
+On the metadata side, the Flow Segment is just a mapping of a Media Object's ID to a Flow's Timeline, so any number of Flows can record that same ID against other `<flow_id, timestamp>` tuples.
+This allows for copy-on-write semantics: immutability means a new Flow must be created to make changes to existing parts of the timeline, but for unmodified portions of the timeline the new `<flow_id, timestamp>` tuple points to the existing Media Object or a part of it.
 See [Flow And Media Timelines](#flow-and-media-timelines) for a description of how that works in practice.
 
 The Flow model is aligned with the principles and schemas of [AMWA NMOS IS-04](https://specs.amwa.tv/is-04/releases/v1.3.2/APIs/schemas/) to facilitate easy integration of NMOS-compliant media devices.
@@ -79,10 +74,9 @@ The process of reading from the store is:
 The process of writing to the store is:
 
 1. Client creates a Flow if necessary by making a request to [`PUT flows/<flow_id>`](https://bbc.github.io/tams/5.1/index.html#/operations/PUT_flows-flowId)
-2. Client makes a request to [`POST flows/<flow_id>/storage`](https://bbc.github.io/tams/5.1/index.html#/operations/POST_flows-flowId-storage) and receives a list of URLs to PUT media data into, along with an optional `pre` URL to call before writing
-3. If a `pre` URL was given, client calls it
-4. Client breaks content into Flow Segments (each of which should contain complete decodable units, _e.g._ a number of complete GOPs for video) and uploads the corresponding media data
-5. Client makes requests to [`POST flows/<flow_id>/segments`](https://bbc.github.io/tams/5.1/index.html#/operations/POST_flows-flowId-segments) with details of each new Flow Segment created, to register them on the timeline
+2. Client makes a request to [`POST flows/<flow_id>/storage`](https://bbc.github.io/tams/5.1/index.html#/operations/POST_flows-flowId-storage) and receives a list of URLs to PUT media data into
+3. Client breaks content into Flow Segments (each of which should contain complete decodable units, _e.g._ a number of complete GOPs for video) and uploads the corresponding media data
+4. Client makes requests to [`POST flows/<flow_id>/segments`](https://bbc.github.io/tams/5.1/index.html#/operations/POST_flows-flowId-segments) with details of each new Flow Segment created, to register them on the timeline
 
 ### Sources
 
@@ -112,7 +106,8 @@ Various scenarios are explored in the [Practical Guidance for Media](https://spe
 
 Flows exist on an infinite timeline (the "Flow timeline"), and the position of content on this timeline is defined by the `timerange` attribute in each Flow Segment of that Flow.
 A timerange is represented in JSON and text using the [TimeRange string pattern](https://bbc.github.io/tams/5.1/index.html#/schemas/timerange).
-Separately the media objects have a timeline (the "media timeline") defined by the container format itself: the timestamps recorded inside the media object for each grain.
+Separately the Media Objects have a timeline (the "media timeline") defined by, or implied by, the container format itself: the timestamps recorded inside the Media Object for each grain in the natural format for that container.
+For example in MPEG-TS that would be the presentation timestamp (PTS), or for a container without timing it may be derived from a frame count and rate.
 The Flow Segment attributes describe how to map the media timeline onto the Flow timeline.
 For Flows using codecs with temporal re-ordering, both of these timelines represent the presentation timeline of the media.
 Note that no explicit relationship is defined between the Flow timelines of different Flows, although a mechanism to define that may be added in future.
@@ -120,23 +115,65 @@ Note that no explicit relationship is defined between the Flow timelines of diff
 For brevity these diagrams start at `0:0`, however it is likely a practical system would stick closer to wall-clock time or TAI, such as starting at `1709634568:0`.
 A timestamp is represented in JSON and text using the [Timestamp string pattern](https://bbc.github.io/tams/5.1/index.html#/schemas/timestamp).
 
-![Graphic showing the Flow timeline and 3 Flow Segments in Flow A, with a media timeline showing 10 samples in each object](./docs/images/Flow%20and%20Media%20Timelines-Flow%20A.drawio.png)
+![Graphic showing the Flow timeline and 3 Flow Segments in Flow A, with a media timeline showing 10 samples in each Media Object](./docs/images/Flow%20and%20Media%20Timelines-Flow%20A.drawio.png)
 
 In the case of Flow A in the diagram above, this is a 1:1 mapping.
-However, in the diagram below the media timeline and Flow timeline differ, because the objects in Flow B have been re-used from Flow A (note the use of the same object ID).
-These re-used objects have their original media timeline, and each grain's position on the Flow timeline can be calculated as `media_timeline + ts_offset`.
+However, in the diagram below the media timeline and Flow timeline differ, because the Media Objects in Flow B have been re-used from Flow A (note the use of the same Media Object ID).
+These re-used Media Objects have their original media timeline, and each grain's position on the Flow timeline can be calculated as `media_timeline + ts_offset`.
 
-![Graphic showing the Flow timeline and 2 Flow Segments in Flow B, where the objects have been re-used from Flow A and the ts_offset set to -1:0](./docs/images/Flow%20and%20Media%20Timelines-Flow%20B.drawio.png)
+![Graphic showing the Flow timeline and 2 Flow Segments in Flow B, where the Media Objects have been re-used from Flow A and the ts_offset set to -1:0](./docs/images/Flow%20and%20Media%20Timelines-Flow%20B.drawio.png)
 
-Flow Segments can also re-use parts of a media object, as in Flow C in the diagram below.
-Notice that the `timerange` still refers to the Flow timeline (and `0:50...` etc. is used as shorthand for `0:500000000`), however a reduced number of grains have been selected, taking only part of the first object and part of the last object.
+Flow Segments can also re-use parts of a Media Object, as in Flow C in the diagram below.
+Notice that the `timerange` still refers to the Flow timeline (and `0:50...` etc. is used as shorthand for `0:500000000`), however a reduced number of grains have been selected, taking only part of the first Media Object and part of the last Media Object.
 
-![Graphic showing the Flow timeline and 3 Flow Segments in Flow C, where the objects have been re-used from Flow A however only half of the first and last object has been used](./docs/images/Flow%20and%20Media%20Timelines-Flow%20C.drawio.png)
+![Graphic showing the Flow timeline and 3 Flow Segments in Flow C, where the Media Objects have been re-used from Flow A however only half of the first and last Media Object has been used](./docs/images/Flow%20and%20Media%20Timelines-Flow%20C.drawio.png)
 
-In this way a simple copy-on-write mechanic can be applied to the store, for example when taking "clips" from multiple Flows and assembling them, the original media objects (and therefore essence) can be referenced, and new media objects are only required to handle changes, for example transitions.
-In the diagram below, portions of Flow X and Flow Y are combined to form Flow Z, along with some rendered transitions which are "new" media, and new objects accordingly.
+In this way a simple copy-on-write mechanic can be applied to the store, for example when taking "clips" from multiple Flows and assembling them, the original Media Objects (and therefore essence) can be referenced, and new Media Objects are only required to handle changes, for example transitions.
+In the diagram below, portions of Flow X and Flow Y are combined to form Flow Z, along with some rendered transitions which are "new" media, and new Media Objects accordingly.
 
-![Graphic showing the Flow timeline and Flow Segments of Flows X, Y and Z, where Z is composed of a mix of re-used segments and new media](./docs/images/Flow%20and%20Media%20Timelines-Flow%20XYZ.drawio.png)
+![Graphic showing the Flow timeline and Flow Segments of Flows X, Y and Z, where Z is composed of a mix of re-used Segments and new media](./docs/images/Flow%20and%20Media%20Timelines-Flow%20XYZ.drawio.png)
+
+In practice a client may need to read (and potentially decode, in the case of inter-frame video codecs) the entire Object, discarding the unwanted grains and returning those selected by the Segment to the consumer.
+This can be handled by mapping the Object's timeline into the Flow timeline by adding `include_object_timerange=true` to the Flow Segment request, and then adding `ts_offset` to the Object timeranges.
+Then the reader can compare the Segment and Object timeranges to work out how much to skip at the beginning and end of the Media Object, the `object_timerange` approach.
+
+Alternatively `ts_offset` can be added to each timestamp inside the Media Object, and then grains can be discarded when the resulting timestamp falls outside the given `timerange` for the Segment.
+
+![Graphic showing the Media Objects making up Flow Z (above) and their Segments, along with the selected grains](./docs/images/Flow%20and%20Media%20Timelines-Flow%20XYZ-subsegments.drawio.png)
+
+The diagram above shows three of the Media Objects used by Flow Z and a smaller portion of the Flow Z timeline considered previously, with both the Media Object timeline (and `object_ts`) and Flow timeline (`segment_ts`) of each grain in the Media Object along the bottom.
+
+The `object_timerange` approach can be applied to ffmpeg by first calculating `skip = timerange.start - (object_timerange.start + ts_offset)`.
+
+- `-ss` should be set to the `skip` time in seconds.
+- `-t` should be set to the duration in seconds, derrived from the Segment timerange
+- `-output_ts_offset` should be set to the start time of the Segment in seconds, to re-map the timestamps embedded in the output segment onto the Flow timeline
+
+Note however that for this to be frame-accurate in codecs using temporal re-ordering, the input must be transcoded.
+For example for Media Object Y05 in Flow Z above:
+
+```bash
+ffmpeg -i segment -ss 0.3 -t 0.5 -output_ts_offset 3.5 -muxpreload 0 -muxdelay 0 \
+  -vcodec libx264 output_segment.ts
+```
+
+The `timerange`/`ts_offset` approach is illustrated by the following pseudocode, which shows how a client might apply the `ts_offset` to each `object_ts`, then validate whether it is inside the given `timerange`.
+Note that the `object_ts` may be a different precision or timebase to the nanosecond timestamps used by TAMS, so some conversion may be required.
+
+```python
+object_ts = to_timestamp(ts)          # `4:0` for `ts = 4.0sec`
+offset_object_ts = object_ts + ts_offset    # `4:0 + -0:700000000 = 3:300000000` (in Flow timeline)
+if (offset_object_ts < timerange.start or
+      offset_object_ts >= timerange.end):  # `3:300000000 is less than 3:500000000`
+    discard_grain()                  # So this grain is discarded
+else:
+    keep_grain()                     # The first grain to be retained will have `object_ts = 4.2`
+                                     # (and `offset_object_ts = 3:500000000 or 3.5sec)`
+```
+
+The diagram below also shows how both approaches might be applied to a Flow using an MPEG-TS container: by working out how much to skip using `object_timerange` and by using `timerange` and `ts_offset`.
+
+![Graphic showing media units being drawn from Flow Z's Media Objects using their timestamps](./docs/images/Flow%20and%20Media%20Timelines-Flow%20XYZ-selecting-units.drawio.png)
 
 ### Events from the API
 
@@ -146,7 +183,30 @@ This is intended to reduce the amount of polling required by clients to keep up 
 However the specification is deliberately left open-ended; only the message bodies are specified, but not the protocol by which they are carried nor the method by which clients subscribe.
 It is assumed that implementations will provide a suitable mechanism, such as a call to allow clients to subscribe to webhooks, or details of an event bus to connect to and receive the messages.
 
-### API Versioning
+### Security
+
+The TAMS specification stipulates authentication methods that a client should support in order to identify themselves and provide credentials to the server, using standard HTTP approaches.
+The authorisation model (the rules by which authenticated requests are allowed or denied) is not part of the TAMS specification, and is up to individual implementers and organisations depending on their exact rules, needs and threat model.
+
+It is assumed that implementations will apply other IT and cloud infrastructure security best practices, notably including the use of TLS (e.g. HTTPS connections) within and between their systems.
+
+## Mock TAMS Service
+
+This repo contains some automation to run a mock version of the API using [Stoplight Prism](https://stoplight.io/open-source/prism).
+To run the mock server using Docker, try something like the command below (or run `make mock-server-up`):
+
+```shell
+docker run --rm --init --name mock-tams -v "$(pwd)":/data:ro -p 4010:4010 stoplight/prism mock /data/TimeAddressableMediaStore.yaml -h 0.0.0.0
+```
+
+A mock API server will start at <http://localhost:4010>
+
+## Proposals, Decisions and Architecture Changes
+
+This repository uses [(M)ADR documents](https://adr.github.io/madr/) to propose significant changes, facilitate discussions and decision making, and to store a record of options that were considered.
+These documents may be found in the [docs/adr](./docs/adr/) directory, and are managed as described by the [ADR Readme](./docs/adr/README.md).
+
+## API Versioning
 
 The API is versioned using a major and minor version number.
 A breaking change - such as removal of a feature, or renaming of properties in such a way that would break compatibility (including fixing a typo) - results in a major version increment and the minor version is reset to 0.
@@ -166,19 +226,7 @@ Otherwise, the version will not change.
 
 It is possible to see what the version would be if a release was made at the current commit by running `make next-version` in the top directory of this repository.
 
-### Security
-
-The TAMS specification stipulates authentication methods that a client should support in order to identify themselves and provide credentials to the server, using standard HTTP approaches.
-The authorisation model (the rules by which authenticated requests are allowed or denied) is not part of the TAMS specification, and is up to individual implementers and organisations depending on their exact rules, needs and threat model.
-
-It is assumed that implementations will apply other IT and cloud infrastructure security best practices, notably including the use of TLS (e.g. HTTPS connections) within and between their systems.
-
-## Proposals, Decisions and Architecture Changes
-
-This repository uses [(M)ADR documents](https://adr.github.io/madr/) to propose significant changes, facilitate discussions and decision making, and to store a record of options that were considered.
-These documents may be found in the [docs/adr](./docs/adr/) directory, and are managed as described by the [ADR Readme](./docs/adr/README.md).
-
-## Making a release
+### Making a release
 
 Run the `release` workflow under the `Actions` tab on this repository on GitHub against the `main` branch.
 This workflow requires approval.

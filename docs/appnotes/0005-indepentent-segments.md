@@ -1,4 +1,4 @@
-# Media objects should be independently decodable. Here's why
+# Media Objects should be independently decodable. Here's why
 
 ## Abstract
 
@@ -27,7 +27,7 @@ Use of Segments that are not-independently decodable may hamper the use of this 
 
 ### Ease of playback
 
-With independently decodable objects, it is possible to download a given Segment and play it back.
+With independently decodable Media Objects, it is possible to download a given Segment and play it back.
 This makes playback extremely simple, with Segments being fed into the decoder with little/no processing.
 Additionally, you do not have to search back/forward to find key-frames needed for playback.
 
@@ -40,7 +40,7 @@ This would result in a larger unplayable section of media than if all Segments a
 ### Compatibility with HLS
 
 HLS is commonly used for streaming media.
-It is possible to construct a HLS file from TAMS data, referring to TAMS objects.
+It is possible to construct a HLS file from TAMS data, referring to TAMS Objects.
 The HLS spec states "The server SHOULD attempt to divide the source media at points that support effective decode of individual Media Segments, such as on packet and key frame boundaries".
 Some common HLS profiles only support Segments are independently decodable.
 

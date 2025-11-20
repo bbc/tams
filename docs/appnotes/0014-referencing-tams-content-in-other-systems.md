@@ -65,7 +65,7 @@ Alternatively the URI form above can be used.
 
 ## String References
 
-When referring to a TAMS object as a string, the URI reference style above may be used, and will make sense in many cases.
+When referring to a TAMS Object as a string, the URI reference style above may be used, and will make sense in many cases.
 
 If a clear need arises, alternative forms such as URNs or [tag URIs](https://www.rfc-editor.org/rfc/rfc4151.html) will be added via the ADR process.
 

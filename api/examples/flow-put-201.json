@@ -1,25 +1,27 @@
 {
-  "id": "6101df05-06bb-41b8-8af4-cf7cd33df209",
-  "source_id": "41d7f7eb-c48d-4513-9b37-17b418d26d7f",
-  "generation": 1,
-  "segments_updated": "2018-03-06T11:14:32Z",
-  "description": "audio capture web",
-  "label": "capture_1",
-  "format": "urn:x-nmos:format:audio",
-  "tags": {
-    "input_quality": "web",
-    "_tams_segmentation_rate": "375/8"
-  },
-  "codec": "audio/aac",
-  "container": "video/mp2t",
-  "avg_bit_rate": 128,
-  "essence_parameters": {
-    "sample_rate": 48000,
-    "channels": 2,
-    "bit_depth": 24,
-    "codec_parameters": {
-      "coded_frame_size": 1024,
-      "mp4_oti": 2
+    "id": "6101df05-06bb-41b8-8af4-cf7cd33df209",
+    "source_id": "41d7f7eb-c48d-4513-9b37-17b418d26d7f",
+    "generation": 1,
+    "segments_updated": "2018-03-06T11:14:32Z",
+    "description": "audio capture web",
+    "label": "capture_1",
+    "format": "urn:x-nmos:format:audio",
+    "tags":
+    {
+        "input_quality": "web"
+    },
+    "codec": "audio/aac",
+    "container": "video/mp2t",
+    "avg_bit_rate": 128,
+    "essence_parameters":
+    {
+        "sample_rate": 48000,
+        "channels": 2,
+        "bit_depth": 24,
+        "codec_parameters":
+        {
+            "coded_frame_size": 1024,
+            "mp4_oti": 2
+        }
     }
-  }
 }

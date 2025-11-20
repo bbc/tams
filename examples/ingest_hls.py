@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # This script demonstrates ingest of media from an HLS playlist into TAMS
 
-from typing import Generator, Any, AsyncGenerator
+import json
+from typing import Generator, Any, AsyncGenerator, Optional
 import asyncio
 import os
 import logging
@@ -21,37 +22,42 @@ logging.basicConfig()
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
+DEFAULT_FLOW_METADATA = {
+    "label": "Demo Flow",
+    "description": "Flow created to demonstrate manual upload",
+    "format": "urn:x-nmos:format:video",
+    "codec": "video/h264",
+    "container": "video/mp2t",
+    "essence_parameters": {
+        "frame_rate": {
+            "numerator": 50,
+            "denominator": 1
+        },
+        "frame_width": 1920,
+        "frame_height": 1080,
+        "bit_depth": 8,
+        "interlace_mode": "progressive",
+        "component_type": "YCbCr",
+        "horiz_chroma_subs": 2,
+        "vert_chroma_subs": 2
+    }
+}
+
 
 async def put_flow(
     session: aiohttp.ClientSession,
     credentials: Credentials,
     tams_url: str,
     flow_id: UUID,
-    source_id: UUID
+    source_id: UUID,
+    flow_metadata: Optional[dict]
 ) -> None:
-    """Create a H.264 video Flow"""
-    flow_metadata = {
-        "id": str(flow_id),
-        "source_id": str(source_id),
-        "label": "Demo Flow",
-        "description": "Flow created to demonstrate manual upload",
-        "format": "urn:x-nmos:format:video",
-        "codec": "video/h264",
-        "container": "video/mp2t",
-        "essence_parameters": {
-            "frame_rate": {
-                "numerator": 50,
-                "denominator": 1
-            },
-            "frame_width": 1920,
-            "frame_height": 1080,
-            "bit_depth": 8,
-            "interlace_mode": "progressive",
-            "component_type": "YCbCr",
-            "horiz_chroma_subs": 2,
-            "vert_chroma_subs": 2
-        }
-    }
+    """Create a H.264 video Flow (note: the given `flow_metadata` will be mutated)"""
+    if flow_metadata is None:
+        flow_metadata = DEFAULT_FLOW_METADATA
+
+    flow_metadata["id"] = str(flow_id)
+    flow_metadata["source_id"] = str(source_id)
 
     logger.info(f"Creating Flow {flow_id}")
 
@@ -191,11 +197,12 @@ async def hls_ingest(
     hls_start_segment: int,
     hls_segment_count: int,
     flow_id: UUID,
-    source_id: UUID
+    source_id: UUID,
+    flow_params: Optional[dict]
 ) -> None:
     """Upload segments from the HLS playlist"""
     async with aiohttp.ClientSession() as session:
-        await put_flow(session, credentials, tams_url, flow_id, source_id)
+        await put_flow(session, credentials, tams_url, flow_id, source_id, flow_params)
 
         object_urls = get_media_storage_urls(session, credentials, tams_url, flow_id, hls_segment_count)
 
@@ -233,8 +240,7 @@ if __name__ == "__main__":
 
     parser.add_argument(
         "--tams-url", type=str, required=True,
-        help=("URL of the top level endpoint in the TAMS service. "
-              "For Squirrel this must include the '/x-cloudfit/squirrelmediastore/<version>' path")
+        help=("URL of the top level endpoint in the TAMS service.")
     )
     parser.add_argument(
         "--oauth2-url", type=str, default=os.environ.get("OAUTH2_URL"),
@@ -276,6 +282,10 @@ if __name__ == "__main__":
         "--source-id", type=UUID,
         help="Source ID for the sample content. Default is to generate an ID"
     )
+    parser.add_argument(
+        "--flow-params", type=json.loads,
+        help="JSON representation of Flow to write. Default is a basic video Flow"
+    )
 
     args = parser.parse_args()
 
@@ -297,5 +307,6 @@ if __name__ == "__main__":
         args.hls_start_segment,
         args.hls_segment_count,
         args.flow_id or uuid4(),
-        args.source_id or uuid4()
+        args.source_id or uuid4(),
+        args.flow_params
     ))

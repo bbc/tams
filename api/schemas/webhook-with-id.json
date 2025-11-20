@@ -1,0 +1,22 @@
+{
+    "title": "Webhook Details",
+    "description": "Details of an existing registered webhook",
+    "type": "object",
+    "allOf": [
+        {
+            "$ref": "webhook.json"
+        },
+        {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "description": "Webhook identifier",
+                    "$ref": "uuid.json"
+                }
+            }
+        }
+    ]
+}

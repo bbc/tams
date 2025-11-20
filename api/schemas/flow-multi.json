@@ -1,7 +1,7 @@
 {
-  "type": "object",
-  "description": "Describes a multi-essence Flow",
   "title": "Multi-essence Flow",
+  "description": "Describes a multi-essence Flow",
+  "type": "object",
   "required": [
     "format"
   ],

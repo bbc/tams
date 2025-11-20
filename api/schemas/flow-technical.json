@@ -1,53 +1,61 @@
 {
-  "type": "object",
-  "description": "Describes the technical characteristics of a Flow (imported by type-specific specifications or as part of a profile)",
-  "title": "Flow Technical",
-  "properties": {
+    "title": "Flow Technical",
+    "description": "Describes the technical characteristics of a Flow (imported by type-specific specifications or as part of a profile)",
+    "type": "object",
+    "properties": {
 
-    "codec": {
-      "description": "A MIME type identification of the (lossy or lossless) coding used for the flow content.",
-      "type": "string",
-      "pattern": "^[^\\s\/]+/[^\\s\/]+$"
-    },
-    "container": {
-      "description": "The container MIME type for flow segments.",
-      "type": "string",
-      "pattern": "^[^\\s\/]+/[^\\s\/]+$"
-    },
-    "avg_bit_rate": {
-      "description": "The average bit rate of the flow segments in 1000 bits/second. A precise definition can be found in the [Setting Flow Bit Rate Properties](https://github.com/bbc/tams/blob/main/docs/appnotes/0013-setting-flow-bit-rate-properties.md) AppNote.",
-      "type": "integer",
-      "minimum": 0
-    },
-    "max_bit_rate": {
-      "description": "The maximum bit rate of the flow segments in 1000 bits/second. A precise definition can be found in the [Setting Flow Bit Rate Properties](https://github.com/bbc/tams/blob/main/docs/appnotes/0013-setting-flow-bit-rate-properties.md) AppNote.",
-      "type": "integer",
-      "minimum": 0
-    },
-    "segment_duration": {
-      "description": "The target flow segment duration in seconds. The duration for each segment may vary around this target value. See also the [Setting Flow Bit Rate Properties](https://github.com/bbc/tams/blob/main/docs/appnotes/0013-setting-flow-bit-rate-properties.md) AppNote for how this property can be used to calculate buffer sizes.",
-      "type": "object",
-      "required": [
-          "numerator"
-      ],
-      "properties": {
-          "numerator": {
-              "description": "numerator",
-              "type": "integer",
-              "exclusiveMinimum": 0
-          },
-          "denominator": {
-              "description": "denominator",
-              "type": "integer",
-              "default": 1,
-              "exclusiveMinimum": 0
-          }
-      }
-    },
-
-    "container_mapping": {
-        "description": "Describes the mapping of the Flow essence from the this Flow's container",
-        "$ref": "container-mapping.json"
+        "codec": 
+        {
+            "description": "A MIME type identification of the (lossy or lossless) coding used for the Flow content. Note that the `type` component of the container MIME type (i.e. the component before the `/`) may be different to the `type` component of the codec MIME type. e.g. An audio Flow may have `audio/aac` coded content may be wrapped in a `video/mp2t` container. Mime types from the [IANA registry](https://www.iana.org/assignments/media-types/media-types.xhtml) should be preferred. Where multiple MIME types are possible, the most common should be preferred. Where this is insufficient, the maintainers of the TAMS repository may create an application note advising which MIME type to use.",
+            "type": "string",
+            "pattern": "^[^\\s\/]+/[^\\s\/]+$"
+        },
+        "container": 
+        {
+            "description": "The container MIME type for Flow Segments. Note that the `type` component of the container MIME type (i.e. the component before the `/`) may be different to the `type` component of the codec MIME type. e.g. An audio Flow may have `audio/aac` coded content may be wrapped in a `video/mp2t` container. Where multiple types exist for a subtype (e.g. `video/mp4`, `audio/mp4`, `application/mp4`), the closest MIME type to the Flow `format` should be used (e.g. `audio/mp4` for a Flow `format` of `urn:x-nmos:format:audio`). Mime types from the [IANA registry](https://www.iana.org/assignments/media-types/media-types.xhtml) should be preferred. Where multiple MIME types are possible, the most common should be preferred. Where this is insufficient, the maintainers of the TAMS repository may create an application note advising which MIME type to use.",
+            "type": "string",
+            "pattern": "^[^\\s\/]+/[^\\s\/]+$"
+        },
+        "avg_bit_rate": 
+        {
+            "description": "The average bit rate of the Flow Segments in 1000 bits/second. A precise definition can be found in the [Setting Flow Bit Rate Properties](https://github.com/bbc/tams/blob/main/docs/appnotes/0013-setting-flow-bit-rate-properties.md) AppNote.",
+            "type": "integer",
+            "minimum": 0
+        },
+        "max_bit_rate": 
+        {
+            "description": "The maximum bit rate of the Flow Segments in 1000 bits/second. A precise definition can be found in the [Setting Flow Bit Rate Properties](https://github.com/bbc/tams/blob/main/docs/appnotes/0013-setting-flow-bit-rate-properties.md) AppNote.",
+            "type": "integer",
+            "minimum": 0
+        },
+        "segment_duration": 
+        {
+            "description": "The target Flow Segment duration in seconds. The duration for each Segment may vary around this target value. See also the [Setting Flow Bit Rate Properties](https://github.com/bbc/tams/blob/main/docs/appnotes/0013-setting-flow-bit-rate-properties.md) AppNote for how this property can be used to calculate buffer sizes.",
+            "type": "object",
+            "required": 
+            [
+                "numerator"
+            ],
+            "properties": 
+            {
+                "numerator": 
+                {
+                    "description": "numerator",
+                    "type": "integer",
+                    "exclusiveMinimum": 0
+                },
+                "denominator": 
+                {
+                    "description": "denominator",
+                    "type": "integer",
+                    "default": 1,
+                    "exclusiveMinimum": 0
+                }
+            }
+        },
+        "container_mapping": {
+              "description": "Describes the mapping of the Flow essence from the this Flow's container",
+              "$ref": "container-mapping.json"
+        }
     }
-  }
 }
