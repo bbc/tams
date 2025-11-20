@@ -22,6 +22,7 @@ For more information on how we use application notes, see [here](./appnotes/READ
 | [0013](./appnotes/0013-setting-flow-bit-rate-properties.md)          | Setting Flow bit rate properties                                |
 | [0014](./appnotes/0014-referencing-tams-content-in-other-systems.md) | Referencing TAMS content in other systems                       |
 | [0015](./appnotes/0015-using-tams-in-opentimelineio.md)              | Using TAMS in OpenTimelineIO                                    |
+| [0016](./appnotes/0016-authorisation-in-tams-workflows.md)           | Authorisation in TAMS workflows                                 |
 | [0017](./appnotes/0017-reuse-of-ids.md)                              | When to re-use IDs in TAMS and compatible systems               |
 | [0018](./appnotes/0018-managing-multiple-object-instances.md)        | Managing Multiple Object Instances                              |
 
@@ -68,6 +69,7 @@ For more information on how we use ADRs, see [here](./adr/README.md).
 | [0031](./adr/0031-flow-image-support.md)                           | Add new flow type to support still images                                  |
 | [0032](./adr/0032-specifying-storage-backend.md)                   | Specifying storage backend when requesting storage allocation              |
 | [0034](./adr/0034-storage-allow-object_ids.md)                     | Add object_ids option to Flow Storage request                              |
+| [0035](./adr/0035-fine-grained-auth.md)                            | Fine-grained Authorisation in TAMS Workflows                               |
 | [0036](./adr/0036-specifying-partial-segment-usage.md)             | Specifying partial segment usage |
 | [0037](./adr/0037-improve-webhooks.md)                             | Proposal for improvements to the Webhooks endpoints                        |
 | [0038](./adr/0038-improved-storage-management.md)                  | Improved Storage Management                                                |

@@ -2448,7 +2448,7 @@ paths:
         "400":
           $ref: '#/components/responses/trait_resource_info_head_400'
         "404":
-          description: The requested Media Object does not exist.
+          description: The requested Media Object does not exist. 404 MUST be returned if the ID has been assigned via the [`/flows/{flowId}/storage`](#/operations/POST_flows-flowId-storage), but not yet registered against a Flow Segment.
     get:
       summary: Media Object Information
       description: |
@@ -2547,7 +2547,7 @@ paths:
         "400":
           description: Bad request. Invalid query options.
         "404":
-          description: The requested Media Object does not exist.
+          description: The requested Media Object does not exist. 404 MUST be returned if the ID has been assigned via the [`/flows/{flowId}/storage`](#/operations/POST_flows-flowId-storage), but not yet registered against a Flow Segment.
   /objects/{objectId}/instances:
     post:
       summary: Register a Media Object instance
@@ -2598,7 +2598,7 @@ paths:
         "403":
           description: Forbidden. You do not have permission to modify this Media Object.
         "404":
-          description: The Media Object does not exist.
+          description: The Media Object does not exist. 404 MUST be returned if the ID has been assigned via the [`/flows/{flowId}/storage`](#/operations/POST_flows-flowId-storage), but not yet registered against a Flow Segment.
     delete:
       summary: Delete a Media Object instance
       description: |
@@ -2637,7 +2637,8 @@ paths:
         "403":
           description: Forbidden. You do not have permission to modify this Media Object.
         "404":
-          description: The requested Object ID in the path is invalid.
+          description: The requested Object ID in the path is invalid. 404 MUST be returned if the ID has been assigned via the [`/flows/{flowId}/storage`](#/operations/POST_flows-flowId-storage), but not yet registered against a Flow Segment.
+
   /flow-delete-requests:
     head:
       summary: List Flow Delete Requests
