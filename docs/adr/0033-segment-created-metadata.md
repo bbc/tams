@@ -1,5 +1,5 @@
 ---
-status: "draft"
+status: "rejected"
 ---
 # Add created metadata to segments
 
