@@ -1,0 +1,82 @@
+{
+    "title": "Flow Segment Post",
+    "description": "Provides the location and metadata of the media files corresponding to timerange Segments of a Flow.",
+    "type": "object",
+    "required":
+    [
+        "object_id",
+        "timerange"
+    ],
+    "properties":
+    {
+        "object_id":
+        {
+            "description": "The Object identifier for the Media Object.",
+            "type": "string"
+        },
+        "ts_offset":
+        {
+            "description": "The timestamp offset between the sample timestamps stored in, or inferred from, the media file and the corresponding timestamp in the Segment, ie. ts_offset = segment ts - media object ts. Assumed to be 0:0 if not set. Format as described by the [Timestamp](#/schemas/timestamp) type",
+            "$ref": "timestamp.json"
+        },
+        "timerange":
+        {
+            "description": "The timerange for the samples contained in the Segment. The timerange start is always inclusive. If samples have a duration then the timerange end is exclusive and covers at least the duration of the last sample. The exclusive timerange end will typically be set to the timestamp of the next sample. If the samples don't have a duration then the timerange end is inclusive. Format is described by the [TimeRange](#/schemas/timerange) type. Note that where temporal re-ordering is used, the timerange and samples refers to the presentation timeline.",
+            "$ref": "timerange.json"
+        },
+        "object_timerange":
+        {
+            "description": "The timerange covering the sample timestamps embedded in or derived from the Media Object itself, on the Media Object's timeline. If not given at first registration of an Object, defaults to `timerange - ts_offset` on the assumption that the Flow Segment uses the entire Media Object. Clients should not set this when Media Objects are re-used. Service implementations should reject requests where `object_timerange` is set to a value that conflicts with the existing Media Object metadata.",
+            "$ref": "timerange.json"
+        },
+        "last_duration":
+        {
+            "description": "The difference between the exclusive end of the `timerange` and the last sample timestamp. Format as described by the [Timestamp](#/schemas/timestamp) type, but cannot be negative",
+            "$ref": "timestamp.json"
+        },
+        "sample_offset":
+        {
+            "description": "The start of the Segment represented as a count of samples from the start of the Object. Note that a sample is a video frame or audio sample. A (coded) audio frame has multiple audio samples. Assumed to be 0 if not set. Must be set if the Flow Segment doesn't start at the beginning of the Media Object. DEPRECATED: Use object_timerange instead - see AppNote 0036. Service implementations SHOULD continue to store and return it if set.",
+            "type": "integer",
+            "deprecated": true
+        },
+        "sample_count":
+        {
+            "description": "The count of samples in the Segment (which may be fewer than in the Object). The count could be less than expected given the Segment duration and rate if there are gaps. If not set, every sample from sample_offset onwards is used. Must be set if the Flow Segment doesn't use the entire Media Object. Note that a sample is a video frame or audio sample. A (coded) audio frame has multiple audio samples. DEPRECATED: Use object_timerange instead - see AppNote 0036. Service implementations SHOULD continue to store and return it if set.",
+            "type": "integer",
+            "deprecated": true
+        },
+        "get_urls":
+        {
+            "description": "A list of URLs to which a GET request can be made to directly retrieve the contents of the Media Object. This is required by the `http_object_store` Storage Backend type, which is the only one currently described. Clients may choose any URL in the list and treat them as identical, however service instances may sort the list such that the preferred URL is first. `get_urls` should only be used to add uncontrolled URLs. URLs for the provided object_id controlled by the service instance will be populated automatically by the service instance.",
+            "type": "array",
+            "items":
+            {
+                "type": "object",
+                "required":
+                [
+                    "url",
+                    "label"
+                ],
+                "properties":
+                {
+                    "url":
+                    {
+                        "description": "A URL to which a GET request can be made to directly retrieve the contents of the Media Object. Clients should include credentials if the provide URL is on the same origin as the API endpoint",
+                        "type": "string"
+                    },
+                    "label":
+                    {
+                        "description": "Label identifying this URL. Service implementations should reject any requests using labels that are already associated with Storage Backends. Service implementations should reject any requests containing multiple `get_urls` with the same `label`.",
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "key_frame_count":
+        {
+            "description": "The number of key frames in the Media Object. This should be set greater than zero when the Media Object contains key frames that serve as a stream access point",
+            "type": "integer"
+        }
+    }
+}

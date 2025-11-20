@@ -1,69 +1,58 @@
 {
-  "type": "object",
-  "description": "Provides the location and metadata of the media files corresponding to timerange segments of a Flow.",
-  "title": "Flow Segment",
-  "required": [
-    "object_id",
-    "timerange"
-  ],
-  "properties": {
-    "object_id" : {
-      "description": "The object store identifier for the media object.",
-      "type": "string"
-    },
-    "ts_offset": {
-      "description": "The timestamp offset between the sample timestamps stored in the media file and the corresponding timestamp in the segment, ie. ts_offset = segment ts - media object ts. Assumed to be 0:0 if not set. Format as described by the [Timestamp](../schemas/timestamp#top) type, but cannot be negative",
-      "$ref": "timestamp.json"
-    },
-    "timerange": {
-      "description": "The timerange for the samples contained in the segment. The timerange start is always inclusive. If samples have a duration then the timerange end is exclusive and covers at least the duration of the last sample. The exclusive timerange end will typically be set to the timestamp of the next sample. If the samples don't have a duration then the timerange end is inclusive. Format is described by the [TimeRange](../schemas/timerange#top) type. Note that where temporal re-ordering is used, the timerange and samples refers to the presentation timeline.",
-      "$ref": "timerange.json"
-    },
-    "last_duration": {
-      "description": "The difference between the exclusive end of the `timerange` and the last sample timestamp. Format as described by the [Timestamp](../schemas/timestamp#top) type, but cannot be negative",
-      "$ref": "timestamp.json"
-    },
-    "sample_offset": {
-      "description": "The start of the segment represented as a count of samples from the start of the object. Note that a sample is a video frame or audio sample. A (coded) audio frame has multiple audio samples. Assumed to be 0 if not set.",
-      "type": "integer"
-    },
-    "sample_count": {
-      "description": "The count of samples in the segment (which may be fewer than in the object). The count could be less than expected given the segment duration and rate if there are gaps. If not set, every sample from sample_offset onwards is used. Note that a sample is a video frame or audio sample. A (coded) audio frame has multiple audio samples",
-      "type": "integer"
-    },
-    "get_urls": {
-      "description": "A list of URLs to which a GET request can be made to directly retrieve the contents of the segment. This is required by the `http_object_store` media store type, which is the only one currently described. Clients may choose any URL in the list and treat them as identical, however servers may sort the list such that the preferred URL is first.",
-      "type": "array",
-      "items": {
-        "type": "object",
-        "required": [
-          "url"
-        ],
-        "properties": {
-          "label": {
-            "description": "Label identifying this URL. If the 'label' is not set then this URL can't be filtered for using the 'accept_get_urls' API query parameter.",
-            "type": "string"
-          },
-          "url": {
-            "description": "A URL to which a GET request can be made to directly retrieve the contents of the segment. Clients should include credentials if the provide URL is on the same origin as the API endpoint",
-            "type": "string"
-          }
+    "type": "object",
+    "description": "Provides the location and metadata of the media files corresponding to timerange segments of a Flow.",
+    "title": "Flow Segment",
+    "allOf":
+    [
+        {
+            "type": "object",
+            "required":
+            [
+                "object_id",
+                "timerange"
+            ],
+            "properties":
+            {
+                "object_id":
+                {
+                    "description": "The object store identifier for the Media Object.",
+                    "type": "string"
+                },
+                "ts_offset":
+                {
+                    "description": "The timestamp offset between the sample timestamps stored in the media file and the corresponding timestamp in the Segment, ie. ts_offset = segment ts - media object ts. Assumed to be 0:0 if not set. Format as described by the [Timestamp](../schemas/timestamp#top) type",
+                    "$ref": "timestamp.json"
+                },
+                "timerange":
+                {
+                    "description": "The timerange for the samples contained in the Segment. The timerange start is always inclusive. If samples have a duration then the timerange end is exclusive and covers at least the duration of the last sample. The exclusive timerange end will typically be set to the timestamp of the next sample. If the samples don't have a duration then the timerange end is inclusive. Format is described by the [TimeRange](../schemas/timerange#top) type. Note that where temporal re-ordering is used, the timerange and samples refers to the presentation timeline.",
+                    "$ref": "timerange.json"
+                },
+                "last_duration":
+                {
+                    "description": "The difference between the exclusive end of the `timerange` and the last sample timestamp. Format as described by the [Timestamp](../schemas/timestamp#top) type, but cannot be negative",
+                    "$ref": "timestamp.json"
+                },
+                "object_timerange": {
+                    "description": "The timerange covering the sample timestamps embedded in or derived from the Media Object itself, on the Media Object's timeline.",
+                    "$ref": "timerange.json"
+                },
+                "sample_offset":
+                {
+                    "description": "The start of the Segment represented as a count of samples from the start of the Media Object. Note that a sample is a video frame or audio sample. A (coded) audio frame has multiple audio samples. Assumed to be 0 if not set. DEPRECATED: Use object_timerange instead - see AppNote 0036. Service implementations SHOULD continue to store and return it if set.",
+                    "type": "integer",
+                    "deprecated": true
+                },
+                "sample_count":
+                {
+                    "description": "The count of samples in the Segment (which may be fewer than in the Media Object). The count could be less than expected given the Segment duration and rate if there are gaps. If not set, every sample from sample_offset onwards is used. Note that a sample is a video frame or audio sample. A (coded) audio frame has multiple audio samples. DEPRECATED: Use object_timerange instead - see AppNote 0036. Service implementations SHOULD continue to store and return it if set.",
+                    "type": "integer",
+                    "deprecated": true
+                }
+            }
         },
-        "additionalProperties": false
-      }
-    },
-    "key_frame_count": {
-      "description": "The number of key frames in the segment. This should be set greater than zero when the segment contains key frames that serve as a stream access point",
-      "type": "integer"
-    },
-    "created_by": {
-      "description": "A string identifier for the entity that created the segment. Implementations SHOULD set suitable default values for `created_by` based on the principal accessing the system, and MAY permit clients to edit the value, subject to suitable permissions-based limitations.",
-      "type": "string"
-    },
-    "created": {
-      "description": "The date-time the segment was created in a given context, e.g. in the store. Implementations SHOULD ignore this if given in a PUT request, and instead manage it internally",
-      "type": "string",
-      "format": "date-time"
-    }
-  }
+        {
+            "$ref": "object-core.json"
+        }
+    ]
 }

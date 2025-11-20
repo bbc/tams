@@ -1,44 +1,32 @@
 [
-  {
-    "object_id": "tams-67cd7994-47d4-4e89-9e9f-5e548b7eb7dd.ts",
-    "timerange": "[0:0_10:0)",
-    "sample_count": 240,
-    "sample_offset": 0,
-    "get_urls": [
-      {
-        "label": "example-cloud-provider.eu-west-1:example-storage-product:example-store-name",
-        "url": "https://a4c52e22f45b4a0fa3ea3b9a42b35808-tams-demo.static.lon1.bbcis.uk/tams-67cd7994-47d4-4e89-9e9f-5e548b7eb7dd.ts"
-      }
-    ],
-    "created_by": "tams-dev",
-    "created": "2008-05-27T18:51:00Z"
-  },
-  {
-    "object_id": "tams-7dffa41c-9e12-4e7d-a269-0aae8351d806.ts",
-    "timerange": "[10:0_20:0)",
-    "sample_count": 240,
-    "sample_offset": 0,
-    "get_urls": [
-      {
-        "label": "example-cloud-provider.eu-west-1:example-storage-product:example-store-name",
-        "url": "https://a4c52e22f45b4a0fa3ea3b9a42b35808-tams-demo.static.lon1.bbcis.uk/tams-7dffa41c-9e12-4e7d-a269-0aae8351d806.ts"
-      }
-    ],
-    "created_by": "tams-dev",
-    "created": "2008-05-27T18:51:10Z"
-  },
-  {
-    "object_id": "tams-bdfb03ae-25a5-4a72-9b9e-14c5119813c9.ts",
-    "timerange": "[20:0_30:0)",
-    "sample_count": 240,
-    "sample_offset": 0,
-    "get_urls": [
-      {
-        "label": "example-cloud-provider.eu-west-1:example-storage-product:example-store-name",
-        "url": "https://a4c52e22f45b4a0fa3ea3b9a42b35808-tams-demo.static.lon1.bbcis.uk/tams-bdfb03ae-25a5-4a72-9b9e-14c5119813c9.ts"
-      }
-    ],
-    "created_by": "tams-dev",
-    "created": "2008-05-27T18:51:20Z"
-  }
+    {
+        "object_id": "846023d3-612d-5014-bc47-88f6eb2d04bb",
+        "timerange": "[0:0_10:0)",
+        "get_urls":
+        [
+            {
+                "url": "https://store.example.com/tams-e2b89b02-21e7-5f9d-aa2d-db38b01453c9/846023d3-612d-5014-bc47-88f6eb2d04bb"
+            }
+        ]
+    },
+    {
+        "object_id": "25be83fc-11d1-5743-9d47-6865cef5ea35",
+        "timerange": "[10:0_20:0)",
+        "get_urls":
+        [
+            {
+                "url": "https://store.example.com/tams-e2b89b02-21e7-5f9d-aa2d-db38b01453c9/25be83fc-11d1-5743-9d47-6865cef5ea35"
+            }
+        ]
+    },
+    {
+        "object_id": "8b785422-6a82-5d60-b25a-f77e0a748321",
+        "timerange": "[20:0_30:0)",
+        "get_urls":
+        [
+            {
+                "url": "https://store.example.com/tams-e2b89b02-21e7-5f9d-aa2d-db38b01453c9/8b785422-6a82-5d60-b25a-f77e0a748321"
+            }
+        ]
+    }
 ]

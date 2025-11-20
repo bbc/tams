@@ -157,7 +157,7 @@ async def simple_edit(
             # The media timeline started at zero when the ingest started, so `ts_offset` indicates what must be
             # added to the media time to get the Flow time.
             # So we can calculate media time at the start of the segment
-            seg_offset = Timestamp.from_str(segment["ts_offset"])
+            seg_offset = Timestamp.from_str(segment.get("ts_offset", "0:0"))
             media_time = seg_tr.start - seg_offset
 
             # Now we want to know what to add to that media time to get the new start time
@@ -294,8 +294,7 @@ if __name__ == "__main__":
 
     parser.add_argument(
         "--tams-url", type=str, required=True,
-        help=("URL of the top level endpoint in the TAMS service. "
-              "For Squirrel this must include the '/x-cloudfit/squirrelmediastore/<version>' path")
+        help=("URL of the top level endpoint in the TAMS service.")
     )
     parser.add_argument(
         "--oauth2-url", type=str, default=os.environ.get("OAUTH2_URL"),

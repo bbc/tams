@@ -1,0 +1,48 @@
+{
+  "id": "4f79cfd1-c057-47f4-8e4d-1b126ca7bf34",
+  "source_id": "2aa143ac-0ab7-4d75-bc32-5c00c13d186f",
+  "generation": 0,
+  "created": "2008-05-27T18:51:00Z",
+  "metadata_updated": "2023-09-14T09:45:26Z",
+  "segments_updated": "2023-09-14T09:45:26Z",
+  "description": "Big Buck Bunny",
+  "label": "bbb",
+  "format": "urn:x-nmos:format:video",
+  "created_by": "tams-dev",
+  "updated_by": "tams-dev",
+  "tags": {
+    "input_quality": "contribution",
+    "_tams_segmentation_rate": "10"
+  },
+  "codec": "video/h264",
+  "container": "video/mp2t",
+  "avg_bit_rate": 2479,
+  "essence_parameters": {
+    "vfr": true,
+    "frame_width": 1280,
+    "frame_height": 720,
+    "bit_depth": 8,
+    "interlace_mode": "progressive",
+    "colorspace": "BT709",
+    "transfer_characteristic": "SDR",
+    "aspect_ratio": {
+      "numerator": 16,
+      "denominator": 9
+    },
+    "pixel_aspect_ratio": {
+      "numerator": 1,
+      "denominator": 1
+    },
+    "component_type": "YCbCr",
+    "vert_chroma_subs": 2,
+    "horiz_chroma_subs": 2,
+    "avc_parameters": {
+      "profile": 100,
+      "level": 31,
+      "flags": 0
+    }
+  },
+  "collected_by": [
+    "e85efab4-993b-4ad6-9af3-4cd8d0d38860"
+  ]
+}

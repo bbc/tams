@@ -8,62 +8,82 @@
     ],
     "properties": {
         "url": {
-            "description": "The URL to which the API should make HTTP POST requests with event data",
+            "description": "The URL to which the service instance should make HTTP POST requests with event data",
             "type": "string"
         },
         "api_key_name": {
             "description": "The HTTP header name that is added to the event POST",
             "type": "string"
         },
-        "api_key_value": {
-            "description": "The value that the HTTP header 'api_key_name' will be set to",
-            "type": "string"
-        },
         "events": {
             "description": "List of event types to receive",
             "type": "array",
             "items": {
-                "type": "string"
+                "type": "string",
+                "enum": [
+                    "flows/created",
+                    "flows/updated",
+                    "flows/deleted",
+                    "flows/segments_added",
+                    "flows/segments_deleted",
+                    "sources/created",
+                    "sources/updated",
+                    "sources/deleted"
+                ]
             }
         },
         "flow_ids": {
             "description": "Limit Flow and Flow Segment events to Flows in the given list of Flow IDs",
             "type": "array",
             "items": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+                "$ref": "uuid.json"
             }
         },
         "source_ids": {
             "description": "Limit Flow, Flow Segment and Source events to Sources in the given list of Source IDs",
             "type": "array",
             "items": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+                "$ref": "uuid.json"
             }
         },
         "flow_collected_by_ids": {
             "description": "Limit Flow and Flow Segment events to those with Flow that is collected by a Flow Collection in the given list of Flow Collection IDs",
             "type": "array",
             "items": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+                "$ref": "uuid.json"
             }
         },
         "source_collected_by_ids": {
             "description": "Limit Flow, Flow Segment and Source events to those with Source that is collected by a Source Collection in the given list of Source Collection IDs",
             "type": "array",
             "items": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+                "$ref": "uuid.json"
             }
         },
         "accept_get_urls": {
-            "description": "List of labels of URLs to include in the `get_urls` property in `flows/segments_added` events. This option is the same as the `accept_get_urls` query parameter for the /flows/{flowId}/segments API endpoint, except that the labels are represented using a JSON array rather than a (comma separated list) string.",
+            "description": "List of labels of URLs to include in the `get_urls` property in `flows/segments_added` events. Where multiple `get_urls` filter query parameters are provided, the included `get_urls` will match all filters. This option is the same as the `accept_get_urls` query parameter for the [/flows/{flowId}/segments](#/operations/GET_flows-flowId-segments) API endpoint, except that the labels are represented using a JSON array rather than a (comma separated list) string.",
             "type": "array",
             "items": {
                 "type": "string"
             }
+        },
+        "accept_storage_ids": {
+            "description": "List of labels of `storage_id`s to include in the `get_urls` property in `flows/segments_added` events. Where multiple `get_urls` filter query parameters are provided, the included `get_urls` will match all filters. This option is the same as the `accept_storage_ids` query parameter for the [/flows/{flowId}/segments](#/operations/GET_flows-flowId-segments) API endpoint, except that the IDs are represented using a JSON array rather than a (comma separated list) string.",
+            "type": "array",
+            "items": {
+                "$ref": "uuid.json"
+            }
+        },
+        "presigned": {
+            "description": "Whether to include presigned/non-presigned URLs in the `get_urls` property in `flows/segments_added` events. Where multiple `get_urls` filter query parameters are provided, the included `get_urls` will match all filters. This option is the same as the `presigned` query parameter for the [/flows/{flowId}/segments](#/operations/GET_flows-flowId-segments) API endpoint.",
+            "type": "boolean"
+        },
+        "verbose_storage": {
+            "description": "Whether to include storage metadata in the `get_urls` property in `flows/segments_added` events. This option is the same as the `verbose_storage` query parameter for the [/flows/{flowId}/segments](#/operations/GET_flows-flowId-segments) API endpoint.",
+            "type": "boolean"
+        },
+        "tags": {
+          "$ref": "tags.json"
         }
     }
 }

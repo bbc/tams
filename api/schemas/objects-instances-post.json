@@ -1,0 +1,40 @@
+{
+    "type": "object",
+    "description": "Register a Media Object instance in the store.",
+    "title": "Media object registration",
+    "oneOf": [
+        {
+            "description": "Request the duplication of a Media Object instance to a new Storage Backend, via it's `storage_id`.",
+            "title": "Controlled instance",
+            "type": "object",
+            "required": [
+                "storage_id"
+            ],
+            "properties": {
+                "storage_id": {
+                    "description": "Storage backend identifier",
+                    "$ref": "uuid.json"
+                }
+            }
+        },
+        {
+            "description": "Register an uncontrolled Media Object instance via its `url`.",
+            "title": "Uncontrolled instance",
+            "type": "object",
+            "required": [
+                "url",
+                "label"
+            ],
+            "properties": {
+                "url": {
+                    "description": "A URL to which a GET request can be made to directly retrieve the contents of the media object. Clients should include credentials if the provide URL is on the same origin as the API endpoint",
+                    "type": "string"
+                },
+                "label": {
+                    "description": "Label identifying this Media Object instance. Service implementations should reject any requests using labels that are already associated with Storage Backends.",
+                    "type": "string"
+                }
+            }
+        }
+    ]
+}

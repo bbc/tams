@@ -1,11 +1,36 @@
 {
     "title": "Flow Storage Post",
-    "description": "Post data for the flow storage endpoint",
+    "description": "Post data for the Flow storage endpoint",
     "type": "object",
     "properties": {
         "limit": {
-            "description": "Limit the number of storage segments in each response page. Implementations may specify their own default and maximum for the limit",
+            "description": "Limit the number of Media Objects in each response page. Service implementations may specify their own default and maximum for the limit",
             "type": "integer"
+        },
+        "object_ids": {
+            "description": "Array of object_ids to use. The supplied object_ids must be new and not already in use in this TAMS service instance. A 400 response will be returned if any supplied object_id already exists.",
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "storage_id": {
+            "description": "The Storage Backend to allocate storage in. A Storage Backend identifier as advertised at the [/service/storage-backends](#/operations/GET_storage-backends) endpoint. If not set the default, as advertised at the [/service/storage-backends](#/operations/GET_storage-backends) endpoint, will be used if available. An invalid Storage Backend identifier will result in a 400 error.",
+            "$ref": "uuid.json"
         }
+    },
+    "not": {
+        "allOf": [
+            {
+                "required": [
+                    "limit"
+                ]
+            },
+            {
+                "required": [
+                    "object_ids"
+                ]
+            }
+        ]
     }
 }

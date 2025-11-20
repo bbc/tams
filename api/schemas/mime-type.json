@@ -1,0 +1,6 @@
+{
+    "title": "MIME Type",
+    "description": "A Mime Type without parameters as defined in [RFC2045](https://www.rfc-editor.org/rfc/rfc2045#section-5.1) and [RFC7231](https://www.rfc-editor.org/rfc/rfc7231#section-3.1.1.1)",
+    "type": "string",
+    "pattern": "^(application|audio|font|example|image|message|model|multipart|text|video|x-(?:[0-9A-Za-z!#$%&'*+.^_`|~-]+))/([0-9A-Za-z!#$%&'*+.^_`|~-]+)$"
+ }

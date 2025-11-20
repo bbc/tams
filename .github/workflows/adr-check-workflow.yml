@@ -1,0 +1,46 @@
+name: ADR and AppNote Check
+run-name: ${{ format('{0} triggered by {1} on {2} {3}', github.workflow, (github.event_name == 'workflow_dispatch' && format('user {0}', github.actor) || format('{0} event', github.event_name) ), github.repository, github.ref_name) }}
+on:
+  pull_request:
+
+jobs:
+  CheckADRAppNoteMessages:
+    permissions:
+      contents: read
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check out PR code
+        uses: actions/checkout@v4
+
+      - name: Check ADRs aren't still marked as "proposed"
+        working-directory: ./docs/adr
+        run: |
+          grep -r '^status: "proposed"' . 2>&1 || true
+          [ $(grep -r '^status: "proposed"' . | wc -c) -eq 0 ]
+
+      - name: Check ADRs are all included in the listing
+        working-directory: ./docs
+        run: |
+          fail=0
+          for filename in ./adr/*.md; do
+            if [[ "$filename" == "./adr/README.md" ]]; then continue; fi
+            if (($(grep $filename README.md | wc -c) == 0)); then
+              echo "::error::Missing ADR in listing: $filename"
+              fail=1
+            fi
+          done
+          exit $fail
+
+      - name: Check AppNotes are all included in the listing
+        working-directory: ./docs
+        run: |
+          fail=0
+          for filename in ./appnotes/*.md; do
+            if [[ "$filename" == "./appnotes/README.md" ]]; then continue; fi
+            if (($(grep $filename README.md | wc -c) == 0)); then
+              echo "::error::Missing AppNote in listing: $filename"
+              fail=1
+            fi
+          done
+          exit $fail
+

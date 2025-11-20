@@ -18,8 +18,9 @@ That is to say the same Object should be re-used where possible, and not duplica
 Implementations may serve the same Object from multiple locations (i.e. via `get_urls` on Flow Segments which use the Object), but the content at all of these locations should be identical.
 
 > [!IMPORTANT]
-> It is not currently possible to maintain Object IDs when transferring media between TAMS instances.
-> This is because a new Object must be created on the destination store, and this will create a new Object ID.
+> ~~It is not currently possible to maintain Object IDs when transferring media between TAMS instances.~~
+> ~~This is because a new Object must be created on the destination store, and this will create a new Object ID.~~
+> **Update** - [ADR 032](https://github.com/bbc/tams/blob/main/docs/adr/0034-storage-allow-object_ids.md) now allows for Object IDs to be specified when allocating storage, this allows for Object IDs to be maintain when transferring media between TAMS instances.
 > It is, however, possible to re-use Object IDs when referencing media held in external storage in another TAMS.
 
 If two Flows have identical data (i.e. Objects) at the same Timestamps, they should be the same Flow and use the same Flow ID and, by extension, the same Source ID.
@@ -64,7 +65,7 @@ But there may be cases where such parallel ingests are in entirely separate syst
 Systems may wish to present a list of existing Sources/Flows on setup in such a way that users could identify the content which is being duplicated and either re-use the existing copy (avoiding an un-needed ingest), or ingest with the existing identifiers.
 
 Note that systems probably shouldn't present the bare UUIDs to the user, they aren't intended to be human readable and will likely provide a bad experience.
-Systems should also avoid revealing the complex technical metadata of flows to users.
+Systems should also avoid revealing the complex technical metadata of Flows to users.
 Systems should ideally present users with the human readable Source Label and Description to enable them to identify matching Sources (i.e. content which matches editorially).
 Ideally, systems should then identify if there is a matching Flow automatically (i.e. a technical match).
 
@@ -96,13 +97,13 @@ Changing of the Source ID of a Flow should only carried out as a last resort whe
 An option less likely to run into these discrepancies is the full re-keying of a Flow.
 That is, the creation of a new Flow ID (if required) that makes use of the intended Source ID, and that references the existing Objects.
 This can be thought of as using the zero-transfer re-use mechanism of TAMS to correct the IDs.
-If an appropriate Flow ID already exists and should be re-used, systems should determine if it is appropriate to add references to the duplicate Objects to the segments which exist on the "destination" Flow.
+If an appropriate Flow ID already exists and should be re-used, systems should determine if it is appropriate to add references to the duplicate Objects to the Segments which exist on the "destination" Flow.
 This may be appropriate if the Objects are in backing storage at different logical/geographical locations.
-It may also be appropriate to reference only some of the objects if they fill in gaps in the destination Flow.
+It may also be appropriate to reference only some of the Objects if they fill in gaps in the destination Flow.
 Systems should then determine weather to delete the duplicate Flow.
 This decision should be made based on the likelihood of impact to other systems that the delete may cause.
-Systems should also consider the resource implications of persisting the duplicate flow.
-If all of the segments are shared between the Flows, the resource impact may only be at the metadata level and may not justify potential disruption.
+Systems should also consider the resource implications of persisting the duplicate Flow.
+If all of the Segments are shared between the Flows, the resource impact may only be at the metadata level and may not justify potential disruption.
 If the potential disruption of deleting the duplicate Flow is little/none, it should probably be deleted.
 
 It should be re-iterated that the best approach to content duplication is to avoid it all together.
@@ -124,7 +125,7 @@ Whether clips are represented as Flows within TAMS or external to TAMS will be d
 #### Authorization
 
 Where authorisation is provided at the Flow level (e.g. by using the mechanism described in ADR-0028/AppNote-0016) new "clip" Flows may be created to provide access to a subsection of an existing Flow only.
-These new flows, by necessity, will have new Flow IDs and Source IDs.
+These new Flows, by necessity, will have new Flow IDs and Source IDs.
 They may, and for efficiency purposes probably should, use the same media Objects where possible.
 It should be noted that Objects may contain more than one frame/sample's worth of media.
 As such, care should be taken where access to content around clip edges is sensitive and new Objects created to remove the sensitive content as required.

@@ -1,56 +1,47 @@
 [
-  {
-    "object_id": "tams-35e9b447-be10-43e0-ab85-e1e9fe15d354",
-    "timerange": "[100:0_110:0)",
-    "sample_count": 240,
-    "sample_offset": 0,
-    "get_urls": [
-      {
-        "label": "pipeline-a",
-        "url": "https://a4c52e22f45b4a0fa3ea3b9a42b35808-tams-demo.static.lon1.bbcis.uk/e79b3426-f770-4c86-a59e-7a040275bfed"
-      },
-      {
-        "label": "pipeline-b",
-        "url": "https://tams-b.s3.eu-west-1.amazonaws.com/35e9b447-be10-43e0-ab85-e1e9fe15d354?X-Amz-Security-Token=signature..."
-      }
-    ],
-    "created_by": "tams-dev",
-    "created": "2008-05-27T18:51:00Z"
-  },
-  {
-    "object_id": "tams-5826312e-9633-4f90-807d-b2588a8ad61f",
-    "timerange": "[110:0_120:0)",
-    "sample_count": 240,
-    "sample_offset": 0,
-    "get_urls": [
-      {
-        "label": "pipeline-a",
-        "url": "https://a4c52e22f45b4a0fa3ea3b9a42b35808-tams-demo.static.lon1.bbcis.uk/9af5e2ff-b28c-4c0f-869b-14ef3fad01d6"
-      },
-      {
-        "label": "pipeline-b",
-        "url": "https://tams-b.s3.eu-west-1.amazonaws.com/5826312e-9633-4f90-807d-b2588a8ad61f?X-Amz-Security-Token=signature..."
-      }
-    ],
-    "created_by": "tams-dev",
-    "created": "2008-05-27T18:51:10Z"
-  },
-  {
-    "object_id": "tams-73c8d377-10fb-4c98-9263-6efaf94f3eab",
-    "timerange": "[120:0_130:0)",
-    "sample_count": 240,
-    "sample_offset": 0,
-    "get_urls": [
-      {
-        "label": "pipeline-a",
-        "url": "https://a4c52e22f45b4a0fa3ea3b9a42b35808-tams-demo.static.lon1.bbcis.uk/5bdf042d-c742-4d69-b864-7e9435b2229a"
-      },
-      {
-        "label": "pipeline-b",
-        "url": "https://tams-b.s3.eu-west-1.amazonaws.com/73c8d377-10fb-4c98-9263-6efaf94f3eab?X-Amz-Security-Token=signature..."
-      }
-    ],
-    "created_by": "tams-dev",
-    "created": "2008-05-27T18:51:20Z"
-  }
+    {
+        "object_id": "846023d3-612d-5014-bc47-88f6eb2d04bb",
+        "timerange": "[100:0_110:0)",
+        "get_urls":
+        [
+            {
+                "label": "main_store",
+                "url": "https://store.example.com/tams-e2b89b02-21e7-5f9d-aa2d-db38b01453c9/846023d3-612d-5014-bc47-88f6eb2d04bb"
+            },
+            {
+                "label": "another_store",
+                "url": "https://another_store.example.com/tams-c6b8e7cc-edd3-5f6d-9d79-4467d06eb8bf/846023d3-612d-5014-bc47-88f6eb2d04bb"
+            }
+        ]
+    },
+    {
+        "object_id": "25be83fc-11d1-5743-9d47-6865cef5ea35",
+        "timerange": "[110:0_120:0)",
+        "get_urls":
+        [
+            {
+                "label": "main_store",
+                "url": "https://store.example.com/tams-e2b89b02-21e7-5f9d-aa2d-db38b01453c9/25be83fc-11d1-5743-9d47-6865cef5ea35"
+            },
+            {
+                "label": "another_store",
+                "url": "https://another_store.example.com/tams-c6b8e7cc-edd3-5f6d-9d79-4467d06eb8bf/25be83fc-11d1-5743-9d47-6865cef5ea35"
+            }
+        ]
+    },
+    {
+        "object_id": "8b785422-6a82-5d60-b25a-f77e0a748321",
+        "timerange": "[120:0_130:0)",
+        "get_urls":
+        [
+            {
+                "label": "main_store",
+                "url": "https://store.example.com/tams-e2b89b02-21e7-5f9d-aa2d-db38b01453c9/8b785422-6a82-5d60-b25a-f77e0a748321"
+            },
+            {
+                "label": "another_store",
+                "url": "https://another_store.example.com/tams-c6b8e7cc-edd3-5f6d-9d79-4467d06eb8bf/8b785422-6a82-5d60-b25a-f77e0a748321"
+            }
+        ]
+    }
 ]

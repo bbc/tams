@@ -1,7 +1,21 @@
 {
     "title": "Flow Collection",
+    "description": "Describes how Flows are collected into another Flow",
     "type": "array",
     "items": {
-        "$ref": "collection-item.json"
+        "type": "object",
+        "title": "Flow Collection Item",
+        "allOf": [
+            { "$ref": "collection-item.json" },
+            {
+                "type": "object",
+                "properties": {
+                    "container_mapping": {
+                        "description": "Describes the mapping of the Flow essence from this Flow collection's container",
+                        "$ref": "container-mapping.json"
+                    }
+                }
+            }
+        ]
     }
 }

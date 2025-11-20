@@ -79,7 +79,7 @@ Known values:
 
 * `awaiting_content` - Flow is expecting, but not currently receiving content
 * `ingesting` - Content is currently being ingested
-* `replication_in_progress` - Content is currently being ingested to this flow from another store via a replication process
+* `replication_in_progress` - Content is currently being ingested to this Flow from another store via a replication process
 * `closed_complete` - Flow is complete and will not receive any more content
 
 ### originating_id
@@ -98,7 +98,7 @@ Status: **Proposed**
 Proposed in [ADR0004a - Flow and Source References](../adr/0004a-ancestry-relationships.md).
 
 Used when this Flow was created by reference (i.e. this Flow is composed of pre-existing Segments in another Flow).
-Contains the timerange in the originating Flow that corresponds to this flow.
+Contains the timerange in the originating Flow that corresponds to this Flow.
 
 ### proxy_of_flow
 
@@ -139,17 +139,17 @@ The media's timestamp is stored in the ptp_timestamp property in the TEMI Timeli
 Status: **Implementation specific**
 
 Used in BBC R&D's experimental internal TAMS implementation named "Squirrel".
-A string representation of a Fraction, used to set the segment rate (segments per second) of the Flow.
+A string representation of a Fraction, used to set the Segment rate (Segments per second) of the Flow.
 This is an average rate.
-Actual segment rates/durations may vary.
+Actual Segment rates/durations may vary.
 
 ### \_tams_segmentation_rate
 
 Status: **Implementation specific**
 
-A string representation of a Fraction, used to set the segment rate (segments per second) of the Flow.
+A string representation of a Fraction, used to set the Segment rate (Segments per second) of the Flow.
 This is an average rate.
-Actual segment rates/durations may vary.
+Actual Segment rates/durations may vary.
 
 ### c2pa-provenance
 
@@ -174,10 +174,10 @@ Status: **Experimental**
 Used in the TAMS demonstration at IBC 2024.
 
 The type is a `number`.
-It is used to limit the number of segments presented in the HLS manifest.
+It is used to limit the number of Segments presented in the HLS manifest.
 Defaults to `150` if the tag is not set.
-Use the value `inf` to list all segments.
-However, listing all segments may result in the generation of the HLS manifest timing out.
+Use the value `inf` to list all Segments.
+However, listing all Segments may result in the generation of the HLS manifest timing out.
 
 ### hls_segment_length
 
@@ -192,8 +192,15 @@ Status: **Experimental**
 Used in the TAMS demonstration at NAB 2025.
 
 The type is a `boolean`.
-It is used to indictate the flow should be excluded from HLS manifest generation.
+It is used to indictate the Flow should be excluded from HLS manifest generation.
 Defaults to `false` if the tag is not set.
+
+### auth_classes
+
+Status: **Experimental**
+
+Suggested as a way to build lightweight Attribute-based Access Control in [AppNote0016: Authorisation in TAMS workflows](./0016-authorisation-in-tams-workflows.md).
+A comma seperated list of auth classes used to derive permissions on the Flow.
 
 ## Known Source Tags
 
@@ -204,5 +211,12 @@ Status: **Experimental**
 Used in the TAMS demonstration at NAB 2025.
 
 The type is a `boolean`.
-It is used to indictate the source should be excluded from HLS manifest generation.
+It is used to indictate the Source should be excluded from HLS manifest generation.
 Defaults to `false` if the tag is not set.
+
+### auth_classes
+
+Status: **Experimental**
+
+Suggested as a way to build lightweight Attribute-based Access Control in [AppNote0016: Authorisation in TAMS workflows](./0016-authorisation-in-tams-workflows.md).
+A comma seperated list of auth classes used to derive permissions on the Source.

@@ -1,24 +1,19 @@
 {
-    "type": "object",
-    "description": "Describes how an object (Source or Flow) is collected into another object of the same type",
     "title": "Collection Item",
+    "description": "Describes how an entity (Source or Flow) is collected into another entity of the same type",
+    "type": "object",
     "required": [
         "id",
         "role"
     ],
     "properties": {
         "id": {
-            "description": "Source or Flow Identifier of the member of this collection. Sources must only collect Sources, and Flows must only collect Flows. Must already be registered in TAMS",
-            "type": "string",
-            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            "description": "Source or Flow Identifier of the member of this collection. Sources MUST only collect Sources, and Flows MUST only collect Flows. Must already be registered in this service instance",
+            "$ref": "uuid.json"
         },
         "role": {
             "description": "A human-readable role of the element in this collection (e.g. 'R' to denote a right audio channel in a collection of mono audio Sources)",
             "type": "string"
-        },
-        "container_mapping": {
-            "description": "Describes the mapping of the Flow essence from this Flow collection's container",
-            "$ref": "container-mapping.json"
         }
     }
 }

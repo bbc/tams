@@ -1,7 +1,7 @@
 {
-    "type": "object",
     "title": "Deletion Request",
     "description": "Describes an ongoing deletion request",
+    "type": "object",
     "required": [
         "id",
         "flow_id",
@@ -12,20 +12,18 @@
     "properties": {
         "id": {
             "description": "Deletion Request ID",
-            "type": "string",
-            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            "$ref": "uuid.json"
         },
         "flow_id": {
-            "description": "ID of the flow to which the deletion request relates",
-            "type": "string",
-            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            "description": "ID of the Flow to which the deletion request relates",
+            "$ref": "uuid.json"
         },
         "timerange_to_delete": {
-            "description": "The timerange of FlowSegments to be deleted in this request, as described by the [TimeRange](../schemas/timerange#top) type",
+            "description": "The timerange of Flow Segments to be deleted in this request, as described by the [TimeRange](#/schemas/timerange) type",
             "$ref": "timerange.json"
         },
         "timerange_remaining": {
-            "description": "The timerange of FlowSegments not yet deleted by this request, as described by the [TimeRange](../schemas/timerange#top) type",
+            "description": "The timerange of Flow Segments not yet deleted by this request, as described by the [TimeRange](#/schemas/timerange) type",
             "$ref": "timerange.json"
         },
         "delete_flow": {
@@ -38,7 +36,7 @@
             "format": "date-time"
         },
         "created_by": {
-            "description": "A string identifier for the entity that created the deletion request. Implementations SHOULD set suitable default values for `created_by` based on the principal accessing the system, and MAY permit clients to edit the value, subject to suitable permissions-based limitations.",
+            "description": "A string identifier for the entity that created the deletion request. Service implementations SHOULD set suitable default values for `created_by` based on the principal accessing the system.",
             "type": "string"
         },
         "updated": {
@@ -62,7 +60,7 @@
             ]
         },
         "error": {
-            "description": "Provides more information for the error status, as described by the [Error](../schemas/error#top) type",
+            "description": "Provides more information for the error status, as described by the [Error](#/schemas/error) type",
             "$ref": "error.json"
         }
     }

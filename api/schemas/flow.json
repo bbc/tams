@@ -1,12 +1,23 @@
 {
-  "type": "object",
-  "description": "Describes a Flow",
-  "title": "Flow",
-  "oneOf": [
-    { "$ref": "flow-video.json" },
-    { "$ref": "flow-audio.json" },
-    { "$ref": "flow-image.json" },
-    { "$ref": "flow-data.json" },
-    { "$ref": "flow-multi.json" }
-  ]
+    "title": "Flow",
+    "description": "Describes a Flow",
+    "type": "object",
+    "oneOf":
+    [
+        {
+            "$ref": "flow-video.json"
+        },
+        {
+            "$ref": "flow-audio.json"
+        },
+        {
+            "$ref": "flow-image.json"
+        },
+        {
+            "$ref": "flow-data.json"
+        },
+        {
+            "$ref": "flow-multi.json"
+        }
+    ]
 }

@@ -1,8 +1,11 @@
-# Storage label format specification
+# 0009: Storage label format specification
+
+> [!CAUTION]
+> DEPRECATED: See [ADR0032](https://github.com/bbc/tams/blob/main/docs/appnotes/0032-specifying-storage-backend.md) for more details
 
 ## Abstract
 
-Users of TAMS have requested guidance on the use of `get_url` labels on flow segments.
+Users of TAMS have requested guidance on the use of `get_url` labels on Flow Segments.
 People want these to provide information to aid the selection of URLs where multiple are available.
 This Application Note provides a specification for the format of `get_url` labels to address these needs.
 
@@ -47,7 +50,7 @@ But we can specify a schema which allows a client to consistently decide which p
 
 ## Content
 
-Given all of the above, this Application Note recommends the following naming convention for the `get_urls` `label` parameter on flow segments:
+Given all of the above, this Application Note recommends the following naming convention for the `get_urls` `label` parameter on Flow Segments:
 
 ```text
 <provider>.<region[optional]>.<availabilityZone[optional]>:<storeType>.<presigned[optional]>:<storeName>

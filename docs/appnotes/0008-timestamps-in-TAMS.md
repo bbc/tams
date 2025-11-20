@@ -16,7 +16,7 @@ Future work may extend the specification to allow more explicit signalling of ti
 
 ### Timestamps in the API
 
-A timerange is associated with each media segment written, in the body of the POST request to register the segment.
+A timerange is associated with each media Segment written, in the body of the POST request to register the Segment.
 See the API documentation for [Flow Segments](https://bbc.github.io/tams/5.0/index.html#/operations/POST_flows-flowId-segments) for more details.
 
 The Flow `timerange` property provided in Flow GET responses is calculated from the available Flow Segments in the store.
@@ -37,7 +37,7 @@ A high-resolution timestamp is easily converted to/from a media unit count for d
 
 ### Uniqueness & linearity
 
-Since time is used as an index in TAMS, it's important that the clock or counter used is linear (strictly increasing without gaps or jumps), and that the mapping between timestamps and media objects is unique i.e. there can be no overlaps in the timeranges covered by media objects on the Flow timeline.
+Since time is used as an index in TAMS, it's important that the clock or counter used is linear (strictly increasing without gaps or jumps), and that the mapping between timestamps and Media Objects is unique i.e. there can be no overlaps in the timeranges covered by Media Objects on the Flow timeline.
 To support long-running Flows, the timestamp format used by TAMS is based on that used in [Precision Time Protocol](https://en.wikipedia.org/wiki/Precision_Time_Protocol), using 48 bits to represent seconds with 32 bits for nanoseconds.
 This provides an extremely large range of possible values of seconds.
 The default PTP epoch, determining the alignment of the origin of the PTP timescale with time of day, is 1 January 1970 00:00:00.
@@ -62,8 +62,8 @@ Where synchronisation relationships between media need to be created rather than
 > ![NOTE:](../images/NOTE.svg) Since time is used as the primary index and Flows are immutable, it follows that timeshifting the media necessitates the creation of a new Flow.
 Flows are co-timed representations of Sources, so this operation will also require a new parent Source to be created.
 See the appnote [Practical Application of the TAMS Content Model](./0001-multi-mono-essence-flows-sources.md) for further information about Flows and Sources.
-There is no need to copy the underlying media objects to achieve a simple timeshift.
-The original media objects can be referenced from the new Flow timeline.
+There is no need to copy the underlying Media Objects to achieve a simple timeshift.
+The original Media Objects can be referenced from the new Flow timeline.
 
 ### Real-time clock vs synthetic timelines
 

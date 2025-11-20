@@ -11,8 +11,7 @@
     "created_by": "tams-dev",
     "updated_by": "tams-dev",
     "tags": {
-        "input_quality": "web",
-        "_tams_segmentation_rate": "375/8"
+        "input_quality": "web"
     },
     "codec": "audio/aac",
     "container": "video/mp2t",
