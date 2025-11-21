@@ -19,7 +19,11 @@ This data would also prove useful when analysing other workflows such as limited
 
 ## Decision Outcome
 
-tbc
+Decision was to reject the ADR on the following grounds:
+- the metadata is not required to use TAMS for the primary use cases of reading or writing the content
+- adding the fields would cause a significant increase in the size of the segment metadata payload and particularly on the related database.
+It is important to keep the segment metadata as fast as possible and therefore small and optimised
+- use cases discussed could all be achieved through the use of an observability platform and querying underlying logs and therefore not required in the TAMS metadata model
 
 ### Implementation
 
