@@ -46,5 +46,5 @@ The alternative option is to not change the TAMS API specification, but look at 
 This could take the form of analytics utilising either the webhook event notifications or implementation logging.
 
 * Good: Minimises changes to the TAMS API
-* Good: Keeps the segment response 
+* Good: Keeps the segment response
 * Bad: Adds complexity to the system to find out basic information
