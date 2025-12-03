@@ -22,8 +22,10 @@ The process is:
       - `sem-ver: feature` - where a new feature has been added
       - `sem-ver: deprecation` - where an existing feature has been marked as deprecated, but not yet removed
 4. If you haven't already done so, sign the CLA (see below)
-5. Open a Pull Request with your changes.
-   Don't worry about leaving empty spaces on the PR template (it's aimed at internal contributions), just fill in the description
+5. Prior to opening a Pull Request you may wish to run the linter with `make lint`: see [Development](./README.md#development) for more on the targets available
+6. Open a Pull Request with your changes.
+   Don't worry about leaving empty spaces on the PR template (it's aimed at internal contributions), just fill in the description.
+   A maintainer will review your changes, and trigger the CI process.
 
 ## Contributor Licence Agreement (CLA)
 
