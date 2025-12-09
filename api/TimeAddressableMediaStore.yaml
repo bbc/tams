@@ -1005,7 +1005,7 @@ paths:
             type: boolean
         - name: timerange
           in: query
-          description: Limit `timerange` in the response to the time range over which Segments partially or wholely overlap with the provided timerange.
+          description: Limit `timerange` of the response to the time range over which Segments partially or wholly overlap with the provided timerange.
           schema:
             default: _
             $ref: 'schemas/timerange.json'
@@ -1031,7 +1031,7 @@ paths:
             type: boolean
         - name: timerange
           in: query
-          description:  Limit `timerange` in the response to the time range over which Segments partially or wholely overlap with the provided timerange.
+          description: Limit `timerange` of the response to the time range over which Segments partially or wholly overlap with the provided timerange.
           schema:
             default: _
             $ref: 'schemas/timerange.json'
@@ -1742,7 +1742,7 @@ paths:
             type: string
         - name: timerange
           in: query
-          description: Return only the results that partially or wholely overlap the timerange specified.
+          description: Return only the results that partially or wholly overlap the timerange specified.
           schema:
             $ref: 'schemas/timerange.json'
         - name: reverse_order
@@ -1869,7 +1869,7 @@ paths:
             type: string
         - name: timerange
           in: query
-          description: Return only the results that partially or wholely overlap the timerange specified.
+          description: Return only the results that partially or wholly overlap the timerange specified.
           schema:
             $ref: 'schemas/timerange.json'
         - name: reverse_order
