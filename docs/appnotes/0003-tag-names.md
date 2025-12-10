@@ -82,6 +82,21 @@ Known values:
 * `replication_in_progress` - Content is currently being ingested to this Flow from another store via a replication process
 * `closed_complete` - Flow is complete and will not receive any more content
 
+### language
+
+Status: **Experimental**
+
+The language of the Flow as an [ISO 639-3 code](https://iso639-3.sil.org/code_tables/639/data/all).
+Where possible, the equivelant Source tag should also be set.
+While a single language per Flow is strongly preferred, this value may be a list where e.g. there are multiple languages spoken in a scene, or where a timed text Flow contains multiple language options.
+
+Examples:
+* [`eng`](https://iso639-3.sil.org/code/eng) for video containing English text
+* [`bfi`](https://iso639-3.sil.org/code/bfi) for video containing British Sign Language
+* [`fra`](https://iso639-3.sil.org/code/fra) for audio containing French speech
+* [`deu`](https://iso639-3.sil.org/code/deu) for German captions
+* `["eng", "fra"]` for audio where both English and French are spoken
+
 ### originating_id
 
 Status: **Proposed**
@@ -220,3 +235,18 @@ Status: **Experimental**
 
 Suggested as a way to build lightweight Attribute-based Access Control in [AppNote0016: Authorisation in TAMS workflows](./0016-authorisation-in-tams-workflows.md).
 A comma seperated list of auth classes used to derive permissions on the Source.
+
+### language
+
+Status: **Experimental**
+
+The language of the Source as an [ISO 639-3 code](https://iso639-3.sil.org/code_tables/639/data/all).
+Where possible, the equivelant Flow tag should also be set.
+While a single language per Source is strongly preferred, this value may be a list where e.g. there are multiple languages spoken in a scene, or where a timed text Flow contains multiple language options.
+
+Examples:
+* [`eng`](https://iso639-3.sil.org/code/eng) for video containing English text
+* [`bfi`](https://iso639-3.sil.org/code/bfi) for video containing British Sign Language
+* [`fra`](https://iso639-3.sil.org/code/fra) for audio containing French speech
+* [`deu`](https://iso639-3.sil.org/code/deu) for German captions
+* `["eng", "fra"]` for audio where both English and French are spoken
