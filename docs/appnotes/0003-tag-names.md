@@ -91,6 +91,7 @@ Where possible, the equivelant Source tag should also be set.
 While a single language per Flow is strongly preferred, this value may be a list where e.g. there are multiple languages spoken in a scene, or where a timed text Flow contains multiple language options.
 
 Examples:
+
 * [`eng`](https://iso639-3.sil.org/code/eng) for video containing English text
 * [`bfi`](https://iso639-3.sil.org/code/bfi) for video containing British Sign Language
 * [`fra`](https://iso639-3.sil.org/code/fra) for audio containing French speech
@@ -245,6 +246,7 @@ Where possible, the equivelant Flow tag should also be set.
 While a single language per Source is strongly preferred, this value may be a list where e.g. there are multiple languages spoken in a scene, or where a timed text Flow contains multiple language options.
 
 Examples:
+
 * [`eng`](https://iso639-3.sil.org/code/eng) for video containing English text
 * [`bfi`](https://iso639-3.sil.org/code/bfi) for video containing British Sign Language
 * [`fra`](https://iso639-3.sil.org/code/fra) for audio containing French speech
