@@ -35,7 +35,7 @@ To judge this position, we might consider what other types of media management T
 TAMS implementations are currently responsible for the reference counting of Media Objects and deleting the Objects from storage once it is no longer references by any Flow Segments.
 It is vital for the management of Media Objects given that they have no conceptual "owner" within the TAMS system, and thus no other system responsible for their deletion.
 This operation is performed by reference counting Object IDs as opposed to explicit signalling by the client.
-It requires no configuration
+It requires no configuration.
 This is also a case where an instance may be considered to be performing its own maintenance routines.
 Loop recording, on the other hand, may be configured via data in the TAMS Service (tags or a field in the core spec) but actually enacted by a secondary system.
 
