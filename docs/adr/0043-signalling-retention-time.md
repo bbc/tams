@@ -97,6 +97,12 @@ This ADR revisits this topic.
 * Option 6c: Describe a method of deleting an entire Flow at a time offset from its Segments updated time
 * Option 6d: Describe a method of deleting an entire Flow at a time offset from the most recent of Segments updated or Metadata updated time
 * Option 7: Describe potential implementation architectures in an Application Note
+* Option 8a: Signal Object garbage collection timeout via the `/service` metadata
+* Option 8b: Specify a fixed Object garbage collection timeout in the specification
+* Option 8c: Do not specify an Object garbage collection timeout
+* Option 9a: Signal presigned URL expiry time via the `/service` metadata
+* Option 9b: Specify presigned URL expiry time in the specification
+* Option 9c: Do not specify a presigned URL expiry time
 
 ## Decision Outcome
 
