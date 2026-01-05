@@ -112,6 +112,8 @@ Chosen options:
 * Option 5b: Describe a method of deleting Segments at a time offset from their TimeRange end
 * Option 6d: Describe a method of deleting an entire Flow at a time offset from the most recent of Segments updated or Metadata updated time
 * Option 7: Describe potential implementation architectures in an Application Note
+* Option 8?
+* Option 9?
 
 This combination of options shall result in a clearly defined approach to implementing loop recording functionality.
 It avoids adding any features to the core specification which cannot be relied upon at all times.
