@@ -62,6 +62,25 @@ Should this feature be deeply integrated into TAMS, or should we expect that thi
 In addition to loop recording, another desirable type of automated clean-up is the deletion of Flows at or after a period of time.
 This ADR will also explore some options for such a feature.
 
+An existing type of automated clean-up that spec references is the garbage collection of Media Objects.
+The spec is currently vague on how this should be implemented.
+This ADR revisits this topic.
+
+Objects are garbage collected both when they are no longer referenced by any Flow Segments, and if they are never registered against a Flow Segment.
+Garbage collection where an Object is no longer referenced by a Flow Segment should happen immediately as permissions can no longer be derived from a parent Flow.
+Garbage collection where an Object is never registered must happen after a period of time to allow for the opportunity for the Object to be registered against a Flow Segment.
+Currently the specification only states the following:
+
+> Service implementations need to handle situations where Objects were uploaded but no Flow Segment was registered successfully.
+
+This means there are no explicit expectations on how much time a client has to make use of an Object.
+
+Furthermore, TAMS currently makes no recommendations on the expiry time of pre-signed URLS.
+Common approaches include this information in the URL itself.
+But this cannot be relied upon.
+This means there are no explicit expectations on how much time a client has to make use of a pre-signed URL.
+This ADR revisits this topic.
+
 ## Considered Options
 
 * Option 1: Leave loop recorder signalling up to the implementer
@@ -244,3 +263,54 @@ This option would be combined with any of the above signalling options.
 It would see an Application Note produced describing possible approaches to implementing loop record functionality.
 
 * Good, because it reduces the design work required on the part of implementers of such functionality
+
+### Option 8a: Signal Object garbage collection timeout via the `/service` metadata
+
+This option would see a parameter added to the metadata at the `/service` endpoint that a Service may use to communicate the minimum time Objects will be available for after first creation.
+Clients should upload content to Objects and register them against segments within this timeframe.
+
+* Good, because it provides a clear contract between Services and Clients regarding the timeframe in which Objects must be used
+* Good, because it allows for Services to set that timeframe based on their implementation/requirements
+* Bad, because it requires Clients to adapt to that signalled timeframe
+
+### Option 8b: Specify a fixed Object garbage collection timeout in the specification
+
+This option would see the TAMS specification specify the minimum time Objects will be available for after first creation.
+Clients should upload content to Objects and register them against segments within this timeframe.
+
+* Good, because it provides a clear contract between Services and Clients regarding the timeframe in which Objects must be used
+* Good, because it doesn't require Clients to adapt to a signalled timeframe
+* Bad, because it doesn't allow for Services to set that timeframe based on their implementation/requirements
+
+### Option 8c: Do not specify an Object garbage collection timeout
+
+This option would see no changes to the TAMS specification.
+The current statement in the specification - that service implementations should handle the case where Objects aren't registered - would remain.
+
+* Good, because it allows for Services to set that timeframe based on their implementation/requirements
+* Bad, because there is no clear contract between Services and Clients regarding the timeframe in which Objects must be used
+* Bad, because Clients cannot adapt to this potentially variable timeframe
+
+### Option 9a: Signal presigned URL expiry time via the `/service` metadata
+
+This option would see a parameter added to the metadata at the `/service` endpoint that a Service may use to communicate the minimum time pre-signed URLs will be valid for.
+
+* Good, because it provides a clear contract between Services and Clients regarding the timeframe over which pre-signed URLs are valid.
+* Good, because it allows for Services to set that timeframe based on their implementation/requirements
+* Bad, because it requires Clients to adapt to that signalled timeframe
+
+### Option 9b: Specify presigned URL expiry time in the specification
+
+This option would see the TAMS specification specify the minimum time pre-signed URLs will be valid for.
+
+* Good, because it provides a clear contract between Services and Clients regarding the timeframe over which pre-signed URLs are valid.
+* Good, because it doesn't require Clients to adapt to a signalled timeframe
+* Bad, because it doesn't allow for Services to set that timeframe based on their implementation/requirements
+
+### Option 9c: Do not specify a presigned URL expiry time
+
+This option would see no changes to the TAMS specification.
+
+* Good, because it allows for Services to set that timeframe based on their implementation/requirements
+* Bad, because there is no clear contract between Services and Clients regarding the timeframe over which pre-signed URLs are valid
+* Bad, because Clients cannot adapt to this potentially variable timeframe
