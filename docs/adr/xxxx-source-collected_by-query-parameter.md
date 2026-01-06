@@ -5,10 +5,10 @@ status: "draft"
 
 ## Context and Problem Statement
 
-Currently at the Source level there is no filtering on the collected_by field.
+Currently at the Source level there is no filtering on the `collected_by` field.
 When vendors are building systems which list content stored in TAMS then they are only looking for the sources at the top of the content tree.
 In many cases this is the multi-Source, however due to single essence (eg audio only) workflows then this is not a reliable method of finding the top level content.
-To achieve this they must go through every result and look to see if the collected_by field is missing as this then indicates that it is the top of a Source collection.
+To achieve this they must go through every result and look to see if the `collected_by `field is missing as this then indicates that it is the top of a Source collection.
 This process can also throw any form of sensible pagination in a client application as when requesting content from the TAMS API it is not known how many results will be retained or discarded.
 
 This ADR is to look at moving this behaviour from the client side into the API.
@@ -44,8 +44,8 @@ See the API specification changes in PR [#xxx](https://github.com/bbc/tams/pull/
 When querying tags there are two fields available - you query on a tag name to get the value, or to query on a second parameter (`tag_exists`) to find out if that tag exists.
 Following this model would mean adding a two parameters - a new query parameter `collected_by_exists` with a boolean value and the `collected_by` to be able to search on one or more ID's.
 
-For the boolean field setting to false this would return all Sources where there is no collected_by values present which is the required behaviour.
-Setting this to true would only return Sources which have a collected_by value.
+For the boolean field setting to false this would return all Sources where there is no `collected_by` values present which is the required behaviour.
+Setting this to true would only return Sources which have a `collected_by` value.
 This option currently has no uses cases, however using this model and a boolean logically requires this behaviour.
 
 
@@ -59,7 +59,7 @@ This option currently has no uses cases, however using this model and a boolean 
 
 ### Option 2: Follow tags example but only implement the exists query parameter
 
-Since the use cases driving this requirement only focus on whether the item is collected_by another Source, then option 2 takes just the exists query parameter element from option 1 and implements that.
+Since the use cases driving this requirement only focus on whether the item is `collected_by` another Source, then option 2 takes just the exists query parameter element from option 1 and implements that.
 In this option it is not possible to query on the ID in the collection, only that it exists.
 
 | Behaviour | Query Parameter |
