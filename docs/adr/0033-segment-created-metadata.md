@@ -49,4 +49,4 @@ This could take the form of analytics utilising either the webhook event notific
 
 ## Additional notes
 
-This ADR was original raised as PR [#129](https://github.com/bbc/tams/pull/129) however was replaced with PR [#xxx](https://github.com/bbc/tams/pull/xxx)
+This ADR was original raised as PR [#129](https://github.com/bbc/tams/pull/129) however was replaced with PR [#165](https://github.com/bbc/tams/pull/165)
