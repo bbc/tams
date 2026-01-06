@@ -82,7 +82,7 @@ Known values:
 * `replication_in_progress` - Content is currently being ingested to this Flow from another store via a replication process
 * `closed_complete` - Flow is complete and will not receive any more content
 
-### language
+### language_code
 
 Status: **Experimental**
 
@@ -237,7 +237,7 @@ Status: **Experimental**
 Suggested as a way to build lightweight Attribute-based Access Control in [AppNote0016: Authorisation in TAMS workflows](./0016-authorisation-in-tams-workflows.md).
 A comma seperated list of auth classes used to derive permissions on the Source.
 
-### language
+### language_code
 
 Status: **Experimental**
 
