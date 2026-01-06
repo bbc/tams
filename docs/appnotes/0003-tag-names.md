@@ -208,7 +208,7 @@ Status: **Experimental**
 Used in the TAMS demonstration at NAB 2025.
 
 The type is a `boolean`.
-It is used to indictate the Flow should be excluded from HLS manifest generation.
+It is used to indicate the Flow should be excluded from HLS manifest generation.
 Defaults to `false` if the tag is not set.
 
 ### auth_classes
@@ -216,7 +216,7 @@ Defaults to `false` if the tag is not set.
 Status: **Experimental**
 
 Suggested as a way to build lightweight Attribute-based Access Control in [AppNote0016: Authorisation in TAMS workflows](./0016-authorisation-in-tams-workflows.md).
-A comma seperated list of auth classes used to derive permissions on the Flow.
+A comma separated list of auth classes used to derive permissions on the Flow.
 
 ## Known Source Tags
 
@@ -227,7 +227,7 @@ Status: **Experimental**
 Used in the TAMS demonstration at NAB 2025.
 
 The type is a `boolean`.
-It is used to indictate the Source should be excluded from HLS manifest generation.
+It is used to indicate the Source should be excluded from HLS manifest generation.
 Defaults to `false` if the tag is not set.
 
 ### auth_classes
@@ -235,14 +235,14 @@ Defaults to `false` if the tag is not set.
 Status: **Experimental**
 
 Suggested as a way to build lightweight Attribute-based Access Control in [AppNote0016: Authorisation in TAMS workflows](./0016-authorisation-in-tams-workflows.md).
-A comma seperated list of auth classes used to derive permissions on the Source.
+A comma separated list of auth classes used to derive permissions on the Source.
 
 ### language_code
 
 Status: **Experimental**
 
 The language of the Source as an [ISO 639-3 code](https://iso639-3.sil.org/code_tables/639/data/all).
-Where possible, the equivelant Flow tag should also be set.
+Where possible, the equivalent Flow tag should also be set.
 While a single language per Source is strongly preferred, this value may be a list where e.g. there are multiple languages spoken in a scene, or where a timed text Flow contains multiple language options.
 
 Examples:
