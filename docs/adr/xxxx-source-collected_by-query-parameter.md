@@ -16,7 +16,6 @@ This has the benefit of not only making it simpler for any system looking for to
 
 While the focus of this ADR is on the Source level of the TAMS API, there are sufficient similarities between the data structures of sources and flows that it is worth considering whether this should be applied to both levels.
 
-
 ## Considered Options
 
 Source Options:
@@ -48,12 +47,11 @@ For the boolean field setting to false this would return all Sources where there
 Setting this to true would only return Sources which have a `collected_by` value.
 This option currently has no uses cases, however using this model and a boolean logically requires this behaviour.
 
-
 | Behaviour | Query Parameter |
 | --------- | --------------- |
 | Source is not collected | `collected_by_exists=false` |
 | Source is collected by specific Source | `collected_by=a46c49f1-4764-42b9-9f91-f267a58903c4` |
-| Source is collected by any of a set of Sources | `collected_by=a46c49f1-4764-42b9-9f91-f267a58903c4,f3ac31bb-c66b-43f8-8362-c82e76f0d28d` |
+| Source is collected by any of the specified Sources | `collected_by=a46c49f1-4764-42b9-9f91-f267a58903c4,f3ac31bb-c66b-43f8-8362-c82e76f0d28d` |
 | Source is collected by any Source | `collected_by_exists=true` |
 | Note that this combination is non-sense | `collected_by_exists=false&collected_by=a46c49f1-4764-42b9-9f91-f267a58903c4` |
 
@@ -67,19 +65,24 @@ In this option it is not possible to query on the ID in the collection, only tha
 | Source is not collected | `collected_by_exists=false` |
 | Source is collected by any Source | `collected_by_exists=true` |
 
+* Good: Keeps it simple and only implements the required behaviour
+* Good: Does not force the requirement to also filter on the ID values
+* Bad: no currently known use case for when the parameter is set to true
 
 ### Option 3: Follow accept_get_urls example and use an empty query parameter
 
 On the `/segments` end point it is possible to specify a query parameter of `accept_get_urls`.
 This field can be comma separated list of labels, however it is allowed to be examply which means that the `get_urls` are ommited in the result
 
-
 | Behaviour | Query Parameter |
 | --------- | --------------- |
 | Source is not collected | `collected_by=` |
 | Source is collected by specific Source | `collected_by=a46c49f1-4764-42b9-9f91-f267a58903c4` |
-| Source is collected by any of a set of Sources | `collected_by=a46c49f1-4764-42b9-9f91-f267a58903c4,f3ac31bb-c66b-43f8-8362-c82e76f0d28d` |
+| Source is collected by any of the specified Sources | `collected_by=a46c49f1-4764-42b9-9f91-f267a58903c4,f3ac31bb-c66b-43f8-8362-c82e76f0d28d` |
 | Source is collected by any Source |  Not possible |
+
+* Good: If filtering by ID is required then this keeps it to a single field
+* Bad: Requires the filtering by ID to be a logical query parameter
 
 If chosen to also apply at the Flow leve then is `collected_by=a46c49f1-4764-42b9-9f91-f267a58903c4` too similar to `/flows/a46c49f1-4764-42b9-9f91-f267a58903c4/flow_collection`? 
 The first gives you all the metadata about the flows, where the later only gives you the ID's and roles
