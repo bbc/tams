@@ -13,7 +13,7 @@ This document describes how flow profiles can be used within the TAMS API to sim
 
 Within a customer deployment of TAMS it is expected that there would be limited number of recommended formats for users to work in.
 Typically this could include a target format for the high quality media and standardised formats for proxy media and images.
-These formats are typically refered to as House formats and do not preclude the storing of other content within the store, however it is likely to be normalised at some point to the house format.
+These formats are typically referred to as House formats and do not preclude the storing of other content within the store, however it is likely to be normalised at some point to the house format.
 
 The use of house formats then makes workflows such as ingest, rendering new content after editing, generation of proxy content and edit by reference easier.
 House formats define one or more common formats for all the systems to utilise.
@@ -31,7 +31,7 @@ The more sources involved in this process, the harder this becomes.
 
 The TAMS profile model is split into a number of stages:
 
-* An end-point to list and describe the available profiles supported by the store
+* An endpoint to list and describe the available profiles supported by the store
 * The ability to supply a profile when creating a flow and the de-normalisation of the technical details at the point of creation
 * The ability to query flows for a given profile to easily and quickly find the required media type
 
@@ -72,7 +72,7 @@ This then simplifies the process of creating the required flows and sources for 
 The edit process could then process each input source in turn read the available flows and match them to the destination flows using the profile tag easily.
 If the source content has additional non standard flows then these could be ignored.
 
-From a flow created from a profile, it is possible to query via both profile ID and also the individual parameter of the flow that have been inheritied from the profile.
+From a flow created from a profile, it is possible to query via both profile ID and also the individual parameter of the flow that have been inherited from the profile.
 
 ## Multi-store working with profiles
 
@@ -82,9 +82,9 @@ This is the same model as for flow, source and object ID's which should be prese
 For workflows where replication of the same content formats are happening on a regular basis then it is recommended that the same profile is loaded into both stores using the same UUID.
 This will mean than when flows are replicated between the stores then the profile identifier will continue to link to the metadata.
 
-If the profile does not existing within the destination store then the profile ID should continue to be preserved.
+If the profile does not exist within the destination store then the profile ID should continue to be preserved.
 This will continue to allow the matching of content within the store by profile ID, plus the profile can be added later and will link to the existing content.
 
-For workflows including more than two orgnaisations it is recommended that one organisation takes responsibility for owning and publishing the profiles.
+For workflows including more than two organisations it is recommended that one organisation takes responsibility for owning and publishing the profiles.
 These profiles can then be loaded into the destination stores.
 The organisation could be a single company or could be an industry body.
