@@ -1186,13 +1186,13 @@ paths:
       parameters:
         - name: include_timerange
           in: query
-          description: Include the available Segment timerange in the response.
+          description: Include `timerange` in the response.
           schema:
             default: false
             type: boolean
         - name: timerange
           in: query
-          description: Limit the returned available Segment timerange to this timerange.
+          description: Limit `timerange` of the response to the time range over which Segments partially or wholly overlap with the provided timerange.
           schema:
             default: _
             $ref: 'schemas/timerange.json'
@@ -1212,13 +1212,13 @@ paths:
       parameters:
         - name: include_timerange
           in: query
-          description: Include the available Segment timerange in the response.
+          description: Include `timerange` in the response.
           schema:
             default: false
             type: boolean
         - name: timerange
           in: query
-          description: Limit the returned available Segment timerange to this timerange.
+          description: Limit `timerange` of the response to the time range over which Segments partially or wholly overlap with the provided timerange.
           schema:
             default: _
             $ref: 'schemas/timerange.json'
@@ -1941,7 +1941,7 @@ paths:
             type: string
         - name: timerange
           in: query
-          description: Return only the results in the timerange specified.
+          description: Return only the results that partially or wholly overlap the timerange specified.
           schema:
             $ref: 'schemas/timerange.json'
         - name: reverse_order
@@ -2068,7 +2068,7 @@ paths:
             type: string
         - name: timerange
           in: query
-          description: Return only the results in the timerange specified.
+          description: Return only the results that partially or wholly overlap the timerange specified.
           schema:
             $ref: 'schemas/timerange.json'
         - name: reverse_order
