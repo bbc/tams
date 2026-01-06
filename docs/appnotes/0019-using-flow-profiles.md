@@ -55,9 +55,8 @@ When creating a flow the generating system has two options:
 1. Specify all the technical characteristics of the flow including the wrapper, codec and essence parameters alongside the non-technical parameters such as label and description
 2. Provide just the technical profile for the flow and non-technical parameters required
 
-When using the second option on submission of the create flow request, the store will then read the metadata for a given profile and use this to populate the metadata for the flow.
-This de-normalisation of the technical parameters means that on the read side the flows created via both mechanisms have the same technical parameters available.
-Additionally if the decision is made to change a standard profile in the future then this does not affect the existing flows as the parameters have already been replicated and should remain unchanged to reflect the media actually being stored.
+When using the second option on submission of the create flow request it is simpler for the creating system.
+The store is responsible for the de-normalisation of the technical parameters so that when reading from the API the flows created via both mechanisms have the same technical parameters available.
 
 Flows that have been created from a profile will include the parameter indicating which profile they were created from.
 This differentiates them from the flows that have been created with the technical characteristics directly.
@@ -72,7 +71,8 @@ This then simplifies the process of creating the required flows and sources for 
 The edit process could then process each input source in turn read the available flows and match them to the destination flows using the profile tag easily.
 If the source content has additional non standard flows then these could be ignored.
 
-From a flow created from a profile, it is possible to query via both profile ID and also the individual parameter of the flow that have been inherited from the profile.
+By the nature of the TAMS API it is possible to query via both profile ID and also the individual parameters of the flow that have been inherited from the profile.
+As per standard behaviour, the API should only return results which match all fields, so for this scenario the flow must have a profile ID and match the other parameters requested.
 
 ## Multi-store working with profiles
 
