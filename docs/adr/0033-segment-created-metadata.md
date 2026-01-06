@@ -25,7 +25,6 @@ Decision was to reject the ADR on the following grounds:
 It is important to keep the segment metadata as fast as possible and therefore small and optimised
 * use cases discussed could all be achieved through the use of an observability platform and querying underlying logs and therefore not required in the TAMS metadata model
 
-
 ## Pros and Cons of the Options
 
 ### Option 1: Add new metadata fields to segment model
@@ -45,7 +44,6 @@ This could take the form of analytics utilising either the webhook event notific
 * Good: Minimises changes to the TAMS API
 * Good: Keeps the segment response
 * Bad: Adds complexity to the system to find out basic information
-
 
 ## Additional notes
 
