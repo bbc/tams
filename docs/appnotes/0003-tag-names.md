@@ -87,7 +87,7 @@ Known values:
 Status: **Experimental**
 
 The language of the Flow as an [ISO 639:2023 Set 3 code](https://iso639-3.sil.org/code_tables/639/data/all) (This replaces ISO 639-3, but is still tracked by the linked website which uses the old naming).
-Where possible, the equivelant Source tag should also be set.
+Where possible, the equivalent Source tag should also be set.
 While a single language per Flow is strongly preferred, this value may be a list where e.g. there are multiple languages spoken in a scene, or where a timed text Flow contains multiple language options.
 
 Examples:
