@@ -26,8 +26,8 @@ Source Options:
 * Option 4: Do nothing
 
 Flows:
-* Option: Apply the same querying capabilities at both Source and Flow level
-* Option: Only apply the new query capabilities at the Source level
+* Option A: Apply the same querying capabilities at both Source and Flow level
+* Option B: Only apply the new query capabilities at the Source level
 
 ## Decision Outcome
 
