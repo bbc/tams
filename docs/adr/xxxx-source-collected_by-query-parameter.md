@@ -84,6 +84,12 @@ This field can be comma separated list of labels, however it is allowed to be ex
 * Good: If filtering by ID is required then this keeps it to a single field
 * Bad: Requires the filtering by ID to be a logical query parameter
 
-If chosen to also apply at the Flow leve then is `collected_by=a46c49f1-4764-42b9-9f91-f267a58903c4` too similar to `/flows/a46c49f1-4764-42b9-9f91-f267a58903c4/flow_collection`? 
+### Flow level implications
+
+At the flow level this is currently some ability to query and update flow collections in the API.
+This behaviour focuses on starting from a known flow to which the collection is applied.
+There is no equivalent endpoints at the source level.
+
+If chosen to also apply at the Flow level then need to consider is `collected_by=a46c49f1-4764-42b9-9f91-f267a58903c4` too similar to `/flows/a46c49f1-4764-42b9-9f91-f267a58903c4/flow_collection`? 
 The first gives you all the metadata about the flows, where the later only gives you the ID's and roles
 
