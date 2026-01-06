@@ -1,12 +1,12 @@
 ---
 status: "draft"
 ---
-# Add the ability to query sources without a collected_by value
+# Ability to query for Sources without a collected_by value
 
 ## Context and Problem Statement
 
 Currently at the Source level there is no filtering on the `collected_by` field.
-When vendors are building systems which list content stored in TAMS then they are only looking for the sources at the top of the content tree.
+When vendors are building systems which list content stored in TAMS then they are only looking for the Sources at the top of the content tree.
 In many cases this is the multi-Source, however due to single essence (eg audio only) workflows then this is not a reliable method of finding the top level content.
 To achieve this they must go through every result and look to see if the `collected_by `field is missing as this then indicates that it is the top of a Source collection.
 This process can also throw any form of sensible pagination in a client application as when requesting content from the TAMS API it is not known how many results will be retained or discarded.
@@ -14,7 +14,7 @@ This process can also throw any form of sensible pagination in a client applicat
 This ADR is to look at moving this behaviour from the client side into the API.
 This has the benefit of not only making it simpler for any system looking for top level content in the system, but also makes the result more predicable as the number of rows requested from the API will result in the available rows up to that limit.
 
-While the focus of this ADR is on the Source level of the TAMS API, there are sufficient similarities between the data structures of sources and flows that it is worth considering whether this should be applied to both levels.
+While the focus of this ADR is on the Source level of the TAMS API, there are sufficient similarities between the data structures of Sources and Flows that it is worth considering whether this should be applied to both levels.
 
 ## Considered Options
 
