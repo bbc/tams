@@ -25,6 +25,7 @@ For more information on how we use application notes, see [here](./appnotes/READ
 | [0016](./appnotes/0016-authorisation-in-tams-workflows.md)           | Authorisation in TAMS workflows                                 |
 | [0017](./appnotes/0017-reuse-of-ids.md)                              | When to re-use IDs in TAMS and compatible systems               |
 | [0018](./appnotes/0018-managing-multiple-object-instances.md)        | Managing Multiple Object Instances                              |
+| [0019](./appnotes/0019-implementing-retention-management.md)         | Methods of implementing retention management                    |
 
 ## ADRs
 
@@ -78,5 +79,6 @@ For more information on how we use ADRs, see [here](./adr/README.md).
 | [0040](./adr/0040-tag-usability-enhancements.md)                   | Tag Usability Enhancements |
 | [0041](./adr/0041-require-explicit-framerate.md)                   | Requiring explicit frame rates |
 | [0042](./adr/0042-uncontrolled-object-instance-labels.md)          | Make `label` Mandatory for Uncontrolled Object Instances |
+| [0043](./adr/0043-signalling-retention-time.md)                    | Signalling retention time |
 
 \* Note: ADR 0004a was the unintended result of a number clash in the early development of TAMS which wasn't caught before publication
