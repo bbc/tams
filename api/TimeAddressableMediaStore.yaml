@@ -536,13 +536,11 @@ paths:
               examples:
                 basic:
                   summary: Source containing elemental video
-                  value:
-                    $ref: examples/source-get-200-basic.json
+                  externalValue: examples/source-get-200-basic.json
                 multi:
                   summary: Multi-essence Source
                   description: Multi-essence Sources collect multiple Sources of different formats under one Source ID.
-                  value:
-                    $ref: examples/source-get-200-multi.json
+                  externalValue: examples/source-get-200-multi.json
         "404":
           description: The requested Source does not exist.
   /sources/{sourceId}/tags:
@@ -1045,47 +1043,38 @@ paths:
               examples:
                 video:
                   summary: Video Flow - H.264 Codec
-                  value:
-                    $ref: examples/flow-get-200-video-h264.json
+                  externalValue: examples/flow-get-200-video-h264.json
                 audio:
                   summary: Audio Flow - AAC Codec
-                  value:
-                    $ref: examples/flow-get-200-audio-aac.json
+                  externalValue: examples/flow-get-200-audio-aac.json
                 rawvideo:
                   summary: Video Flow - Uncompressed (Quicktime)
-                  value:
-                    $ref: examples/flow-get-200-video-raw.json
+                  externalValue: examples/flow-get-200-video-raw.json
                 jpegimage:
                   summary: Image Flow - JPEG Codec
-                  value:
-                    $ref: examples/flow-get-200-image-jpeg.json
+                  externalValue: examples/flow-get-200-image-jpeg.json
                 video_vfr:
                   summary: Video Flow - H.264 Codec, Variable Frame Rate
-                  value:
-                    $ref: examples/flow-get-200-video-h264-vfr.json
+                  externalValue: examples/flow-get-200-video-h264-vfr.json
                 ttml:
                   summary: Data Flow - TTML
                   description: TAMS can also be used for storing non-AV content such as subtitles or event data
-                  value:
-                    $ref: examples/flow-get-200-data-ttml.json
+                  externalValue: examples/flow-get-200-data-ttml.json
                 multi:
                   summary: Multi-essence Flow
                   description: Multi-essence Flows are used to collect multiple Flows of different formats under one Flow ID
-                  value:
-                    $ref: examples/flow-get-200-multi.json
+                  externalValue: examples/flow-get-200-multi.json
                 multi-container-map:
                   summary: Multi-essence Flow with a container map
                   description: |
                     Multi-essence Flows are used to collect multiple Flows of different formats under one Flow ID.
                     The collection has container maps for the audio Flows as there are 2 audio tracks in the container.
-                  value:
-                    $ref: examples/flow-get-200-multi-container-map.json
+                  externalValue: examples/flow-get-200-multi-container-map.json
                 audio-multi:
                   summary: Audio Flow in a multi-essence Flow
                   description: |
                     The audio Flow does not have a container property as the media is accessed via the multi-essence Flow
-                  value:
-                    $ref: examples/flow-get-200-audio-aac-multi.json
+                  externalValue: examples/flow-get-200-audio-aac-multi.json
         "404":
           description: The requested Flow does not exist.
         "400":
@@ -1114,12 +1103,10 @@ paths:
             examples:
               audio:
                 summary: Stereo audio Flow
-                value:
-                  $ref: examples/flow-put.json
+                externalValue: examples/flow-put.json
               multi:
                 summary: Multi-essence Flow
-                value:
-                  $ref: examples/flow-put-multi.json
+                externalValue: examples/flow-put-multi.json
             schema:
               $ref: schemas/flow.json
         required: true
@@ -1963,21 +1950,18 @@ paths:
               examples:
                 basic:
                   summary: Basic Example
-                  value:
-                    $ref: examples/flow-segments-get-200.json
+                  externalValue: examples/flow-segments-get-200.json
                 sample_count:
                   summary: Partial Segment
                   description: |
                     This example shows re-use of existing Media Objects
-                  value:
-                    $ref: examples/flow-segments-get-200-object-timerange.json
+                  externalValue: examples/flow-segments-get-200-object-timerange.json
                 multiple_urls:
                   summary: Multiple URLs
                   description: |
                     This example shows how the Media Object for a Flow Segment could be accessed using multiple URLs.
                     Clients are free to choose any of the URLs given (which return identical Media Objects), however the service has expressed a preference for the "pipeline-a" URLs by putting them first in the list.
-                  value:
-                    $ref: examples/flow-segments-get-200-multiple-urls.json
+                  externalValue: examples/flow-segments-get-200-multiple-urls.json
         "400":
           description: Bad request. Invalid query options.
         "404":
@@ -2123,12 +2107,10 @@ paths:
             examples:
               limit:
                 summary: limit
-                value:
-                  $ref: examples/flow-storage-post.json
+                externalValue: examples/flow-storage-post.json
               object_ids:
                 summary: object_ids
-                value:
-                  $ref: examples/flow-storage-post-object_ids.json
+                externalValue: examples/flow-storage-post-object_ids.json
             schema:
               $ref: schemas/flow-storage-post.json
       responses:
@@ -2372,12 +2354,10 @@ paths:
             examples:
               controlled:
                 summary: Registering a controlled instance
-                value:
-                  $ref: examples/objects-instances-controlled-post.json
+                externalValue: examples/objects-instances-controlled-post.json
               uncontrolled:
                 summary: Registering a uncontrolled instance
-                value:
-                  $ref: examples/objects-instances-uncontrolled-post.json
+                externalValue: examples/objects-instances-uncontrolled-post.json
             schema:
               $ref: schemas/objects-instances-post.json
         required: true
