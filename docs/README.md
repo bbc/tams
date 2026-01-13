@@ -68,6 +68,7 @@ For more information on how we use ADRs, see [here](./adr/README.md).
 | [0030](./adr/0030-allow-external-media-objects.md)                 | Allow a Flow to reference media objects in other Flows and storage         |
 | [0031](./adr/0031-flow-image-support.md)                           | Add new flow type to support still images                                  |
 | [0032](./adr/0032-specifying-storage-backend.md)                   | Specifying storage backend when requesting storage allocation              |
+| [0033](./adr/0033-segment-created-metadata.md)                     | Add created metadata to segments                                           |
 | [0034](./adr/0034-storage-allow-object_ids.md)                     | Add object_ids option to Flow Storage request                              |
 | [0035](./adr/0035-fine-grained-auth.md)                            | Fine-grained Authorisation in TAMS Workflows                               |
 | [0036](./adr/0036-specifying-partial-segment-usage.md)             | Specifying partial segment usage |
