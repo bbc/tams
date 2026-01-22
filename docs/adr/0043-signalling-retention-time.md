@@ -212,26 +212,26 @@ This option would see the time for a Flow's automated deletion to be signalled w
 * Neutral, because enacting this requires no further calculations
 * Bad, because this mode of operation cannot be statically templated
 
-### Option 6b: Describe a method of deleting an entire Flow at a time offset from its creation time
+### Option 6b: Describe a method of deleting an entire Flow at a time offset from its `created` time
 
-This option would see the time for a Flow's automated deletion to be signalled with an offset to be applied to the Flow's Creation time.
+This option would see the time for a Flow's automated deletion to be signalled with an offset to be applied to the Flow's `created` time.
 
 * Good, because it supports static templating (e.g. via Flow Profiles)
 * Neutral, because enacting this requires a simple calculation to identify the actual time for deletion
 * Neutral, because it allows Flows to be assigned an explicit life time
 * Bad, because it doesn't take into account whether the Flow is still being written to
 
-### Option 6c: Describe a method of deleting an entire Flow at a time offset from its Segments updated time
+### Option 6c: Describe a method of deleting an entire Flow at a time offset from its `segments_updated` time
 
-This option would see the time for a Flow's automated deletion to be signalled with an offset to be applied to the Flow's Segments Updated time.
+This option would see the time for a Flow's automated deletion to be signalled with an offset to be applied to the Flow's `segments_updated` time.
 
 * Good, because it supports static templating (e.g. via Flow Profiles)
 * Good, because it allows Flows to be assigned an explicit life time beyond when Segments are written to it
 * Neutral, because enacting this requires a simple calculation to identify the actual time for deletion
 
-### Option 6d: Describe a method of deleting an entire Flow at a time offset from the most recent of Segments updated or Metadata updated time
+### Option 6d: Describe a method of deleting an entire Flow at a time offset from the most recent of `segments_updated` or `metadata_updated` time
 
-This option would see the time for a Flow's automated deletion to be signalled with an offset to be applied to the Flow's the later of Segments Updated or Metadata Updated time.
+This option would see the time for a Flow's automated deletion to be signalled with an offset to be applied to the Flow's the later of `segments_updated` or `metadata_updated` time.
 
 * Good, because it supports static templating (e.g. via Flow Profiles)
 * Good, because it captures any type of Flow modification
