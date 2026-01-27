@@ -80,5 +80,6 @@ For more information on how we use ADRs, see [here](./adr/README.md).
 | [0041](./adr/0041-require-explicit-framerate.md)                   | Requiring explicit frame rates |
 | [0042](./adr/0042-uncontrolled-object-instance-labels.md)          | Make `label` Mandatory for Uncontrolled Object Instances |
 | [0043](./adr/0043-signalling-retention-time.md)                    | Signalling retention time |
+| [0045](./adr/0045-flow-init-segments.md)                           | Support for init Segments in Flows |
 
 \* Note: ADR 0004a was the unintended result of a number clash in the early development of TAMS which wasn't caught before publication
