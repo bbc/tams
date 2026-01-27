@@ -81,6 +81,7 @@ For more information on how we use ADRs, see [here](./adr/README.md).
 | [0042](./adr/0042-uncontrolled-object-instance-labels.md)          | Make `label` Mandatory for Uncontrolled Object Instances |
 | [0043](./adr/0043-signalling-retention-time.md)                    | Signalling retention time |
 | [0044](./adr/0044-signalling-timeouts.md)                          | Signalling timeout periods |
+| [0045](./adr/0045-flow-init-segments.md)                           | Support for init Segments in Flows |
 | [0046](./adr/0046-governance.md)                                   | Governance |
 
 \* Note: ADR 0004a was the unintended result of a number clash in the early development of TAMS which wasn't caught before publication
