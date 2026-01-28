@@ -146,6 +146,183 @@ paths:
                 $ref: schemas/storage-backends-list.json
               example:
                 $ref: examples/storage-backends-get-200.json
+  /service/profiles:
+    head:
+      summary: Profile Backend Information
+      description: Return Profile headers
+      operationId: HEAD_profiles
+      tags:
+        - Profiles
+      parameters:
+        - name: format
+          in: query
+          description: Filter on Profile format.
+          schema:
+            $ref: 'schemas/content-format.json'
+        - name: codec
+          in: query
+          description: Filter on Profile codec.
+          schema:
+            $ref: 'schemas/mime-type.json'
+        - name: label
+          in: query
+          description: Filter on Profiles that have the given label.
+          schema:
+            type: string
+        - $ref: '#/components/parameters/trait_resource_paged_key'
+        - $ref: '#/components/parameters/trait_paged_limit'
+      responses:
+        "200":
+          description: ""
+          headers:
+            Link:
+              description: Provides references to cursors for paging. Only the 'rel' attribute with value 'next' and a link to the next page is currently supported. If 'next' is not present then it is the last page.
+              schema:
+                type: string
+            X-Paging-Limit:
+              description: Identifies the current limit being used for paging. This may not match the requested value if the requested value was too high for the implementation
+              schema:
+                type: integer
+            X-Paging-NextKey:
+              description: Opaque string that can be supplied to the `page` query parameter to get the next page of results.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: string
+        "400":
+          description: Bad request. Invalid query options.
+    get:
+      summary: Profile Backend Information
+      description: List of Profiles supported by the store instance for use when creating flows.
+      operationId: GET_profiles
+      tags:
+        - Profiles
+      parameters:
+        - name: format
+          in: query
+          description: Filter on Profile format.
+          schema:
+            $ref: 'schemas/content-format.json'
+        - name: codec
+          in: query
+          description: Filter on Profile codec.
+          schema:
+            $ref: 'schemas/mime-type.json'
+        - name: label
+          in: query
+          description: Filter on Profiles that have the given label.
+          schema:
+            type: string
+        - $ref: '#/components/parameters/trait_resource_paged_key'
+        - $ref: '#/components/parameters/trait_paged_limit'
+      responses:
+        "200":
+          description: ""
+          headers:
+            Link:
+              description: Provides references to cursors for paging. Only the 'rel' attribute with value 'next' and a link to the next page is currently supported. If 'next' is not present then it is the last page.
+              schema:
+                type: string
+            X-Paging-Limit:
+              description: Identifies the current limit being used for paging. This may not match the requested value if the requested value was too high for the implementation
+              schema:
+                type: integer
+            X-Paging-NextKey:
+              description: Opaque string that can be supplied to the `page` query parameter to get the next page of results.
+              schema:
+                type: string
+          content:
+            application/json:
+              example:
+                $ref: examples/profiles-get-200.json
+              schema:
+                type: array
+                items:
+                  $ref: "schemas/profile.json"
+        "400":
+          description: Bad request. Invalid query options.
+  /service/profiles/{profileId}:
+    parameters:
+      - name: profileId
+        in: path
+        required: true
+        schema:
+          $ref: 'schemas/uuid.json'
+        description: The Profile identifier.
+    head:
+      summary: Profile Details
+      description: Return Profile path headers
+      operationId: HEAD_profiles-profileId
+      tags:
+        - Profiles
+      responses:
+        "200":
+          $ref: '#/components/responses/trait_resource_info_head_200'
+        "404":
+          $ref: '#/components/responses/trait_resource_info_head_404'
+    get:
+      summary: Profile Details
+      description: Returns Profile metadata.
+      operationId: GET_profiles-profileId
+      tags:
+        - Profiles
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: schemas/profile.json
+              examples:
+                video:
+                  summary: Video Profile
+                  value:
+                    $ref: examples/profile-get-200-video.json
+                jpegimage:
+                  summary: Image Profile
+                  value:
+                    $ref: examples/profile-get-200-image.json
+        "404":
+          description: The requested profile does not exist.
+    post:
+      summary: Create Profile
+      description: |
+        Create a new Profile to be used when creating flows with the matching metadata.  
+        
+        It is not possible to update an existing Profile as this would mean it no longer matches flows that have already been created using it.
+        If a change to a Profile is required then a new Profile should be created with the updated information and new flows reference this new Profile.  
+        
+        Attempting to update an existing profiles should return a 400 error.
+
+        Tags can be created at the Profile level to hold information about the Profile itself.  
+        These do not form part of the flow that is created.  
+        These are tag/value format and could be used for tasks such as version tracking or holding encoding parameters.
+      operationId: POST_profiles-profileId
+      tags:
+        - Profiles
+      requestBody:
+        content:
+          application/json:
+            example:
+              $ref: examples/profile-put.json
+            schema:
+              $ref: schemas/profile.json
+        required: true
+      responses:
+        "201":
+          description: The flow has been created.
+          content:
+            application/json:
+              example:
+                $ref: examples/profile-post-201.json
+              schema:
+                $ref: schemas/profile.json
+        "400":
+          description: Bad request. Invalid Profile JSON or Profile already exists.
+        "404":
+          description: The requested Profile ID in the path is invalid.
   /service/webhooks:
     head:
       summary: List Webhook URLs
@@ -832,6 +1009,11 @@ paths:
           description: Filter on Flow codec.
           schema:
             $ref: 'schemas/mime-type.json'
+        - name: profile_id
+          in: query
+          description: Filter on Profile identifier.
+          schema:
+            $ref: 'schemas/uuid.json'   
         - name: label
           in: query
           description: Filter on Flows that have the given label.
@@ -919,6 +1101,11 @@ paths:
           description: Filter on Flow codec.
           schema:
             $ref: 'schemas/mime-type.json'
+        - name: profile_id
+          in: query
+          description: Filter on Profile identifier.
+          schema:
+            $ref: 'schemas/uuid.json' 
         - name: label
           in: query
           description: Filter on Flows that have the given label.
@@ -979,7 +1166,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "schemas/flow.json"
+                  $ref: "schemas/flow-get.json"
         "400":
           description: Bad request. Invalid query options.
   /flows/{flowId}:
@@ -1041,7 +1228,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: schemas/flow.json
+                $ref: schemas/flow-get.json
               examples:
                 video:
                   summary: Video Flow - H.264 Codec
@@ -1093,6 +1280,7 @@ paths:
     put:
       summary: Create or Replace Flow
       description: |
+        |
         Create or replace the Flow metadata.
 
         Clients should aim to populate as many of the Flow metadata fields as possible and practical. The fewer parameters that are set, the higher the likelihood that reading clients will have to retrieve the media to determine technical metadata to e.g. configure decoders.
@@ -1105,6 +1293,13 @@ paths:
         Examples of conflicting metadata include `format` not matching, or the `role` in `source_collection` and `flow_collection` not matching.
         It may also be possible for service implementations to detect some instances where multiple Flows should not be considered of the same Source, such as audio Flows with different numbers of tracks.
         Further guidance on when Flows/Sources may be considered the same/different may be found in the [Practical Guidance for Media](https://specs.amwa.tv/ms-04/releases/v1.0.0/docs/3.0._Practical_Guidance_for_Media.html) section of AMWA MS-04.
+
+        Flows can be created either by directly supplying all the required technical metadata or by referencing an existing Profile in the store.  
+        When using a Profile, the store will use the technical details (format, codec, essence_parameters etc.) from that profile, along with the metadata provided.  
+        It is up to the store implementation whether this is normalised on the flow creation or read-only.
+
+        When creating a flow using a Profile it is not possible to override any specific fields as this would invalidate the link to the Profile.  
+        Supplying a Profile ID and technical metadata should result in a 400 validation error
       operationId: PUT_flows-flowId
       tags:
         - Flows
@@ -1120,8 +1315,12 @@ paths:
                 summary: Multi-essence Flow
                 value:
                   $ref: examples/flow-put-multi.json
+              profile:
+                summary: Flow created using a Profile
+                value:
+                  $ref: examples/flow-put-profile.json
             schema:
-              $ref: schemas/flow.json
+              $ref: schemas/flow-put.json
         required: true
       responses:
         "201":
@@ -1131,7 +1330,7 @@ paths:
               example:
                 $ref: examples/flow-put-201.json
               schema:
-                $ref: schemas/flow.json
+                $ref: schemas/flow-get.json
         "204":
           description: No content. The Flow has been updated.
         "400":
@@ -2528,7 +2727,7 @@ webhooks:
                     - flow
                   properties:
                     flow:
-                      $ref: "schemas/flow.json"
+                      $ref: "schemas/flow-get.json"
   flows/updated:
     post:
       security:
@@ -2557,7 +2756,7 @@ webhooks:
                     - flow
                   properties:
                     flow:
-                      $ref: "schemas/flow.json"
+                      $ref: "schemas/flow-get.json"
   flows/deleted:
     post:
       security:
@@ -2815,6 +3014,8 @@ tags:
   - name: Flows
     description: |
       Sources which have been 'rendered' to a specific encoding/packaging format.
+  - name: Profiles
+    description: Centralised management of the technical characteristics of a flow
     externalDocs:
       url: 'https://specs.amwa.tv/ms-04/releases/v1.0.0/docs/2.3._Explanation_-_Flow.html'
   - name: FlowSegments

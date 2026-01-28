@@ -83,3 +83,28 @@ For more information on how we use ADRs, see [here](./adr/README.md).
 | [0046](./adr/0046-governance.md)                                   | Governance |
 
 \* Note: ADR 0004a was the unintended result of a number clash in the early development of TAMS which wasn't caught before publication
+
+## Application Notes
+
+Application notes are informatative documents describing the recommended usage of the API.
+For more information on how we use application notes, see [here](./appnotes/README.md).
+
+| Application Note Number                                              | Title                                                           |
+| -------------------------------------------------------------------- | --------------------------------------------------------------- |
+| [0001](./appnotes/0001-multi-mono-essence-flows-sources.md)          | Practical Application of the TAMS Content Model                 |
+| [0002](./appnotes/0002-Timing-in-MPEG-TS.md)                         | Timing in MPEG-TS                                               |
+| [0003](./appnotes/0003-tag-names.md)                                 | Tags, how to use them, and how we manage them                   |
+| [0004](./appnotes/0004-tams-for-data.md)                             | When TAMS is a good fit for non-media data. And when it’s not   |
+| [0005](./appnotes/0005-indepentent-segments.md)                      | Media objects should be independently decodable. Here's why     |
+| [0006](./appnotes/0006-containers-and-mappings.md)                   | Containers and Mappings                                         |
+| [0007](./appnotes/0007-populating-source-metadata.md)                | Populating Source Metadata                                      |
+| [0008](./appnotes/0008-timestamps-in-TAMS.md)                        | Timestamps in TAMS                                              |
+| [0009](./appnotes/0009-storage-label-format.md)                      | Storage label format specification - **Superseded by ADR-0032** |
+| [0010](./appnotes/0010-long-running-sources-and-flows.md)            | Long-running Sources and Flows                                  |
+| [0011](./appnotes/0011-c2pa.md)                                      | C2PA provenance across related Sources and Flows                |
+| [0012](./appnotes/0012-using-flow-segment-timeranges.md)             | Using Flow Segment timeranges                                   |
+| [0013](./appnotes/0013-setting-flow-bit-rate-properties.md)          | Setting Flow bit rate properties                                |
+| [0014](./appnotes/0014-referencing-tams-content-in-other-systems.md) | Referencing TAMS content in other systems                       |
+| [0015](./appnotes/0015-using-tams-in-opentimelineio.md)              | Using TAMS in OpenTimelineIO                                    |
+| [0017](./appnotes/0017-reuse-of-ids.md)                              | When to re-use IDs in TAMS and compatible systems               |
+| [0019](./appnotes/0019-using-flow-profiles.md)                       | Using flow profiles                                             |
