@@ -23,10 +23,9 @@ To that end, there needs to be a sustainable governance model for TAMS which inv
 Chosen option: Option 2: Move to an organisation such as the Linux Foundation, because TAMS is ultimately a software specification, so a software oriented approach seems appropriate.
 Furthermore such organisations offer lightweight governance and the freedom to move quickly, while fostering an open ecosystem.
 
-<!-- This is an optional element. Feel free to remove. -->
 ### Implementation
 
-{Once the proposal has been implemented, add a link to the relevant PRs here}
+[https://github.com/bbc/tams/pull/168](https://github.com/bbc/tams/pull/168)
 
 ## Pros and Cons of the Options
 
