@@ -16,7 +16,7 @@ This Application Note applies to TAMS v5.0+.
 ### Flow `container` Property
 
 The Flow `container` property serves 2 purposes.
-The `container` property identifies the container type for the Media bjects and its presence flags whether the Flow directly references Media Objects.
+The `container` property identifies the container type for the Media Objects and its presence flags whether the Flow directly references Media Objects.
 
 The `container` property is a [MIME type](https://datatracker.ietf.org/doc/html/rfc6838).
 Example values are `video/mp2t` for MPEG-TS, `video/mp4` for MP4 and `application/json` for JSON.
