@@ -1,0 +1,57 @@
+{
+  "type": "object",
+  "description": "Describes a Profile",
+  "title": "Profile",
+  "required": 
+  [
+    "id",
+    "flow_metadata"
+  ],
+  "properties": 
+  {
+    "id": 
+    {
+      "description": "Profile identifier.",
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    },
+    "label": 
+    {
+      "description": "Freeform string label for the Profile",
+      "type": "string"
+    },
+    "description": 
+    {
+      "description": "Freeform text describing the Profile",
+      "type": "string"
+    },
+    "created_by": 
+    {
+      "description": "A string identifier for the entity that created the Profile. Implementations SHOULD set suitable default values for `created_by` based on the principal accessing the system, and MAY permit clients to edit the value, subject to suitable permissions-based limitations.",
+      "type": "string"
+    },
+    "created": 
+    {
+      "description": "The date-time the Profile was created in a given context, e.g. in the store. Implementations SHOULD ignore this if given in a PUT request, and instead manage it internally",
+      "type": "string",
+      "format": "date-time"
+    },
+    "tags": 
+    {
+      "description": "Key value is a freeform string.  As Profiles are considered immutable then this also applies to tags which cannot be updated after a Profile has been created",
+      "$ref": "tags.json"
+    },
+    "flow_metadata": 
+    {
+      "description": "The technical characteristics of the Profile.  This section will be mapped directly to all flows created using this Profile.",
+      "type": "object",
+      "oneOf": 
+      [
+        { "$ref": "flow-video.json" },
+        { "$ref": "flow-audio.json" },
+        { "$ref": "flow-image.json" },
+        { "$ref": "flow-data.json" }
+      ]
+    }
+  }
+}

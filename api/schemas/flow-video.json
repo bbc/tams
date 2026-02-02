@@ -4,7 +4,7 @@
     "type": "object",
     "allOf": [
         {
-            "$ref": "flow-core.json"
+            "$ref": "flow-technical.json"
         },
         {
             "type": "object",
