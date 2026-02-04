@@ -41,7 +41,36 @@ Let's consider how the TAMS content model is used in practice through some simpl
 
 Ingest of a LPCM audio stream (for example an AES67 or SMPTE ST2110-30 stream) requires the creation of a new `Flow ID` to identify the sequence of Segments containing the audio samples, and a new `Source ID` as an editorial entity to support the linking of this media with other representations.
 
-![Graphic showing ingest of an LPCM audio stream to create a TAMS Flow with its Source](./images/0001-multi-mono-essence-flows-sources-fig1.png)
+```mermaid
+block-beta
+columns 8
+    space:4
+    dummy1[" "]
+    space:2
+    dummy2[" "]
+    dummy1 -- "Time" --> dummy2
+    style dummy1 fill:none, stroke:transparent;
+    style dummy2 fill:none, stroke:transparent;
+
+    a_s["Source \n Audio \n (BBC Proms R3 Mix)"]
+    space:1
+    a_f["Flow \n Audio \n LPCM Stereo \n (BBC Proms R3 Mix - High Quality)"]
+    space:1
+    a_fs_1["Segment \n (LPCM)"]
+    a_fs_2["Segment \n (LPCM)"]
+    a_fs_3["Segment \n (LPCM)"]
+    a_fs_4["Segment \n (LPCM)"]
+    a_f -- "Represents" --> a_s
+    a_f --- a_fs_1
+
+    classDef source fill:#00BF7D,color:#000
+    classDef flow fill:#0073E6,color:#FFF
+    classDef segment fill:#5928ED,color:#FFF
+
+    class a_s source
+    class a_f flow
+    class a_fs_1,a_fs_2,a_fs_3,a_fs_4 segment
+```
 
 > ![NOTE:](../images/NOTE.svg) By convention, the interleaved audio is treated as a single mono-essence `Flow`.
 Implementers of media ingesters may choose to offer the option to split the interleave into several separate `Flows`.
@@ -55,7 +84,49 @@ The correspondence of the underlying samples to the timeline is inherited from t
 The new `Flow ID` is linked to the same `Source ID` as the original audio `Flow`.
 Handling of alternative representations of video (and other types of media) follow the same pattern.
 
-![Graphic showing creation of a proxy TAMS audio Flow from the LPCM representation, linked to the original via a common Source](./images/0001-multi-mono-essence-flows-sources-fig2.png)
+```mermaid
+block-beta
+columns 8
+    space:4
+    dummy1[" "]
+    space:2
+    dummy2[" "]
+    dummy1 -- "Time" --> dummy2
+    style dummy1 fill:none, stroke:transparent
+    style dummy2 fill:none, stroke:transparent
+
+    space:2
+    a_f_a["Flow \n Audio \n LPCM Stereo \n (BBC Proms R3 Mix - High Quality)"]
+    space:1
+    a_fs_a1["Segment \n (LPCM)"]
+    a_fs_a2["Segment \n (LPCM)"]
+    a_fs_a3["Segment \n (LPCM)"]
+    a_fs_a4["Segment \n (LPCM)"]
+    a_f_a -- "Represents" --> a_s
+    a_f_a --- a_fs_a1
+
+    a_s["Source \n Audio \n (BBC Proms R3 Mix)"]
+    space:7
+
+    space:2
+    a_f_b["Flow \n Audio \n AAC Stereo \n (BBC Proms R3 Mix - Compressed)"]
+    space:1
+    a_fs_b1["Segment \n (AAC)"]
+    a_fs_b2["Segment \n (AAC)"]
+    a_fs_b3["Segment \n (AAC)"]
+    a_fs_b4["Segment \n (AAC)"]
+    a_f_b -- "Represents" --> a_s
+    a_f_b --- a_fs_b1
+
+    classDef source fill:#00BF7D,color:#000
+    classDef flow fill:#0073E6,color:#FFF
+    classDef segment fill:#5928ED,color:#FFF
+
+    class a_s source
+    class a_f_a,a_f_b flow
+    class a_fs_a1,a_fs_a2,a_fs_a3,a_fs_a4,a_fs_b1,a_fs_b2,a_fs_b3,a_fs_b4 segment
+```
+
 > ![NOTE:](../images/NOTE.svg) The duration of the Segments in the derived `Flow` may differ due to technical constraints of the encoding algorithm or other reasons.
 In this case, Segment timestamps will be remapped so the relationship between the timeline and the underlying media samples is preserved.
 
@@ -69,11 +140,118 @@ Technical metadata relating to the elementary streams is used to populate the co
 For maximum flexibility, the video and audio essence is demuxed on ingest and stored separately under their respective mono-essence `Flow IDs`.
 The synchronisation relationship between the elements is preserved through the use of a common time index for the set.
 
-![Graphic showing ingest of an AV stream to create a set of TAMS Flows and Sources, stored as mono-essence](./images/0001-multi-mono-essence-flows-sources-fig3.png)
+```mermaid
+block-beta
+columns 11
+    s_m["Source \n Multi-essence \n (Original feed)"]
+    space:3
+    f_m["Flow \n Multi-essence \n (Original feed)"]
+    space:6
+    f_m -- "Represents" --> s_m
+
+    space:11
+
+    space:7
+    time_dummy_1[" "]
+    space:2
+    time_dummy_2[" "]
+    time_dummy_1 -- "Time" --> time_dummy_2
+    style time_dummy_1 fill:none, stroke:transparent;
+    style time_dummy_2 fill:none, stroke:transparent;
+
+    space:1
+    s_v["Source \n Video \n (Main)"]
+    space:3
+    f_v["Flow \n Video \n H264 \n (Main)"]
+    space:1
+    fs_v_1["Video \n Segment"]
+    fs_v_2["Video \n Segment"]
+    fs_v_3["Video \n Segment"]
+    fs_v_4["Video \n Segment"]
+    f_v -- "Represents" --> s_v
+    f_v --- fs_v_1
+
+    s_a["Source \n Audio \n (Production Sound)"]
+    space:3
+    f_a["Flow \n Audio \n AAC \n (Production Sound)"]
+    space:2
+    fs_a_1["Audio \n Segment"]
+    fs_a_2["Audio \n Segment"]
+    fs_a_3["Audio \n Segment"]
+    fs_a_4["Audio \n Segment"]
+    f_a -- "Represents" --> s_a
+    f_a --- fs_a_1
+
+    s_m -- "Collects" --> s_v
+    s_m -- "Collects" --> s_a
+
+    f_m -- "Collects" --> f_v
+    f_m -- "Collects" --> f_a
+
+    classDef source fill:#00BF7D,color:#000
+    classDef flow fill:#0073E6,color:#FFF
+    classDef segment fill:#5928ED,color:#FFF
+
+    class s_m,s_a,s_v source
+    class f_m,f_a,f_v flow
+    class fs_a_1,fs_a_2,fs_a_3,fs_a_4,fs_v_1,fs_v_2,fs_v_3,fs_v_4 segment
+```
 
 If your use case doesn't require this flexibility, it may be more convenient to store the multi-essence stream (in this case a Transport Stream) directly under the multi-essence `Flow` identifier, leaving the mono-essence `Flows` unpopulated, as shown below.
 
-![Graphic showing ingest of an AV stream to create a set of TAMS Flows and Sources, stored as multi-essence](./images/0001-multi-mono-essence-flows-sources-fig4.png)
+```mermaid
+block-beta
+columns 11
+    space:7
+    time_dummy_1[" "]
+    space:2
+    time_dummy_2[" "]
+    time_dummy_1 -- "Time" --> time_dummy_2
+    style time_dummy_1 fill:none, stroke:transparent;
+    style time_dummy_2 fill:none, stroke:transparent;
+
+    s_m["Source \n Multi-essence \n (Original feed)"]
+    space:3
+    f_m["Flow \n Multi-essence \n (Original feed)"]
+    space:2
+    fs_m_1["Muxed \n Segment"]
+    fs_m_2["Muxed \n Segment"]
+    fs_m_3["Muxed \n Segment"]
+    fs_m_4["Muxed \n Segment"]
+    f_m -- "Represents" --> s_m
+    f_m --- fs_m_1
+
+    space:11
+
+    space:11
+
+    space:1
+    s_v["Source \n Video \n (Main)"]
+    space:3
+    f_v["Flow \n Video \n H264 \n (Main)"]
+    space:5
+    f_v -- "Represents" --> s_v
+
+    s_a["Source \n Audio \n (Production Sound)"]
+    space:3
+    f_a["Flow \n Audio \n AAC \n (Production Sound)"]
+    space:6
+    f_a -- "Represents" --> s_a
+
+    s_m -- "Collects" --> s_v
+    s_m -- "Collects" --> s_a
+
+    f_m -- "Collects" --> f_v
+    f_m -- "Collects" --> f_a
+
+    classDef source fill:#00BF7D,color:#000
+    classDef flow fill:#0073E6,color:#FFF
+    classDef segment fill:#5928ED,color:#FFF
+
+    class s_m,s_a,s_v source
+    class f_m,f_a,f_v flow
+    class fs_m_1,fs_m_2,fs_m_3,fs_m_4 segment
+```
 
 ### Addition of Ancillary or Alternative Audio
 
@@ -81,7 +259,92 @@ If your use case doesn't require this flexibility, it may be more convenient to 
 The synchronisation relationship between two or more `Flows` is encoded into their relationship to a common timeline.
 As a result, adding ancillary or alternative audio to a set of media is as simple as creating the new media co-timed with the other items in the set, and introducing a new multi-essence `Flow` (and corresponding multi-essence `Source`) to define the augmented media `collection`.
 
-![Graphic showing addition of audio description to the collection of TAMS Flows and Sources](./images/0001-multi-mono-essence-flows-sources-fig5.png)
+```mermaid
+block-beta
+columns 13
+    space:1
+    s_m_a["Source \n Multi-essence \n (Original feed)"]
+    space:4
+    f_m_a["Flow \n Multi-essence \n (Original feed)"]
+    space:6
+    f_m_a -- "Represents" --> s_m_a
+
+    space:2
+    s_m_b["Source \n Multi-essence \n (Feed + AD)"]
+    space:2
+    f_m_b["Flow \n Multi-essence \n (Feed + AD)"]
+    space:7
+    f_m_b -- "Represents" --> s_m_b
+
+    space:13
+
+    space:9
+    time_dummy_1[" "]
+    space:2
+    time_dummy_2[" "]
+    time_dummy_1 -- "Time" --> time_dummy_2
+    style time_dummy_1 fill:none, stroke:transparent;
+    style time_dummy_2 fill:none, stroke:transparent;
+
+    s_v["Source \n Video \n (Main)"]
+    space:6
+    f_v["Flow \n Video \n V210 \n (Main)"]
+    space:1
+    fs_v_1["Video \n Segment"]
+    fs_v_2["Video \n Segment"]
+    fs_v_3["Video \n Segment"]
+    fs_v_4["Video \n Segment"]
+    f_v -- "Represents" --> s_v
+    f_v --- fs_v_1
+
+    space:1
+    s_a_a["Source \n Audio \n (Production Sound)"]
+    space:4
+    f_a_a["Flow \n Audio \n AAC \n (Production Sound)"]
+    space:2
+    fs_a_a1["Audio \n Segment"]
+    fs_a_a2["Audio \n Segment"]
+    fs_a_a3["Audio \n Segment"]
+    fs_a_a4["Audio \n Segment"]
+    f_a_a -- "Represents" --> s_a_a
+    f_a_a --- fs_a_a1
+
+    space:2
+    s_a_b["Source \n Audio \n (Audio Description)"]
+    space:2
+    f_a_b["Flow \n Audio \n AAC \n (Audio Description)"]
+    space:3
+    fs_a_b1["Audio \n Segment"]
+    fs_a_b2["Audio \n Segment"]
+    fs_a_b3["Audio \n Segment"]
+    fs_a_b4["Audio \n Segment"]
+    f_a_b -- "Represents" --> s_a_b
+    f_a_b --- fs_a_b1
+
+    s_m_a -- "Collects" --> s_v
+    s_m_b -- "Collects" --> s_v
+
+    s_m_a -- "Collects" --> s_a_a
+    s_m_b -- "Collects" --> s_a_a
+
+    s_m_b -- "Collects" --> s_a_b
+
+    f_m_a -- "Collects" --> f_v
+    f_m_b -- "Collects" --> f_v
+
+    f_m_a -- "Collects" --> f_a_a
+    f_m_b -- "Collects" --> f_a_a
+
+    f_m_b -- "Collects" --> f_a_b
+
+    classDef source fill:#00BF7D,color:#000
+    classDef flow fill:#0073E6,color:#FFF
+    classDef segment fill:#5928ED,color:#FFF
+
+    class s_m_a,s_m_b,s_a_a,s_a_b,s_v source
+    class f_m_a,f_m_b,f_a_a,f_a_b,f_v flow
+    class fs_a_a1,fs_a_a2,fs_a_a3,fs_a_a4,fs_a_b1,fs_a_b2,fs_a_b3,fs_a_b4,fs_v_1,fs_v_2,fs_v_3,fs_v_4 segment
+```
 
 > ![NOTE:](../images/NOTE.svg) It's technically permissible to collect together a mixture of mono- and multi-essence Flows into a higher-level multi-essence Flow.
 However, creating multi-level hierarchies like this breeds complexity and will likely impact performance, so it's inadvisable in most cases.
@@ -91,6 +354,120 @@ It's generally better to reference the lowest-level mono-essence Flows individua
 
 Video layers or overlays can also be stored as separate `Flows`, synchronised using the same mechanism as in the audio example above.
 
-![Graphic showing addition of audio description to the collection of TAMS Flows and Sources](./images/0001-multi-mono-essence-flows-sources-fig6.png)
+```mermaid
+block-beta
+columns 15
+    space:1
+    s_m_a["Source \n Multi-essence \n (Original feed)"]
+    space:6
+    f_m_a["Flow \n Multi-essence \n (Original feed)"]
+    space:6
+    f_m_a -- "Represents" --> s_m_a
+
+    space:2
+    s_m_b["Source \n Multi-essence \n (Feed + AD)"]
+    space:4
+    f_m_b["Flow \n Multi-essence \n (Feed + AD)"]
+    space:7
+    f_m_b -- "Represents" --> s_m_b
+
+    space:3
+    s_m_c["Source \n Multi-essence \n (Feed + Graphics)"]
+    space:2
+    f_m_c["Flow \n Multi-essence \n (Feed + Graphics)"]
+    space:8
+    f_m_c -- "Represents" --> s_m_c
+
+    space:15
+
+    space:15
+
+    space:11
+    time_dummy_1[" "]
+    space:2
+    time_dummy_2[" "]
+    time_dummy_1 -- "Time" --> time_dummy_2
+    style time_dummy_1 fill:none, stroke:transparent;
+    style time_dummy_2 fill:none, stroke:transparent;
+
+    s_v_a["Source \n Video \n (Main)"]
+    space:8
+    f_v_a["Flow \n Video \n V210 \n (Main)"]
+    space:1
+    fs_v_a1["Video \n Segment"]
+    fs_v_a2["Video \n Segment"]
+    fs_v_a3["Video \n Segment"]
+    fs_v_a4["Video \n Segment"]
+    f_v_a -- "Represents" --> s_v_a
+    f_v_a --- fs_v_a1
+
+    space:1
+    s_a_a["Source \n Audio \n (Production Sound)"]
+    space:6
+    f_a_a["Flow \n Audio \n AAC \n (Production Sound)"]
+    space:2
+    fs_a_a1["Audio \n Segment"]
+    fs_a_a2["Audio \n Segment"]
+    fs_a_a3["Audio \n Segment"]
+    fs_a_a4["Audio \n Segment"]
+    f_a_a -- "Represents" --> s_a_a
+    f_a_a --- fs_a_a1
+
+    space:2
+    s_a_b["Source \n Audio \n (Audio Description)"]
+    space:4
+    f_a_b["Flow \n Audio \n AAC \n (Audio Description)"]
+    space:3
+    fs_a_b1["Audio \n Segment"]
+    fs_a_b2["Audio \n Segment"]
+    fs_a_b3["Audio \n Segment"]
+    fs_a_b4["Audio \n Segment"]
+    f_a_b -- "Represents" --> s_a_b
+    f_a_b --- fs_a_b1
+
+    space:3
+    s_v_b["Source \n Video \n (Graphics)"]
+    space:2
+    f_v_b["Flow \n Video \n H264 \n (Graphics)"]
+    space:4
+    fs_v_b1["Video \n Segment"]
+    fs_v_b2["Video \n Segment"]
+    fs_v_b3["Video \n Segment"]
+    fs_v_b4["Video \n Segment"]
+    f_v_b -- "Represents" --> s_v_b
+    f_v_b --- fs_v_b1
+
+    s_m_a -- "Collects" --> s_v_a
+    s_m_b -- "Collects" --> s_v_a
+    s_m_c -- "Collects" --> s_v_a
+
+    s_m_a -- "Collects" --> s_a_a
+    s_m_b -- "Collects" --> s_a_a
+    s_m_c -- "Collects" --> s_a_a
+
+    s_m_b -- "Collects" --> s_a_b
+
+    s_m_c -- "Collects" --> s_v_b
+
+    f_m_a -- "Collects" --> f_v_a
+    f_m_b -- "Collects" --> f_v_a
+    f_m_c -- "Collects" --> f_v_a
+
+    f_m_a -- "Collects" --> f_a_a
+    f_m_b -- "Collects" --> f_a_a
+    f_m_c -- "Collects" --> f_a_a
+
+    f_m_b -- "Collects" --> f_a_b
+
+    f_m_c -- "Collects" --> f_v_b
+
+    classDef source fill:#00BF7D,color:#000
+    classDef flow fill:#0073E6,color:#FFF
+    classDef segment fill:#5928ED,color:#FFF
+
+    class s_m_a,s_m_b,s_m_c,s_a_a,s_a_b,s_v_a,s_v_b source
+    class f_m_a,f_m_b,f_m_c,f_a_a,f_a_b,f_v_a,f_v_b flow
+    class fs_a_a1,fs_a_a2,fs_a_a3,fs_a_a4,fs_a_b1,fs_a_b2,fs_a_b3,fs_a_b4,fs_v_a1,fs_v_a2,fs_v_a3,fs_v_a4,fs_v_b1,fs_v_b2,fs_v_b3,fs_v_b4 segment
+```
 
 Being able to reference these audio and video layers independently and bind them together in different combinations offers greater flexibility in downstream media workflows, and for future re-use of media assets.
