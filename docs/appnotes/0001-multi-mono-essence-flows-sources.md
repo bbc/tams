@@ -253,11 +253,247 @@ columns 11
     class fs_m_1,fs_m_2,fs_m_3,fs_m_4 segment
 ```
 
+### Quality Ladder
+
+In many cases, a "quality ladder" of representations may be provided to suit different bandwidths, display resolutions, and quality requirements etc.
+The general principle in TAMS is that the media required should be communicated at the Source level where possible.
+It should be up to the client to decide the Flows required automatically, where possible, as it will often have more data regarding the requirements and resources available than the user.
+As the number of renditions increases, the number of possible combinations also increases.
+For this reason, it recommended to only create Multi-Flows where they provide value to the system.
+For example the initial Flows collections that will, by extension, create the Source collections that may be used to identify different renditions.
+Or the creation of a specific Flow collection to pass to render server.
+
+```mermaid
+block-beta
+columns 14
+    space:1
+    s_m["Source \n Multi-essence \n (Original feed)"]
+    space:5
+    f_m_a["Flow \n Multi-essence \n (HQ Audio + UHD)"]
+    space:6
+    f_m_a -- "Represents" --> s_m
+
+    space:14
+
+    space:14
+
+    space:10
+    time_dummy_1[" "]
+    space:2
+    time_dummy_2[" "]
+    time_dummy_1 -- "Time" --> time_dummy_2
+    style time_dummy_1 fill:none, stroke:transparent;
+    style time_dummy_2 fill:none, stroke:transparent;
+
+    s_a["Source \n Audio \n (Production Sound)"]
+    space:7
+    f_a_a["Flow \n Audio \n AAC \n (High Quality Sound)"]
+    space:1
+    fs_a_a1["HQ Audio \n Segment"]
+    fs_a_a2["HQ Audio \n Segment"]
+    fs_a_a3["HQ Audio \n Segment"]
+    fs_a_a4["HQ Audio \n Segment"]
+    f_a_a -- "Represents" --> s_a
+    f_a_a --- fs_a_a1
+
+    space:7
+    f_a_b["Flow \n Audio \n AAC \n (Low Quality Sound)"]
+    space:2
+    fs_a_b1["LQ Audio \n Segment"]
+    fs_a_b2["LQ Audio \n Segment"]
+    fs_a_b3["LQ Audio \n Segment"]
+    fs_a_b4["LQ Audio \n Segment"]
+    f_a_b -- "Represents" --> s_a
+    f_a_b --- fs_a_b1
+
+    space:1
+    s_v["Source \n Video \n (Main)"]
+    space:4
+    f_v_a["Flow \n Video \n 2160p \n (Main - UHD)"]
+    space:3
+    fs_v_a1["UHD Video \n Segment"]
+    fs_v_a2["UHD Video \n Segment"]
+    fs_v_a3["UHD Video \n Segment"]
+    fs_v_a4["UHD Video \n Segment"]
+    f_v_a -- "Represents" --> s_v
+    f_v_a --- fs_v_a1
+
+    space:5
+    f_v_b["Flow \n Video \n 1080p \n (Main - HD)"]
+    space:4
+    fs_v_b1["HD Video \n Segment"]
+    fs_v_b2["HD Video \n Segment"]
+    fs_v_b3["HD Video \n Segment"]
+    fs_v_b4["HD Video \n Segment"]
+    f_v_b -- "Represents" --> s_v
+    f_v_b --- fs_v_b1
+
+    space:4
+    f_v_c["Flow \n Video \n 480p \n (Main - SD)"]
+    space:5
+    fs_v_c1["SD Video \n Segment"]
+    fs_v_c2["SD Video \n Segment"]
+    fs_v_c3["SD Video \n Segment"]
+    fs_v_c4["SD Video \n Segment"]
+    f_v_c -- "Represents" --> s_v
+    f_v_c --- fs_v_c1
+
+    s_m -- "Collects" --> s_v
+    s_m -- "Collects" --> s_a
+
+    f_m_a -- "Collects" --> f_a_a
+    f_m_a -- "Collects" --> f_v_a
+
+    classDef source fill:#00BF7D,color:#000
+    classDef flow fill:#0073E6,color:#FFF
+    classDef segment fill:#5928ED,color:#FFF
+
+    class s_m,s_a,s_v source
+    class f_m_a,f_a_a,f_a_b,f_v_a,f_v_b,f_v_c flow
+    class fs_a_a1,fs_a_a2,fs_a_a3,fs_a_a4,fs_a_b1,fs_a_b2,fs_a_b3,fs_a_b4,fs_v_a1,fs_v_a2,fs_v_a3,fs_v_a4,fs_v_b1,fs_v_b2,fs_v_b3,fs_v_b4,fs_v_c1,fs_v_c2,fs_v_c3,fs_v_c4 segment
+```
+
+> [!CAUTION]
+> The following diagram is an anti-pattern that should be avoided
+
+The following diagram demonstrates the proliferation of Flows, and exponential complexity that arises from representing all possible combinations of renditions as separate Multi-Flows.
+
+```mermaid
+block-beta
+columns 14
+    space:1
+    s_m["Source \n Multi-essence \n (Original feed)"]
+    space:6
+    f_m_a["Flow \n Multi-essence \n (HQ Audio + UHD)"]
+    space:5
+    f_m_a -- "Represents" --> s_m
+
+    space:7
+    f_m_b["Flow \n Multi-essence \n (HQ Audio + HD)"]
+    space:6
+    f_m_b -- "Represents" --> s_m
+
+    space:6
+    f_m_c["Flow \n Multi-essence \n (HQ Audio + SD)"]
+    space:7
+    f_m_c -- "Represents" --> s_m
+
+    space:5
+    f_m_d["Flow \n Multi-essence \n (LQ Audio + UHD)"]
+    space:8
+    f_m_d -- "Represents" --> s_m
+
+    space:4
+    f_m_e["Flow \n Multi-essence \n (LQ Audio + HD)"]
+    space:9
+    f_m_e -- "Represents" --> s_m
+
+    space:3
+    f_m_f["Flow \n Multi-essence \n (LQ Audio + SD)"]
+    space:10
+    f_m_f -- "Represents" --> s_m
+
+    space:14
+
+    space:14
+
+    space:14
+
+    space:10
+    time_dummy_1[" "]
+    space:2
+    time_dummy_2[" "]
+    time_dummy_1 -- "Time" --> time_dummy_2
+    style time_dummy_1 fill:none, stroke:transparent;
+    style time_dummy_2 fill:none, stroke:transparent;
+
+    s_a["Source \n Audio \n (Production Sound)"]
+    space:7
+    f_a_a["Flow \n Audio \n AAC \n (High Quality Sound)"]
+    space:1
+    fs_a_a1["HQ Audio \n Segment"]
+    fs_a_a2["HQ Audio \n Segment"]
+    fs_a_a3["HQ Audio \n Segment"]
+    fs_a_a4["HQ Audio \n Segment"]
+    f_a_a -- "Represents" --> s_a
+    f_a_a --- fs_a_a1
+
+    space:7
+    f_a_b["Flow \n Audio \n AAC \n (Low Quality Sound)"]
+    space:2
+    fs_a_b1["LQ Audio \n Segment"]
+    fs_a_b2["LQ Audio \n Segment"]
+    fs_a_b3["LQ Audio \n Segment"]
+    fs_a_b4["LQ Audio \n Segment"]
+    f_a_b -- "Represents" --> s_a
+    f_a_b --- fs_a_b1
+
+    space:1
+    s_v["Source \n Video \n (Main)"]
+    space:4
+    f_v_a["Flow \n Video \n 2160p \n (Main - UHD)"]
+    space:3
+    fs_v_a1["UHD Video \n Segment"]
+    fs_v_a2["UHD Video \n Segment"]
+    fs_v_a3["UHD Video \n Segment"]
+    fs_v_a4["UHD Video \n Segment"]
+    f_v_a -- "Represents" --> s_v
+    f_v_a --- fs_v_a1
+
+    space:5
+    f_v_b["Flow \n Video \n 1080p \n (Main - HD)"]
+    space:4
+    fs_v_b1["HD Video \n Segment"]
+    fs_v_b2["HD Video \n Segment"]
+    fs_v_b3["HD Video \n Segment"]
+    fs_v_b4["HD Video \n Segment"]
+    f_v_b -- "Represents" --> s_v
+    f_v_b --- fs_v_b1
+
+    space:4
+    f_v_c["Flow \n Video \n 480p \n (Main - SD)"]
+    space:5
+    fs_v_c1["SD Video \n Segment"]
+    fs_v_c2["SD Video \n Segment"]
+    fs_v_c3["SD Video \n Segment"]
+    fs_v_c4["SD Video \n Segment"]
+    f_v_c -- "Represents" --> s_v
+    f_v_c --- fs_v_c1
+
+    s_m -- "Collects" --> s_v
+    s_m -- "Collects" --> s_a
+
+    f_m_a -- "Collects" --> f_a_a
+    f_m_b -- "Collects" --> f_a_a
+    f_m_c -- "Collects" --> f_a_a
+    f_m_d -- "Collects" --> f_a_b
+    f_m_e -- "Collects" --> f_a_b
+    f_m_f -- "Collects" --> f_a_b
+    f_m_a -- "Collects" --> f_v_a
+    f_m_b -- "Collects" --> f_v_b
+    f_m_c -- "Collects" --> f_v_c
+    f_m_d -- "Collects" --> f_v_a
+    f_m_e -- "Collects" --> f_v_b
+    f_m_f -- "Collects" --> f_v_c
+
+    classDef source fill:#00BF7D,color:#000
+    classDef flow fill:#0073E6,color:#FFF
+    classDef segment fill:#5928ED,color:#FFF
+
+    class s_m,s_a,s_v source
+    class f_m_a,f_m_b,f_m_c,f_m_d,f_m_e,f_m_f,f_a_a,f_a_b,f_v_a,f_v_b,f_v_c flow
+    class fs_a_a1,fs_a_a2,fs_a_a3,fs_a_a4,fs_a_b1,fs_a_b2,fs_a_b3,fs_a_b4,fs_v_a1,fs_v_a2,fs_v_a3,fs_v_a4,fs_v_b1,fs_v_b2,fs_v_b3,fs_v_b4,fs_v_c1,fs_v_c2,fs_v_c3,fs_v_c4 segment
+```
+
 ### Addition of Ancillary or Alternative Audio
 
 `Flows` are logically independent and are associated with other `Flows` via the `collection` mechanism, so new `Flows` can be created to augment your assets at any time.
 The synchronisation relationship between two or more `Flows` is encoded into their relationship to a common timeline.
 As a result, adding ancillary or alternative audio to a set of media is as simple as creating the new media co-timed with the other items in the set, and introducing a new multi-essence `Flow` (and corresponding multi-essence `Source`) to define the augmented media `collection`.
+
+> [!NOTE]
+> In this example, the two Multi-Flows and Sources are representing editorially distinct and useful combinations of media.
+This makes the use of multiple Multi-Flows appropriate as opposed to the anti-pattern described above.
 
 ```mermaid
 block-beta
