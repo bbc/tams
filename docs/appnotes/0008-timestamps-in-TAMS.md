@@ -59,7 +59,8 @@ To put it another way, we need to use a common clock to derive the timestamps fo
 The timestamps may be sampled from the clock or they may be synthesised (for example in the case of file ingest) using a counter starting from a pre-agreed value incrementing in steps that correspond to the media unit rate.
 Where synchronisation relationships between media need to be created rather than captured (for example when adding additional elements like graphics layers or audio description), the timestamps may be generated or modified on ingest to align with the pre-existing timeline.
 
-> ![NOTE:](../images/NOTE.svg) Since time is used as the primary index and Flows are immutable, it follows that timeshifting the media necessitates the creation of a new Flow.
+> [!NOTE]
+> Since time is used as the primary index and Flows are immutable, it follows that timeshifting the media necessitates the creation of a new Flow.
 Flows are co-timed representations of Sources, so this operation will also require a new parent Source to be created.
 See the appnote [Practical Application of the TAMS Content Model](./0001-multi-mono-essence-flows-sources.md) for further information about Flows and Sources.
 There is no need to copy the underlying Media Objects to achieve a simple timeshift.
