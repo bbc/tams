@@ -13,7 +13,8 @@ This short article will show you how `Flows` and `Sources` support flexible mult
 The Time Addressable Media Store uses strong, universally unique identifiers to manage and track media assets.
 In most cases, these identifiers are coined when media is placed in the store (either by a file or stream ingest operation).
 
-> ![NOTE:](../images/NOTE.svg) Ingest of media originating from an NMOS-compliant streaming device may persist the NMOS identifiers, since they conform to the same underlying model.
+> [!NOTE]
+> Ingest of media originating from an NMOS-compliant streaming device may persist the NMOS identifiers, since they conform to the same underlying model.
 Future implementations of stream handling infrastructure may choose to embrace the TAMS content model more fully, adding identity and timing information that could be captured into the store, providing consistency between the streamed and stored domains.
 
 Each media element is given a `Flow ID`, which is used to reference the content via the API.
@@ -32,7 +33,8 @@ Mono-essence `Flows` can be referenced by any number of multi-essence `Flow coll
 Storing the media elements independently affords more flexibility in cases where media elements regularly need to be manipulated separately, as it avoids the overhead of repeated unpacking and repacking.
 As an alternative, multi-essence streams can be stored directly in muxed form if the flexibility of elemental media is not required.
 
-> ![NOTE:](../images/NOTE.svg) TAMS use of `Sources` and `Flows` aligns with terminology used the Advanced Media Workflow Association's Networked Media Open Specifications.
+> [!NOTE]
+> TAMS use of `Sources` and `Flows` aligns with terminology used the Advanced Media Workflow Association's Networked Media Open Specifications.
 TAMS extends some of the basic concepts to meet the needs of the practical applications it is designed to address.
 
 Let's consider how the TAMS content model is used in practice through some simple examples.
@@ -72,7 +74,8 @@ columns 8
     class a_fs_1,a_fs_2,a_fs_3,a_fs_4 segment
 ```
 
-> ![NOTE:](../images/NOTE.svg) By convention, the interleaved audio is treated as a single mono-essence `Flow`.
+> [!NOTE]
+> By convention, the interleaved audio is treated as a single mono-essence `Flow`.
 Implementers of media ingesters may choose to offer the option to split the interleave into several separate `Flows`.
 If required, separate identifiers can be assigned to channels in an interleaved audio `Flow`, but that is beyond the scope of this application note.
 
@@ -127,7 +130,8 @@ columns 8
     class a_fs_a1,a_fs_a2,a_fs_a3,a_fs_a4,a_fs_b1,a_fs_b2,a_fs_b3,a_fs_b4 segment
 ```
 
-> ![NOTE:](../images/NOTE.svg) The duration of the Segments in the derived `Flow` may differ due to technical constraints of the encoding algorithm or other reasons.
+> [!NOTE]
+> The duration of the Segments in the derived `Flow` may differ due to technical constraints of the encoding algorithm or other reasons.
 In this case, Segment timestamps will be remapped so the relationship between the timeline and the underlying media samples is preserved.
 
 ### Ingest of SRT Stream (video + stereo audio)
@@ -582,7 +586,8 @@ columns 13
     class fs_a_a1,fs_a_a2,fs_a_a3,fs_a_a4,fs_a_b1,fs_a_b2,fs_a_b3,fs_a_b4,fs_v_1,fs_v_2,fs_v_3,fs_v_4 segment
 ```
 
-> ![NOTE:](../images/NOTE.svg) It's technically permissible to collect together a mixture of mono- and multi-essence Flows into a higher-level multi-essence Flow.
+> [!NOTE]
+> It's technically permissible to collect together a mixture of mono- and multi-essence Flows into a higher-level multi-essence Flow.
 However, creating multi-level hierarchies like this breeds complexity and will likely impact performance, so it's inadvisable in most cases.
 It's generally better to reference the lowest-level mono-essence Flows individually in the multi-essence collection.
 
