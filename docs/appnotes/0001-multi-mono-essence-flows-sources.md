@@ -824,3 +824,110 @@ columns 8
     class a_fs_a1,a_fs_a2,a_fs_a3,a_fs_a4,a_fs_b1,a_fs_b2 segment
     class a_mo_1,a_mo_2,a_mo_3,a_mo_4 object
 ```
+
+### Edit-by-Reference with Multiple Flows
+
+A new cuts-based edit may be created as a new Source and Flow that similarly references existing Media Objects from one or more Flows.
+New Objects are only created for media that doesn't currently exist in the store.
+Flow Segments could use a subset of the TimeRange available in a referenced Object e.g. only the first 5 seconds of a 10 second Object are needed.
+
+```mermaid
+block-beta
+columns 9
+    space:4
+    dummy1[" "]
+    space:3
+    dummy2[" "]
+    dummy1 -- "Time" --> dummy2
+    style dummy1 fill:none, stroke:transparent;
+    style dummy2 fill:none, stroke:transparent;
+
+    a_s_a["Source \n Audio \n (BBC Proms R3 Ep1)"]
+    space:1
+    a_f_a["Flow \n Audio \n LPCM Stereo \n (BBC Proms R3 Ep1 - High Quality)"]
+    space:1
+    a_fs_a1["Segment \n (LPCM)"]
+    a_fs_a2["Segment \n (LPCM)"]
+    a_fs_a3["Segment \n (LPCM)"]
+    a_fs_a4["Segment \n (LPCM)"]
+    space:1
+    a_f_a -- "Represents" --> a_s_a
+    a_f_a --- a_fs_a1
+
+    space:9
+
+    space:4
+    a_mo_a1["Media Object \n (LPCM)"]
+    a_mo_a2["Media Object \n (LPCM)"]
+    a_mo_a3["Media Object \n (LPCM)"]
+    a_mo_a4["Media Object \n (LPCM)"]
+    space:1
+
+    a_fs_a1 -- "References" --> a_mo_a1
+    a_fs_a2 -- "References" --> a_mo_a2
+    a_fs_a3 -- "References" --> a_mo_a3
+    a_fs_a4 -- "References" --> a_mo_a4
+
+    space:9
+
+    a_s_b["Source \n Audio \n (BBC Proms Highlights)"]
+    space:1
+    a_f_b["Flow \n Audio \n LPCM Stereo \n (BBC Proms Highlights - High Quality)"]
+    space:1
+    a_fs_b1["Segment \n (LPCM)"]
+    a_fs_b2["Segment \n (LPCM)"]
+    a_fs_b3["Segment \n (LPCM)"]
+    a_fs_b4["Segment \n (LPCM)"]
+    a_fs_b5["Segment \n (LPCM)"]
+    a_f_b -- "Represents" --> a_s_b
+    a_f_b --- a_fs_b1
+
+    space:9
+
+    space:8
+    a_mo_b1["Media Object \n (LPCM)"]
+
+    space:9
+
+    space:4
+    a_mo_c1["Media Object \n (LPCM)"]
+    a_mo_c2["Media Object \n (LPCM)"]
+    a_mo_c3["Media Object \n (LPCM)"]
+    a_mo_c4["Media Object \n (LPCM)"]
+    space:1
+
+    space:9
+
+    a_s_c["Source \n Audio \n (BBC Proms R3 Ep2)"]
+    space:1
+    a_f_c["Flow \n Audio \n LPCM Stereo \n (BBC Proms R3 Ep2 - High Quality)"]
+    space:1
+    a_fs_c1["Segment \n (LPCM)"]
+    a_fs_c2["Segment \n (LPCM)"]
+    a_fs_c3["Segment \n (LPCM)"]
+    a_fs_c4["Segment \n (LPCM)"]
+    space:1
+    a_f_c -- "Represents" --> a_s_c
+    a_f_c --- a_fs_c1
+
+    a_fs_c1 -- "References" --> a_mo_c1
+    a_fs_c2 -- "References" --> a_mo_c2
+    a_fs_c3 -- "References" --> a_mo_c3
+    a_fs_c4 -- "References" --> a_mo_c4
+
+    a_fs_b1 -- "References" --> a_mo_a2
+    a_fs_b2 -- "References" --> a_mo_a3
+    a_fs_b3 -- "References" --> a_mo_c3
+    a_fs_b4 -- "References" --> a_mo_c4
+    a_fs_b5 -- "References" --> a_mo_b1
+
+    classDef source fill:#00BF7D,color:#000
+    classDef flow fill:#0073E6,color:#FFF
+    classDef segment fill:#5928ED,color:#FFF
+    classDef object fill:#00B4C5,color:#000
+
+    class a_s_a,a_s_b,a_s_c source
+    class a_f_a,a_f_b,a_f_c flow
+    class a_fs_a1,a_fs_a2,a_fs_a3,a_fs_a4,a_fs_b1,a_fs_b2,a_fs_b3,a_fs_b4,a_fs_b5,a_fs_c1,a_fs_c2,a_fs_c3,a_fs_c4 segment
+    class a_mo_a1,a_mo_a2,a_mo_a3,a_mo_a4,a_mo_b1,a_mo_c1,a_mo_c2,a_mo_c3,a_mo_c4 object
+```
