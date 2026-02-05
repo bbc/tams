@@ -21,7 +21,8 @@ Each media element is given a `Flow ID`, which is used to reference the content 
 This media is typically chunked and stored as Media Objects.
 These Media Objects are typically short (on the order of seconds) and independently decodable to allow for efficient random access of content.
 Media Objects are mapped to a Flow's timeline via Flow Segments.
-Once the media is in the store, it is never modified directly, and its `Flow ID` and relationship to the timeline never changes, ensuring that when you request a particular `Flow ID` and timerange via the API, you always get the same media Segments back.
+Once the media is in the store, it is considered immutable and never modified directly.
+It's `Flow ID` and relationship to the timeline never changes, ensuring that when you request a particular `Flow ID` and timerange via the API, you always get the same media Segments back.
 
 The length of Media Objects is dependent on limitations of codecs and their configuration (such as GOP sizes) along with a trade-off between number of requests to upload/download content, cost, and granularity.
 Multiple Flow Segments, in the same or different Flows, may reference the same Media Object.
@@ -36,9 +37,23 @@ By extension, content can be referenced independent of its encoding by using the
 
 The TAMS content model provides a `collection` mechanism for grouping several mono-essence `Flow` entities together under a multi-essence `Flow ID`.
 Mono-essence `Flows` can be referenced by any number of multi-essence `Flow collections`.
+Counterpart `Source collections` also exist and are created by TAMS services automatically based on their Flow equivalents.
+
+It is considered best practice to deal with media as Sources wherever possible, particularly when presenting that media to human users.
+Systems are often better placed to decide which technical representation (i.e. Flow) is most appropriate for their use than other systems or human users.
+There will also typically be fewer Sources available than Flows, resulting in shorter listings in UIs etc.
+These listings may, in some use cases, be further filtered to just Multi-Sources which collect related media.
+It may, be appropriate to deal in Flows directly in cases where specific technical representations are important.
+For example, when passing Flows to a file-export service.
 
 Storing the media elements independently affords more flexibility in cases where media elements regularly need to be manipulated separately, as it avoids the overhead of repeated unpacking and repacking.
+For example, a transcription service would need access to audio, but not video.
+And generation of video proxies would not need access to audio.
+Additionally, it avoids the need to create separate multiplexed streams for all combinations of audio and video qualities.
+This saves on resources.
+
 As an alternative, multi-essence streams can be stored directly in muxed form if the flexibility of elemental media is not required.
+This may be of particular use where the original stream must be retained for compliance reasons.
 
 > [!NOTE]
 > TAMS use of `Sources` and `Flows` aligns with terminology used the Advanced Media Workflow Association's Networked Media Open Specifications.
