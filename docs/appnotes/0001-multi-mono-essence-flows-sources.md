@@ -14,12 +14,19 @@ The Time Addressable Media Store uses strong, universally unique identifiers to 
 In most cases, these identifiers are coined when media is placed in the store (either by a file or stream ingest operation).
 
 > [!NOTE]
-> Ingest of media originating from an NMOS-compliant streaming device may persist the NMOS identifiers, since they conform to the same underlying model.
+> Ingest of media originating from an NMOS-compliant streaming device may persist the [NMOS identifiers](https://specs.amwa.tv/ms-04/releases/v1.0.0/docs/2.1._Summary_and_Definitions.html), since they conform to the same underlying model.
 Future implementations of stream handling infrastructure may choose to embrace the TAMS content model more fully, adding identity and timing information that could be captured into the store, providing consistency between the streamed and stored domains.
 
 Each media element is given a `Flow ID`, which is used to reference the content via the API.
-The media Segments are indexed by time.
+This media is typically chunked and stored as Media Objects.
+These Media Objects are typically short (on the order of seconds) and independently decodable to allow for efficient random access of content.
+Media Objects are mapped to a Flow's timeline via Flow Segments.
 Once the media is in the store, it is never modified directly, and its `Flow ID` and relationship to the timeline never changes, ensuring that when you request a particular `Flow ID` and timerange via the API, you always get the same media Segments back.
+
+The length of Media Objects is dependent on limitations of codecs and their configuration (such as GOP sizes) along with a trade-off between number of requests to upload/download content, cost, and granularity.
+Multiple Flow Segments, in the same or different Flows, may reference the same Media Object.
+Flow Segments may reference partial Media Objects, allowing for frame/sample accuracy.
+This is particularly useful when re-using existing Media Objects in so-called edit-by-reference workflows.
 
 `Sources` provide another layer of identity that groups together editorially-equivalent `Flows`, making it easy to find different representations of the same content.
 For example, consider two `Flows`, comprising an H264 bitstream and a JPEG2000 bitstream respectively, representing the same sequence of pictures.
@@ -42,6 +49,10 @@ Let's consider how the TAMS content model is used in practice through some simpl
 ### Simple Mono-essence Stream Ingest (stereo audio)
 
 Ingest of a LPCM audio stream (for example an AES67 or SMPTE ST2110-30 stream) requires the creation of a new `Flow ID` to identify the sequence of Segments containing the audio samples, and a new `Source ID` as an editorial entity to support the linking of this media with other representations.
+The chunked media is stored as Media Objects and mapped onto the Flow's timeline via Flow Segments.
+
+> [!NOTE]
+> Other examples in this Application Note omit Media Objects for brevity
 
 ```mermaid
 block-beta
@@ -65,13 +76,28 @@ columns 8
     a_f -- "Represents" --> a_s
     a_f --- a_fs_1
 
+    space:4
+    a_mo_1["Media Object \n (LPCM)"]
+    a_mo_2["Media Object \n (LPCM)"]
+    a_mo_3["Media Object \n (LPCM)"]
+    a_mo_4["Media Object \n (LPCM)"]
+
+    space:8
+
+    a_fs_1 -- "References" --> a_mo_1
+    a_fs_2 -- "References" --> a_mo_2
+    a_fs_3 -- "References" --> a_mo_3
+    a_fs_4 -- "References" --> a_mo_4
+
     classDef source fill:#00BF7D,color:#000
     classDef flow fill:#0073E6,color:#FFF
     classDef segment fill:#5928ED,color:#FFF
+    classDef object fill:#00B4C5,color:#000
 
     class a_s source
     class a_f flow
     class a_fs_1,a_fs_2,a_fs_3,a_fs_4 segment
+    class a_mo_1,a_mo_2,a_mo_3,a_mo_4 object
 ```
 
 > [!NOTE]
