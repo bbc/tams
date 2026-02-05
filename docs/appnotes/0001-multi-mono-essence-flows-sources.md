@@ -91,13 +91,13 @@ columns 8
     a_f -- "Represents" --> a_s
     a_f --- a_fs_1
 
+    space:8
+
     space:4
     a_mo_1["Media Object \n (LPCM)"]
     a_mo_2["Media Object \n (LPCM)"]
     a_mo_3["Media Object \n (LPCM)"]
     a_mo_4["Media Object \n (LPCM)"]
-
-    space:8
 
     a_fs_1 -- "References" --> a_mo_1
     a_fs_2 -- "References" --> a_mo_2
@@ -757,3 +757,70 @@ columns 15
 ```
 
 Being able to reference these audio and video layers independently and bind them together in different combinations offers greater flexibility in downstream media workflows, and for future re-use of media assets.
+
+### Clipping Media
+
+A clip of an existing Source may be represented purely in metadata, referencing the existing Media Objects.
+A new Source and Flow is created as the clip may be considered editorially distinct.
+The new Flow may map the existing Objects to different points on it's timeline.
+
+```mermaid
+block-beta
+columns 8
+    space:4
+    dummy1[" "]
+    space:2
+    dummy2[" "]
+    dummy1 -- "Time" --> dummy2
+    style dummy1 fill:none, stroke:transparent;
+    style dummy2 fill:none, stroke:transparent;
+
+    a_s_a["Source \n Audio \n (BBC Proms R3 Mix)"]
+    space:1
+    a_f_a["Flow \n Audio \n LPCM Stereo \n (BBC Proms R3 Mix - High Quality)"]
+    space:1
+    a_fs_a1["Segment \n (LPCM)"]
+    a_fs_a2["Segment \n (LPCM)"]
+    a_fs_a3["Segment \n (LPCM)"]
+    a_fs_a4["Segment \n (LPCM)"]
+    a_f_a -- "Represents" --> a_s_a
+    a_f_a --- a_fs_a1
+
+    space:8
+
+    space:4
+    a_mo_1["Media Object \n (LPCM)"]
+    a_mo_2["Media Object \n (LPCM)"]
+    a_mo_3["Media Object \n (LPCM)"]
+    a_mo_4["Media Object \n (LPCM)"]
+
+    a_fs_a1 -- "References" --> a_mo_1
+    a_fs_a2 -- "References" --> a_mo_2
+    a_fs_a3 -- "References" --> a_mo_3
+    a_fs_a4 -- "References" --> a_mo_4
+
+    space:8
+
+    a_s_b["Source \n Audio \n (BBC Proms Clip)"]
+    space:1
+    a_f_b["Flow \n Audio \n LPCM Stereo \n (BBC Proms Clip - High Quality)"]
+    space:1
+    a_fs_b1["Segment \n (LPCM)"]
+    a_fs_b2["Segment \n (LPCM)"]
+    space:2
+    a_f_b -- "Represents" --> a_s_b
+    a_f_b --- a_fs_b1
+
+    a_fs_b1 -- "References" --> a_mo_2
+    a_fs_b2 -- "References" --> a_mo_3
+
+    classDef source fill:#00BF7D,color:#000
+    classDef flow fill:#0073E6,color:#FFF
+    classDef segment fill:#5928ED,color:#FFF
+    classDef object fill:#00B4C5,color:#000
+
+    class a_s_a,a_s_b source
+    class a_f_a,a_f_b flow
+    class a_fs_a1,a_fs_a2,a_fs_a3,a_fs_a4,a_fs_b1,a_fs_b2 segment
+    class a_mo_1,a_mo_2,a_mo_3,a_mo_4 object
+```
