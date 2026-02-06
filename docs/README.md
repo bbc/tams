@@ -81,5 +81,6 @@ For more information on how we use ADRs, see [here](./adr/README.md).
 | [0042](./adr/0042-uncontrolled-object-instance-labels.md)          | Make `label` Mandatory for Uncontrolled Object Instances |
 | [0043](./adr/0043-signalling-retention-time.md)                    | Signalling retention time |
 | [0046](./adr/0046-governance.md)                                   | Governance |
+| [0047](./adr/0047-role-naming-convention.md)                       | Role Naming Convention |
 
 \* Note: ADR 0004a was the unintended result of a number clash in the early development of TAMS which wasn't caught before publication
