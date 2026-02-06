@@ -26,6 +26,7 @@ For more information on how we use application notes, see [here](./appnotes/READ
 | [0017](./appnotes/0017-reuse-of-ids.md)                              | When to re-use IDs in TAMS and compatible systems               |
 | [0018](./appnotes/0018-managing-multiple-object-instances.md)        | Managing Multiple Object Instances                              |
 | [0019](./appnotes/0019-implementing-retention-management.md)         | Methods of implementing retention management                    |
+| [0020](./appnotes/0020-role-naming-convention.md)                    | Role Naming Convention                                          |
 
 ## ADRs
 
