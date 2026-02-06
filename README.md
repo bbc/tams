@@ -32,6 +32,7 @@ Users of TAMS are insulated from the details of the underlying storage.
 - [Rendered Specification](https://bbc.github.io/tams)
 - [Supporting Documentation (Application notes and Decision Records)](./docs/README.md)
 - [Example API Usage Scripts](./examples/README.md)
+- [Description of governance process](./GOVERNANCE.md)
 
 ## Design
 
