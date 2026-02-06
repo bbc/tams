@@ -15,7 +15,7 @@
         },
         {
             "id": "94996f2e-0cb5-43d3-ab6c-db5a9cf667aa",
-            "role": "L",
+            "role": "audio:programme:L",
             "container_mapping": {
                 "track_index": 1,
                 "format_track_index": 0,
@@ -26,7 +26,7 @@
         },
         {
             "id": "9ba0523e-22a0-4c69-a598-baf4be244a79",
-            "role": "R",
+            "role": "audio:programme:R",
             "container_mapping": {
                 "track_index": 2,
                 "format_track_index": 1,
