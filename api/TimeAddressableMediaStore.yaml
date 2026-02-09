@@ -2111,7 +2111,14 @@ paths:
 
         The response will include a PUT URL that a client uses to upload the Media Object.
         The client is expected to register the Flow Segment using the [/flows/{flowId}/segments](#/operations/POST_flows-flowId-segments) endpoint once the upload is complete.
-        Service implementations need to handle situations where Objects were uploaded but no Flow Segment was registered successfully.
+
+        Clients MAY request Objects in batches to reduce the number of HTTP requests made to the Service.
+        Clients are not expected to use all of the Objects they requested.
+        Objects will likely go unused in cases such as shutdown of ingesting clients, the end of ingested live streams, and unexpected network congestion.
+        Clients SHOULD, however, adapt the number of Objects they request such that they may reasonably expect to use them before the timeout advertised in [`min_object_timeout` at the `/service`](#/operations/GET_service) endpoint.
+
+        Service implementations need to handle situations where Objects are not used, and where content is were uploaded but no Flow Segment was registered successfully.
+        In these circumstances, Services should garbage collect Objects after the timeout advertised in [`min_object_timeout` at the `/service`](#/operations/GET_service) endpoint.
 
         When making requests to the provided `put_url`, clients should include credentials if the provided URL is on the same origin as the API itself, akin to the `same-origin` mode in the [WhatWG Fetch Standard](https://fetch.spec.whatwg.org/#concept-request-credentials-mode).
       operationId: POST_flows-flowId-storage

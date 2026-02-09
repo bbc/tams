@@ -7,7 +7,7 @@
     ],
     "properties": {
         "url": {
-            "description": "The URL to make the request to",
+            "description": "The URL to make the request to. Where this URL is pre-signed, it SHALL remain valid for the timeframe advertised in [`min_presigned_url_timeout` at the `/service`](#/operations/GET_service) endpoint.",
             "type": "string"
         },
         "body": {
