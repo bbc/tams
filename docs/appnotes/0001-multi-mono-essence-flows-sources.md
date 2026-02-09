@@ -247,8 +247,8 @@ columns 11
 If your use case doesn't require this flexibility, it may be more convenient to store the multi-essence stream (in this case a Transport Stream) directly under the Multi-Flow, leaving the mono-essence `Flows` unpopulated, as shown below.
 
 > [!NOTE]
-> Mono-essence `Flows` are often still be useful for conveying the technical properties of the tracks within the multiplex stream.
-This would aid systems in identifying media they are compatible with.
+> Unpopulated mono-essence `Flows` collected by populated Multi-Flows are often still useful for conveying the technical properties of the tracks within the multiplexed stream of the Multi-Flow.
+This aids consuming clients in identifying media they are compatible with.
 
 ```mermaid
 block-beta
