@@ -21,8 +21,10 @@ Each media element is given a `Flow ID`, which is used to reference the content 
 This media is typically chunked and stored as Media Objects.
 These Media Objects are typically short (on the order of seconds) and independently decodable to allow for efficient random access of content.
 Media Objects are mapped to a Flow's timeline via Flow Segments.
-Once the media is in the store, it is considered immutable and never modified directly.
-It's `Flow ID` and relationship to the timeline never changes, ensuring that when you request a particular `Flow ID` and timerange via the API, you always get the same media Segments back.
+
+Once media is in the store, it is considered immutable and never modified directly.
+A Flow's `Flow ID`, its Flow Segments, and their relationship to the Flow's timeline never changes.
+This ensures that when you request a particular `Flow ID` and timerange via the API, you always get the same media back.
 
 The length of Media Objects is dependent on limitations of codecs and their configuration (such as GOP sizes) along with a trade-off between number of requests to upload/download content, cost, and granularity.
 Multiple Flow Segments, in the same or different Flows, may reference the same Media Object.
@@ -35,9 +37,9 @@ They share a `Source ID` and exist on the same timeline.
 A request for the same timerange of either `Flow` will result in the same picture or sequence of pictures when decoded.
 By extension, content can be referenced independent of its encoding by using the `Source IDs` directly, allowing clips and assembly edits to be described in purely editorial terms.
 
-The TAMS content model provides a `collection` mechanism for grouping several mono-essence `Flow` entities together under a multi-essence `Flow ID`.
-Mono-essence `Flows` can be referenced by any number of multi-essence `Flow collections`.
-Counterpart `Source collections` also exist and are created by TAMS services automatically based on their Flow equivalents.
+The TAMS content model provides a `collection` mechanism for grouping several mono-essence `Flow` entities together under a multi-essence `Flow` (Multi-Flow).
+Mono-essence `Flows` can be referenced by any number of Multi-Flows via their `flow_collection` attribute.
+Counterpart `source_collection` attribute also exist against `Sources` and are created by TAMS services automatically based on their Flow equivalents.
 
 It is considered best practice to deal with media as Sources wherever possible, particularly when presenting that media to human users.
 Systems are often better placed to decide which technical representation (i.e. Flow) is most appropriate for their use than other systems or human users.
@@ -177,8 +179,8 @@ In this case, Segment timestamps will be remapped so the relationship between th
 
 ### Ingest of SRT Stream (video + stereo audio)
 
-Stepping up to a stream containing both audio and video, packaged into a MPEG2 Transport Stream and encapsulated in SRT, three `Flow` entities are created on ingest: one for the video essence, one for the audio essence and a multi-essence `Flow` to record the association of the mono-essence `Flows` as an ingested stream.
-The multi-essence `Flow` features a `collection` attribute that lists the `Flow IDs` in the set, each annotated with a string describing its role.
+Stepping up to a stream containing both audio and video, packaged into a MPEG2 Transport Stream and encapsulated in SRT, three `Flow` entities are created on ingest: one for the video essence, one for the audio essence and a Multi-Flow to record the association of the mono-essence `Flows` as an ingested stream.
+The Mutli-Flow features a `collection` attribute that lists the `Flow IDs` in the set, each annotated with a string describing its role.
 
 Technical metadata relating to the elementary streams is used to populate the corresponding mono-essence `Flow` properties.
 
@@ -242,7 +244,7 @@ columns 11
     class fs_a_1,fs_a_2,fs_a_3,fs_a_4,fs_v_1,fs_v_2,fs_v_3,fs_v_4 segment
 ```
 
-If your use case doesn't require this flexibility, it may be more convenient to store the multi-essence stream (in this case a Transport Stream) directly under the multi-essence `Flow` identifier, leaving the mono-essence `Flows` unpopulated, as shown below.
+If your use case doesn't require this flexibility, it may be more convenient to store the multi-essence stream (in this case a Transport Stream) directly under the Multi-Flow, leaving the mono-essence `Flows` unpopulated, as shown below.
 
 > [!NOTE]
 > Mono-essence `Flows` are often still be useful for conveying the technical properties of the tracks within the multiplex stream.
@@ -538,7 +540,7 @@ columns 14
 
 `Flows` are logically independent and are associated with other `Flows` via the `collection` mechanism, so new `Flows` can be created to augment your assets at any time.
 The synchronisation relationship between two or more `Flows` is encoded into their relationship to a common timeline.
-As a result, adding ancillary or alternative audio to a set of media is as simple as creating the new media co-timed with the other items in the set, and introducing a new multi-essence `Flow` (and corresponding multi-essence `Source`) to define the augmented media `collection`.
+As a result, adding ancillary or alternative audio to a set of media is as simple as creating the new media co-timed with the other items in the set, and introducing a new Multi-Flow (and corresponding Multi-Source) to define the augmented media `collection`.
 
 > [!NOTE]
 > In this example, the two Multi-Flows and Sources are representing editorially distinct and useful combinations of media.
