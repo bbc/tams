@@ -30,9 +30,9 @@ It provides a framework for sharing that media between systems, solutions and or
 2. TAMS and the API should be as simple as possible, and always strike a balance across aspects such as complexity, capability, scalability.
 3. TAMS API servers and clients with compatible versions should interoperate.
    The specification is prescriptive and opinionated where necessary to enable this.
-4. However we aim to give users as much flexibility as possible while ensuring interoperability
+4. However we aim to give users as much flexibility as possible while ensuring interoperability.
 5. Optional features and capabilities are used cautiously, to simplify client implementations and reduce integration engineering work.
-6. We re-use patterns and approaches where possible: both within TAMS, and drawing on existing approaches in other technologies
+6. We re-use patterns and approaches where possible: both within TAMS, and drawing on existing approaches in other technologies.
 7. Breaking changes are possible, but we strike a balance to minimise impact and maximise benefit.
-   We make decisions with strong engineering justification and consider the impact of change, through an open decision process
-8. The TAMS community is governed by a balanced mix of users (broadcasters, content owners etc.) and technology/solution vendors
+   We make decisions with strong engineering justification and consider the impact of change, through an open decision process.
+8. The TAMS community is governed by a balanced mix of users (broadcasters, content owners etc.) and technology/solution vendors.
