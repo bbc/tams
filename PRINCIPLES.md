@@ -8,7 +8,7 @@ The TSC use these to guide technical decision making and shape the direction of 
 Overall, TAMS and the TAMS API is an interface for writing media to and reading it from a store.
 It provides a framework for sharing that media between systems, solutions and organisations using a content-centric, cloud-native approach, all focused around a store (or a number of stores).
 
-1. TAMS is designed to be interoperable.
+1. TAMS is designed as an interoperable media framework.
    Having TAMS support should enable integration with other TAMS solutions, removing or minimising the need for bespoke integrations.
 2. TAMS is agnostic to clouds, codecs, and containers.
    It may describe how to integrate with a particular technology, but the core API can be implemented in many ways for many purposes.
@@ -16,7 +16,7 @@ It provides a framework for sharing that media between systems, solutions and or
    While it also works for data (and has data as a supported type) it is primarily designed for media-like workflows on a timeline.
 4. TAMS supports fast-turnaround/near-live workflows, but also works well for file-based workflows, and in some cases can take the place of live signal-centric workflows, if appropriate latency tradeoffs can be made.
 5. TAMS does not implement a MAM.
-   It should contain the minimum possible content discovery and library management features.
+   It should contain the minimum possible content discovery and library management features required for effective interoperability.
    Anything else should go in a system designed for that purpose.
 6. TAMS is open source to reduce barriers to entry and maximise adoption: anyone should be able to participate in the ecosystem, providing maximum choice.
 7. TAMS is a living specification.
@@ -36,3 +36,4 @@ It provides a framework for sharing that media between systems, solutions and or
 7. Breaking changes are possible, but we strike a balance to minimise impact and maximise benefit.
    We make decisions with strong engineering justification and consider the impact of change, through an open decision process.
 8. The TAMS community is governed by a balanced mix of users (broadcasters, content owners etc.) and technology/solution vendors.
+9. When common requirements arise, or the need for a common piece of functionality becomes clear, we attempt to standardise an approach either in the API Specification or an Application Note to enable interoperability.
