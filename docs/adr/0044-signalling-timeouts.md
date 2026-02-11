@@ -42,6 +42,15 @@ Chosen option: Option 1a, and Option 2a.
 
 These options will be implemented such that the API specification could be extended in future to support Options 1d, and 2d if required.
 
+The minimum timeout for presigned URLs has been selected as 30 seconds.
+This is to allow for long distance, poor quality connections.
+In particular, latency to opposite sides of Earth is on the order of 250ms and can be much higher.
+
+The minimum timeout for Media Objects has been selected as 5 minutes.
+This is to allow for the upload of moderately sized Objects over poor quality connections.
+
+The timeout for Objects is significantly higher than presigned URLs as uploads/downloads must be initiated with presigned URLs before they time out, but Object upload and registration against Flow Segments must be completed before the Object timeout.
+
 ### Implementation
 
 Implemented in [PR #166](https://github.com/bbc/tams/pull/166)
