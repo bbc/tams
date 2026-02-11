@@ -57,7 +57,7 @@ The specification would include a minimum value allowing Clients to validate the
 * Good, because it provides a clear contract between Services and Clients regarding the timeframe in which Objects must be used
 * Good, because it allows for Services to set that timeframe based on their implementation/requirements
 * Good, because it provides clear performance requirements for Clients
-* Bad, because it requires Clients to adapt to that signalled timeframe
+* Bad, because it requires Clients to adapt to that signalled timeframe (or at least meet the minimum level)
 
 ### Option 1b: Specify a fixed Object garbage collection timeout in the specification
 
@@ -81,7 +81,7 @@ The current statement in the specification - that service implementations should
 ### Option 1d: Client and Service negotiate Object garbage collection timeout
 
 This option would see Clients and Services actively negotiate Object garbage collection timeouts.
-This would likely take the form of minimum and maximum values being advertised by the Service at it's `/service` endpoint.
+This would likely take the form of minimum and maximum values being advertised by the Service at its `/service` endpoint.
 Clients would then specify a value in this range when requesting Object allocation.
 
 * Good, because it provides a clear contract between Services and Clients regarding the timeframe in which Objects must be used
