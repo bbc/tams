@@ -39,8 +39,12 @@ For how to represent editorial purpose (options `Pn`):
 
 ## Decision Outcome
 
-Chosen option: Option 1a and Option 2d, because this allows `role` to be free-form and evolve over time, and avoids a breaking change to the specification or unduly constraining it.
-While this prevents clients from being able to automatically determine the purpose of each item in a collection, in many cases the role merely serves to change what the user is shown and they are left to make the decisions.
+Chosen option: Option R3a and Option P4, because it lines up with the existing common use of `role` and allows it to evolve over time.
+It also limits the changes required to the API, and while in some cases it may trigger extra API requests (e.g. to enumerate the media types of a collection), it is likely the details of those collection items will be needed anyway, so the requests would be needed.
+Furthermore the TAMS API is intended not to serve as a Media Asset Manager and provide minimal library management and discovery features: through that lens the additional request burden seems reasonable and if it becomes too onerous in a particular deployment, that may indicate a MAM is required.
+However Option R3c (surfacing `role` in collections) could be added later if necessary.
+
+Regarding editorial purposes, while Option P4 makes it harder for clients to automatically determine the purpose of each item in a collection, in many cases the role merely serves to change what the user is shown and they are left to make the decisions.
 In cases where it matters which elements of a collection are picked up (for example packaging content for distribution) the correct items should be identified by some more rigorous method anyway (for example creating a multi-essence Flow of just the items required).
 
 ### Implementation
