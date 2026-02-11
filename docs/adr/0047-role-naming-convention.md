@@ -22,10 +22,13 @@ Or main video, signed video or clean-feed without graphics.
 
 * Option 1a: Provide guidance on how the free-text field `role` should be used
 * Option 1b: Replace `role` with a number of additional controlled fields
-* Option 2a: Represent editorial purpose using DVB component descriptors
-* Option 2b: Represent editorial purpose using roles from MPEG-DASH
-* Option 2c: Represent editorial purpose based on descriptions in the MovieLabs Ontology for Media Creation
-* Option 2d: Represent purpose of content using a list, as with tags
+
+For how to represent editorial purpose (options `Pn`):
+
+* Option P1: Represent editorial purpose using DVB component descriptors
+* Option P2: Represent editorial purpose using roles from MPEG-DASH
+* Option P3: Represent editorial purpose based on descriptions in the MovieLabs Ontology for Media Creation
+* Option P4: Represent purpose of content using a list, as with tags
 
 ## Decision Outcome
 
@@ -35,9 +38,8 @@ In cases where it matters which elements of a collection are picked up (for exam
 
 ### Implementation
 
-{Once the proposal has been implemented, add a link to the relevant PRs here}
+Implemented by <https://github.com/bbc/tams/pull/173>
 
-<!-- This is an optional element. Feel free to remove. -->
 ## Pros and Cons of the Options
 
 ### Option 1a: Provide guidance on how the free-text field `role` should be used
@@ -57,7 +59,9 @@ Change the specification to remove `role` and replace it with a more precise set
 * Bad, because it requires work to fully specify all the possible purposes an item in a collection can fulfil.
 * Bad, because it then constrains TAMS and requires a change as new purposes are identified.
 
-### Option 2a: Represent editorial purpose using DVB component descriptors
+## Pros and Cons of the Options - for representing editorial purpose
+
+### Option P1: Represent editorial purpose using DVB component descriptors
 
 DVB uses the `stream_content`, `stream_content_ext` and `component_type` fields in the `component_descriptor` to describe the type of a Service.
 These are described in [ETSI EN 300 468 pp 60-70](https://www.etsi.org/deliver/etsi_en/300400_300499/300468/01.19.01_60/en_300468v011901p.pdf).
@@ -68,7 +72,7 @@ TAMS could use the same descriptors, or their names.
 * Bad, because many of the types also include technical characteristics of content, making them unsuitable for use in Sources
 * Bad, because the list is focused on distribution, so cannot contain aspects such as clean-feed video
 
-### Option 2b: Represent editorial purpose using MPEG-DASH roles
+### Option P2: Represent editorial purpose using MPEG-DASH roles
 
 MPEG-DASH contains a role attribute for an `AdaptationSet`, which describes the purose of that particular track.
 A number of values for that attribute are given in the specification (see ISO/IEC 23009-1:2022 section 5.8.5.5), covering the `main` content along with others such as `alternate`, `supplementary`, `commentary`, `description`, etc.
@@ -78,7 +82,7 @@ TAMS could use these descriptors for the table directly.
 * Neutral, because the example use cases identified above could be represented, however some would be ambiguous, such as using `alternate` for clean-feed video
 * Bad, because the list cannot be expanded beyond what is in the MPEG-DASH specification
 
-### Option 2c: Represent editorial purpose based on descriptions in the MovieLabs Ontology for Media Creation
+### Option P3: Represent editorial purpose based on descriptions in the MovieLabs Ontology for Media Creation
 
 The MovieLabs [Ontology for Media Creation](https://mc.movielabs.com/docs/ontology/) contains some definitions of the purpose of pieces of content.
 Unfortunately it does not appear to represent differing purposes of video content, and for audio it refers to definitions in SMPTE ST 377-41.
@@ -88,7 +92,7 @@ It was not possible to acquire a copy of this SMPTE document at time of writing,
 * Bad, because it relies on a document not available to the TAMS community.
 * Bad, because video is not covered in the document.
 
-### Option 2d: Represent purpose of content using a list, as with tags
+### Option P4: Represent purpose of content using a list, as with tags
 
 When describing the editorial purpose of an item in a collection, draw from a list of suggested types in an Application Note.
 Allow new types to be added as they come up, in a similar process to tags.
