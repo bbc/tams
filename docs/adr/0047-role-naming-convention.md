@@ -11,17 +11,24 @@ It would be useful to have some recommendations about how to use roles.
 
 One part of that recommendation should be the editorial purpose of an item: for example programme audio, audio description or commentary.
 Or main video, signed video or clean-feed without graphics.
+Currently this is represented in free text.
 
 ## Decision Drivers
 
 * Roles must be set when creating a multi-essence collection.
 * When viewing a multi-essence Source or Flow, only the list of IDs collected and roles are available: getting formats and tags requires another query.
 * Items in a collection serve a variety of different purposes, and it is useful to have some commonality.
+* At time of writing `role` is typically `video` or `audio`, but practical applications need to represent more complex packages.
 
 ## Considered Options
 
-* Option 1a: Provide guidance on how the free-text field `role` should be used
-* Option 1b: Replace `role` with a number of additional controlled fields
+For how to use the `role` field (options `Rn`):
+
+* Option R1: Make `role` a semi-structured field containing editorial purpose, media type and other details
+* Option R2: Replace `role` with a number of additional controlled fields
+* Option R3a: Use `role` as editorial purpose, use other queries for Flow/Source properties
+* Option R3b: Use `role` as editorial purpose, use other queries for Flow/Source properties, surface `role` as a query param
+* Option R3c: Use `role` as editorial purpose, additionally surface `format` in collection
 
 For how to represent editorial purpose (options `Pn`):
 
@@ -40,17 +47,21 @@ In cases where it matters which elements of a collection are picked up (for exam
 
 Implemented by <https://github.com/bbc/tams/pull/173>
 
-## Pros and Cons of the Options
+## Pros and Cons of the Options - for the `role` field
 
-### Option 1a: Provide guidance on how the free-text field `role` should be used
+### Option R1: Make `role` a semi-structured field containing editorial purpose, media type and other details
 
-Write an Application Note suggesting a naming convention for the `role` field, and that clients may also choose to query the members of the collection and consider their labels/tags directly instead.
+Write an Application Note suggesting a naming convention for the `role` field, with a structured form that captures media type, editorial purpose and additional details.
+This would be similar to the approach taken in the (now deprecated) [storage label AppNote](../appnotes/0009-storage-label-format.md).
+Clients could either read the collection items and identify both type and purpose, or query the members of the collection and consider their labels/tags directly instead.
 
-* Good, because it avoids a breaking change to the specification, instead only creating guidance
-* Good, because it makes `role` open-ended, allowing space for future change and expansion
-* Bad, because it does not constrain the use of `role`, and clients may have to rely on human intervention
+* Good, because it avoids a breaking change to the specification, instead only creating guidance.
+* Good, because it makes `role` open-ended, allowing space for future change and expansion.
+* Good, because it saves making additional API requests to get media type and other details of collection items.
+* Bad, because it does not constrain the use of `role`, and clients may have to rely on human intervention.
+* Bad, because it forces clients to handle and parse an un-enforced free-text field, which may be malformed as a result.
 
-### Option 1b: Replace `role` with a number of additional controlled fields
+### Option R2: Replace `role` with a number of additional controlled fields
 
 Change the specification to remove `role` and replace it with a more precise set of fields conveying the purpose of each element in the collection.
 
@@ -58,6 +69,63 @@ Change the specification to remove `role` and replace it with a more precise set
 * Bad, because it requires a breaking change to the API, to provide a capability that can be achieved another way.
 * Bad, because it requires work to fully specify all the possible purposes an item in a collection can fulfil.
 * Bad, because it then constrains TAMS and requires a change as new purposes are identified.
+
+### Option R3a: Use `role` solely for editorial purpose, and rely on other fields for other purposes
+
+Use `role` primarily as a label to represent the editorial purpose of an item in a collection (broadly aligned with common usage).
+Where a client wants to identify the type of a collection item, they can request the full details from the API.
+For example if a collection contains multiple items of role "programme" the client could request all of those items by ID to find out one was video and one audio (or, subject to a draft ADR being accepted, make a direct query of `GET /flows?collected_by_id=...` and cross-reference the results with the collection listing).
+
+* Good, because it aligns with current common usage of `role`.
+* Good, because it avoids a breaking change to the specification.
+* Good, becuause it does not introduce a semi-structured field and force clients to handle malformed data.
+* Bad, because it forces clients to make additional requests (and possibly a somewhat complex cross-reference) to locate all the data they need.
+  In particular a UI element displaying all the Sources in a store, the editorial purposes they contain and their media types would require an additional listing request per top-level Source.
+
+### Option R3b: Use `role` as editorial purpose, use other queries for Flow/Source properties, surface `role` as a query param
+
+As Option R3a, however `role` is added as an extra query parameter to the Flow and Source listing endpoints.
+As a result, a client could request all the items of a specific role which are members of a particular collection (`GET /flows?collected_by_id=...&role=...`).
+
+* Good, because it aligns with current common usage of `role`.
+* Good, because it avoids a breaking change to the specification.
+* Good, becuause it does not introduce a semi-structured field and force clients to handle malformed data.
+* Bad, because it forces clients to make additional requests to locate all the data they need.
+  In particular a UI element displaying all the Sources in a store, the editorial purposes they contain and their media types would require an additional listing request per top-level Source.
+* Bad, because an item's role in a collection is a property of the collection, not the item, so the implementation is likely to be quite complex!
+
+### Option R3c: Use `role` as editorial purpose, additionally surface `format` in collection
+
+As Option R3a, however the `collects` property of a multi-essence Flow or Source gains an additonal property, `format` which is the `format` property of the collected item.
+For example:
+
+```json
+[
+    {
+        "id": "f59a1785-b5bd-4829-afe0-7f65f9b335dd",
+        "role": "programme",
+        "format": "urn:x-nmos:format:video"
+    },
+    {
+        "id": "7162d669-3230-4254-99d1-2c06f815d025",
+        "role": "programme",
+        "format": "urn:x-nmos:format:audio"
+    },
+    {
+        "id": "2e285f91-6dff-4117-b26b-1ae749c5f5aa",
+        "role": "audio_description",
+        "format": "urn:x-nmos:format:audio"
+    }
+]
+```
+
+A client can directly identify the members of the collection directly.
+
+* Good, because it aligns with current common usage of `role`.
+* Good, becuause it does not introduce a semi-structured field and force clients to handle malformed data.
+* Good, because it allows clients to get more of the salient information about a collection in a single request.
+  It would allow the UI element suggested above to be built from a single listing request, for example.
+* Neutral, because it changes the specification, albeit in a non-breaking way.
 
 ## Pros and Cons of the Options - for representing editorial purpose
 
