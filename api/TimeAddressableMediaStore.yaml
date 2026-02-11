@@ -2115,7 +2115,7 @@ paths:
         Clients MAY request Objects in batches to reduce the number of HTTP requests made to the Service.
         Clients are not expected to use all of the Objects they requested.
         Objects will likely go unused in cases such as shutdown of ingesting clients, the end of ingested live streams, and unexpected network congestion.
-        Clients SHOULD, however, adapt the number of Objects they request such that they may reasonably expect to use them before the timeout advertised in [`min_object_timeout` at the `/service`](#/operations/GET_service) endpoint.
+        Clients SHOULD, however, adapt the number of Objects they request such that they may reasonably expect to use them before the timeout advertised in [`min_object_timeout` at the `/service`](#/operations/GET_service) endpoint, which is subject to a specified minimum (see service endpoint schema).
 
         Service implementations need to handle situations where Objects are not used, and where content is were uploaded but no Flow Segment was registered successfully.
         In these circumstances, Services should garbage collect Objects after the timeout advertised in [`min_object_timeout` at the `/service`](#/operations/GET_service) endpoint.
