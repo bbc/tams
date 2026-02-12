@@ -19,6 +19,12 @@ class Credentials(metaclass=ABCMeta):
         return {}
 
 
+class EmptyCredentials(Credentials):
+    """Empty Credentials class for when none are used"""
+    def header(self) -> dict[str, str]:
+        return {}
+
+
 class BasicCredentials(Credentials):
     """Basic username/password credentials"""
     def __init__(self, username: str, password: str) -> None:
