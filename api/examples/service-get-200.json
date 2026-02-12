@@ -10,5 +10,7 @@
             "name": "webhooks",
             "docs": "https://bbc.github.io/tams/7.0/index.html#/operations/POST_webhooks"
         }
-    ]
+    ],
+    "min_object_timeout": "600:0",
+    "min_presigned_url_timeout": "610:0"
 }
