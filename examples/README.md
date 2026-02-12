@@ -113,7 +113,7 @@ If the timing is known to be 30 Hz (which it is for this sample content) then th
 
 ### Outgest File ([outgest_file.py](./outgest_file.py))
 
-The [outgest_file.py](./ingest_hls.py) script demonstrates how Flow media can be exported to a local file.
+The [outgest_file.py](./outgest_file.py) script demonstrates how Flow media can be exported to a local file.
 
 Run the script as follows (replace `<URL>` and set `<FLOW ID>` to the Flow ID logged by the [ingest HLS script](#ingest-hls-ingest_hlspy)),
 
@@ -139,7 +139,7 @@ The script follows these steps:
 
 ### Simple Edit ([simple_edit.py](./simple_edit.py))
 
-The [simple_edit.py](./ingest_hls.py) script demonstrates how media can be shared between Flows using a lightweight metadata-only operation that constructs a Flow from timeranges of other Flows.
+The [simple_edit.py](./simple_edit.py) script demonstrates how media can be shared between Flows using a lightweight metadata-only operation that constructs a Flow from timeranges of other Flows.
 The script takes 2 Flows and timeranges as inputs, and creates an output Flow that is a concatenation of the 2 inputs, containing at most one page of segments from each.
 
 Firstly, create the 2 input Flows from the sample content.
