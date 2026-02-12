@@ -15,8 +15,8 @@ from mediatimestamp import TimeRange, Timestamp
 import mediajson
 import av
 
-from credentials import Credentials, BasicCredentials, OAuth2ClientCredentials
-from client import post_request, put_request
+from utils.credentials import Credentials, BasicCredentials, OAuth2ClientCredentials
+from utils.client import post_request, put_request
 
 logging.basicConfig()
 logger = logging.getLogger()
