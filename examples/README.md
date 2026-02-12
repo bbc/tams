@@ -178,3 +178,7 @@ This mode can be used by adding the `--cut-interval-sec <seconds>` parameter to 
 will cut between the two Flows on that interval.
 The resulting Flow will not be playable using simple tools (such as direct HLS mappings) and will require a client that
 fully implements the TAMS specification, including handling long-GOP precharge if necessary.
+
+### Authorization Proxy ([authz_proxy](./authz_proxy))
+
+This [authorization proxy](./authz_proxy) demonstrates Fine-Grained Authorisation (FGA) using a reverse proxy in front of a TAMS API instance, by matching user group membership to an `auth_classes` tag on Sources, Flows and Webhooks.
