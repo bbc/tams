@@ -12,7 +12,7 @@
             "$ref": "uuid.json"
         },
         "role": {
-            "description": "A human-readable role of the element in this collection (e.g. 'R' to denote a right audio channel in a collection of mono audio Sources)",
+            "description": "A string describing the purpose of this element in the collection, primarily intended to be human-readable (e.g. 'audio_description' to denote the audio description track in a multi of audio and video Sources). See the [Role Names](https://github.com/bbc/tams/blob/main/docs/appnotes/0020-role-names.md) application note for suggested names.",
             "type": "string"
         }
     }

@@ -10,11 +10,15 @@
     "flow_collection": [
         {
             "id": "4f79cfd1-c057-47f4-8e4d-1b126ca7bf34",
-            "role": "video"
+            "role": "programme"
         },
         {
             "id": "6101df05-06bb-41b8-8af4-cf7cd33df209",
-            "role": "audio"
+            "role": "programme"
+        },
+        {
+            "id": "c8943cb3-08df-46de-8ce8-0d7d70ed204c",
+            "role": "audio_description"
         },
         {
             "id": "e85efab4-993b-4ad6-9af3-4cd8d0d38860",
