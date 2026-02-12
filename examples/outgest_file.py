@@ -14,8 +14,8 @@ from mediatimestamp import Timestamp, TimeRange
 import aiohttp
 import av
 
-from credentials import Credentials, BasicCredentials, OAuth2ClientCredentials
-from client import get_request
+from utils.credentials import Credentials, BasicCredentials, OAuth2ClientCredentials
+from utils.client import get_request
 
 logging.basicConfig()
 logger = logging.getLogger()
