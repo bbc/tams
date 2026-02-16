@@ -10,10 +10,10 @@ It provides a framework for sharing that media between systems, solutions and or
 
 1. TAMS is designed as an interoperable media framework.
    Having TAMS support should enable integration with other TAMS solutions, removing or minimising the need for bespoke integrations.
-2. TAMS is agnostic to clouds, codecs, and containers.
+2. TAMS is agnostic to clouds, codecs, and containers and is intended to deploy anywhere, including on-premise and at the edge.
    It may describe how to integrate with a particular technology, but the core API can be implemented in many ways for many purposes.
 3. TAMS is for media.
-   While it also works for data (and has data as a supported type) it is primarily designed for media-like workflows on a timeline.
+   It is primarily designed for media-like workflows on a timeline, however it also works for data-as-media that is accessed through the index of time (and as such, has data as a supported type).
 4. TAMS supports fast-turnaround/near-live workflows, but also works well for file-based workflows, and in some cases can take the place of live signal-centric workflows, if appropriate latency tradeoffs can be made.
 5. TAMS does not implement a MAM.
    It should contain the minimum possible content discovery and library management features required for effective interoperability.
@@ -31,9 +31,10 @@ It provides a framework for sharing that media between systems, solutions and or
 3. TAMS API servers and clients with compatible versions should interoperate.
    The specification is prescriptive and opinionated where necessary to enable this.
 4. However we aim to give users as much flexibility as possible while ensuring interoperability.
-5. Optional features and capabilities are used cautiously, to simplify client implementations and reduce integration engineering work.
-6. We re-use patterns and approaches where possible: both within TAMS, and drawing on existing approaches in other technologies.
-7. Breaking changes are possible, but we strike a balance to minimise impact and maximise benefit.
+5. The specification is agnostic to implementation, and we avoid implementation details driving decision-making (however we strike a balance in writing a specification that can be implemented)
+6. Optional features and capabilities are used cautiously, to simplify client implementations and reduce integration engineering work.
+7. We re-use patterns and approaches where possible: both within TAMS, and drawing on existing approaches in other technologies.
+8. Breaking changes are possible, but we strike a balance to minimise impact and maximise benefit.
    We make decisions with strong engineering justification and consider the impact of change, through an open decision process.
-8. The TAMS community is governed by a balanced mix of users (broadcasters, content owners etc.) and technology/solution vendors.
-9. When common requirements arise, or the need for a common piece of functionality becomes clear, we attempt to standardise an approach either in the API Specification or an Application Note to enable interoperability.
+9. The TAMS community is governed by a balanced mix of users (broadcasters, content owners etc.) and technology/solution vendors.
+10. When common requirements arise, or the need for a common piece of functionality becomes clear, we attempt to standardise an approach either in the API Specification or an Application Note to enable interoperability.
