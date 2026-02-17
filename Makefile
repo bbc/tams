@@ -2,7 +2,7 @@ NUM_OF_PARENT:=$(shell echo $$(( $(words $(MAKEFILE_LIST)))) )
 topdir:=$(realpath $(dir $(word $(NUM_OF_PARENT),$(MAKEFILE_LIST))))
 
 # pbrversion calculates versions based on git tags, number of commits since the most recent tag, magic strings in commit messages to signal types of changes. Magic strings are of the form `Sem-Ver: ` followed by one of `feature`, `api-break`, `deprecation`, and `bugfix`. pbrversion returns a `<major>.<minor>.<patch>` semantic version. This repo only uses a `<major>.<minor>` version, so the last component is stripped using make's `basename` function.
-NEXT_VERSION := $(basename $(shell docker run --rm -v $(topdir):/data:ro public.ecr.aws/o4o2s1w1/cloudfit/pbrversion:1.4.1 --brief))
+NEXT_VERSION := $(basename $(shell docker run --rm -v $(topdir):/data:ro public.ecr.aws/o4o2s1w1/cloudfit/pbrversion:1.4.2 --brief))
 
 all: help
 
