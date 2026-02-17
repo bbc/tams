@@ -513,7 +513,7 @@ async def post_flow_segments(request: Request, groups: list[str], flow_id: UUID)
         if media_object.exists:
             try:
                 await media_object.has_read(groups, throw=True)
-            except NotFound, Forbidden:
+            except (NotFound, Forbidden):
                 raise InvalidUsage(f"Object {object_id} not found")
 
     return await app.ctx.tams.passthrough_request(request)

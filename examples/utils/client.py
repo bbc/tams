@@ -6,7 +6,7 @@ from contextlib import asynccontextmanager
 
 import aiohttp
 
-from credentials import Credentials, RenewableCredentials
+from .credentials import Credentials, RenewableCredentials
 
 
 @asynccontextmanager
