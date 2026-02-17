@@ -219,7 +219,7 @@ These documents may be found in the [docs/adr](./docs/adr/) directory, and are m
 ### Development
 
 This repository contains a [Makefile](./Makefile) with various targets to aid specification development.
-These rely on having Docker available on the system, and are primarily tested on Linux (but may work on other platforms).
+These rely on having Docker available on the system, are primarily tested on Linux and some of the images used are only built for x86-64 platforms, however other operating systems and platforms may work using emulation.
 Linting and documentation rendering are also handled by GitHub Actions when Pull Requests are submitted and merged.
 
 The following targets are available:
