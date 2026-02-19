@@ -180,7 +180,7 @@ In this case, Segment timestamps will be remapped so the relationship between th
 ### Ingest of SRT Stream (video + stereo audio)
 
 Stepping up to a stream containing both audio and video, packaged into a MPEG2 Transport Stream and encapsulated in SRT, three `Flow` entities are created on ingest: one for the video essence, one for the audio essence and a Multi-Flow to record the association of the mono-essence `Flows` as an ingested stream.
-The Mutli-Flow features a `collection` attribute that lists the `Flow IDs` in the set, each annotated with a string describing its role.
+The Multi-Flow features a `collection` attribute that lists the `Flow IDs` in the set, each annotated with a string describing its role.
 
 Technical metadata relating to the elementary streams is used to populate the corresponding mono-essence `Flow` properties.
 
@@ -244,7 +244,7 @@ columns 11
     class fs_a_1,fs_a_2,fs_a_3,fs_a_4,fs_v_1,fs_v_2,fs_v_3,fs_v_4 segment
 ```
 
-If your use case doesn't require this flexibility, it may be more convenient to store the multi-essence stream (in this case a Transport Stream) directly under the Multi-Flow, leaving the mono-essence `Flows` unpopulated, as shown below.
+If your use case doesn't require this flexibility, it may be more convenient to store the multi-essence stream (in this case a Transport Stream) as muxed Media Objects, with Flow Segments being populated directly against the Multi-Flow, leaving the mono-essence Flows unpopulated, as shown below.
 
 > [!NOTE]
 > Unpopulated mono-essence `Flows` collected by populated Multi-Flows are often still useful for conveying the technical properties of the tracks within the multiplexed stream of the Multi-Flow.
@@ -320,7 +320,7 @@ columns 14
     space:1
     s_m["Source \n Multi-essence \n (Original feed)"]
     space:5
-    f_m_a["Flow \n Multi-essence \n (HQ Audio + UHD)"]
+    f_m_a["Flow \n Multi-essence \n (Original feed) \n (HQ Audio + UHD)"]
     space:6
     f_m_a -- "Represents" --> s_m
 
@@ -415,7 +415,7 @@ columns 14
     space:1
     s_m["Source \n Multi-essence \n (Original feed)"]
     space:6
-    f_m_a["Flow \n Multi-essence \n (HQ Audio + UHD)"]
+    f_m_a["Flow \n Multi-essence \n (Original feed) \n (HQ Audio + UHD)"]
     space:5
     f_m_a -- "Represents" --> s_m
 
