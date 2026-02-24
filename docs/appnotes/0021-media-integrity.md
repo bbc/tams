@@ -112,9 +112,9 @@ As an example, the probability of a collision on the default CRC64 hash calculat
 #### Worked examples
 
 > [!WARNING]
-> This section is going to miss-use the above SLA durability value as if it is a genuine probability of Object loss.
+> This section is going to miss-use the above durability value as if it is a genuine probability of Object loss.
 This is likely not the case.
-That SLA number exists purely as a means for one business to make a contractual promise to another.
+That number exists purely as a means for one business to make a promise to another.
 It is also likely that the probability of the loss of any given object is NOT independent.
 The actual cumulative probability would be lower where the probability of loss of some of the Objects is linked as rather than applying to one Object, the durability would apply to many together.
 But we can make some observations on the trade-offs of Segment size, and probability of loss if we make an over-simplified assumption that we can take that probability as read.
@@ -123,7 +123,7 @@ And we can put some worse-case figures to probability of loss.
 With that warning in mind, this section is going calculate the probability of loss of media for various segment sizes.
 We shall use a round number of 10 million hours of media.
 We shall assume that the 10 million hours is total mono-essence media (i.e. separate audio and video Flows).
-Note that we are using duration of media here, not amount of data, as durability the durability figure we are using is dependent on the number of Objects, not the size of them.
+Note that we are using duration of media here, not amount of data, as the durability figure we are using is dependent on the number of Objects, not the size of them.
 We shall represent the 99.999999999% durability (i.e. probability of NOT loosing any given segment) as `1-(1e-11)`.
 
 $a = \text{10m hours}$ = 10m hours : Archive size (hours)
