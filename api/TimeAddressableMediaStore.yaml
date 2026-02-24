@@ -1044,18 +1044,30 @@ paths:
                 video:
                   summary: Video Flow - H.264 Codec
                   externalValue: examples/flow-get-200-video-h264.json
-                audio:
-                  summary: Audio Flow - AAC Codec
-                  externalValue: examples/flow-get-200-audio-aac.json
                 rawvideo:
                   summary: Video Flow - Uncompressed (Quicktime)
                   externalValue: examples/flow-get-200-video-raw.json
-                jpegimage:
-                  summary: Image Flow - JPEG Codec
-                  externalValue: examples/flow-get-200-image-jpeg.json
+                mxf_jpeg2k:
+                  summary: Video Flow - JPEG-2000 (MXF container)
+                  externalValue: examples/flow-get-200-video-jpeg-mxf.json
+                mxf_h264:
+                  summary: Video Flow - H.264 (MXF container)
+                  externalValue: examples/flow-get-200-video-h264-mxf.json
+                jp2_jpeg2k_singleframe:
+                  summary: Video Flow - JPEG-2000 (JP2 container, single frame segments)
+                  externalValue: examples/flow-get-200-video-jpeg-jp2.json
                 video_vfr:
                   summary: Video Flow - H.264 Codec, Variable Frame Rate
                   externalValue: examples/flow-get-200-video-h264-vfr.json
+                audio:
+                  summary: Audio Flow - AAC Codec
+                  externalValue: examples/flow-get-200-audio-aac.json
+                audio_wav:
+                  summary: Audio Flow - PCM
+                  externalValue: examples/flow-get-200-audio-wav.json
+                jpegimage:
+                  summary: Image Flow - JPEG Codec
+                  externalValue: examples/flow-get-200-image-jpeg.json
                 ttml:
                   summary: Data Flow - TTML
                   description: TAMS can also be used for storing non-AV content such as subtitles or event data
