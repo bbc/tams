@@ -1,7 +1,7 @@
 {
   "type": "object",
   "title": "Media Bucket Object Store",
-  "description": "Gives information on storage for Media Objects. This schema is for the `http_object_store` Storage Backend type which provides URLs for storing Media Objects in object store buckets, and is the only Storage Backend type currently implemented.",
+  "description": "Gives information on storage for Media Objects. This schema is for the `http_object_store` Storage Backend type which provides URLs for storing Media Objects in object store buckets, and is the only Storage Backend type currently implemented.  URLs SHOULD support the inclusion of checksums in headers as supported by advertised Storage Backend product. See AppNote 0048 for more details.",
   "properties": {
     "media_objects": {
       "type": "array",
