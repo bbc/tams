@@ -17,6 +17,9 @@
     "codec": "video/h264",
     "container": "video/mp2t",
     "avg_bit_rate": 2479,
+    "segment_duration": {
+        "numerator": 10
+    },
     "essence_parameters":
     {
         "frame_rate":
