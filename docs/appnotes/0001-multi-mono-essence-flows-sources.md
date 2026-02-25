@@ -62,7 +62,7 @@ In this case, Segment timestamps will be remapped so the relationship between th
 ### Ingest of SRT Stream (video + stereo audio)
 
 Stepping up to a stream containing both audio and video, packaged into a MPEG2 Transport Stream and encapsulated in SRT, three `Flow` entities are created on ingest: one for the video essence, one for the audio essence and a multi-essence `Flow` to record the association of the mono-essence `Flows` as an ingested stream.
-The multi-essence `Flow` features a `collection` attribute that lists the `Flow IDs` in the set, each annotated with a string describing its role.
+The multi-essence `Flow` features a `collection` attribute that lists the `Flow IDs` in the set, each annotated with a string describing its role (see [AppNote 0020](./0020-role-names.md) for suggested role naming).
 
 Technical metadata relating to the elementary streams is used to populate the corresponding mono-essence `Flow` properties.
 

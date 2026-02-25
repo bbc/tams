@@ -26,6 +26,7 @@ For more information on how we use application notes, see [here](./appnotes/READ
 | [0017](./appnotes/0017-reuse-of-ids.md)                              | When to re-use IDs in TAMS and compatible systems               |
 | [0018](./appnotes/0018-managing-multiple-object-instances.md)        | Managing Multiple Object Instances                              |
 | [0019](./appnotes/0019-implementing-retention-management.md)         | Methods of implementing retention management                    |
+| [0020](./appnotes/0020-role-naming-convention.md)                    | Role Naming Convention                                          |
 
 ## ADRs
 
@@ -82,5 +83,6 @@ For more information on how we use ADRs, see [here](./adr/README.md).
 | [0043](./adr/0043-signalling-retention-time.md)                    | Signalling retention time |
 | [0044](./adr/0044-signalling-timeouts.md)                          | Signalling timeout periods |
 | [0046](./adr/0046-governance.md)                                   | Governance |
+| [0047](./adr/0047-role-naming-convention.md)                       | Role Naming Convention |
 
 \* Note: ADR 0004a was the unintended result of a number clash in the early development of TAMS which wasn't caught before publication
