@@ -252,6 +252,11 @@ async def interval_edit(
                 new_seg_tr = TimeRange.from_start_length(working_time, segment_length_remaining,
                                                          TimeRange.INCLUDE_START)
 
+            # Note that `sample_offset` and `sample_count` are deprecated but still set for backwards compatibility.
+            # They have been replaced by `object_timerange`.
+            # As this is referencing an existing Object, `object_timerange` will already be set against the Object and will
+            # not need setting here.
+            # When `sample_offset` and `sample_count` are dropped from the spec, they will be deleted here.
             new_segment = {
                 "object_id": next_seg["object_id"],
                 "timerange": new_seg_tr,
