@@ -1,6 +1,7 @@
-bbb_sunflower_1080p_30fps_normal.mp4
-bbb_sunflower_1080p_30fps_normal.mp4.zip
+bbb_sunflower_1080p_30fps_normal*
+tams-edit-test-film-v4*
 sample_content/
+sample_content_segments/
 venv/
 __pycache__/
 output.ts

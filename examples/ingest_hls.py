@@ -66,8 +66,8 @@ async def put_flow(
         credentials,
         f"{tams_url}/flows/{flow_id}",
         json=flow_metadata
-    ) as resp:
-        resp.raise_for_status()
+    ):
+        pass  # Context manager will raise on failure
 
 
 async def get_media_storage_urls(
@@ -87,8 +87,7 @@ async def get_media_storage_urls(
                 "limit": segment_count
             }
         ) as resp:
-            resp.raise_for_status()
-
+            # Context manager will raise on failure
             media_storage = await resp.json()
             media_object_urls = media_storage["media_objects"]
 
@@ -184,8 +183,8 @@ async def ingest_segment(
             "object_id": object_url['object_id'],
             "timerange": seg_tr
         })
-    ) as resp:
-        resp.raise_for_status()
+    ):
+        pass  # Context manager will raise on failure
 
     logger.info(f"Created flow segment for {object_url['object_id']} at {seg_tr.to_sec_nsec_range()}")
 
