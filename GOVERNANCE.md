@@ -70,6 +70,8 @@ In general, the TSC is responsible for:
 - Deciding how any certification or compatibility programme operates
 - Coordinating any marketing, events, or communications regarding the project.
 
+To aid in decision making, a set of principles guiding what TAMS is and how it develops are set out in [PRINCIPLES.md](./PRINCIPLES.md)
+
 Furthermore during the Setup and Transition Periods, the TSC is charged with:
 
 - Finding a suitable legal and administrative framework through which the project should operate
