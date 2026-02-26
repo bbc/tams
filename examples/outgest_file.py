@@ -122,7 +122,7 @@ def normalise_and_transfer_media(
     discarding_samples = discard_before_count > 0 or keep_after_count >= 0
     output_timerange = TimeRange.never()
     first_packet = True
-    with av.open(media_essence, mode="r", format="mpegts") as av_input:
+    with av.open(media_essence, mode="r") as av_input:
         for pkt in av_input.demux(**demux_kwargs):
             if pkt.dts is None and pkt.pts is None:
                 continue
@@ -247,12 +247,12 @@ async def outgest_file(
     if "container" not in flow:
         raise NotImplementedError("Flow without a container is not supported")
     if flow["container"] != "video/mp2t":
-        raise NotImplementedError(f"Flow container '{flow['container']}' is not supported")
+        logger.warning(f"Non-MPEGTS containers may work but are not well tested (Container is '{flow['container']}')")
     if flow["format"] not in ["urn:x-nmos:format:video", "urn:x-nmos:format:audio"]:
         raise NotImplementedError(f"Flow format '{flow['format']}' is not supported")
 
     output_timerange = TimeRange.never()
-    with av.open(output_filename, mode="w", format="mpegts") as av_output:
+    with av.open(output_filename, mode="w") as av_output:
         async with aiohttp.ClientSession() as media_object_session:
             async for segment in get_flow_segments(tams_url, credentials, flow, timerange):
                 try:
