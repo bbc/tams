@@ -216,6 +216,20 @@ It is assumed that implementations will apply other IT and cloud infrastructure 
 This repository uses [(M)ADR documents](https://adr.github.io/madr/) to propose significant changes, facilitate discussions and decision making, and to store a record of options that were considered.
 These documents may be found in the [docs/adr](./docs/adr/) directory, and are managed as described by the [ADR Readme](./docs/adr/README.md).
 
+### Development
+
+This repository contains a [Makefile](./Makefile) with various targets to aid specification development.
+These rely on having Docker available on the system, are primarily tested on Linux and some of the images used are only built for x86-64 platforms, however other operating systems and platforms may work using emulation.
+Linting and documentation rendering are also handled by GitHub Actions when Pull Requests are submitted and merged.
+
+The following targets are available:
+
+- `make lint` - Lint Markdown documents, validate API specifications, examples and schemas
+- `make render` - Generate HTML rendered version of OpenAPI spec (at `api/docs/index.html`)
+- `make mock-server-up` - Start a mock TAMS API on <http://localhost:4010/?access_token=fake>
+
+Note that for the mock server, some credentials must be supplied to meet the spec; either an `Authorization` header for HTTP Basic/Bearer token, or an `access_token` query string.
+
 ## Making a release
 
 Run the `release` workflow under the `Actions` tab on this repository on GitHub against the `main` branch.
