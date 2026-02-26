@@ -30,7 +30,7 @@ DEFAULT_FLOW_METADATA = {
     "container": "video/mp2t",
     "essence_parameters": {
         "frame_rate": {
-            "numerator": 50,
+            "numerator": 30,
             "denominator": 1
         },
         "frame_width": 1920,
