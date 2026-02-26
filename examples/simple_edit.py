@@ -62,8 +62,8 @@ async def put_flow(
         credentials,
         f"{tams_url}/flows/{flow_id}",
         json=flow_metadata
-    ) as resp:
-        resp.raise_for_status()
+    ):
+        pass  # Context manager will raise on failure
 
 
 async def get_segments(
@@ -79,7 +79,6 @@ async def get_segments(
         credentials,
         f"{tams_url}/flows/{flow_id}/segments?timerange={timerange!s}"
     ) as resp:
-        resp.raise_for_status()
         return await resp.json()
 
 
@@ -94,7 +93,6 @@ async def get_flow(
         credentials,
         f"{tams_url}/flows/{flow_id}"
     ) as resp:
-        resp.raise_for_status()
         return await resp.json()
 
 
@@ -125,7 +123,6 @@ async def simple_edit(
                     "timerange": segment["timerange"]
                 })
             ) as resp:
-                resp.raise_for_status()
                 print(f"Added segment from Flow {input_1_flow_id} from and to timerange {segment['timerange']}")
 
         # Add segments from input 2 to output after the input 1 segments
@@ -174,7 +171,6 @@ async def simple_edit(
                     "ts_offset": new_ts_offset
                 })
             ) as resp:
-                resp.raise_for_status()
                 print(f"Added segment from Flow {input_2_flow_id} and timerange "
                       "{segment['timerange']} to {new_seg_tr!s}")
 
@@ -274,7 +270,6 @@ async def interval_edit(
                 f"{tams_url}/flows/{output_flow_id}/segments",
                 json=mediajson.encode_value(new_segment)
             ) as resp:
-                resp.raise_for_status()
                 print(f"Added segment from Flow {current_seg['id']} and timerange {next_seg_tr} to {new_seg_tr!s}")
 
             # Advance our time pointer
