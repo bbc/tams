@@ -1,0 +1,27 @@
+{
+    "id": "fd25a9fc-3b58-4dc1-93d4-81c52b206562",
+    "source_id": "8af9d4a3-aff7-44e8-b384-d2bfc0b93533",
+    "generation": 0,
+    "created": "2025-02-24T11:33:46Z",
+    "metadata_updated": "2025-02-24T11:33:46Z",
+    "segments_updated": "2025-02-24T11:48:22Z",
+    "description": "Radio off-air recording",
+    "label": "Radio off-air",
+    "format": "urn:x-nmos:format:audio",
+    "created_by": "tams-dev",
+    "updated_by": "tams-dev",
+    "tags": {
+        "input_quality": "contribution"
+    },
+    "codec": "audio/x-raw-int",
+    "container": "audio/wav",
+    "avg_bit_rate": 192,
+       "essence_parameters": {
+        "sample_rate": 48000,
+        "channels": 2,
+        "bit_depth": 16,
+        "unc_parameters": {
+            "unc_type": "interleaved"
+        }
+    }
+}

@@ -30,7 +30,7 @@ DEFAULT_FLOW_METADATA = {
     "container": "video/mp2t",
     "essence_parameters": {
         "frame_rate": {
-            "numerator": 50,
+            "numerator": 30,
             "denominator": 1
         },
         "frame_width": 1920,
@@ -66,8 +66,8 @@ async def put_flow(
         credentials,
         f"{tams_url}/flows/{flow_id}",
         json=flow_metadata
-    ) as resp:
-        resp.raise_for_status()
+    ):
+        pass  # Context manager will raise on failure
 
 
 async def get_media_storage_urls(
@@ -87,8 +87,7 @@ async def get_media_storage_urls(
                 "limit": segment_count
             }
         ) as resp:
-            resp.raise_for_status()
-
+            # Context manager will raise on failure
             media_storage = await resp.json()
             media_object_urls = media_storage["media_objects"]
 
@@ -102,6 +101,13 @@ def get_hls_segment_filenames(hls_filename: str) -> Generator[str, None, None]:
 
     for segment in playlist.segments:
         yield segment.uri
+
+
+def get_segment_list_filenames(list_filename: str) -> Generator[str, None, None]:
+    """Return list of filenames from a plain list (rather than an HLS manifest above)"""
+    with open(list_filename, "r") as fp:
+        for line in fp:
+            yield line.rstrip()
 
 
 def extract_segment_timerange(filename: str) -> TimeRange:
@@ -153,14 +159,25 @@ async def ingest_segment(
     tams_url: str,
     flow_id: UUID,
     object_url: dict[str, Any],
-    filename: str
-) -> None:
-    """Upload the segment's media object and register the segment"""
-    seg_tr = await asyncio.get_running_loop().run_in_executor(
+    filename: str,
+    start_timestamp_in_flow: Optional[Timestamp] = None
+) -> TimeRange:
+    """Upload the segment's media object and register the segment
+
+    Returns the ingested segment timerange
+    """
+    media_tr = await asyncio.get_running_loop().run_in_executor(
         None,
         extract_segment_timerange,
         filename
     )
+
+    if start_timestamp_in_flow:
+        seg_tr = TimeRange.from_start_length(start_timestamp_in_flow, media_tr.length, TimeRange.INCLUDE_START)
+        ts_offset = start_timestamp_in_flow - media_tr.start
+    else:
+        seg_tr = media_tr
+        ts_offset = Timestamp(0, 0)
 
     first_object_url = object_url["put_url"]["url"]
     content_type = object_url["put_url"]["content-type"]
@@ -174,7 +191,7 @@ async def ingest_segment(
         ) as resp:
             resp.raise_for_status()
 
-    logger.info(f"Uploaded object to {object_url['object_id']}")
+    logger.info(f"Uploaded object to {object_url['object_id']} for timerange {seg_tr}")
 
     async with post_request(
         session,
@@ -182,60 +199,75 @@ async def ingest_segment(
         f"{tams_url}/flows/{flow_id}/segments",
         json=mediajson.encode_value({
             "object_id": object_url['object_id'],
-            "timerange": seg_tr
+            "timerange": seg_tr,
+            "ts_offset": ts_offset
         })
-    ) as resp:
-        resp.raise_for_status()
+    ):
+        pass  # Context manager will raise on failure
 
     logger.info(f"Created flow segment for {object_url['object_id']} at {seg_tr.to_sec_nsec_range()}")
+    return seg_tr
 
 
-async def hls_ingest(
+async def segment_ingest(
     tams_url: str,
     credentials: Credentials,
-    hls_filename: str,
-    hls_start_segment: int,
-    hls_segment_count: int,
+    manifest_filename: str,
+    start_segment: int,
+    segment_count: int,
     flow_id: UUID,
     source_id: UUID,
-    flow_params: Optional[dict]
+    flow_params: Optional[dict],
+    hls_mode: bool = True,
+    sequence_force_start_time: Optional[Timestamp] = None
 ) -> None:
     """Upload segments from the HLS playlist"""
     async with aiohttp.ClientSession() as session:
         await put_flow(session, credentials, tams_url, flow_id, source_id, flow_params)
 
-        object_urls = get_media_storage_urls(session, credentials, tams_url, flow_id, hls_segment_count)
+        object_urls = get_media_storage_urls(session, credentials, tams_url, flow_id, segment_count)
 
-        hls_segment_filenames = get_hls_segment_filenames(hls_filename)
+        if hls_mode:
+            segment_filenames = get_hls_segment_filenames(manifest_filename)
+        else:
+            segment_filenames = get_segment_list_filenames(manifest_filename)
+
+        position_in_flow = None
+        if sequence_force_start_time:
+            position_in_flow = sequence_force_start_time
 
         # This sequential upload process could be optimised by using asyncio tasks to
         # ingest segments concurrently
         count = 0
-        for segment_filename in hls_segment_filenames:
+        for segment_filename in segment_filenames:
             count += 1
-            if count <= hls_start_segment:
+            if count <= start_segment:
                 continue
-            elif count > hls_start_segment + hls_segment_count:
+            elif count > start_segment + segment_count:
                 break
 
             object_url = await anext(object_urls)
 
-            full_segment_filename = os.path.join(os.path.dirname(hls_filename), segment_filename)
+            full_segment_filename = os.path.join(os.path.dirname(manifest_filename), segment_filename)
 
-            await ingest_segment(
+            seg_tr = await ingest_segment(
                 session,
                 credentials,
                 tams_url,
                 flow_id,
                 object_url,
-                full_segment_filename
+                full_segment_filename,
+                start_timestamp_in_flow=position_in_flow  # Will be None if not used
             )
+
+            if position_in_flow:
+                position_in_flow += seg_tr.length
 
 
 if __name__ == "__main__":
     parser = ArgumentParser(
         prog="ingest_hls",
-        description="TAMS Flow ingest from HLS basic example"
+        description="TAMS Flow ingest from segment manifest example"
     )
 
     parser.add_argument(
@@ -262,18 +294,39 @@ if __name__ == "__main__":
         "--password", type=str, default=os.environ.get("PASSWORD"),
         help="Basic auth password. Defaults to the 'PASSWORD' environment variable"
     )
+
+    # Manifest input arguments
     parser.add_argument(
-        "--hls-filename", type=str, default="sample_content/hls_output.m3u8",
-        help="HLS playlist providing segment files"
+        "--filename", type=str, default="sample_content_segments/hls_output.m3u8",
+        help="File or HLS playlist providing segment files"
     )
     parser.add_argument(
-        "--hls-start-segment", type=int, default=0,
+        "--use-simple-list", "-S", action="store_true",
+        help="Interpret the input file as a simple list of filenames, rather than an HLS manifest"
+    )
+    parser.add_argument(
+        "--start-segment", type=int, default=0,
         help="Segment number to start ingesting from"
     )
     parser.add_argument(
-        "--hls-segment-count", type=int, default=30,
+        "--segment-count", type=int, default=30,
         help="Maximum number of segments to ingest"
     )
+
+    # HLS-specific arguments (aliases of above)
+    parser.add_argument(
+        "--hls-filename", type=str,
+        help="HLS playlist providing segment files. Alias for `--filename`"
+    )
+    parser.add_argument(
+        "--hls-start-segment", type=int, default=0,
+        help="Segment number to start ingesting from. Alias for `--start-segment`"
+    )
+    parser.add_argument(
+        "--hls-segment-count", type=int, default=30,
+        help="Maximum number of segments to ingest. Alias for `--segment-count`"
+    )
+
     parser.add_argument(
         "--flow-id", type=UUID,
         help="Flow ID for the sample content. Default is to generate an ID"
@@ -285,6 +338,10 @@ if __name__ == "__main__":
     parser.add_argument(
         "--flow-params", type=json.loads,
         help="JSON representation of Flow to write. Default is a basic video Flow"
+    )
+    parser.add_argument(
+        "--force-start-time", type=Timestamp.from_str,
+        help="Ignore timestamps in the input and ingest from this point, sequentially"
     )
 
     args = parser.parse_args()
@@ -300,13 +357,20 @@ if __name__ == "__main__":
             "or basic credentials (--username, --password)"
         )
 
-    output_timerange = asyncio.run(hls_ingest(
+    list_filename = args.hls_filename or args.filename
+    start_segment = args.hls_start_segment or args.start_segment
+    segment_count = args.hls_segment_count or args.segment_count
+    hls_mode = (args.hls_filename is not None) or not args.use_simple_list
+
+    output_timerange = asyncio.run(segment_ingest(
         args.tams_url.rstrip("/"),
         credentials,
-        args.hls_filename,
-        args.hls_start_segment,
-        args.hls_segment_count,
+        list_filename,
+        start_segment,
+        segment_count,
         args.flow_id or uuid4(),
         args.source_id or uuid4(),
-        args.flow_params
+        args.flow_params,
+        hls_mode=hls_mode,
+        sequence_force_start_time=args.force_start_time
     ))

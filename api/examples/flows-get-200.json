@@ -133,5 +133,132 @@
             "vert_chroma_subs": 1,
             "horiz_chroma_subs": 2
         }
+    },
+    {
+        "id": "1a670176-5b40-433b-9d66-8f90efc026b6",
+        "source_id": "3e6201e2-4b38-402a-a08f-e2529ec98229",
+        "generation": 0,
+        "created": "2026-02-24T09:35:25Z",
+        "metadata_updated": "2026-02-24T09:35:25Z",
+        "segments_updated": "2026-02-24T14:28:11Z",
+        "description": "Video Flow in a MXF container, JPEG-2000 codec",
+        "label": "VFX Render - Full Quality",
+        "format": "urn:x-nmos:format:video",
+        "created_by": "tams-dev",
+        "updated_by": "tams-dev",
+        "tags":
+        {
+            "input_quality": "intermediate"
+        },
+        "codec": "video/jp2",
+        "container": "application/mxf",
+        "avg_bit_rate": 250000,
+        "essence_parameters":
+        {
+            "frame_rate":
+            {
+                "numerator": 50,
+                "denominator": 1
+            },
+            "frame_width": 1920,
+            "frame_height": 1080,
+            "bit_depth": 10,
+            "interlace_mode": "progressive",
+            "colorspace": "BT709",
+            "transfer_characteristic": "SDR",
+            "aspect_ratio":
+            {
+                "numerator": 16,
+                "denominator": 9
+            },
+            "pixel_aspect_ratio":
+            {
+                "numerator": 1,
+                "denominator": 1
+            },
+            "component_type": "YCbCr",
+            "vert_chroma_subs": 1,
+            "horiz_chroma_subs": 1
+        }
+    },
+    {
+        "id": "1491ecfb-813d-4453-9554-e417d03161ba",
+        "source_id": "3e6201e2-4b38-402a-a08f-e2529ec98229",
+        "generation": 1,
+        "created": "2026-02-24T09:35:25Z",
+        "metadata_updated": "2026-02-24T09:36:02Z",
+        "segments_updated": "2026-02-24T15:38:21Z",
+        "description": "Video Flow in a MXF container, H264 codec",
+        "label": "VFX Render - Proxy Quality",
+        "format": "urn:x-nmos:format:video",
+        "created_by": "tams-dev",
+        "updated_by": "tams-dev",
+        "tags":
+        {
+            "input_quality": "web"
+        },
+        "codec": "video/h264",
+        "container": "application/mxf",
+        "avg_bit_rate": 6000,
+        "essence_parameters":
+        {
+            "frame_rate":
+            {
+                "numerator": 50,
+                "denominator": 1
+            },
+            "frame_width": 1920,
+            "frame_height": 1080,
+            "bit_depth": 8,
+            "interlace_mode": "progressive",
+            "colorspace": "BT709",
+            "transfer_characteristic": "SDR",
+            "aspect_ratio":
+            {
+                "numerator": 16,
+                "denominator": 9
+            },
+            "pixel_aspect_ratio":
+            {
+                "numerator": 1,
+                "denominator": 1
+            },
+            "component_type": "YCbCr",
+            "vert_chroma_subs": 2,
+            "horiz_chroma_subs": 2,
+            "avc_parameters":
+            {
+                "profile": 100,
+                "level": 31,
+                "flags": 0
+            }
+        }
+    },
+    {
+        "id": "fd25a9fc-3b58-4dc1-93d4-81c52b206562",
+        "source_id": "8af9d4a3-aff7-44e8-b384-d2bfc0b93533",
+        "generation": 0,
+        "created": "2025-02-24T11:33:46Z",
+        "metadata_updated": "2025-02-24T11:33:46Z",
+        "segments_updated": "2025-02-24T11:48:22Z",
+        "description": "Radio off-air recording",
+        "label": "Radio off-air",
+        "format": "urn:x-nmos:format:audio",
+        "created_by": "tams-dev",
+        "updated_by": "tams-dev",
+        "tags": {
+            "input_quality": "contribution"
+        },
+        "codec": "audio/x-raw-int",
+        "container": "audio/wav",
+        "avg_bit_rate": 192,
+        "essence_parameters": {
+            "sample_rate": 48000,
+            "channels": 2,
+            "bit_depth": 16,
+            "unc_parameters": {
+                "unc_type": "interleaved"
+            }
+        }
     }
 ]

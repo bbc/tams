@@ -20,9 +20,13 @@ The following is required to run the example scripts:
 
 ### Sample Content
 
-The [Big Buck Bunny](https://peach.blender.org/) short film is used as sample content for ingesting into TAMS.
-Run `make sample_content` to download a file containing 30 fps HD and convert it to a video-only HLS playlist using ffmpeg.
-The result can be found in the `sample_content/` folder.
+A number of short films are provided as sample content for ingesting into TAMS.
+Run `make sample_content` to download them and generate a number of playlists using `ffmpeg`.
+The result can be found in the `sample_content_segments/` folder.
+
+- `sample_content_segments/hls_output.m3u8`: Big Buck Bunny as a video-only HLS playlist with 5-second segments
+- `sample_content_segments/mov_h264_flow.list`: Short test film as a single H.264 video segment in a .mov container
+- `sample_content_segments/wav_pcm_flow.list`: Audio from short test film as a series of .wav files containing PCM 
 
 ### Virtual Environment
 
@@ -81,7 +85,7 @@ The script makes some assumptions about the media content (e.g. the resulting Fl
 Run the script as follows (replace `<URL>`),
 
 ```bash
-./ingest_hls.py --tams-url <URL> --hls-filename sample_content/hls_output.m3u8
+./ingest_hls.py --tams-url <URL> --hls-filename sample_content_segments/hls_output.m3u8
 ```
 
 The output Flow ID is logged as well as each segment timerange that is ingested from the HLS playlist.
@@ -91,7 +95,7 @@ By default at most 30 segments will be ingested.
 The script follows these steps:
 
 * a new Flow is created with (hardcoded) properties that match the sample content
-* the segment filenames are extracted from the playlist `sample_content/hls_output.m3u8`
+* the segment filenames are extracted from the playlist `sample_content_segments/hls_output.m3u8`
 * each segment media file is read to extract the timerange
 * each segment media file is uploaded using the pre-signed URLs provided by the TAMS
 * each segment is registered in TAMS
@@ -100,6 +104,12 @@ The script also has args to
 
 * change the start segment (`--hls-start-segment`) and number of segments (`--hls-segment-count`) limit, i.e. override the default 30 segment limit
 * set the Flow ID (`--flow-id`) and Source ID (`--source-id`)
+* read a list of filenames rather than an HLS manifest (`--filename` and `--use-simple-list`) to ingest with formats other than HLS and MPEG-TS
+* force the start time of the ensuing Flow (`--force-start-time`): will also force the timing of subsequent segments to make a contiguous Flow, regardless of internal timing
+
+The sample content also contains additional sets of segmented material, to demonstrate other codecs and container formats:
+* H.264 video, MOV container, single segment: `./ingest_hls.py --tams-url <URL> --filename sample_content_segments/mov_h264_flow.list --use-simple-list --flow-params '{"label":"Demo Flow - MOV container","description":"Flow created to demonstrate manual upload of a single-segment Flow in a MOV container","format":"urn:x-nmos:format:video","codec":"video/h264","container":"video/quicktime","essence_parameters":{"frame_rate":{"numerator":50,"denominator":1},"frame_width":1920,"frame_height":1080,"bit_depth":8,"interlace_mode":"progressive","component_type":"YCbCr","horiz_chroma_subs":2,"vert_chroma_subs":2}}'`
+* PCM audio, WAV container: `./ingest_hls.py --tams-url <URL> --filename sample_content_segments/wav_pcm_flow.list --use-simple-list --force-start-time "0:0" --flow-params '{"label":"Demo Flow - WAV container","description":"Flow created to demonstrate manual upload of PCM audio in a WAV container","format":"urn:x-nmos:format:audio","codec":"audio/x-raw-int","container":"audio/wav","essence_parameters":{"sample_rate":48000,"channels":2,"bit_depth":16,"unc_parameters":{"unc_type":"interleaved"}}}'`
 
 > The timerange extraction process as implemented is not optimal in terms of speed (e.g. it doesn't need to read all the frames) but at least it is more accurate than using the segment durations from the HLS playlist.
 >
@@ -134,6 +144,8 @@ The script follows these steps:
 * each segment media object is downloaded using a TAMS provided pre-signed URL
 * the media timing is adjusted using the segment `ts_offset`, `sample_offset` and `sample_count` properties as required as well as timestamp rollover within the segment time period
 * the media is re-wrapped to the local MPEG-TS file
+
+This script also supports the other container examples described above, but may not correctly support all codecs, containers and Flows.
 
 > The script has not been optimised to download segments concurrently.
 

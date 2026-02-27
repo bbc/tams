@@ -1047,22 +1047,34 @@ paths:
                   summary: Video Flow - H.264 Codec
                   value:
                     $ref: examples/flow-get-200-video-h264.json
-                audio:
-                  summary: Audio Flow - AAC Codec
-                  value:
-                    $ref: examples/flow-get-200-audio-aac.json
                 rawvideo:
                   summary: Video Flow - Uncompressed (Quicktime)
                   value:
                     $ref: examples/flow-get-200-video-raw.json
-                jpegimage:
-                  summary: Image Flow - JPEG Codec
+                mxf_jpeg2k:
+                  summary: Video Flow - JPEG-2000 (MXF container)
                   value:
-                    $ref: examples/flow-get-200-image-jpeg.json
+                    $ref: examples/flow-get-200-video-jpeg-mxf.json
+                mxf_h264:
+                  summary: Video Flow - H.264 (MXF container)
+                  value:
+                    $ref: examples/flow-get-200-video-h264-mxf.json
                 video_vfr:
                   summary: Video Flow - H.264 Codec, Variable Frame Rate
                   value:
                     $ref: examples/flow-get-200-video-h264-vfr.json
+                audio:
+                  summary: Audio Flow - AAC Codec
+                  value:
+                    $ref: examples/flow-get-200-audio-aac.json
+                audio_wav:
+                  summary: Audio Flow - PCM
+                  value:
+                    $ref: examples/flow-get-200-audio-wav.json
+                jpegimage:
+                  summary: Image Flow - JPEG Codec
+                  value:
+                    $ref: examples/flow-get-200-image-jpeg.json
                 ttml:
                   summary: Data Flow - TTML
                   description: TAMS can also be used for storing non-AV content such as subtitles or event data
@@ -2145,8 +2157,17 @@ paths:
             application/json:
               schema:
                 $ref: schemas/flow-storage.json
-              example:
-                $ref: examples/flow-storage-post-201.json
+              examples:
+                mpegts:
+                  summary: MPEG-TS container Flow
+                  description: Flow using MPEG-TS as the container format, writing to a cloud object store
+                  value:
+                    $ref: examples/flow-storage-post-201.json
+                wav_proxy:
+                  summary: WAV Flow
+                  description: Flow using WAV as the container format, writing to an HTTP interfacerunning on the same origin as the TAMS API
+                  value:
+                    $ref: examples/flow-storage-post-201-wav.json
         "400":
           description: Bad request. Invalid Flow storage request JSON or the Flow 'container' is not set. If object_ids supplied, some or all already exist.
         "403":
