@@ -25,7 +25,7 @@ logger.setLevel(logging.INFO)
 async def get_flow(tams_url: str, credentials: Credentials, flow_id: UUID) -> dict:
     """Returns a Flow dict for the given Flow ID"""
     flow_url = f"{tams_url}/flows/{flow_id}"
-    async with aiohttp.ClientSession() as session:
+    async with aiohttp.ClientSession(trust_env=True) as session:
         async with get_request(session, credentials, flow_url) as resp:
             resp.raise_for_status()
             return await resp.json()
@@ -39,7 +39,7 @@ async def get_flow_segments(
 ) -> AsyncGenerator[dict, None]:
     """Generator of Flow Segment dicts for the given Flow ID and timerange"""
     segments_url = f"{tams_url}/flows/{flow['id']}/segments?timerange={timerange!s}&presigned=true"
-    async with aiohttp.ClientSession() as session:
+    async with aiohttp.ClientSession(trust_env=True) as session:
         while True:
             async with get_request(session, credentials, segments_url) as resp:
                 resp.raise_for_status()
@@ -253,7 +253,7 @@ async def outgest_file(
 
     output_timerange = TimeRange.never()
     with av.open(output_filename, mode="w", format="mpegts") as av_output:
-        async with aiohttp.ClientSession() as media_object_session:
+        async with aiohttp.ClientSession(trust_env=True) as media_object_session:
             async for segment in get_flow_segments(tams_url, credentials, flow, timerange):
                 try:
                     download_url = segment["get_urls"][0]["url"]
