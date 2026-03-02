@@ -201,7 +201,7 @@ async def hls_ingest(
     flow_params: Optional[dict]
 ) -> None:
     """Upload segments from the HLS playlist"""
-    async with aiohttp.ClientSession() as session:
+    async with aiohttp.ClientSession(trust_env=True) as session:
         await put_flow(session, credentials, tams_url, flow_id, source_id, flow_params)
 
         object_urls = get_media_storage_urls(session, credentials, tams_url, flow_id, hls_segment_count)
