@@ -87,6 +87,8 @@ The TSC meets fortnightly online, at a time to suit the availability of the memb
 Meetings are open (however only TSC members may vote on matters put to a vote).
 Contact any member of the TSC for a copy of the invitation.
 
+Notes from TSC meetings are in [the wiki](https://github.com/bbc/tams/wiki/).
+
 ### Voting and Decision-Making
 
 The TSC strives for consensus.
