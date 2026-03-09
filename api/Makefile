@@ -8,9 +8,9 @@ build-lint:
 	docker pull --platform linux/amd64 stoplight/spectral:6.10 >/dev/null 2>/dev/null || true
 	DOCKER_BUILDKIT=1 docker build --platform linux/amd64 -f Dockerfile.multi --target oaslint -t tams_api_oaslint:local .
 
-lint: build-lint
-	docker run --platform linux/amd64 --rm tams_api_oaslint:local lint --fail-severity=warn /data/TimeAddressableMediaStore.yaml
-
+# Work around https://github.com/stoplightio/spectral/issues/2819 using the bundled spec
+lint: build-lint docs/TimeAddressableMediaStore_bundled.yaml
+	docker run --platform linux/amd64 --rm -v $(topdir):/api tams_api_oaslint:local lint --fail-severity=warn /api/docs/TimeAddressableMediaStore_bundled.yaml
 
 build-bundle:
 	docker pull redocly/cli:latest >/dev/null 2>/dev/null || true
