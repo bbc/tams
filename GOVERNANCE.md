@@ -105,10 +105,10 @@ It is expected this mix will change in time.
 At the time of writing, the TSC membership is still being identified, and we would like to hear from individuals interested in joining.
 This sets out a broad shape of the group:
 
-- Sam Mesterton-Gibbons (BBC)
-- James Sandford (BBC)
-- Richard Lynton-Evans (BBC)
+- Sam Mesterton-Gibbons (BBC, Chair)
 - John Biltcliffe (AWS)
+- Richard Lynton-Evans (BBC)
+- James Sandford (BBC)
 - Chris Swan (AWS)
 - `<Another broadcaster/content owner/user organisation>`
 - `<A vendor organisation>`
