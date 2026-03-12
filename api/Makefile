@@ -5,11 +5,11 @@ all: help
 
 
 build-lint:
-	docker pull stoplight/spectral:6.10 >/dev/null 2>/dev/null || true
-	DOCKER_BUILDKIT=1 docker build -f Dockerfile.multi --target oaslint -t tams_api_oaslint:local .
+	docker pull --platform linux/amd64 stoplight/spectral:6.10 >/dev/null 2>/dev/null || true
+	DOCKER_BUILDKIT=1 docker build --platform linux/amd64 -f Dockerfile.multi --target oaslint -t tams_api_oaslint:local .
 
 lint: build-lint
-	docker run --rm tams_api_oaslint:local lint --fail-severity=warn /data/TimeAddressableMediaStore.yaml
+	docker run --platform linux/amd64 --rm tams_api_oaslint:local lint --fail-severity=warn /data/TimeAddressableMediaStore.yaml
 
 
 build-bundle:
@@ -23,8 +23,8 @@ render: docs/TimeAddressableMediaStore_bundled.yaml
 
 
 mock-server-up:
-	docker pull stoplight/prism >/dev/null 2>/dev/null || true
-	docker run --rm --init --name mock-tams -v "${topdir}":/data:ro -p 4010:4010 stoplight/prism mock /data/TimeAddressableMediaStore.yaml -h 0.0.0.0
+	docker pull --platform linux/amd64 stoplight/prism >/dev/null 2>/dev/null || true
+	docker run --platform linux/amd64 --rm --init --name mock-tams -v "${topdir}":/data:ro -p 4010:4010 stoplight/prism mock /data/TimeAddressableMediaStore.yaml -h 0.0.0.0
 
 mock-server-down:
 	docker stop mock-tams

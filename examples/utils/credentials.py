@@ -19,6 +19,12 @@ class Credentials(metaclass=ABCMeta):
         return {}
 
 
+class EmptyCredentials(Credentials):
+    """Empty Credentials class for when none are used"""
+    def header(self) -> dict[str, str]:
+        return {}
+
+
 class BasicCredentials(Credentials):
     """Basic username/password credentials"""
     def __init__(self, username: str, password: str) -> None:
@@ -64,7 +70,7 @@ class OAuth2ClientCredentials(RenewableCredentials):
         }
         headers = get_basic_auth_header(self.client_id, self.client_secret)
 
-        async with aiohttp.ClientSession() as session:
+        async with aiohttp.ClientSession(trust_env=True) as session:
             async with session.post(self.authorization_url, data=form_data, headers=headers) as resp:
                 resp.raise_for_status()
 

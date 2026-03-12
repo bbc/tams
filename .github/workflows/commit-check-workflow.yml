@@ -48,3 +48,15 @@ jobs:
 
       - name: Check PR commit messages don't start with '!reword'
         run: "[ $(git log --grep '^!reword' | wc -c) -eq 0 ]"
+
+      - name: Check PR commit messages don't start with 'fixup!'
+        run: "[ $(git log --grep '^fixup!' | wc -c) -eq 0 ]"
+
+      - name: Check PR commit messages don't start with 'squash!'
+        run: "[ $(git log --grep '^squash!' | wc -c) -eq 0 ]"
+
+      - name: Check PR commit messages don't start with 'amend!'
+        run: "[ $(git log --grep '^amend!' | wc -c) -eq 0 ]"
+
+      - name: Check PR commit messages don't start with 'reword!'
+        run: "[ $(git log --grep '^reword!' | wc -c) -eq 0 ]"

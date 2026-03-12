@@ -1,0 +1,5 @@
+authlib
+httpx
+sanic
+sanic[ext]
+PyJWT

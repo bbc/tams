@@ -13,8 +13,8 @@ import aiohttp
 from mediatimestamp import TimeRange, Timestamp
 import mediajson
 
-from credentials import Credentials, BasicCredentials, OAuth2ClientCredentials
-from client import post_request, put_request, get_request
+from utils.credentials import Credentials, BasicCredentials, OAuth2ClientCredentials
+from utils.client import post_request, put_request, get_request
 
 logging.basicConfig()
 logger = logging.getLogger()
@@ -108,7 +108,7 @@ async def simple_edit(
     output_source_id: UUID,
 ) -> None:
     """Add timerange of segments from input 1 followed by a timerange of segments from input 2"""
-    async with aiohttp.ClientSession() as session:
+    async with aiohttp.ClientSession(trust_env=True) as session:
         await put_flow(session, credentials, tams_url, output_flow_id, output_source_id)
 
         # Add segments from input 1 to output
@@ -200,7 +200,7 @@ async def interval_edit(
         "_copy_edit_interval": cut_interval_ts.to_sec_nsec()
     }
 
-    async with aiohttp.ClientSession() as session:
+    async with aiohttp.ClientSession(trust_env=True) as session:
         # Create output Flow
         await put_flow(session, credentials, tams_url, output_flow_id, output_source_id, custom_tags=custom_tags)
 

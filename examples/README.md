@@ -113,7 +113,7 @@ If the timing is known to be 30 Hz (which it is for this sample content) then th
 
 ### Outgest File ([outgest_file.py](./outgest_file.py))
 
-The [outgest_file.py](./ingest_hls.py) script demonstrates how Flow media can be exported to a local file.
+The [outgest_file.py](./outgest_file.py) script demonstrates how Flow media can be exported to a local file.
 
 Run the script as follows (replace `<URL>` and set `<FLOW ID>` to the Flow ID logged by the [ingest HLS script](#ingest-hls-ingest_hlspy)),
 
@@ -139,7 +139,7 @@ The script follows these steps:
 
 ### Simple Edit ([simple_edit.py](./simple_edit.py))
 
-The [simple_edit.py](./ingest_hls.py) script demonstrates how media can be shared between Flows using a lightweight metadata-only operation that constructs a Flow from timeranges of other Flows.
+The [simple_edit.py](./simple_edit.py) script demonstrates how media can be shared between Flows using a lightweight metadata-only operation that constructs a Flow from timeranges of other Flows.
 The script takes 2 Flows and timeranges as inputs, and creates an output Flow that is a concatenation of the 2 inputs, containing at most one page of segments from each.
 
 Firstly, create the 2 input Flows from the sample content.
@@ -178,3 +178,7 @@ This mode can be used by adding the `--cut-interval-sec <seconds>` parameter to 
 will cut between the two Flows on that interval.
 The resulting Flow will not be playable using simple tools (such as direct HLS mappings) and will require a client that
 fully implements the TAMS specification, including handling long-GOP precharge if necessary.
+
+### Authorization Proxy ([authz_proxy](./authz_proxy))
+
+This [authorization proxy](./authz_proxy) demonstrates Fine-Grained Authorisation (FGA) using a reverse proxy in front of a TAMS API instance, by matching user group membership to an `auth_classes` tag on Sources, Flows and Webhooks.

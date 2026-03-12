@@ -14,7 +14,7 @@
             ],
             "properties": {
                 "error": {
-                    "description": "Provides more information for the error status, as described by the [Error](../schemas/error#top) type",
+                    "description": "Provides more information for the error status, as described by the [Error](#/schemas/error) type",
                     "$ref": "error.json"
                 },
                 "status": {
