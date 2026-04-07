@@ -231,6 +231,7 @@ def normalise_and_transfer_media(
             # Discard media units after segment_timerange end
             if process_media_unit_count and not output_timerange.ends_earlier_than_timerange(segment_timerange):
                 if not output_timerange.ends_inside_timerange(segment_timerange):
+                    # If output doesn't end before or during the segment, last packet caused it to end after the segment
                     assert (output_timerange.end is not None)
                     output_end_diff = output_timerange.end - segment_timerange.end
                     logger.warning(
