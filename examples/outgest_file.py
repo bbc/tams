@@ -234,7 +234,7 @@ def normalise_and_transfer_media(
                     assert (output_timerange.end is not None)
                     output_end_diff = output_timerange.end - segment_timerange.end
                     logger.warning(
-                        "Segment timrange end is not at a packet boundary. "
+                        "Segment timerange end is not at a packet boundary. "
                         f"Included {output_end_diff} samples at the end. "
                         "A transcode would be required to get the correct number of samples"
                     )
