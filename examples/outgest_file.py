@@ -172,10 +172,10 @@ def normalise_and_transfer_media(
             # Don't attempt to get the media unit count if it isn't required to
             # process FlowSegment.sample_offset and sample_count. This avoids potential
             # NotImplementedError because the packet duration is not set.
-            process_media_unit_count = skip_start_duration > 0 or skip_end_duration > 0
+            process_media_packet_offsets = skip_start_duration > 0 or skip_end_duration > 0
 
             # Get the number of media units (samples) in the packet
-            if process_media_unit_count:
+            if process_media_packet_offsets:
                 if pkt.duration is not None:
                     # We assume the packet duration is accurate enough to provide a media unit count
                     pkt_duration = Timestamp.from_count(pkt.duration, 1/pkt.time_base)
@@ -187,7 +187,7 @@ def normalise_and_transfer_media(
                         raise NotImplementedError("Packet doesn't provide a duration")
 
             # Discard media units before FlowSegment.sample_offset
-            if process_media_unit_count and skip_start_duration > 0:
+            if process_media_packet_offsets and skip_start_duration > 0:
                 skip_start_duration -= pkt_duration
                 if skip_start_duration < 0:
                     logger.warning(
@@ -229,7 +229,7 @@ def normalise_and_transfer_media(
             av_output.mux([pkt])
 
             # Discard media units after segment_timerange end
-            if process_media_unit_count and not output_timerange.ends_earlier_than_timerange(segment_timerange):
+            if process_media_packet_offsets and not output_timerange.ends_earlier_than_timerange(segment_timerange):
                 if not output_timerange.ends_inside_timerange(segment_timerange):
                     # If output doesn't end before or during the segment, last packet caused it to end after the segment
                     assert (output_timerange.end is not None)
