@@ -22,6 +22,7 @@ We would like to:
 * place as little burden on implementations as possible with TAMS-specific functionality
 * have no/minimal impact on existing (non-init segment based) implementations
 * re-use existing patterns/functionality where possible/practical
+* maintain, as far as possible, the "independently decodable Objects" property of TAMS
 * allow the use of existing init segment extensions (e.g. C2PA)
 * avoid specifying Flow parameters that are format-specific
 
@@ -54,6 +55,7 @@ The TAMS API likely does not capture all metadata media formats may need to incl
 * Good, because it requires no changes to the API specification
 * Bad, because initial research indicates this will not be possible due to missing metadata
 * Bad, because it requires a potentially complex implementation that requires in-depth knowledge of the structure of init segments and significant domain expertise
+* Bad, because extensions such as C2PA metadata may need to be re-created on ingest due to the sequence of init and media segments changing
 
 ### Option 2: Significantly expand essence parameters to fully capture everything
 
@@ -62,6 +64,7 @@ This option would see Option 1 extended to include the addition of required para
 * Bad, because it will likely require significant additions to Flow technical metadata
 * Bad, because it will likely require the addition of format specific parameters to Flow technical metadata
 * Bad, because it requires a potentially complex implementation that requires in-depth knowledge of the structure of init segments and significant domain expertise
+* Bad, because extensions such as C2PA metadata may need to be re-created on ingest due to the sequence of init and media segments changing
 
 ### Option 3: Create a Flow Segment with a never timerange for the init segment
 
@@ -75,6 +78,7 @@ This option would see the never TimeRange used to represent init segments.
 * Neutral, because it doesn't allow for different init segments for different parts of the Flow
   * Note: It is not clear we have a real use case for this as a new init segment likely means a change to the technical parameters, which requires a new Flow in TAMS
   * Initial testing indicates common fMP4/DASH players do not support multiple init segments
+* Neutral, because extensions such as C2PA metadata should be supported as the sequence of init and media segments isn't changed
 * Bad, because the approach is somewhat unintuitive
 * Bad, because it may result in unexpected behaviour with existing TAMS implementations
 
@@ -92,6 +96,7 @@ Implementations might use the init segment's Object ID to determine the compatib
   * Note: It is not clear we have a real use case for this as a new init segment likely means a change to the technical parameters, which requires a new Flow in TAMS
   * Initial testing indicates common fMP4/DASH players do not support multiple init segments
 * Netural, because it requires a backwards-compatible addition to the spec
+* Neutral, because extensions such as C2PA metadata should be supported as the sequence of init and media segments isn't changed
 
 ### Option 5: Make the init segment an object-level property, which can be uploaded and have a URL generated
 
@@ -105,6 +110,7 @@ A change in the init segment's Object ID may be used to determine a need to re-p
   * Note: It is not clear we have a real use case for this as a new init segment likely means a change to the technical parameters, which requires a new Flow in TAMS
   * Initial testing indicates common fMP4/DASH players do not support multiple init segments
 * Netural, because it requires a backwards-compatible addition to the spec
+* Neutral, because extensions such as C2PA metadata should be supported as the sequence of init and media segments isn't changed
 * Bad, because it will result in a significant increase in Object metadata which makes up a large proportion of data stored in TAMS
 
 ### Option 6: Have a Flow that is the init segment Flow
@@ -122,6 +128,7 @@ This would allow for multiple init segments to be applied to different parts of 
 * Netural, because it requires a backwards-compatible addition to the spec
 * Neutral, because it may be unintuitive
 * Neutral, because it would require open-ended Flow Segments to support live Flows
+* Neutral, because extensions such as C2PA metadata should be supported as the sequence of init and media segments isn't changed
 
 ### Option 7: Put the init segment somewhere on the TAMS API instead of as an object (e.g. as a base64 blob)
 
@@ -133,3 +140,29 @@ In addition to the base options:
 * Bad, because it would represent a new pattern where one isn't strictly required
 * Bad, because it would require a different GET path to media segments
 * Bad, because it would likely require additional work on the part of clients to construct a virtual file for the init segment to pass to decoders/players
+
+### Option 8: Embed the init segment in every Object
+
+As with Option 5, but with the init segment embedded in the Object file itself, rather than as a property against the Object.
+This would make each Object entirely independently decodable, maintaining this important property of TAMS.
+It is unclear how well players/decoders would support this workflow which is more akin to a playlist of multiple fMP4 files, than a manifest.
+
+* Good, because it doesn't require format-specific Flow parameters
+* Good, because it re-uses existing patterns/mechanisms
+* Good, because it requires no changes to the API specification
+* Neutral, because it allows for different init segments for different parts of the Flow
+  * Note: It is not clear we have a real use case for this as a new init segment likely means a change to the technical parameters, which requires a new Flow in TAMS
+  * It is unclear if such a workflow would be supported by players/decoders as standard
+* Bad, because extensions such as C2PA metadata may need to be re-created on ingest due to the sequence of init and media segments changing
+* Bad, because it will result in a significant increase in the size of Objects, which makes up a large proportion of data stored in TAMS
+
+### Option 9: Do not add support for init segments
+
+Many/all of the above options require significant changes to how the TAMS API is used, or requires formats such as fMP4 to be used in non-standard ways.
+This may lead to fragmentation of the TAMS ecosystem, or require fMP4 codecs to be modified in a manner that requires significant in-depth domain knowledge.
+We have, however, seen multiple off-spec extensions to the TAMS specification to add init-segment support which itself exacerbates the issue of fragmentation of the TAMS ecosystem.
+
+* Good, because it encourages TAMS interoperability by maintaining a small number of workflow variations.
+* Neutral, because we would explicitly not support a format commonly used in the media industry
+  * If the way the format would be supported would be non-standard from an fMP4 point of view, TAMS support may bring its own issues - hence "neutral"
+* Bad, because this option may persist the existing situation with off-spec extensions
