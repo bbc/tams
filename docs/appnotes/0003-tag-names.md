@@ -235,6 +235,7 @@ Used to trigger the creation of the Flow via an automated transcode process, as 
 Known values:
 
 * `immediate` - The Flow should be populated by a transcode process immediately
+* `virtual` - The Flow should be populated with "virtual" Segments that will allow for just-in-time transcode of individual Media Objects on read
 
 ### writing_flow_timing_temi_timestamps
 
