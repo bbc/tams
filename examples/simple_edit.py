@@ -13,14 +13,15 @@ import aiohttp
 from mediatimestamp import TimeRange, Timestamp
 import mediajson
 
-from credentials import Credentials, BasicCredentials, OAuth2ClientCredentials
-from client import post_request, put_request, get_request
+from utils.credentials import Credentials, BasicCredentials, OAuth2ClientCredentials
+from utils.client import post_request, put_request, get_request
 
 logging.basicConfig()
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 FLOW_FRAME_RATE = 50
+
 
 async def put_flow(
     session: aiohttp.ClientSession,
@@ -108,7 +109,7 @@ async def simple_edit(
     output_source_id: UUID,
 ) -> None:
     """Add timerange of segments from input 1 followed by a timerange of segments from input 2"""
-    async with aiohttp.ClientSession() as session:
+    async with aiohttp.ClientSession(trust_env=True) as session:
         await put_flow(session, credentials, tams_url, output_flow_id, output_source_id)
 
         # Add segments from input 1 to output
@@ -174,7 +175,8 @@ async def simple_edit(
                 })
             ) as resp:
                 resp.raise_for_status()
-                print(f"Added segment from Flow {input_2_flow_id} and timerange {segment['timerange']} to {new_seg_tr!s}")
+                print(f"Added segment from Flow {input_2_flow_id} and timerange "
+                      "{segment['timerange']} to {new_seg_tr!s}")
 
         print(f"Finished writing output {output_flow_id}")
 
@@ -200,7 +202,7 @@ async def interval_edit(
         "_copy_edit_interval": cut_interval_ts.to_sec_nsec()
     }
 
-    async with aiohttp.ClientSession() as session:
+    async with aiohttp.ClientSession(trust_env=True) as session:
         # Create output Flow
         await put_flow(session, credentials, tams_url, output_flow_id, output_source_id, custom_tags=custom_tags)
 
@@ -248,10 +250,16 @@ async def interval_edit(
                 # Rest of this cut fits in the current segment, so we can write a new segment
                 new_seg_tr = TimeRange(working_time, next_switch_at, TimeRange.INCLUDE_START)
             else:
-                 # We need to add all of the rest of this segment, and then some more of the next one before cutting
+                # We need to add all of the rest of this segment,
+                # and then some more of the next one before cutting
                 new_seg_tr = TimeRange.from_start_length(working_time, segment_length_remaining,
                                                          TimeRange.INCLUDE_START)
 
+            # Note that `sample_offset` and `sample_count` are deprecated but still set for backwards compatibility.
+            # They have been replaced by `object_timerange`.
+            # As this is referencing an existing Object, `object_timerange` will already be set against the Object and
+            # will not need setting here.
+            # When `sample_offset` and `sample_count` are dropped from the spec, they will be deleted here.
             new_segment = {
                 "object_id": next_seg["object_id"],
                 "timerange": new_seg_tr,

@@ -25,6 +25,7 @@ For more information on how we use application notes, see [here](./appnotes/READ
 | [0016](./appnotes/0016-authorisation-in-tams-workflows.md)           | Authorisation in TAMS workflows                                 |
 | [0017](./appnotes/0017-reuse-of-ids.md)                              | When to re-use IDs in TAMS and compatible systems               |
 | [0018](./appnotes/0018-managing-multiple-object-instances.md)        | Managing Multiple Object Instances                              |
+| [0019](./appnotes/0019-implementing-retention-management.md)         | Methods of implementing retention management                    |
 
 ## ADRs
 
@@ -68,6 +69,7 @@ For more information on how we use ADRs, see [here](./adr/README.md).
 | [0030](./adr/0030-allow-external-media-objects.md)                 | Allow a Flow to reference media objects in other Flows and storage         |
 | [0031](./adr/0031-flow-image-support.md)                           | Add new flow type to support still images                                  |
 | [0032](./adr/0032-specifying-storage-backend.md)                   | Specifying storage backend when requesting storage allocation              |
+| [0033](./adr/0033-segment-created-metadata.md)                     | Add created metadata to segments                                           |
 | [0034](./adr/0034-storage-allow-object_ids.md)                     | Add object_ids option to Flow Storage request                              |
 | [0035](./adr/0035-fine-grained-auth.md)                            | Fine-grained Authorisation in TAMS Workflows                               |
 | [0036](./adr/0036-specifying-partial-segment-usage.md)             | Specifying partial segment usage |
@@ -77,6 +79,9 @@ For more information on how we use ADRs, see [here](./adr/README.md).
 | [0040](./adr/0040-tag-usability-enhancements.md)                   | Tag Usability Enhancements |
 | [0041](./adr/0041-require-explicit-framerate.md)                   | Requiring explicit frame rates |
 | [0042](./adr/0042-uncontrolled-object-instance-labels.md)          | Make `label` Mandatory for Uncontrolled Object Instances |
+| [0043](./adr/0043-signalling-retention-time.md)                    | Signalling retention time |
+| [0044](./adr/0044-signalling-timeouts.md)                          | Signalling timeout periods |
+| [0046](./adr/0046-governance.md)                                   | Governance |
 
 \* Note: ADR 0004a was the unintended result of a number clash in the early development of TAMS which wasn't caught before publication
 

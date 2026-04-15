@@ -125,6 +125,9 @@ These re-used Media Objects have their original media timeline, and each grain's
 
 Flow Segments can also re-use parts of a Media Object, as in Flow C in the diagram below.
 Notice that the `timerange` still refers to the Flow timeline (and `0:50...` etc. is used as shorthand for `0:500000000`), however a reduced number of grains have been selected, taking only part of the first Media Object and part of the last Media Object.
+The Flow `timerange` and `object_timerange` internal to the Media Object have a 1:1 mapping (`ts_offset` is `0:0`).
+The first Media Object has an `object_timerange` of `[0:0_1:0)` but the Flow Segment which uses it has a `timerange` of `[0:500000000_1:0)`.
+This indicates this Flow Segment is using the last half of the Media Object.
 
 ![Graphic showing the Flow timeline and 3 Flow Segments in Flow C, where the Media Objects have been re-used from Flow A however only half of the first and last Media Object has been used](./docs/images/Flow%20and%20Media%20Timelines-Flow%20C.drawio.png)
 
@@ -215,6 +218,20 @@ It is assumed that implementations will apply other IT and cloud infrastructure 
 
 This repository uses [(M)ADR documents](https://adr.github.io/madr/) to propose significant changes, facilitate discussions and decision making, and to store a record of options that were considered.
 These documents may be found in the [docs/adr](./docs/adr/) directory, and are managed as described by the [ADR Readme](./docs/adr/README.md).
+
+### Development
+
+This repository contains a [Makefile](./Makefile) with various targets to aid specification development.
+These rely on having Docker available on the system, are primarily tested on Linux and some of the images used are only built for x86-64 platforms, however other operating systems and platforms may work using emulation.
+Linting and documentation rendering are also handled by GitHub Actions when Pull Requests are submitted and merged.
+
+The following targets are available:
+
+- `make lint` - Lint Markdown documents, validate API specifications, examples and schemas
+- `make render` - Generate HTML rendered version of OpenAPI spec (at `api/docs/index.html`)
+- `make mock-server-up` - Start a mock TAMS API on <http://localhost:4010/?access_token=fake>
+
+Note that for the mock server, some credentials must be supplied to meet the spec; either an `Authorization` header for HTTP Basic/Bearer token, or an `access_token` query string.
 
 ## Making a release
 
