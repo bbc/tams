@@ -224,6 +224,18 @@ Specified as a TAMS-compatible [Timestamp](../appnotes/0008-timestamps-in-TAMS.m
 The earliest time in [TAI](https://en.wikipedia.org/wiki/International_Atomic_Time) at which a given Segment should be automatically deleted is calculated by adding this offset to the end Timestamp component of the Segments TimeRange.
 Example: For a Flow using TAI for its timeline, a `segment_retention_offset` of `600:0` will result in Segments being deleted after 10 minutes (specifically, after the end of the Segment).
 
+### trigger_transcode
+
+Status: **Experimental**
+
+Proposed in [AppNote0022 - Architectures for the transcoding of media](./0022-transcode-architectures.md).
+
+Used to trigger the creation of the Flow via an automated transcode process, as described in [AppNote0022](./0022-transcode-architectures.md).
+
+Known values:
+
+* `immediate` - The Flow should be populated by a transcode process immediately
+
 ### writing_flow_timing_temi_timestamps
 
 Status: **Implementation specific**
