@@ -125,6 +125,9 @@ These re-used Media Objects have their original media timeline, and each grain's
 
 Flow Segments can also re-use parts of a Media Object, as in Flow C in the diagram below.
 Notice that the `timerange` still refers to the Flow timeline (and `0:50...` etc. is used as shorthand for `0:500000000`), however a reduced number of grains have been selected, taking only part of the first Media Object and part of the last Media Object.
+The Flow `timerange` and `object_timerange` internal to the Media Object have a 1:1 mapping (`ts_offset` is `0:0`).
+The first Media Object has an `object_timerange` of `[0:0_1:0)` but the Flow Segment which uses it has a `timerange` of `[0:500000000_1:0)`.
+This indicates this Flow Segment is using the last half of the Media Object.
 
 ![Graphic showing the Flow timeline and 3 Flow Segments in Flow C, where the Media Objects have been re-used from Flow A however only half of the first and last Media Object has been used](./docs/images/Flow%20and%20Media%20Timelines-Flow%20C.drawio.png)
 

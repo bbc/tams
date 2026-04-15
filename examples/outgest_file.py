@@ -38,7 +38,9 @@ async def get_flow_segments(
     timerange: TimeRange
 ) -> AsyncGenerator[dict, None]:
     """Generator of Flow Segment dicts for the given Flow ID and timerange"""
-    segments_url = f"{tams_url}/flows/{flow['id']}/segments?timerange={timerange!s}&presigned=true"
+    segments_url = (
+        f"{tams_url}/flows/{flow['id']}/segments?timerange={timerange!s}"
+        "&presigned=true&include_object_timerange=true")
     async with aiohttp.ClientSession(trust_env=True) as session:
         while True:
             async with get_request(session, credentials, segments_url) as resp:
@@ -56,7 +58,7 @@ async def get_flow_segments(
                         )
 
                 try:
-                    segments_url = resp.links["next"]["url"]
+                    segments_url = str(resp.links["next"]["url"])
                 except KeyError:
                     break
 
@@ -104,22 +106,46 @@ def normalise_and_transfer_media(
     else:
         raise NotImplementedError()
 
-    try:
-        discard_before_count = int(segment["sample_offset"])
-    except KeyError:
-        discard_before_count = 0
-
-    try:
-        keep_after_count = int(segment["sample_count"])
-        if keep_after_count == 0:
-            # Corner case - no media units are used from the segment
-            return TimeRange.never()
-    except KeyError:
-        keep_after_count = -1
-
     ts_offset = Timestamp.from_str(segment.get("ts_offset", "0:0"))
 
-    discarding_samples = discard_before_count > 0 or keep_after_count >= 0
+    segment_timerange = TimeRange.from_str(segment["timerange"])
+    assert (segment_timerange.start is not None)
+    assert (segment_timerange.end is not None)
+
+    try:
+        object_timerange = TimeRange.from_str(segment["object_timerange"])
+    except KeyError:
+        if "sample_offset" in segment or "sample_count" in segment:
+            raise NotImplementedError(
+                "object_timerange is not set but the deprecated sample_offset or sample_count are. "
+                "This is conflicting data and the Segment metadata is invalid. "
+                "This script does not support pre TAMS v8.0 sample-only Segment metadata.")
+        object_timerange = TimeRange(
+            start=segment_timerange.start - ts_offset,
+            end=segment_timerange.end - ts_offset,
+            inclusivity=segment_timerange.inclusivity
+            )
+        logger.warning(
+            f"Object TimeRange not found. Using Segment TimeRange offset by ts_offset ({object_timerange})")
+    assert (object_timerange.start is not None)
+    assert (object_timerange.end is not None)
+
+    offset_object_timerange = TimeRange(
+        object_timerange.start + ts_offset,
+        object_timerange.end + ts_offset,
+        object_timerange.inclusivity
+        )
+    assert (offset_object_timerange.start is not None)
+    assert (offset_object_timerange.end is not None)
+    if segment_timerange not in offset_object_timerange:
+        logger.warning(
+            f"Segment TimeRange ({segment_timerange}) is not contained by Object TimeRange "
+            f"({object_timerange}) + ts_offset ({ts_offset}) in Segment metadata")
+
+    skip_start_duration = segment_timerange.start - offset_object_timerange.start
+    skip_end_duration = offset_object_timerange.end - segment_timerange.end
+
+    discarding_samples = skip_start_duration > 0 or skip_end_duration > 0
     output_timerange = TimeRange.never()
     first_packet = True
     with av.open(media_essence, mode="r", format="mpegts") as av_input:
@@ -146,10 +172,10 @@ def normalise_and_transfer_media(
             # Don't attempt to get the media unit count if it isn't required to
             # process FlowSegment.sample_offset and sample_count. This avoids potential
             # NotImplementedError because the packet duration is not set.
-            process_media_unit_count = discard_before_count > 0 or keep_after_count >= 0
+            process_media_packet_offsets = skip_start_duration > 0 or skip_end_duration > 0
 
             # Get the number of media units (samples) in the packet
-            if process_media_unit_count:
+            if process_media_packet_offsets:
                 if pkt.duration is not None:
                     # We assume the packet duration is accurate enough to provide a media unit count
                     pkt_duration = Timestamp.from_count(pkt.duration, 1/pkt.time_base)
@@ -160,15 +186,13 @@ def normalise_and_transfer_media(
                     else:
                         raise NotImplementedError("Packet doesn't provide a duration")
 
-                media_unit_count = pkt_duration.to_count(media_rate)
-
             # Discard media units before FlowSegment.sample_offset
-            if process_media_unit_count and discard_before_count > 0:
-                discard_before_count -= media_unit_count
-                if discard_before_count < 0:
+            if process_media_packet_offsets and skip_start_duration > 0:
+                skip_start_duration -= pkt_duration
+                if skip_start_duration < 0:
                     logger.warning(
-                        "Segment 'sample_offset' is not a whole number of packets. "
-                        f"Included {-discard_before_count} samples at the start. "
+                        "Segment TimeRange Start is not at a packet boundary. "
+                        f"Included {Timestamp() - skip_start_duration} samples at the start. "
                         "A transcode would be required to get the correct number of samples"
                     )
                 continue
@@ -204,24 +228,24 @@ def normalise_and_transfer_media(
 
             av_output.mux([pkt])
 
-            # Discard media units >= FlowSegment.sample_offset + FlowSegment.sample_count
-            if process_media_unit_count and keep_after_count >= 0:
-                keep_after_count -= media_unit_count
-                if keep_after_count <= 0:
-                    if keep_after_count < 0:
-                        logger.warning(
-                            "Segment 'sample_count' is not a whole number of packets. "
-                            f"Included {-keep_after_count} samples at the end. "
-                            "A transcode would be required to get the correct number of samples"
-                        )
-                    break
+            # Discard media units after segment_timerange end
+            if process_media_packet_offsets and not output_timerange.ends_earlier_than_timerange(segment_timerange):
+                if not output_timerange.ends_inside_timerange(segment_timerange):
+                    # If output doesn't end before or during the segment, last packet caused it to end after the segment
+                    assert (output_timerange.end is not None)
+                    output_end_diff = output_timerange.end - segment_timerange.end
+                    logger.warning(
+                        "Segment timerange end is not at a packet boundary. "
+                        f"Included {output_end_diff} samples at the end. "
+                        "A transcode would be required to get the correct number of samples"
+                    )
+                break
 
     if check_timing and not discarding_samples:
         # Warn if the normalised timerange calculated from the media pts and FlowSegment.ts_offset
         # does not equal the normalised FlowSegment.timerange.
         # Note that normalisation will hide differences that are less than 1/2 the media unit duration
         # and the assumption is that those differences are rounding errors
-        segment_timerange = TimeRange.from_str(segment["timerange"]).normalise(media_rate)
         norm_output_timerange = output_timerange.normalise(media_rate)
         norm_segment_timerange = segment_timerange.normalise(media_rate)
         if norm_output_timerange != norm_segment_timerange:
