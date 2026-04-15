@@ -30,7 +30,9 @@ Flows:
 
 ## Decision Outcome
 
-tbc
+Recommendation: Option 3 since this already exists within the API as part of the webhooks, however this requires clarification of empty query parameters which is recommended to match the proposed behaviours.
+
+Additionally it is recommended to add the same capability at the Flow level and again match this with the same parameter as used in the webhooks and clarify the empty query parameter behaviour.
 
 ### Implementation
 
@@ -72,24 +74,29 @@ In this option it is not possible to query on the ID in the collection, only tha
 ### Option 3: Follow accept_get_urls example and use an empty query parameter
 
 On the `/segments` end point it is possible to specify a query parameter of `accept_get_urls`.
-This field can be comma separated list of labels, however it is allowed to be examply which means that the `get_urls` are ommited in the result
+This field can be comma separated list of labels, however it is allowed to be empty which means that the `get_urls` are ommited in the result
+
+Similarly in the webhooks it is possible to specify the `source_collected_by_ids` as an array of Source IDs.
+In the current it is not entirely clear what the behaviour of the query parameter if the value is left empty.
+However it is proposed to keep the same query parameter for comsistency then update the webhooks to clarify what should happen for an empty query parameter.
 
 | Behaviour | Query Parameter |
 | --------- | --------------- |
-| Source is not collected | `collected_by=` |
-| Source is collected by specific Source | `collected_by=a46c49f1-4764-42b9-9f91-f267a58903c4` |
-| Source is collected by any of the specified Sources | `collected_by=a46c49f1-4764-42b9-9f91-f267a58903c4,f3ac31bb-c66b-43f8-8362-c82e76f0d28d` |
+| Source is not collected | `source_collected_by_ids=` |
+| Source is collected by specific Source | `source_collected_by_ids=a46c49f1-4764-42b9-9f91-f267a58903c4` |
+| Source is collected by any of the specified Sources | `source_collected_by_ids=a46c49f1-4764-42b9-9f91-f267a58903c4,f3ac31bb-c66b-43f8-8362-c82e76f0d28d` |
 | Source is collected by any Source |  Not possible |
 
 * Good: If filtering by ID is required then this keeps it to a single field
+* Good: Uses an existing field which is already present in the API and provided consistency between different areas
 * Bad: Requires the filtering by ID to be a logical query parameter
 
 ### Flow level implications
 
-At the flow level this is currently some ability to query and update flow collections in the API.
-This behaviour focuses on starting from a known flow to which the collection is applied.
-There is no equivalent endpoints at the source level.
+At the Flow level this is currently some ability to query and update Flow collections in the API.
+This behaviour focuses on starting from a known Flow to which the collection is applied.
+There is no equivalent endpoints at the Source level.
 
-If chosen to also apply at the Flow level then need to consider is `collected_by=a46c49f1-4764-42b9-9f91-f267a58903c4` too similar to `/flows/a46c49f1-4764-42b9-9f91-f267a58903c4/flow_collection`? 
-The first gives you all the metadata about the flows, where the later only gives you the ID's and roles
+If chosen to also apply at the Flow level then need to consider is `flows_collected_by_id=a46c49f1-4764-42b9-9f91-f267a58903c4` too similar to `/flows/a46c49f1-4764-42b9-9f91-f267a58903c4/flow_collection`? 
+The first gives you all the metadata about the Flows, where the later only gives you the ID's and roles
 
