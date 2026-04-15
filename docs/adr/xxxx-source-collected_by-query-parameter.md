@@ -8,7 +8,7 @@ status: "draft"
 Currently at the Source level there is no filtering on the `collected_by` field.
 When vendors are building systems which list content stored in TAMS then they are only looking for the Sources at the top of the content tree.
 In many cases this is the multi-Source, however due to single essence (eg audio only) workflows then this is not a reliable method of finding the top level content.
-To achieve this they must go through every result and look to see if the `collected_by `field is missing as this then indicates that it is the top of a Source collection.
+To achieve this they must go through every result and look to see if the `collected_by` field is missing as this then indicates that it is the top of a Source collection.
 This process can also throw any form of sensible pagination in a client application as when requesting content from the TAMS API it is not known how many results will be retained or discarded.
 
 This ADR is to look at moving this behaviour from the client side into the API.
@@ -45,8 +45,8 @@ See the API specification changes in PR [#xxx](https://github.com/bbc/tams/pull/
 When querying tags there are two fields available - you query on a tag name to get the value, or to query on a second parameter (`tag_exists`) to find out if that tag exists.
 Following this model would mean adding a two parameters - a new query parameter `collected_by_exists` with a boolean value and the `collected_by` to be able to search on one or more ID's.
 
-For the boolean field setting to false this would return all Sources where there is no `collected_by` values present which is the required behaviour.
-Setting this to true would only return Sources which have a `collected_by` value.
+For the boolean field setting to false this would return all Sources where there is no `collected_by` value present which is the required behaviour.
+Setting this to true would return only Sources that have a `collected_by` value.
 This option currently has no uses cases, however using this model and a boolean logically requires this behaviour.
 
 | Behaviour | Query Parameter |
@@ -55,7 +55,7 @@ This option currently has no uses cases, however using this model and a boolean 
 | Source is collected by specific Source | `collected_by=a46c49f1-4764-42b9-9f91-f267a58903c4` |
 | Source is collected by any of the specified Sources | `collected_by=a46c49f1-4764-42b9-9f91-f267a58903c4,f3ac31bb-c66b-43f8-8362-c82e76f0d28d` |
 | Source is collected by any Source | `collected_by_exists=true` |
-| Note that this combination is non-sense | `collected_by_exists=false&collected_by=a46c49f1-4764-42b9-9f91-f267a58903c4` |
+| Note that this combination is nonsense | `collected_by_exists=false&collected_by=a46c49f1-4764-42b9-9f91-f267a58903c4` |
 
 ### Option 2: Follow tags example but only implement the exists query parameter
 
@@ -74,7 +74,7 @@ In this option it is not possible to query on the ID in the collection, only tha
 ### Option 3: Follow accept_get_urls example and use an empty query parameter
 
 On the `/segments` end point it is possible to specify a query parameter of `accept_get_urls`.
-This field can be comma separated list of labels, however it is allowed to be empty which means that the `get_urls` are ommited in the result
+This field can be a comma separated list of labels, however it is allowed to be empty which means that the `get_urls` are omitted in the result
 
 Similarly in the webhooks it is possible to specify the `source_collected_by_ids` as an array of Source IDs.
 In the current it is not entirely clear what the behaviour of the query parameter if the value is left empty.
