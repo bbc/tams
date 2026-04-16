@@ -19,9 +19,15 @@ lint-markdown:
 	docker run -v ${topdir}:/workdir davidanson/markdownlint-cli2-rules:v0.12.1
 
 lint-apispec:
-	$(MAKE) -C api/ lint
+	$(MAKE) -C api/ lint-apispec
 
-lint: lint-markdown lint-apispec
+lint-json:
+	$(MAKE) -C api/ lint-json
+
+lint: lint-markdown lint-apispec lint-json
+
+conform-json:
+	$(MAKE) -C api/ conform-json
 
 next-version:
 	@echo $(NEXT_VERSION)
@@ -35,7 +41,8 @@ help:
 	@echo "make mock-server-up     - Start a mock API server on http://localhost:4010"
 	@echo "make mock-server-down   - Stop the mock API server"
 	@echo "make lint               - Lint API specification document and Markdown files"
+	@echo "make conform-json       - Conform JSON files to linter"
 	@echo "make next-version       - Print the version the code should have if it is released as it currently is"
 	@echo "make update-api-version - Update the API version in the OpenAPI document to match the next-version. This WILL NOT make a release on the repository."
 
-.PHONY: help render mock-server-up mock-server-down lint-markdown lint-apispec lint next-version update-api-version
+.PHONY: help render mock-server-up mock-server-down lint-markdown lint-apispec lint-json lint conform-json next-version update-api-version

@@ -38,3 +38,12 @@ COPY .spectral.yaml /data/
 
 # Copy in documentation source files
 COPY --from=layer /api /data
+
+###############################################################################
+# Stage: jq - Lint JSON files
+###############################################################################
+FROM ${CLOUDFIT_BASE_NAME}:${CLOUDFIT_BASE_LABEL} AS jq
+
+WORKDIR /data/
+
+RUN DEBIAN_FRONTEND=noninteractive && apt-get update && apt-get install -y jq
