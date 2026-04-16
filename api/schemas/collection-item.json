@@ -1,19 +1,19 @@
 {
-    "title": "Collection Item",
-    "description": "Describes how an entity (Source or Flow) is collected into another entity of the same type",
-    "type": "object",
-    "required": [
-        "id",
-        "role"
-    ],
-    "properties": {
-        "id": {
-            "description": "Source or Flow Identifier of the member of this collection. Sources MUST only collect Sources, and Flows MUST only collect Flows. Must already be registered in this service instance",
-            "$ref": "uuid.json"
-        },
-        "role": {
-            "description": "A human-readable role of the element in this collection (e.g. 'R' to denote a right audio channel in a collection of mono audio Sources)",
-            "type": "string"
-        }
+  "title": "Collection Item",
+  "description": "Describes how an entity (Source or Flow) is collected into another entity of the same type",
+  "type": "object",
+  "required": [
+    "id",
+    "role"
+  ],
+  "properties": {
+    "id": {
+      "description": "Source or Flow Identifier of the member of this collection. Sources MUST only collect Sources, and Flows MUST only collect Flows. Must already be registered in this service instance",
+      "$ref": "uuid.json"
+    },
+    "role": {
+      "description": "A human-readable role of the element in this collection (e.g. 'R' to denote a right audio channel in a collection of mono audio Sources)",
+      "type": "string"
     }
+  }
 }

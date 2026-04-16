@@ -20,8 +20,8 @@
             ],
             "properties": {
               "storage_id": {
-                  "description": "Storage Backend identifier",
-                  "$ref": "uuid.json"
+                "description": "Storage Backend identifier",
+                "$ref": "uuid.json"
               },
               "url": {
                 "description": "A URL to which a GET request can be made to directly retrieve the contents of the media object. Clients should include credentials if the provide URL is on the same origin as the API endpoint",

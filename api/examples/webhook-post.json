@@ -1,9 +1,9 @@
 {
-    "url": "https://hook.example.com",
-    "api_key_name": "Authorization",
-    "api_key_value": "Bearer 21238dksdjqwpqscj9",
-    "events": [
-        "flows/created",
-        "flows/updated"
-    ]
+  "url": "https://hook.example.com",
+  "api_key_name": "Authorization",
+  "api_key_value": "Bearer 21238dksdjqwpqscj9",
+  "events": [
+    "flows/created",
+    "flows/updated"
+  ]
 }

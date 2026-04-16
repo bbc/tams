@@ -1,67 +1,67 @@
 {
-    "title": "Deletion Request",
-    "description": "Describes an ongoing deletion request",
-    "type": "object",
-    "required": [
-        "id",
-        "flow_id",
-        "timerange_to_delete",
-        "delete_flow",
-        "status"
-    ],
-    "properties": {
-        "id": {
-            "description": "Deletion Request ID",
-            "$ref": "uuid.json"
-        },
-        "flow_id": {
-            "description": "ID of the Flow to which the deletion request relates",
-            "$ref": "uuid.json"
-        },
-        "timerange_to_delete": {
-            "description": "The timerange of Flow Segments to be deleted in this request, as described by the [TimeRange](#/schemas/timerange) type",
-            "$ref": "timerange.json"
-        },
-        "timerange_remaining": {
-            "description": "The timerange of Flow Segments not yet deleted by this request, as described by the [TimeRange](#/schemas/timerange) type",
-            "$ref": "timerange.json"
-        },
-        "delete_flow": {
-            "description": "Whether the Flow should be deleted once the timerange has been",
-            "type": "boolean"
-        },
-        "created": {
-            "description": "Date/Time when this deletion request was created",
-            "type": "string",
-            "format": "date-time"
-        },
-        "created_by": {
-            "description": "A string identifier for the entity that created the deletion request. Service implementations SHOULD set suitable default values for `created_by` based on the principal accessing the system.",
-            "type": "string"
-        },
-        "updated": {
-            "description": "Date/Time when this deletion request was updated",
-            "type": "string",
-            "format": "date-time"
-        },
-        "expiry": {
-            "description": "Date/Time when this deletion request will be deleted",
-            "type": "string",
-            "format": "date-time"
-        },
-        "status": {
-            "description": "Status of the delete request",
-            "type": "string",
-            "enum": [
-                "created",
-                "started",
-                "done",
-                "error"
-            ]
-        },
-        "error": {
-            "description": "Provides more information for the error status, as described by the [Error](#/schemas/error) type",
-            "$ref": "error.json"
-        }
+  "title": "Deletion Request",
+  "description": "Describes an ongoing deletion request",
+  "type": "object",
+  "required": [
+    "id",
+    "flow_id",
+    "timerange_to_delete",
+    "delete_flow",
+    "status"
+  ],
+  "properties": {
+    "id": {
+      "description": "Deletion Request ID",
+      "$ref": "uuid.json"
+    },
+    "flow_id": {
+      "description": "ID of the Flow to which the deletion request relates",
+      "$ref": "uuid.json"
+    },
+    "timerange_to_delete": {
+      "description": "The timerange of Flow Segments to be deleted in this request, as described by the [TimeRange](#/schemas/timerange) type",
+      "$ref": "timerange.json"
+    },
+    "timerange_remaining": {
+      "description": "The timerange of Flow Segments not yet deleted by this request, as described by the [TimeRange](#/schemas/timerange) type",
+      "$ref": "timerange.json"
+    },
+    "delete_flow": {
+      "description": "Whether the Flow should be deleted once the timerange has been",
+      "type": "boolean"
+    },
+    "created": {
+      "description": "Date/Time when this deletion request was created",
+      "type": "string",
+      "format": "date-time"
+    },
+    "created_by": {
+      "description": "A string identifier for the entity that created the deletion request. Service implementations SHOULD set suitable default values for `created_by` based on the principal accessing the system.",
+      "type": "string"
+    },
+    "updated": {
+      "description": "Date/Time when this deletion request was updated",
+      "type": "string",
+      "format": "date-time"
+    },
+    "expiry": {
+      "description": "Date/Time when this deletion request will be deleted",
+      "type": "string",
+      "format": "date-time"
+    },
+    "status": {
+      "description": "Status of the delete request",
+      "type": "string",
+      "enum": [
+        "created",
+        "started",
+        "done",
+        "error"
+      ]
+    },
+    "error": {
+      "description": "Provides more information for the error status, as described by the [Error](#/schemas/error) type",
+      "$ref": "error.json"
     }
+  }
 }

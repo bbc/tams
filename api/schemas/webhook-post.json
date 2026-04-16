@@ -1,27 +1,27 @@
 {
-    "title": "Register Webhook",
-    "description": "Register to receive updates via webhook",
-    "type": "object",
-    "allOf": [
-        {
-            "$ref": "webhook.json"
+  "title": "Register Webhook",
+  "description": "Register to receive updates via webhook",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "webhook.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "api_key_value": {
+          "description": "The value that the HTTP header 'api_key_name' will be set to",
+          "type": "string"
         },
-        {
-            "type": "object",
-            "properties": {
-                "api_key_value": {
-                    "description": "The value that the HTTP header 'api_key_name' will be set to",
-                    "type": "string"
-                },
-                "status": {
-                    "description": "Status of the Webhook. `created` will register the webhook in the created state and the service instance will attempt to start sending events. `disabled` will register the webhook in a disabled state and will not send events. Assumed to be `created` if not set.",
-                    "type": "string",
-                    "enum": [
-                        "created",
-                        "disabled"
-                    ]
-                }
-            }
+        "status": {
+          "description": "Status of the Webhook. `created` will register the webhook in the created state and the service instance will attempt to start sending events. `disabled` will register the webhook in a disabled state and will not send events. Assumed to be `created` if not set.",
+          "type": "string",
+          "enum": [
+            "created",
+            "disabled"
+          ]
         }
-    ]
+      }
+    }
+  ]
 }

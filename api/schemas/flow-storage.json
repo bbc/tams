@@ -18,7 +18,9 @@
             "description": "The object store identifier for the Media Object.",
             "type": "string"
           },
-          "put_url": { "$ref": "http-request.json" }
+          "put_url": {
+            "$ref": "http-request.json"
+          }
         }
       }
     }

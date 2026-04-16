@@ -1,38 +1,38 @@
 {
-    "title": "Object",
-    "unevaluatedProperties": false,
-    "allOf": [
-        {
-            "type": "object",
-            "required": [
-                "id",
-                "referenced_by_flows",
-                "timerange"
-            ],
-            "properties": {
-                "id": {
-                    "description": "The Media Object identifier.",
-                    "type": "string"
-                },
-                "referenced_by_flows": {
-                    "type": "array",
-                    "description": "List of Flows that reference this Media Object via Flow Segments in this store instance.",
-                    "items": {
-                        "$ref": "uuid.json"
-                    }
-                },
-                "first_referenced_by_flow": {
-                    "description": "The first Flow that had a Flow Segment reference the Media Object in this store instance. This Flow is also present in 'referenced_by_flows' if it is still referenced by the Flow. This property is optional and may in some implementations become unset if the Flow no longer references the media object, e.g. because it was deleted.",
-                    "$ref": "uuid.json"
-                },
-                "timerange": {
-                    "description": "The timerange covering the sample timestamps embedded in or derived from the Media Object itself, on the Media Object's timeline.",
-                    "$ref": "timerange.json"
-                }
-            }
+  "title": "Object",
+  "unevaluatedProperties": false,
+  "allOf": [
+    {
+      "type": "object",
+      "required": [
+        "id",
+        "referenced_by_flows",
+        "timerange"
+      ],
+      "properties": {
+        "id": {
+          "description": "The Media Object identifier.",
+          "type": "string"
         },
-        {
-            "$ref": "object-core.json"
+        "referenced_by_flows": {
+          "type": "array",
+          "description": "List of Flows that reference this Media Object via Flow Segments in this store instance.",
+          "items": {
+            "$ref": "uuid.json"
+          }
+        },
+        "first_referenced_by_flow": {
+          "description": "The first Flow that had a Flow Segment reference the Media Object in this store instance. This Flow is also present in 'referenced_by_flows' if it is still referenced by the Flow. This property is optional and may in some implementations become unset if the Flow no longer references the media object, e.g. because it was deleted.",
+          "$ref": "uuid.json"
+        },
+        "timerange": {
+          "description": "The timerange covering the sample timestamps embedded in or derived from the Media Object itself, on the Media Object's timeline.",
+          "$ref": "timerange.json"
         }
-    ]
+      }
+    },
+    {
+      "$ref": "object-core.json"
+    }
+  ]
 }
