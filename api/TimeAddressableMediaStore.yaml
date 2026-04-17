@@ -747,7 +747,7 @@ paths:
         "200":
           $ref: '#/components/responses/trait_resource_info_head_200'
         "404":
-          description: The requested Source does not exist, or does not have a label set.
+          description: The requested Source does not exist.
     get:
       summary: Source Label
       description: Returns the Source label property. This should be a very short, human-readable label that may be displayed in listings of Sources.
@@ -764,7 +764,7 @@ paths:
               schema:
                 type: string
         "404":
-          description: The requested Source does not exist, or does not have a label set.
+          description: The requested Source does not exist.
     put:
       summary: Create or Update Source Label
       description: Create or update the label property. This should be a very short, human-readable label that may be displayed in listings of Sources.
@@ -1371,7 +1371,7 @@ paths:
         "200":
           $ref: '#/components/responses/trait_resource_info_head_200'
         "404":
-          description: The requested Flow does not exist, or does not have a label set.
+          description: The requested Flow does not exist.
     get:
       summary: Flow Label
       description: Returns the Flow label property. This should be a very short, human-readable label that may be displayed in listings of Flows.
@@ -1388,7 +1388,7 @@ paths:
               schema:
                 type: string
         "404":
-          description: The requested Flow does not exist, or does not have a label set.
+          description: The requested Flow does not exist.
     put:
       summary: Create or Update Flow Label
       description: Create or update the label property. This should be a very short, human-readable label that may be displayed in listings of Flows.
