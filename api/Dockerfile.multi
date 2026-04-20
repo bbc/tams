@@ -28,6 +28,13 @@ COPY --from=layer /api /data
 ENTRYPOINT [ "/bundle-api.sh" ]
 
 ###############################################################################
+# Stage: jq - Lint specification and schemas
+###############################################################################
+FROM ${CLOUDFIT_BASE_NAME}:${CLOUDFIT_BASE_LABEL} AS jq
+
+RUN DEBIAN_FRONTEND=noninteractive && apt-get update && apt-get install -y jq
+
+###############################################################################
 # Stage: oaslint - Validates OpenAPI specifications
 ###############################################################################
 FROM stoplight/spectral:6.10 AS oaslint

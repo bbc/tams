@@ -1,13 +1,37 @@
 NUM_OF_PARENT:=$(shell echo $$(( $(words $(MAKEFILE_LIST)))) )
 topdir:=$(realpath $(dir $(word $(NUM_OF_PARENT),$(MAKEFILE_LIST))))
 
+JSON_FILES=$(shell find . -name "*.json")
+LINT_JSON_TARGETS=$(patsubst %, %.lintjson, $(JSON_FILES))
+LINT_JSONNODOCKER_TARGETS=$(patsubst %, %.lintnodockerjson, $(JSON_FILES))
+
 all: help
 
+%.lintjson:
+	docker run -i ghcr.io/jqlang/jq:latest < $* '.' --indent 4 | diff $* -
+
+%.lintnodockerjson:
+	jq < $* '.' --indent 4 | diff $* -
+
+lint-json-targets: $(LINT_JSONNODOCKER_TARGETS)
+
+lint-jsonnodocker-targets: $(LINT_JSONNODOCKER_TARGETS)
+
+build-lint-json:
+	docker pull --platform linux/amd64 alpine >/dev/null 2>/dev/null || true
+	DOCKER_BUILDKIT=1 docker build --platform linux/amd64 -f Dockerfile.multi --target jq -t tams_jq:local .
+
+lint-json-mount: build-lint-json
+	docker run --platform linux/amd64 --rm -v $(topdir):/api -w /api tams_jq:local /bin/sh -c 'set -x && for FILE in $(shell find . -name "*.json"); do jq < $$FILE '.' --indent 4 | diff $$FILE -; done'
+
+lint-json-local:
+	for FILE in $(shell find . -name "*.json"); do jq < $$FILE '.' --indent 4 | diff $$FILE -; done
+
 lint-json:
-	for FILE in $(shell find . -name "*.json"); do docker run -i ghcr.io/jqlang/jq:latest < $$FILE '.' | diff $$FILE -; done
+	for FILE in $(shell find . -name "*.json"); do docker run -i ghcr.io/jqlang/jq:latest < $$FILE '.' --indent 4 | diff $$FILE -; done
 
 conform-json:
-	for FILE in $(shell find . -name "*.json"); do docker run -i ghcr.io/jqlang/jq:latest < $$FILE '.' > $$FILE.tmp.json && mv $$FILE.tmp.json $$FILE; done
+	for FILE in $(shell find . -name "*.json"); do docker run -i ghcr.io/jqlang/jq:latest < $$FILE '.' --indent 4 > $$FILE.tmp.json && mv $$FILE.tmp.json $$FILE; done
 
 build-lint-oas:
 	docker pull --platform linux/amd64 stoplight/spectral:6.10 >/dev/null 2>/dev/null || true
