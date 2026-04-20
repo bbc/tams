@@ -1,47 +1,39 @@
 {
-    "title": "Data Flow",
-    "description": "Describes a data Flow",
-    "type": "object",
-    "allOf":
-    [
-        {
-            "$ref": "flow-core.json"
+  "title": "Data Flow",
+  "description": "Describes a data Flow",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "flow-technical.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "format",
+        "essence_parameters",
+        "codec"
+      ],
+      "properties": {
+        "format": {
+          "description": "The primary content type URN for the flow.",
+          "type": "string",
+          "enum": [
+            "urn:x-nmos:format:data"
+          ]
         },
-        {
-            "type": "object",
-            "required":
-            [
-                "format",
-                "essence_parameters",
-                "codec"
-            ],
-            "properties":
-            {
-                "format":
-                {
-                    "description": "The primary content type URN for the Flow.",
-                    "type": "string",
-                    "enum":
-                    [
-                        "urn:x-nmos:format:data"
-                    ]
-                },
-                "essence_parameters":
-                {
-                    "title": "Data Flow Essence Parameters",
-                    "description": "Describes the parameters of the essence inside this data Flow",
-                    "type": "object",
-                    "additionalProperties": false,
-                    "properties":
-                    {
-                        "data_type":
-                        {
-                            "description": "The type of information encoded in the Flow, identified using a URN. e.g. The data_type may be urn:x-tams:data:bounding-box, and the codec `application/json`.",
-                            "type": "string"
-                        }
-                    }
-                }
+        "essence_parameters": {
+          "title": "Data Flow Essence Parameters",
+          "description": "Describes the parameters of the essence inside this data Flow",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "data_type": {
+              "description": "The type of information encoded in the Flow, identified using a URN. e.g. The data_type may be urn:x-tams:data:bounding-box, and the codec `application/json`.",
+              "type": "string"
             }
+          }
         }
-    ]
+      }
+    }
+  ]
 }

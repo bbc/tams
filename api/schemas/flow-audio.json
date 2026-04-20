@@ -2,96 +2,94 @@
     "title": "Audio Flow",
     "description": "Describes an audio Flow",
     "type": "object",
-    "allOf":
+    "allOf": 
     [
         {
-            "$ref": "flow-core.json"
+            "$ref": "flow-technical.json"
         },
         {
             "type": "object",
-            "required":
-            [
+            "required": [
                 "format",
                 "essence_parameters",
                 "codec"
             ],
-            "properties":
+            "properties": 
             {
-                "format":
+                "format": 
                 {
                     "description": "The primary content type URN for the Flow.",
                     "type": "string",
-                    "enum":
+                    "enum": 
                     [
                         "urn:x-nmos:format:audio"
                     ]
                 },
-                "essence_parameters":
+                "essence_parameters": 
                 {
                     "title": "Audio Flow Essence Parameters",
                     "description": "Describes the parameters of the essence inside this audio Flow",
                     "type": "object",
-                    "required":
+                    "required": 
                     [
                         "sample_rate",
                         "channels"
                     ],
                     "additionalProperties": false,
-                    "properties":
+                    "properties": 
                     {
-                        "sample_rate":
+                        "sample_rate": 
                         {
                             "description": "The fixed number of samples per second.",
                             "type": "integer",
                             "exclusiveMinimum": 0
                         },
-                        "channels":
+                        "channels": 
                         {
                             "description": "The channel count.",
                             "type": "integer",
                             "exclusiveMinimum": 0
                         },
-                        "bit_depth":
+                        "bit_depth": 
                         {
                             "description": "The number of significant bits used to represent the audio sample. The minumum number of bytes then equals `round_up(bit_depth / 8)`. If codec is `audio/x-raw-int` bit_depth must be set. If codec is `audio/x-raw-float` bit_depth must be set to 32 or 64",
                             "type": "integer",
                             "exclusiveMinimum": 0
                         },
-                        "codec_parameters":
+                        "codec_parameters": 
                         {
                             "title": "Audio Codec Parameters",
                             "type": "object",
-                            "required":
-                            [],
-                            "properties":
+                            "required": [],
+                            "properties": 
                             {
-                                "coded_frame_size":
+                                "coded_frame_size": 
                                 {
                                     "description": "The fixed number of samples per coded audio frame.",
                                     "type": "integer"
                                 },
-                                "mp4_oti":
+                                "mp4_oti": 
                                 {
                                     "description": "The MPEG-4 Object Type Identification. For more information on the use of this property in codec strings, see https://developer.mozilla.org/en-US/docs/Web/Media/Formats/codecs_parameter#mpeg-4_audio",
                                     "type": "integer"
                                 }
                             }
                         },
-                        "unc_parameters":
+                        "unc_parameters": 
                         {
                             "title": "Uncompressed Audio Parameters",
                             "type": "object",
-                            "required":
+                            "required": 
                             [
                                 "unc_type"
                             ],
-                            "properties":
+                            "properties": 
                             {
-                                "unc_type":
+                                "unc_type": 
                                 {
                                     "description": "The uncompressed audio multi-channel representation type. If codec is `audio/x-raw-int` or `audio/x-raw-float`, unc_type must be set.",
                                     "type": "string",
-                                    "enum":
+                                    "enum": 
                                     [
                                         "interleaved",
                                         "planar",
