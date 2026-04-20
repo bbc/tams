@@ -12,6 +12,7 @@ This application note discusses the available architectures that may be used whe
 
 In this architecture, transcode is the responsibility of the ingest client.
 When media is written to TAMS, the ingest client is configured to transcode the media and write multiple Flows of the same Source to TAMS.
+Ingest clients must take care that timing is aligned between all generated Flows of the Source.
 
 ### Pros
 
