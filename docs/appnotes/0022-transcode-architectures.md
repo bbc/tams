@@ -112,6 +112,7 @@ Where the originating Flow has a `flow_status` of `ingesting`, new virtual Segme
 
 ### Pros
 
+* Transcode only takes place when a client attempts to use the transcoded media
 * Requesting clients integrate with fewer APIs
 * Transcode capability to be deployed in close (logical) proximity to the rest of the TAMS Service, due to its deep integration with it
 * Fewer components potentially means a less complicated architecture overall
@@ -121,6 +122,7 @@ Where the originating Flow has a `flow_status` of `ingesting`, new virtual Segme
 * Adds control signalling to the TAMS API
 * Potentially impedes more complex configuration of transcoders
 * Deep integration adds more complexity to TAMS Service implementations
+* Segments need to be short enough and transcode fast enough to respond to Object GET in a timely manner
 
 ### Extension - Segment Duration
 
@@ -128,7 +130,7 @@ While basic implementations may wish to maintain the Segment duration of the ori
 This may be configured by setting the `segment_duration` in the new Flow's metadata.
 The Service should carry out due diligence that the requested Segment duration is valid against restrictions such as possible GOP lengths.
 
-This approach could, for example, allow media to go from single frame per Segment, to long-GOP, and visa-versa.
+This approach could, for example, allow media to go from single frame per Segment, to long-GOP, and vice-versa.
 This capability may be particularly effective in the transpackaging use case, where different size segments may be generated with minimal overheads.
 
 ### Extension - Store Write-Back
