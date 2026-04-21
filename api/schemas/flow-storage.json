@@ -1,27 +1,29 @@
 {
-  "type": "object",
-  "title": "Media Bucket Object Store",
-  "description": "Gives information on storage for Media Objects. This schema is for the `http_object_store` Storage Backend type which provides URLs for storing Media Objects in object store buckets, and is the only Storage Backend type currently implemented.",
-  "properties": {
-    "media_objects": {
-      "type": "array",
-      "description": "List of information for identifying and uploading Media Objects",
-      "items": {
-        "type": "object",
-        "description": "Information for a Media Object",
-        "required": [
-          "object_id",
-          "put_url"
-        ],
-        "properties": {
-          "object_id": {
-            "description": "The object store identifier for the Media Object.",
-            "type": "string"
-          },
-          "put_url": { "$ref": "http-request.json" }
+    "type": "object",
+    "title": "Media Bucket Object Store",
+    "description": "Gives information on storage for Media Objects. This schema is for the `http_object_store` Storage Backend type which provides URLs for storing Media Objects in object store buckets, and is the only Storage Backend type currently implemented.",
+    "properties": {
+        "media_objects": {
+            "type": "array",
+            "description": "List of information for identifying and uploading Media Objects",
+            "items": {
+                "type": "object",
+                "description": "Information for a Media Object",
+                "required": [
+                    "object_id",
+                    "put_url"
+                ],
+                "properties": {
+                    "object_id": {
+                        "description": "The object store identifier for the Media Object.",
+                        "type": "string"
+                    },
+                    "put_url": {
+                        "$ref": "http-request.json"
+                    }
+                }
+            }
         }
-      }
-    }
-  },
-  "additionalProperties": false
+    },
+    "additionalProperties": false
 }

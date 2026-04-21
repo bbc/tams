@@ -6,7 +6,9 @@
         "type": "object",
         "title": "Flow Collection Item",
         "allOf": [
-            { "$ref": "collection-item.json" },
+            {
+                "$ref": "collection-item.json"
+            },
             {
                 "type": "object",
                 "properties": {
