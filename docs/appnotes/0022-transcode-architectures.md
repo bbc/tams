@@ -95,3 +95,53 @@ The transcode service may be designed such that all Segments are transcoded in p
 * Adds control signalling to the TAMS API
 * Potentially impedes more complex configuration of transcoders
 * More components may mean a more complicated architecture
+
+## Transcode on Request
+
+This architecture sees transcode of media being triggered just-in-time when a consuming client attempts to read media segments in a format not currently available on-disk.
+
+> [!NOTE]
+> This option likely requires deep integration into the TAMS Service due to the potential creation and removal of Media Object Instances.
+
+The requesting client will create a new Flow against the existing Source with the required codec and properties, and the `trigger_transcode` tag set to `virtual`.
+The TAMS Service will populate Segments and Objects correlating with the timeline range covered by the original Segments.
+These Objects will have instances that are "virtual".
+That is to say that the Objects do not exist on disk.
+When a GET request is performed with the instance URL, the Service will perform the transcode to create the segment and return it, as if the media existed on disk.
+
+Where the originating Flow has a `flow_status` of `ingesting`, new virtual Segments should be created as new originating Segments are registered.
+
+### Pros
+
+* Transcode only takes place when a client attempts to use the transcoded media
+* Requesting clients integrate with fewer APIs
+* Transcode capability to be deployed in close (logical) proximity to the rest of the TAMS Service, due to its deep integration with it
+* Fewer components potentially means a less complicated architecture overall
+
+### Cons
+
+* Adds control signalling to the TAMS API
+* Potentially impedes more complex configuration of transcoders
+* Deep integration adds more complexity to TAMS Service implementations
+* Segments need to be short enough and transcode fast enough to respond to Object GET in a timely manner
+
+### Extension - Segment Duration
+
+While basic implementations may wish to maintain the Segment duration of the originating Flow, a more extensive implementation may allow output Segment duration to be configured.
+This may be configured by setting the `segment_duration` in the new Flow's metadata.
+The Service should carry out due diligence that the requested Segment duration is valid against restrictions such as possible GOP lengths.
+
+This approach could, for example, allow media to go from single frame per Segment, to long-GOP, and vice-versa.
+This capability may be particularly effective in the transpackaging use case, where different size segments may be generated with minimal overheads.
+
+### Extension - Store Write-Back
+
+Once created, the transcoded instance may be stored on an appropriate Storage Backend, registered against the Object, and the virtual instance removed from the Object.
+This would enable the number of transcode processes to be minimised where instances may be re-used.
+Implementers should consider the relative resource/cost use of storing to disk Vs re-transcoding.
+
+### Extension - Pre-emptive Transcode
+
+Implementations may wish to pre-empt future requests.
+When Segments in Flow containing virtual Segments are requested, the implementation may transcode virtual Segments in close temporal proximity to the requested Segments.
+How far and in which direction implementations pre-emptively transcode will depend on expected usage patterns and the speed of the transcode.
