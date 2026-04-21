@@ -4,8 +4,7 @@
     "type": "urn:x-tams:service.example",
     "api_version": "1.0",
     "service_version": "tams.1.10.0-da88b8b",
-    "event_stream_mechanisms":
-    [
+    "event_stream_mechanisms": [
         {
             "name": "webhooks",
             "docs": "https://bbc.github.io/tams/7.0/index.html#/operations/POST_webhooks"

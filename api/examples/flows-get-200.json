@@ -11,17 +11,14 @@
         "format": "urn:x-nmos:format:video",
         "created_by": "tams-dev",
         "updated_by": "tams-dev",
-        "tags":
-        {
+        "tags": {
             "input_quality": "contribution"
         },
         "codec": "video/h264",
         "container": "video/mp2t",
         "avg_bit_rate": 2479,
-        "essence_parameters":
-        {
-            "frame_rate":
-            {
+        "essence_parameters": {
+            "frame_rate": {
                 "numerator": 24,
                 "denominator": 1
             },
@@ -31,21 +28,18 @@
             "interlace_mode": "progressive",
             "colorspace": "BT709",
             "transfer_characteristic": "SDR",
-            "aspect_ratio":
-            {
+            "aspect_ratio": {
                 "numerator": 16,
                 "denominator": 9
             },
-            "pixel_aspect_ratio":
-            {
+            "pixel_aspect_ratio": {
                 "numerator": 1,
                 "denominator": 1
             },
             "component_type": "YCbCr",
             "vert_chroma_subs": 2,
             "horiz_chroma_subs": 2,
-            "avc_parameters":
-            {
+            "avc_parameters": {
                 "profile": 100,
                 "level": 31,
                 "flags": 0
@@ -64,20 +58,17 @@
         "format": "urn:x-nmos:format:audio",
         "created_by": "tams-dev",
         "updated_by": "tams-dev",
-        "tags":
-        {
+        "tags": {
             "input_quality": "web"
         },
         "codec": "audio/aac",
         "container": "video/mp2t",
         "avg_bit_rate": 128,
-        "essence_parameters":
-        {
+        "essence_parameters": {
             "sample_rate": 48000,
             "channels": 2,
             "bit_depth": 24,
-            "codec_parameters":
-            {
+            "codec_parameters": {
                 "coded_frame_size": 1024,
                 "mp4_oti": 2
             }
@@ -95,17 +86,14 @@
         "format": "urn:x-nmos:format:video",
         "created_by": "tams-dev",
         "updated_by": "tams-dev",
-        "tags":
-        {
+        "tags": {
             "input_quality": "intermediate"
         },
         "codec": "video/raw",
         "container": "video/quicktime",
         "avg_bit_rate": 1658880,
-        "essence_parameters":
-        {
-            "frame_rate":
-            {
+        "essence_parameters": {
+            "frame_rate": {
                 "numerator": 50,
                 "denominator": 1
             },
@@ -115,19 +103,16 @@
             "interlace_mode": "progressive",
             "colorspace": "BT709",
             "transfer_characteristic": "SDR",
-            "aspect_ratio":
-            {
+            "aspect_ratio": {
                 "numerator": 16,
                 "denominator": 9
             },
-            "pixel_aspect_ratio":
-            {
+            "pixel_aspect_ratio": {
                 "numerator": 1,
                 "denominator": 1
             },
             "component_type": "YCbCr",
-            "unc_parameters":
-            {
+            "unc_parameters": {
                 "unc_type": "UYVY"
             },
             "vert_chroma_subs": 1,
@@ -146,17 +131,14 @@
         "format": "urn:x-nmos:format:video",
         "created_by": "tams-dev",
         "updated_by": "tams-dev",
-        "tags":
-        {
+        "tags": {
             "input_quality": "intermediate"
         },
         "codec": "video/jp2",
         "container": "application/mxf",
         "avg_bit_rate": 250000,
-        "essence_parameters":
-        {
-            "frame_rate":
-            {
+        "essence_parameters": {
+            "frame_rate": {
                 "numerator": 50,
                 "denominator": 1
             },
@@ -166,13 +148,11 @@
             "interlace_mode": "progressive",
             "colorspace": "BT709",
             "transfer_characteristic": "SDR",
-            "aspect_ratio":
-            {
+            "aspect_ratio": {
                 "numerator": 16,
                 "denominator": 9
             },
-            "pixel_aspect_ratio":
-            {
+            "pixel_aspect_ratio": {
                 "numerator": 1,
                 "denominator": 1
             },
@@ -193,17 +173,14 @@
         "format": "urn:x-nmos:format:video",
         "created_by": "tams-dev",
         "updated_by": "tams-dev",
-        "tags":
-        {
+        "tags": {
             "input_quality": "web"
         },
         "codec": "video/h264",
         "container": "application/mxf",
         "avg_bit_rate": 6000,
-        "essence_parameters":
-        {
-            "frame_rate":
-            {
+        "essence_parameters": {
+            "frame_rate": {
                 "numerator": 50,
                 "denominator": 1
             },
@@ -213,21 +190,18 @@
             "interlace_mode": "progressive",
             "colorspace": "BT709",
             "transfer_characteristic": "SDR",
-            "aspect_ratio":
-            {
+            "aspect_ratio": {
                 "numerator": 16,
                 "denominator": 9
             },
-            "pixel_aspect_ratio":
-            {
+            "pixel_aspect_ratio": {
                 "numerator": 1,
                 "denominator": 1
             },
             "component_type": "YCbCr",
             "vert_chroma_subs": 2,
             "horiz_chroma_subs": 2,
-            "avc_parameters":
-            {
+            "avc_parameters": {
                 "profile": 100,
                 "level": 31,
                 "flags": 0
