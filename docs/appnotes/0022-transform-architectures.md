@@ -125,6 +125,10 @@ When a GET request is performed with the instance URL, the Service will perform 
 
 Where the originating Flow has a `flow_status` of `ingesting`, new virtual Segments should be created as new originating Segments are registered.
 
+Clients may wish to intiate a transcode without actually downloading the content.
+For example, to ensure content is available in an appropriate format ahead of playout into broadcast.
+This may be achieved via the usual Object Instance creation mechanism by POSTing the destination storage backend ID to the [`objects/{objectId}/instances`](https://bbc.github.io/tams/8.0/index.html#/operations/POST_objects-instances) endpoint.
+
 ### Pros
 
 * Transcode only takes place when a client attempts to use the transcoded media
