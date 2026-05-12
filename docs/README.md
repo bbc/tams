@@ -88,6 +88,7 @@ For more information on how we use ADRs, see [here](./adr/README.md).
 | [0044](./adr/0044-signalling-timeouts.md)                          | Signalling timeout periods |
 | [0045](./adr/0045-flow-init-segments.md)                           | Support for init Segments in Flows |
 | [0046](./adr/0046-governance.md)                                   | Governance |
+| [0047](./adr/0047-flow-profiles.md)                                | Adding Flow Profiles to TAMS |
 | [0048](./adr/0048-media-integrity.md)                              | Integrity model for media in TAMS, and when interacting with other systems |
 
 \* Note: ADR 0004a was the unintended result of a number clash in the early development of TAMS which wasn't caught before publication
