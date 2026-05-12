@@ -22,10 +22,10 @@ House formats define one or more common formats for all the systems to utilise.
 
 For edit by reference workflows there is a need both to create new Sources and Flows for the new item and also combine the segments together to create the new edit.
 
-If the content to be referenced is only coming from a one source (potentially with multiple Flows), for example a simple clip, then it is relatively easy to clone the technical parameters of the existing Flows and then join the Segments to the new Flow.
+If the content to be referenced is only coming from a one source (potentially with multiple Flows), for example a simple clip, then it is relatively straightforward to clone the technical parameters of the existing Flows and then join the Segments to the new Flow.
 However if the content for the new edit is derived from multiple Sources then there is a need to match the Flows from the different Sources based on the technical characteristics.
 Currently the TAMS API does not provide an easy method to do this, so it is necessary to compare all the Flows in code to find the matches.
-The more Sources involved in this process, the harder this becomes.
+As more Sources are involved in this process then the matching process becomes more complex.
 
 ## TAMS Profiles within the API
 
@@ -41,7 +41,7 @@ It is possible to create and view Profiles via the dedicated API calls under the
 These Profiles hold all the technical parameters required to create a Flow in a single location.
 A system looking to ingest standardised content into TAMS would create content matching one or more Profiles as defined in the endpoint.
 
-A Profile should be treated as immutable, so once created it cannot be updated.
+A Profile is treated as immutable - once created it cannot be updated.
 Updating a Profile would cause mismatches with Flows which have been already created using that Profile and so breaks the model for Profiles.
 To update a Profile a new one with a new ID should be created.
 
@@ -89,5 +89,5 @@ If the Profile does not exist within the destination store then the Profile ID s
 This will continue to allow the matching of content within the store by Profile ID, plus the Profile can be added later and will link to the existing content.
 
 For workflows including more than two organisations it is recommended that one organisation takes responsibility for owning and publishing the Profiles.
-These Profiles can then be loaded into the destination stores.
+These Profiles can then be created in both the source and destination stores using the same UUID.
 The organisation could be a single company or could be an industry body.
