@@ -278,12 +278,10 @@ paths:
               examples:
                 video:
                   summary: Video Profile
-                  value:
-                    $ref: examples/profile-get-200-video.json
+                  externalValue: examples/profile-get-200-video.json
                 jpegimage:
                   summary: Image Profile
-                  value:
-                    $ref: examples/profile-get-200-image.json
+                  externalValue: examples/profile-get-200-image.json
         "404":
           description: The requested profile does not exist.
     post:
@@ -1316,8 +1314,7 @@ paths:
                 externalValue: examples/flow-put-multi.json
               profile:
                 summary: Flow created using a Profile
-                value:
-                  $ref: examples/flow-put-profile.json
+                externalValue: examples/flow-put-profile.json
             schema:
               $ref: schemas/flow-put.json
         required: true
