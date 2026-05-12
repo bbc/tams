@@ -34,9 +34,9 @@ See the API specification changes in PR [#130](https://github.com/bbc/tams/pull/
 
 ### Option 1: Add Flow Profiles to the core specification
 
-A new API resource shall be added under /services/profiles to centralise the technical metadata (format, codec, container, essence parameters) for commonly used Flow configurations. 
-The Flow creation endpoint shall accept a profile_id in place of individual technical parameters, with the store responsible for de-normalising the Profile metadata onto the Flow for read compatibility. 
-The Flows listing endpoint shall gain a profile_id query parameter, enabling discovery of all Flows matching a given Profile across one or more Sources. 
+A new API resource shall be added under /services/profiles to centralise the technical metadata (format, codec, container, essence parameters) for commonly used Flow configurations.
+The Flow creation endpoint shall accept a profile_id in place of individual technical parameters, with the store responsible for de-normalising the Profile metadata onto the Flow for read compatibility.
+The Flows listing endpoint shall gain a profile_id query parameter, enabling discovery of all Flows matching a given Profile across one or more Sources.
 Profiles shall be immutable once created; updates shall require creating a new Profile with a new UUID, and Profile IDs shall be preserved across stores during replication.
 
 - Good: Centralising the technical metadata for Flows where it is the same
