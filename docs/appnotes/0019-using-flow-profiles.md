@@ -74,6 +74,9 @@ If the Source content has additional non standard Flows then these could be igno
 By the nature of the TAMS API it is possible to query via both Profile ID and also the individual parameters of the Flow that have been inherited from the profile.
 As per standard behaviour, the API should only return results which match all fields, so for this scenario the Flow must have a profile ID and match the other parameters requested.
 
+In future it is proposed to add additional match methods when querying Flows using a Profile.
+This would include options for a "greedy match" where all Flows which match the technical characteristics are returned even if not created or updated to include a Profile.
+
 ## Multi-store working with Profiles
 
 The UUID of a Profile is assumed to be globally unique.
