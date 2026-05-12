@@ -109,8 +109,8 @@ This sets out a broad shape of the group:
 
 - Sam Mesterton-Gibbons (BBC, Chair)
 - John Biltcliffe (AWS)
+- James Elliott (Elliott Media)
 - Richard Lynton-Evans (BBC)
+- Glenn Skare Pedersen (Cutting Room)
 - James Sandford (BBC)
 - Chris Swan (AWS)
-- `<Another broadcaster/content owner/user organisation>`
-- `<A vendor organisation>`

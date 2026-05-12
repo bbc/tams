@@ -217,16 +217,23 @@
                     "if": {
                         "properties": {
                             "vfr": {
-                                "enum": [false, null]
+                                "enum": [
+                                    false,
+                                    null
+                                ]
                             }
                         }
                     },
                     "then": {
-                            "required": ["frame_rate"]
+                        "required": [
+                            "frame_rate"
+                        ]
                     },
                     "else": {
                         "not": {
-                            "required": ["frame_rate"]
+                            "required": [
+                                "frame_rate"
+                            ]
                         }
                     }
                 }

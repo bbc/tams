@@ -1,0 +1,25 @@
+{
+    "media_objects": [
+        {
+            "object_id": "e0a3df95-d7f5-4991-be40-500aa22a1ce3",
+            "put_url": {
+                "url": "https://example.com/tams/object-proxy/500aa22a1ce3",
+                "content-type": "audio/wav"
+            }
+        },
+        {
+            "object_id": "89f565ce-edd1-49fd-b6b7-900b6e4b545f",
+            "put_url": {
+                "url": "https://example.com/tams/object-proxy/900b6e4b545f",
+                "content-type": "audio/wav"
+            }
+        },
+        {
+            "object_id": "45342cb7-5fc0-4223-b2a8-de05c16453d1",
+            "put_url": {
+                "url": "https://example.com/tams/object-proxy/de05c16453d1",
+                "content-type": "audio/wav"
+            }
+        }
+    ]
+}

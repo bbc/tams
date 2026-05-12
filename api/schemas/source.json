@@ -11,7 +11,7 @@
             "description": "Source identifier",
             "$ref": "uuid.json"
         },
-        "format" : {
+        "format": {
             "description": "The primary content type URN for the Source.",
             "$ref": "content-format.json"
         },

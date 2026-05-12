@@ -924,7 +924,7 @@ paths:
         "200":
           $ref: '#/components/responses/trait_resource_info_head_200'
         "404":
-          description: The requested Source does not exist, or does not have a label set.
+          description: The requested Source does not exist.
     get:
       summary: Source Label
       description: Returns the Source label property. This should be a very short, human-readable label that may be displayed in listings of Sources.
@@ -941,7 +941,7 @@ paths:
               schema:
                 type: string
         "404":
-          description: The requested Source does not exist, or does not have a label set.
+          description: The requested Source does not exist.
     put:
       summary: Create or Update Source Label
       description: Create or update the label property. This should be a very short, human-readable label that may be displayed in listings of Sources.
@@ -1231,18 +1231,30 @@ paths:
                 video:
                   summary: Video Flow - H.264 Codec
                   externalValue: examples/flow-get-200-video-h264.json
-                audio:
-                  summary: Audio Flow - AAC Codec
-                  externalValue: examples/flow-get-200-audio-aac.json
                 rawvideo:
                   summary: Video Flow - Uncompressed (Quicktime)
                   externalValue: examples/flow-get-200-video-raw.json
-                jpegimage:
-                  summary: Image Flow - JPEG Codec
-                  externalValue: examples/flow-get-200-image-jpeg.json
+                mxf_jpeg2k:
+                  summary: Video Flow - JPEG-2000 (MXF container)
+                  externalValue: examples/flow-get-200-video-jpeg-mxf.json
+                mxf_h264:
+                  summary: Video Flow - H.264 (MXF container)
+                  externalValue: examples/flow-get-200-video-h264-mxf.json
+                jp2_jpeg2k_singleframe:
+                  summary: Video Flow - JPEG-2000 (JP2 container, single frame segments)
+                  externalValue: examples/flow-get-200-video-jpeg-jp2.json
                 video_vfr:
                   summary: Video Flow - H.264 Codec, Variable Frame Rate
                   externalValue: examples/flow-get-200-video-h264-vfr.json
+                audio:
+                  summary: Audio Flow - AAC Codec
+                  externalValue: examples/flow-get-200-audio-aac.json
+                audio_wav:
+                  summary: Audio Flow - PCM
+                  externalValue: examples/flow-get-200-audio-wav.json
+                jpegimage:
+                  summary: Image Flow - JPEG Codec
+                  externalValue: examples/flow-get-200-image-jpeg.json
                 ttml:
                   summary: Data Flow - TTML
                   description: TAMS can also be used for storing non-AV content such as subtitles or event data
@@ -1558,7 +1570,7 @@ paths:
         "200":
           $ref: '#/components/responses/trait_resource_info_head_200'
         "404":
-          description: The requested Flow does not exist, or does not have a label set.
+          description: The requested Flow does not exist.
     get:
       summary: Flow Label
       description: Returns the Flow label property. This should be a very short, human-readable label that may be displayed in listings of Flows.
@@ -1575,7 +1587,7 @@ paths:
               schema:
                 type: string
         "404":
-          description: The requested Flow does not exist, or does not have a label set.
+          description: The requested Flow does not exist.
     put:
       summary: Create or Update Flow Label
       description: Create or update the label property. This should be a very short, human-readable label that may be displayed in listings of Flows.
@@ -2326,8 +2338,15 @@ paths:
             application/json:
               schema:
                 $ref: schemas/flow-storage.json
-              example:
-                $ref: examples/flow-storage-post-201.json
+              examples:
+                mpegts:
+                  summary: MPEG-TS container Flow
+                  description: Flow using MPEG-TS as the container format, writing to a cloud object store
+                  externalValue: examples/flow-storage-post-201.json
+                wav_proxy:
+                  summary: WAV Flow
+                  description: Flow using WAV as the container format, writing to an HTTP interface running on the same origin as the TAMS API
+                  externalValue: examples/flow-storage-post-201-wav.json
         "400":
           description: Bad request. Invalid Flow storage request JSON or the Flow 'container' is not set. If object_ids supplied, some or all already exist.
         "403":

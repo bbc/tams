@@ -83,7 +83,7 @@
             "type": "boolean"
         },
         "tags": {
-          "$ref": "tags.json"
+            "$ref": "tags.json"
         }
     }
 }

@@ -1,21 +1,24 @@
 {
-    "id": "0fde9c11-da9d-434a-a113-d3b20a2cf251",
-    "source_id": "2aa143ac-0ab7-4d75-bc32-5c00c13d186f",
+    "id": "1a670176-5b40-433b-9d66-8f90efc026b6",
+    "source_id": "3e6201e2-4b38-402a-a08f-e2529ec98229",
     "generation": 0,
-    "created": "2018-03-06T09:10:22Z",
-    "metadata_updated": "2018-03-06T09:12:22Z",
-    "segments_updated": "2018-03-06T11:14:32Z",
-    "description": "video capture",
-    "label": "capture_1",
+    "created": "2026-02-24T09:35:25Z",
+    "metadata_updated": "2026-02-24T09:35:25Z",
+    "segments_updated": "2026-02-24T14:28:11Z",
+    "description": "Video Flow in a MXF container, JPEG-2000 codec",
+    "label": "VFX Render - Full Quality",
     "format": "urn:x-nmos:format:video",
     "created_by": "tams-dev",
     "updated_by": "tams-dev",
     "tags": {
         "input_quality": "intermediate"
     },
-    "codec": "video/raw",
-    "container": "video/quicktime",
-    "avg_bit_rate": 1658880,
+    "codec": "video/jp2",
+    "container": "application/mxf",
+    "avg_bit_rate": 250000,
+    "segment_duration": {
+        "numerator": 60
+    },
     "essence_parameters": {
         "frame_rate": {
             "numerator": 50,
@@ -23,7 +26,7 @@
         },
         "frame_width": 1920,
         "frame_height": 1080,
-        "bit_depth": 8,
+        "bit_depth": 10,
         "interlace_mode": "progressive",
         "colorspace": "BT709",
         "transfer_characteristic": "SDR",
@@ -36,9 +39,6 @@
             "denominator": 1
         },
         "component_type": "YCbCr",
-        "unc_parameters": {
-            "unc_type": "UYVY"
-        },
         "vert_chroma_subs": 1,
         "horiz_chroma_subs": 2
     }
