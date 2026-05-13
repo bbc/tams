@@ -19,11 +19,13 @@ Ingest clients must take care that timing is aligned between all generated Flows
 * Many ingest clients have added TAMS capability to existing products which already include this capability
 * The ingest client may have access to a higher quality copy of media than the one(s) written to TAMS
 * In many cases, this will be the most simple architecture
+* The low bitrate proxy may be uploaded prior to the higher bitrate in low bandwidth environments where latency is of high importance
 
 ### Cons
 
 * Transcode may take place even if likelihood of the transcoded media being used is low
 * Transcode in the ingest client will result in higher ingress bandwidth use compared to transcode within the TAMS Service's compute environment
+* Requires additional resources/capabilities on the ingest client
 
 ## Event-triggered Transcode on Ingest
 
@@ -64,6 +66,7 @@ The transcode client may be designed such that all Segments are transcoded in pa
 * Keeps control signalling out of the TAMS API
 * Potentially allows for more complex configuration of transcoders
 * Potentially allows for transcode service to be deployed in close (logical) proximity to the TAMS Service
+* Where transcode timerange is supported, enables a fine-grained approach to transcode
 
 #### Cons
 
