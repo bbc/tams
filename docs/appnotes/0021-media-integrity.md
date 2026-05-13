@@ -8,14 +8,15 @@ This Application Note discusses approaches to ensuring the integrity of media in
 ## TAMS Architecture
 
 A TAMS Service, and associated workflow will often be architect as follows.
-A write client originates media (how is not important at this point).
-It registers a Flow with the TAMS Service.
-Then requests the allocation of a number of Objects and associated PUT URLs.
-Uploads media to those Objects (directly to the storage backend).
-And registers them against the Flow via Flow Segments.
-A read client queries to find the Flow it requires.
-Requests the Flow's Segments, with their associated Object GET URLs.
-It the retrieves the Objects and assembles them in sequence for use.
+
+1. A write client originates media (how is not important at this point).
+2. It registers a Flow with the TAMS Service.
+3. Then requests the allocation of a number of Objects and associated PUT URLs.
+4. Uploads media to those Objects (directly to the storage backend).
+  And registers them against the Flow via Flow Segments.
+5. A read client queries to find the Flow it requires.
+6. Requests the Flow's Segments, with their associated Object GET URLs.
+7. It then retrieves the Objects and assembles them in sequence for use.
 
 ```mermaid
 architecture-beta
@@ -87,7 +88,7 @@ Where detectable checksum errors did occur, they should result in a re-transmit 
 The likelihood of an TCP checksum collision is `1/2**16`.
 Undetectable corruptions are so unlikely to occur that the probability can be considered negligible.
 
-It is also worth noting that TCP initially sends the amount of data a connection intends to transmit.
+It is also worth noting that HTTP(s) initially sends the amount of data a connection intends to transmit.
 If a packet in the middle of the transmission is lost, there will be a missing sequence number allowing the lost packet to be detected.
 If the last packet is lost, the amount of data received doesn’t match the amount of data communicated.
 The packet loss will then be detected and a re-transmit can happen or the upload can be signalled as failed.

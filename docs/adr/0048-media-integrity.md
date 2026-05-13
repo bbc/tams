@@ -68,6 +68,7 @@ This option would see recommendations that implementations allow/pass through th
 As with Option 2, but with checksums stored in Flow metadata instead of the native Object store solution.
 
 * Good, because it is agnostic to Storage Backends
+* Bad, because it requires a change to the spec
 * Bad, because the checksum in Flow metadata will likely not be the one used in automated integrity checking
 * Bad, because checksum is not stored with the data
 
