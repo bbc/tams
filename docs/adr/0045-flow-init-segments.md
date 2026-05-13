@@ -75,10 +75,10 @@ This option would see the never TimeRange used to represent init segments.
 
 * Good, because it requires little/no spec changes
 * Good, because it doesn't require format-specific Flow parameters
-* Neutral, because it doesn't allow for different init segments for different parts of the Flow
-  * Note: It is not clear we have a real use case for this as a new init segment likely means a change to the technical parameters, which requires a new Flow in TAMS
-  * Initial testing indicates common fMP4/DASH players do not support multiple init segments
 * Neutral, because extensions such as C2PA metadata should be supported as the sequence of init and media segments isn't changed
+* Bad, because it doesn't allow for different init segments for different parts of the Flow
+  * Relevant formats support multiple init-segments via features such as "multi-Period" manifests
+  * Some relevant formats may use init segments to signal minor changes to encoding parameters
 * Bad, because the approach is somewhat unintuitive
 * Bad, because it may result in unexpected behaviour with existing TAMS implementations
 
@@ -92,11 +92,11 @@ Implementations might use the init segment's Object ID to determine the compatib
 
 * Good, because it doesn't require format-specific Flow parameters
 * Good, because it re-uses existing patterns/mechanisms
-* Neutral, because it doesn't allow for different init segments for different parts of the Flow
-  * Note: It is not clear we have a real use case for this as a new init segment likely means a change to the technical parameters, which requires a new Flow in TAMS
-  * Initial testing indicates common fMP4/DASH players do not support multiple init segments
-* Netural, because it requires a backwards-compatible addition to the spec
+* Neutral, because it requires a backwards-compatible addition to the spec
 * Neutral, because extensions such as C2PA metadata should be supported as the sequence of init and media segments isn't changed
+* Bad, because it doesn't allow for different init segments for different parts of the Flow
+  * Relevant formats support multiple init-segments via features such as "multi-Period" manifests
+  * Some relevant formats may use init segments to signal minor changes to encoding parameters
 
 ### Option 5: Make the init segment an object-level property, which can be uploaded and have a URL generated
 
@@ -106,10 +106,10 @@ A change in the init segment's Object ID may be used to determine a need to re-p
 
 * Good, because it doesn't require format-specific Flow parameters
 * Good, because it re-uses existing patterns/mechanisms
-* Neutral, because it allows for different init segments for different parts of the Flow
-  * Note: It is not clear we have a real use case for this as a new init segment likely means a change to the technical parameters, which requires a new Flow in TAMS
-  * Initial testing indicates common fMP4/DASH players do not support multiple init segments
-* Netural, because it requires a backwards-compatible addition to the spec
+* Good, because it allows for different init segments for different parts of the Flow
+  * Relevant formats support multiple init-segments via features such as "multi-Period" manifests
+  * Some relevant formats may use init segments to signal minor changes to encoding parameters
+* Neutral, because it requires a backwards-compatible addition to the spec
 * Neutral, because extensions such as C2PA metadata should be supported as the sequence of init and media segments isn't changed
 * Bad, because it will result in a significant increase in Object metadata which makes up a large proportion of data stored in TAMS
 
@@ -122,13 +122,14 @@ This would allow for multiple init segments to be applied to different parts of 
 
 * Good, because it doesn't require format-specific Flow parameters
 * Good, because it re-uses existing patterns/mechanisms
-* Neutral, because it allows for different init segments for different parts of the Flow
-  * Note: It is not clear we have a real use case for this as a new init segment likely means a change to the technical parameters, which requires a new Flow in TAMS
-  * Initial testing indicates common fMP4/DASH players do not support multiple init segments
-* Netural, because it requires a backwards-compatible addition to the spec
+* Good, because it allows for different init segments for different parts of the Flow
+  * Relevant formats support multiple init-segments via features such as "multi-Period" manifests
+  * Some relevant formats may use init segments to signal minor changes to encoding parameters
+* Neutral, because it requires a backwards-compatible addition to the spec
 * Neutral, because it may be unintuitive
 * Neutral, because it would require open-ended Flow Segments to support live Flows
 * Neutral, because extensions such as C2PA metadata should be supported as the sequence of init and media segments isn't changed
+* Bad, because it requires Objects from multiple Flows (init segment Flow, and media segment Flow) to decode a give piece of media
 
 ### Option 7: Put the init segment somewhere on the TAMS API instead of as an object (e.g. as a base64 blob)
 
@@ -145,16 +146,22 @@ In addition to the base options:
 
 As with Option 5, but with the init segment embedded in the Object file itself, rather than as a property against the Object.
 This would make each Object entirely independently decodable, maintaining this important property of TAMS.
-It is unclear how well players/decoders would support this workflow which is more akin to a playlist of multiple fMP4 files, than a manifest.
+Relevant formats have a concept of "self-initialising" media segments.
+But these are, in at least some formats, explicitly not allowed for segmented media such as is used in TAMS.
+And are only permitted for playlist-style use cases where a media segment is used to contain a full file.
 
 * Good, because it doesn't require format-specific Flow parameters
 * Good, because it re-uses existing patterns/mechanisms
 * Good, because it requires no changes to the API specification
-* Neutral, because it allows for different init segments for different parts of the Flow
-  * Note: It is not clear we have a real use case for this as a new init segment likely means a change to the technical parameters, which requires a new Flow in TAMS
-  * It is unclear if such a workflow would be supported by players/decoders as standard
-* Bad, because extensions such as C2PA metadata may need to be re-created on ingest due to the sequence of init and media segments changing
-* Bad, because it will result in a significant increase in the size of Objects, which makes up a large proportion of data stored in TAMS
+* Good, because it allows for different init segments for different parts of the Flow
+  * Relevant formats support multiple init-segments via features such as "multi-Period" manifests
+  * Some relevant formats may use init segments to signal minor changes to encoding parameters
+* Bad, because media using extensions such as C2PA metadata may need to be re-encoded/re-packaged on ingest due to the sequence of init and media segments changing
+* Bad, because it will result in an increase in the size of Objects, which makes up a large proportion of data stored in TAMS
+  * Such an increase is likely to be minor for individual Objects, but significant in larger deployments with relatively small Segment sizes
+  * Note: This point is in comparison to the other Options in the ADR, rather than to the current situation in the TAMS ecosystem where equivalent metadata is already stored in Objects
+* Bad, because this approach may result in un-needed overheads or even interrupted playback in some player implementations
+  * Some relevant implementations of player technologies, such as Media Source Extensions, are known to re-initialise decoders on (superfluous) new init segments which may result in disruption to playback
 
 ### Option 9: Do not add support for init segments
 
