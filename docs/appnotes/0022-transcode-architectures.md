@@ -88,6 +88,9 @@ Where the originating Flow has a `flow_status` of `ingesting`, the transcode ser
 
 The transcode service may be designed such that all Segments are transcoded in parallel, allowing for faster than real-time transcodes in many cases.
 
+Where the transcode service is deeply integrated with the API Service, creation of Flows with the `trigger_transcode` tag set to `immediate` but incompatible technical parameters may result in a `501` Not Implemented error.
+The body of the response may include further details on the nature of the error.
+
 #### Pros
 
 * Requesting clients integrate with fewer APIs
@@ -98,3 +101,4 @@ The transcode service may be designed such that all Segments are transcoded in p
 * Adds control signalling to the TAMS API
 * Potentially impedes more complex configuration of transcoders
 * More components may mean a more complicated architecture
+* There are no obvious ways to communicate errors in-band where the transcode service is not deeply integrated that don't have significant drawbacks
