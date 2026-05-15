@@ -84,5 +84,7 @@ For more information on how we use ADRs, see [here](./adr/README.md).
 | [0044](./adr/0044-signalling-timeouts.md)                          | Signalling timeout periods |
 | [0046](./adr/0046-governance.md)                                   | Governance |
 | [0047](./adr/0047-role-naming-convention.md)                       | Role Naming Convention |
+| [0049](./adr/0049-channel-mapping.md)                              | Channel Mapping |
+| [0050](./adr/0050-mono-essence-collections.md)                     | Mono Essence Collections |
 
 \* Note: ADR 0004a was the unintended result of a number clash in the early development of TAMS which wasn't caught before publication

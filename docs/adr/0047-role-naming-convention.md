@@ -19,6 +19,8 @@ Currently this is represented in free text.
 * When viewing a multi-essence Source or Flow, only the list of IDs collected and roles are available: getting formats and tags requires another query.
 * Items in a collection serve a variety of different purposes, and it is useful to have some commonality.
 * At time of writing `role` is typically `video` or `audio`, but practical applications need to represent more complex packages.
+* One area of interest is mapping and representing channels, for example audio channel shuffling.
+  This is considered seperately in [ADR0049 Channel Mapping](./0049-channel-mapping.md).
 
 ## Considered Options
 
