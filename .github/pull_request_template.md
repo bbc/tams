@@ -7,10 +7,10 @@ GitHub Issue:
 <!-- Add any other issues in other tracking tools, e.g. Jira here too -->
 
 # Related PRs
-_Where appropriate. Indicate order to be merged._
+<!-- Where appropriate. Indicate order to be merged. -->
 
 # Submitter PR Checks
-_(tick as appropriate)_
+<!-- Tick as appropriate -->
 
 - [ ] PR completes task/fixes bug
 - [ ] API version has been incremented if necessary
@@ -20,7 +20,7 @@ _(tick as appropriate)_
 - [ ] Follow-up stories added to Jira
 
 # Reviewer PR Checks
-_(tick as appropriate)_
+<!-- Tick as appropriate -->
 
 - [ ] PR completes task/fixes bug
 - [ ] Design makes sense, and fits with our current code base
