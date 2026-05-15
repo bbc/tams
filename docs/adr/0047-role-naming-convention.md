@@ -29,6 +29,7 @@ For how to use the `role` field (options `Rn`):
 * Option R3a: Use `role` as editorial purpose, use other queries for Flow/Source properties
 * Option R3b: Use `role` as editorial purpose, use other queries for Flow/Source properties, surface `role` as a query param
 * Option R3c: Use `role` as editorial purpose, additionally surface `format` in collection
+* Option R3d: Use `role` as editorial purpose, make it optional, surface same detail in tags
 
 For how to represent editorial purpose (options `Pn`):
 
@@ -39,10 +40,10 @@ For how to represent editorial purpose (options `Pn`):
 
 ## Decision Outcome
 
-Chosen option: Option R3a and Option P4, because it lines up with the existing common use of `role` and allows it to evolve over time.
+Chosen option: Option R3d and Option P4, because it lines up with the existing common use of `role` and allows it to evolve over time.
 It also limits the changes required to the API, and while in some cases it may trigger extra API requests (e.g. to enumerate the media types of a collection), it is likely the details of those collection items will be needed anyway, so the requests would be needed.
 Furthermore the TAMS API is intended not to serve as a Media Asset Manager and provide minimal library management and discovery features: through that lens the additional request burden seems reasonable and if it becomes too onerous in a particular deployment, that may indicate a MAM is required.
-However Option R3c (surfacing `role` in collections) could be added later if necessary.
+However Option R3c (surfacing `format` in collections) could be added later if necessary.
 
 Regarding editorial purposes, while Option P4 makes it harder for clients to automatically determine the purpose of each item in a collection, in many cases the role merely serves to change what the user is shown and they are left to make the decisions.
 In cases where it matters which elements of a collection are picked up (for example packaging content for distribution) the correct items should be identified by some more rigorous method anyway (for example creating a multi-essence Flow of just the items required).
@@ -130,6 +131,16 @@ A client can directly identify the members of the collection directly.
 * Good, because it allows clients to get more of the salient information about a collection in a single request.
   It would allow the UI element suggested above to be built from a single listing request, for example.
 * Neutral, because it changes the specification, albeit in a non-breaking way.
+
+### Option R3d: Use `role` as editorial purpose, make it optional, surface same detail in tags
+
+As Option R3a, however `role` is no longer required in the `collects` property where it is not needed.
+Additional a tag is described for editorial purpose.
+
+* Good, because it prevents this brittle field being relied upon
+* Good, because it removes a piece of data from `CollectionItem` that is about the Flow itself
+* Good, because it provides a way to put that piece of information on the Flow itself
+* Bad, because it may break client implementations expecting to get a `role` field in the response
 
 ## Pros and Cons of the Options - for representing editorial purpose
 
