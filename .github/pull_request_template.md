@@ -1,8 +1,10 @@
 # Details
 _Brief description of what this PR does._
 
-# Jira Issue (if relevant)
-Jira URL:
+# Issue (if relevant)
+GitHub Issue:
+
+<!-- Add any other issues in other tracking tools, e.g. Jira here too -->
 
 # Related PRs
 _Where appropriate. Indicate order to be merged._
