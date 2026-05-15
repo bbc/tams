@@ -112,7 +112,7 @@ The body of the response may include further details on the nature of the error.
 
 ## Transcode on Request
 
-This architecture sees transcode of media being triggered just-in-time when a consuming client attempts to read media segments in a format not currently available on-disk.
+This architecture sees transcode/transpackage of media being triggered just-in-time when a consuming client attempts to read media segments in a format not currently available on-disk.
 
 > [!NOTE]
 > This option likely requires deep integration into the TAMS Service due to the potential creation and removal of Media Object Instances.
@@ -125,7 +125,7 @@ When a GET request is performed with the instance URL, the Service will perform 
 
 Where the originating Flow has a `flow_status` of `ingesting`, new virtual Segments should be created as new originating Segments are registered.
 
-Clients may wish to intiate a transcode without actually downloading the content.
+Clients may wish to initiate a transcode without actually downloading the content.
 For example, to ensure content is available in an appropriate format ahead of playout into broadcast.
 This may be achieved via the usual Object Instance creation mechanism by POSTing the destination storage backend ID to the [`objects/{objectId}/instances`](https://bbc.github.io/tams/8.0/index.html#/operations/POST_objects-instances) endpoint.
 
@@ -163,3 +163,8 @@ Implementers should consider the relative resource/cost use of storing to disk V
 Implementations may wish to pre-empt future requests.
 When Segments in Flow containing virtual Segments are requested, the implementation may transcode virtual Segments in close temporal proximity to the requested Segments.
 How far and in which direction implementations pre-emptively transcode will depend on expected usage patterns and the speed of the transcode.
+
+### Extension - Other Forms of Transform
+
+While the registration of Flows described in this approach only lends itself to transcode and transpackage operations, the broader concept of Virtual Segments may be applied to other forms of transform.
+How such transforms are registered is not described here.
