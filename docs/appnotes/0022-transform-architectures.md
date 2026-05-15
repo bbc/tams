@@ -121,9 +121,9 @@ The requesting client will create a new Flow against the existing Source with th
 The TAMS Service will populate Segments and Objects correlating with the timeline range covered by the original Segments.
 These Objects will have instances that are "virtual".
 That is to say that the Objects do not exist on disk.
-When a GET request is performed with the instance URL, the Service will perform the transcode to create the segment and return it, as if the media existed on disk.
+When a GET request is performed with the instance URL, the Service will perform the transcode to create the Object and return it, as if the media existed on disk.
 
-Where the originating Flow has a `flow_status` of `ingesting`, new virtual Segments should be created as new originating Segments are registered.
+Where the originating Flow has a `flow_status` of `ingesting`, new Virtual Objects and corresponding Segments should be created as new originating Segments are registered.
 
 Clients may wish to initiate a transcode without actually downloading the content.
 For example, to ensure content is available in an appropriate format ahead of playout into broadcast.
@@ -161,10 +161,10 @@ Implementers should consider the relative resource/cost use of storing to disk V
 ### Extension - Pre-emptive Transcode
 
 Implementations may wish to pre-empt future requests.
-When Segments in Flow containing virtual Segments are requested, the implementation may transcode virtual Segments in close temporal proximity to the requested Segments.
+When Segments in a Flow containing Virtual Objects are requested, the implementation may transcode Virtual Objects in close temporal proximity to the requested Segments.
 How far and in which direction implementations pre-emptively transcode will depend on expected usage patterns and the speed of the transcode.
 
 ### Extension - Other Forms of Transform
 
-While the registration of Flows described in this approach only lends itself to transcode and transpackage operations, the broader concept of Virtual Segments may be applied to other forms of transform.
+While the registration of Flows described in this approach only lends itself to transcode and transpackage operations, the broader concept of Virtual Objects may be applied to other forms of transform.
 How such transforms are registered is not described here.
