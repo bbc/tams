@@ -86,6 +86,13 @@ Status: **Deprecated**
 Replaced by the `created` field in Flow metadata.
 Contains the ISO formatted date-time when a Flow was created.
 
+### editorial_purpose
+
+Status: **Proposed**
+
+Captures the editorial purpose of a piece of content, giving a hint about what it's for and what can be found inside.
+Values are captured in [AppNote0020 Editorial Purposes](./0020-editorial-purpose.md)
+
 ### flow_retention_offset
 
 Status: **Proposed**
@@ -256,6 +263,13 @@ Status: **Experimental**
 
 Suggested as a way to build lightweight Attribute-based Access Control in [AppNote0016: Authorisation in TAMS workflows](./0016-authorisation-in-tams-workflows.md).
 A comma separated list of auth classes used to derive permissions on the Source.
+
+### editorial_purpose
+
+Status: **Proposed**
+
+Captures the editorial purpose of a piece of content, giving a hint about what it's for and what can be found inside.
+Values are captured in [AppNote0020 Editorial Purposes](./0020-editorial-purpose.md)
 
 ### hls_exclude
 
