@@ -1,4 +1,4 @@
-# 0022: Architectures for the transcoding of media
+# 0022: Architectures for the transforming of media
 
 ## Abstract
 
