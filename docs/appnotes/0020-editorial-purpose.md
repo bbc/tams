@@ -1,9 +1,10 @@
-# 0020: Role Naming Convention
+# 0020: Editorial Purpose
 
 ## Abstract
 
 Each item in the collection of a multi-essence Source or Flow has a `role`, intended as a description of that item's purpose in the collection.
-Roles are intended to be human-readable and uncontrolled, however a list of common editorial purposes and associated names is useful.
+Additionally there is an `editorial_purpose` tag, serving the same functionality.
+These are intended to be human-readable and uncontrolled, however a list of common editorial purposes and associated names is useful.
 
 This functions much like [Tag Names](./0003-tag-names.md) and this list will likely grow over time.
 
