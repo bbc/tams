@@ -1,5 +1,5 @@
 ---
-status: "proposed"
+status: "accepted"
 ---
 # Integrity model for media in TAMS, and when interacting with other systems
 
