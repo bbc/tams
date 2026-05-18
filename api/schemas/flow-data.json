@@ -30,6 +30,10 @@
                         "data_type": {
                             "description": "The type of information encoded in the Flow, identified using a URN. e.g. The data_type may be urn:x-tams:data:bounding-box, and the codec `application/json`.",
                             "type": "string"
+                        },
+                        "init_segments": {
+                            "description": "Whether the Flow makes use of initialisation segments. This parameter MUST be set to `true` if Media Objects have `init_object` populated. If set to `true`, all Media Objects MUST have `init_object` populated. Assume `false` if omitted.",
+                            "type": "boolean"
                         }
                     }
                 }
