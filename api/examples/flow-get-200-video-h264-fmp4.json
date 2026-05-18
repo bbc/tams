@@ -14,7 +14,7 @@
         "input_quality": "contribution"
     },
     "codec": "video/h264",
-    "container": "video/mp4",
+    "container": "video/iso.segment",
     "init_segments": true,
     "avg_bit_rate": 2479,
     "segment_duration": {
