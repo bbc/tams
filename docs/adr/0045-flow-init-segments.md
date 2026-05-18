@@ -147,9 +147,9 @@ This would allow for multiple init segments to be applied to different parts of 
   * Relevant formats support multiple init-segments via features such as "multi-Period" manifests
   * Some relevant formats may use init segments to signal minor changes to encoding parameters
 * Neutral, because it requires a backwards-compatible addition to the spec
-* Neutral, because it may be unintuitive
 * Neutral, because it would require open-ended Flow Segments to support live Flows
 * Neutral, because extensions such as C2PA metadata should be supported as the sequence of init and media segments isn't changed
+* Bad, because it may be unintuitive
 * Bad, because it requires Objects from multiple Flows (init segment Flow, and media segment Flow) to decode a give piece of media
 
 ### Option 7: Put the init segment somewhere on the TAMS API instead of as an object (e.g. as a base64 blob)
