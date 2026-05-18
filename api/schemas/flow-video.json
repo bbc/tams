@@ -212,6 +212,10 @@
                             "description": "If `true`, the frame rate of the Flow is variable and `frame_rate` MUST NOT be set. If `false` or omitted, the frame rate of the Flow is fixed and `frame_rate` MUST be set.",
                             "type": "boolean",
                             "default": false
+                        },
+                        "init_segments": {
+                            "description": "Whether the Flow makes use of initialisation segments. This parameter MUST be set to `true` if Media Objects have `init_object` populated. If set to `true`, all Media Objects MUST have `init_object` populated. Assume `false` if omitted.",
+                            "type": "boolean"
                         }
                     },
                     "if": {

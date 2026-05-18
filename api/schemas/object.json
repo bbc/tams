@@ -28,11 +28,33 @@
                 "timerange": {
                     "description": "The timerange covering the sample timestamps embedded in or derived from the Media Object itself, on the Media Object's timeline.",
                     "$ref": "timerange.json"
+                },
+                "init_object": {
+                    "title": "Initialisation Object",
+                    "description": "The Object containing the initialisation segment required to decode the parent Media Object.",
+                    "unevaluatedProperties": false,
+                    "allOf": [
+                        {
+                            "type": "object",
+                            "required": [
+                                "id"
+                            ],
+                            "properties": {
+                                "id": {
+                                    "description": "The identifier of the initialisation Object.",
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        {
+                            "$ref": "object-core.json"
+                        }
+                    ]
                 }
             }
         },
         {
-            "$ref": "object-core.json"
+            "$ref": "object-media-core.json"
         }
     ]
 }

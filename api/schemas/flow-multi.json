@@ -18,6 +18,18 @@
                     "enum": [
                         "urn:x-nmos:format:multi"
                     ]
+                },
+                "essence_parameters": {
+                    "title": "Multi Flow Essence Parameters",
+                    "description": "Describes the parameters of the essence inside this multi Flow",
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "init_segments": {
+                            "description": "Whether the Flow makes use of initialisation segments. This parameter MUST be set to `true` if Media Objects have `init_object` populated. If set to `true`, all Media Objects MUST have `init_object` populated. Assume `false` if omitted.",
+                            "type": "boolean"
+                        }
+                    }
                 }
             }
         }
