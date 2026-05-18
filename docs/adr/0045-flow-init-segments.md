@@ -28,22 +28,43 @@ We would like to:
 
 ## Considered Options
 
-* {title of option 1}
-* {title of option 2}
-* {title of option 3}
-* … <!-- numbers of options can vary -->
+* Option 1: Generate init segments from essence parameters
+* Option 2: Significantly expand essence parameters to fully capture everything
+* Option 3: Create a Flow Segment with a never timerange for the init segment
+* Option 4: Make the init segment a Flow-level property for which a URL can be generated
+* Option 5: Make the init segment an object-level property, which can be uploaded and have a URL generated
+* Option 6: Have a Flow that is the init segment Flow
+* Option 7: Put the init segment somewhere on the TAMS API instead of as an object (e.g. as a base64 blob)
+* Option 8: Embed the init segment in every Object
 
 ## Decision Outcome
 
-Chosen option: "{title of option 1}", because
-{Justification, e.g., only option which resolves requirements, or comes out best (see below)}.
+Chosen option: Option 5: Make the init segment an object-level property, which can be uploaded and have a URL generated.
 
-<!-- This is an optional element. Feel free to remove. -->
+Options 1, 2, 3, and 4 would not allow for Flows which have multiple init segments.
+This would place additional restrictions on workflows that TAMS interfaces with, or would require transformation to/from a single-init segment rendition where multiple init segment renditions are required elsewhere.
+Examples of such workflows are those which use multi-period manifests, and those which use certain profiles of C2PA.
+Additionally, edit-by-reference workflows would be unduly restricted by the need for a single init segment per Flow.
+
+Option 1, 2, 3, and 7 were considered particularly undesirable in terms of how they interacted with the TAMS data model, clashed with existing patterns, or would have a poor developer experience.
+
+Option 6 would require implementations generic operations (e.g. store transfer) to have specific understanding/behaviour of media types to operate correctly.
+It may also break existing implementations of such functionality silently in some cases (e.g. media segments copied without init segments), or result in unexpected behaviour.
+
+Option 8 would again place restrictions on workflows that TAMS interfaces with, or would require transformation to/from an embedded-segment rendition.
+Such an approach was also identified as being expressly prohibited by some media formats.
+Real-world issues were also identified regarding processing load, and smoothness of playback with some player/decoder implementations where superfluous init segments are provided.
+
+Option 5 provides little/no restrictions on broader workflows.
+It provides good backwards compatibility.
+It provides good feature compatibility with the likes of edit-by-reference.
+It provides minimal burden on client implementations.
+It re-uses existing patterns, keeping the burden on service implementations as low as possible.
+
 ### Implementation
 
-{Once the proposal has been implemented, add a link to the relevant PRs here}
+Implemented by <https://github.com/bbc/tams/pull/167>.
 
-<!-- This is an optional element. Feel free to remove. -->
 ## Pros and Cons of the Options
 
 ### Option 1: Generate init segments from essence parameters
