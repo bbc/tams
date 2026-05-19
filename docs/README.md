@@ -27,7 +27,8 @@ For more information on how we use application notes, see [here](./appnotes/READ
 | [0018](./appnotes/0018-managing-multiple-object-instances.md)        | Managing Multiple Object Instances                              |
 | [0019](./appnotes/0019-implementing-retention-management.md)         | Methods of implementing retention management                    |
 | [0021](./appnotes/0021-media-integrity.md)                           | Integrity model for media in TAMS, and when interacting with other systems |
-| [0022](./appnotes/0022-transform-architectures.md)                   | Architectures for the transforming of media                      |
+| [0022](./appnotes/0022-transform-architectures.md)                   | Architectures for the transforming of media                     |
+| [0024](./appnotes/0024-using-init-segments.md)                       | Using Media with Initialisation Segments in TAMS                |
 
 ## ADRs
 
