@@ -1,6 +1,20 @@
 # 0024: Using Media with Initialisation Segments in TAMS
 
-This Application Note assumes basic knowledge of how to write/read media to/from a TAMS service.
+> [!NOTE]
+> There is an unfortunate overlap in terminology between TAMS and CMAF/DASH/HLS/fMP4.
+> As such, where Segments or Flow Segments are referred to capitalised this document is referring to the TAMS resource types.
+> Where init segments or media segments are referred to in lower case, this document is referring to the CMAF resource types.
+> Where this document refers to Media Objects or Objects, it is referring to the TAMS Media Object resource type.
+> Objects (without Media prepended) has been preferred when referring Objects containing initialisation segments to avoid potential confusion "init Media Object" may cause.
+> There is no implied distinction between Media Object or Objects in the TAMS API.
+<!-- markdownlint-disable-line -->
+>[!NOTE]
+> This Application Note refers to CMAF, MPEG-DASH, HLS, and fMP4.
+> It also uses terms of art from those formats.
+> It should, however, be read as applying to the general case of any format that uses equivalent concepts of initialisation segments.
+<!-- markdownlint-disable-line -->
+> [!IMPORTANT]
+> This Application Note assumes basic knowledge of how to write/read media to/from a TAMS service.
 
 Some media formats, such as [CMAF](https://www.iso.org/standard/85623.html) compatible MPEG-DASH and fMP4, split content into initialisation (init) segments and media segments.
 The init segments contain parameters used to configure decoders common across the stream of media
