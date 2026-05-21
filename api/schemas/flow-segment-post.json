@@ -8,11 +8,11 @@
     ],
     "properties": {
         "object_id": {
-            "description": "The Object identifier for the Media Object. The `content-type` of the Media Object MUST match the `container` mime-type of the Flow.",
+            "description": "The Object identifier for the Media Object. The `content-type` of the Media Object MUST match the `container` mime-type of the Flow. Service implementations SHOULD reject Objects IDs which have previously been registered as an `init_object_id` on other Flow Segments. i.e. init segments may not be used as media segments.",
             "type": "string"
         },
         "init_object_id": {
-            "description": "The Object identifier for the initialisation segment Object required to decode the Media Object. The `content-type` of the initialisation segment Object MAY differ from the `container` mime-type of the Flow. This parameter MUST only be set where the media format makes use of initialisation segments. Initialisation Objects SHOULD be re-used where possible. This parameter SHOULD be omitted where the Object `object_id` already exists and is being re-used.",
+            "description": "The Object identifier for the initialisation segment Object required to decode the Media Object. The `content-type` of the initialisation segment Object MAY differ from the `container` mime-type of the Flow. This parameter MUST only be set where the media format makes use of initialisation segments. Initialisation Objects SHOULD be re-used where possible. This parameter SHOULD be omitted where the Object `object_id` already exists and is being re-used. Service implementations SHOULD reject Objects IDs which have previously been registered as an `id` on other Flow Segments. i.e. media segments may not be used as init segments.",
             "type": "string"
         },
         "ts_offset": {
