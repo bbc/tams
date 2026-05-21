@@ -74,6 +74,7 @@ This is likely not possible with TAMS currently.
 The TAMS API likely does not capture all metadata media formats may need to include in init segments.
 
 * Good, because it requires no changes to the API specification
+* Good, because it supports features like edit-by-reference without any modification
 * Bad, because initial research indicates this will not be possible due to missing metadata
 * Bad, because it requires a potentially complex implementation that requires in-depth knowledge of the structure of init segments and significant domain expertise
 * Bad, because extensions such as C2PA metadata may need to be re-created on ingest due to the sequence of init and media segments changing
@@ -82,6 +83,7 @@ The TAMS API likely does not capture all metadata media formats may need to incl
 
 This option would see Option 1 extended to include the addition of required parameters to Flow metadata.
 
+* Good, because it supports features like edit-by-reference without any modification
 * Bad, because it will likely require significant additions to Flow technical metadata
 * Bad, because it will likely require the addition of format specific parameters to Flow technical metadata
 * Bad, because it requires a potentially complex implementation that requires in-depth knowledge of the structure of init segments and significant domain expertise
@@ -97,6 +99,7 @@ This option would see the never TimeRange used to represent init segments.
 * Good, because it requires little/no spec changes
 * Good, because it doesn't require format-specific Flow parameters
 * Neutral, because extensions such as C2PA metadata should be supported as the sequence of init and media segments isn't changed
+* Bad, because it features like edit-by-reference would require a different workflow to non-init-segment Flows
 * Bad, because it doesn't allow for different init segments for different parts of the Flow
   * Relevant formats support multiple init-segments via features such as "multi-Period" manifests
   * Some relevant formats may use init segments to signal minor changes to encoding parameters
@@ -113,6 +116,8 @@ Implementations might use the init segment's Object ID to determine the compatib
 
 * Good, because it doesn't require format-specific Flow parameters
 * Good, because it re-uses existing patterns/mechanisms
+* Good, because it supports features like edit-by-reference without any modification
+  * Though additional checks for Flow compatibility may be required
 * Neutral, because it requires a backwards-compatible addition to the spec
 * Neutral, because extensions such as C2PA metadata should be supported as the sequence of init and media segments isn't changed
 * Bad, because it doesn't allow for different init segments for different parts of the Flow
@@ -130,6 +135,7 @@ A change in the init segment's Object ID may be used to determine a need to re-p
 * Good, because it allows for different init segments for different parts of the Flow
   * Relevant formats support multiple init-segments via features such as "multi-Period" manifests
   * Some relevant formats may use init segments to signal minor changes to encoding parameters
+* Good, because it supports features like edit-by-reference without any modification
 * Neutral, because it requires a backwards-compatible addition to the spec
 * Neutral, because extensions such as C2PA metadata should be supported as the sequence of init and media segments isn't changed
 * Bad, because it will result in a significant increase in Object metadata which makes up a large proportion of data stored in TAMS
@@ -149,6 +155,7 @@ This would allow for multiple init segments to be applied to different parts of 
 * Neutral, because it requires a backwards-compatible addition to the spec
 * Neutral, because it would require open-ended Flow Segments to support live Flows
 * Neutral, because extensions such as C2PA metadata should be supported as the sequence of init and media segments isn't changed
+* Bad, because it features like edit-by-reference would require a different workflow to non-init-segment Flows
 * Bad, because it may be unintuitive
 * Bad, because it requires Objects from multiple Flows (init segment Flow, and media segment Flow) to decode a give piece of media
 
@@ -177,6 +184,7 @@ And are only permitted for playlist-style use cases where a media segment is use
 * Good, because it allows for different init segments for different parts of the Flow
   * Relevant formats support multiple init-segments via features such as "multi-Period" manifests
   * Some relevant formats may use init segments to signal minor changes to encoding parameters
+* Good, because it supports features like edit-by-reference without any modification
 * Bad, because media using extensions such as C2PA metadata may need to be re-encoded/re-packaged on ingest due to the sequence of init and media segments changing
 * Bad, because it will result in an increase in the size of Objects, which makes up a large proportion of data stored in TAMS
   * Such an increase is likely to be minor for individual Objects, but significant in larger deployments with relatively small Segment sizes
