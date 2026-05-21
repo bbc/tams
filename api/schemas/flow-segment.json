@@ -48,10 +48,10 @@
                         {
                             "type": "object",
                             "required": [
-                                "id"
+                                "object_id"
                             ],
                             "properties": {
-                                "id": {
+                                "object_id": {
                                     "description": "The identifier of the initialisation Object.",
                                     "type": "string"
                                 }
