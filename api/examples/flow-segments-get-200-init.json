@@ -8,7 +8,7 @@
             }
         ],
         "init_object": {
-            "id": "9ef06e23-b882-4a93-b005-480de42ef4e9",
+            "object_id": "9ef06e23-b882-4a93-b005-480de42ef4e9",
             "get_urls": [
                 {
                     "url": "https://store.example.com/tams-e2b89b02-21e7-5f9d-aa2d-db38b01453c9/9ef06e23-b882-4a93-b005-480de42ef4e9"
@@ -25,7 +25,7 @@
             }
         ],
         "init_object": {
-            "id": "9ef06e23-b882-4a93-b005-480de42ef4e9",
+            "object_id": "9ef06e23-b882-4a93-b005-480de42ef4e9",
             "get_urls": [
                 {
                     "url": "https://store.example.com/tams-e2b89b02-21e7-5f9d-aa2d-db38b01453c9/9ef06e23-b882-4a93-b005-480de42ef4e9"
@@ -42,7 +42,7 @@
             }
         ],
         "init_object": {
-            "id": "192472f1-55fd-45dc-b355-e6833a3a140c",
+            "object_id": "192472f1-55fd-45dc-b355-e6833a3a140c",
             "get_urls": [
                 {
                     "url": "https://store.example.com/tams-e2b89b02-21e7-5f9d-aa2d-db38b01453c9/192472f1-55fd-45dc-b355-e6833a3a140c"
