@@ -1156,7 +1156,9 @@ paths:
       summary: Delete Flow
       description: |
         Deletes the Flow and associated Segments.
-        If Flow Segment deletion takes too long then this request will return 202 Accepted and the `Location` header will point to a Flow Delete Request to monitor deletion progress
+        If Flow Segment deletion takes too long then this request will return 202 Accepted and the `Location` header will point to a Flow Delete Request to monitor deletion progress.
+        
+        Services SHALL only delete Media Objects when they are no longer referenced by any Flow Segments or other Media Objects (i.e. as init Objects).
       operationId: DELETE_flows-flowId
       tags:
         - Flows
@@ -2075,7 +2077,9 @@ paths:
     delete:
       summary: Delete Flow Segment
       description: |
-        Deletes the Flow Segments. If the deletion takes too long then this request will return 202 Accepted and the `Location` header will point to a Flow Delete Request to monitor deletion progress
+        Deletes the Flow Segments. If the deletion takes too long then this request will return 202 Accepted and the `Location` header will point to a Flow Delete Request to monitor deletion progress.
+        
+        Services SHALL only delete Media Objects when they are no longer referenced by any Flow Segments or other Media Objects (i.e. as init Objects).
       operationId: DELETE_flows-flowId-segments
       tags:
         - FlowSegments

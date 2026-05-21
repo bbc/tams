@@ -19,7 +19,7 @@
             "$ref": "uuid.json"
         },
         "content_type": {
-            "description": "The `content_type` to use for the Objects. This parameter MUST only be set where requesting storage for initialisation segments in media formats which require them, and where the mime-type of those initialisation segments differs to that of the media segments. Assumed to be the `container` type of th Flow if not set.",
+            "description": "The `content_type` to use for the Objects. This parameter MUST only be set where requesting storage for initialisation segments in media formats which require them, and where the mime-type of those initialisation segments differs to that of the media segments. Assumed to be the `container` type of the Flow if not set.",
             "$ref": "mime-type.json"
         }
     },
