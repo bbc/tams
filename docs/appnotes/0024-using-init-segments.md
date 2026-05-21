@@ -38,6 +38,10 @@ This allows existing Media Object re-use mechanisms (i.e. edit-by-reference) to 
 Init segments follow the media.
 A client may then detect if the init segment has changed by observing if the init Object ID remains the same or changes between subsequent Flow Segments.
 
+> [!IMPORTANT]
+> Encoder implementations/configurations should minimise the creation of new init segments as much possible.
+> Over-use of init segments may result in un-needed re-initialisation of decoders which may adversely affect performance and/or playback.
+
 ## General Workflows
 
 The general workflows described here refer to init and media segments in isolation from manifests used by specific media formats.
