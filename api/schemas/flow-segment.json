@@ -39,11 +39,33 @@
                     "description": "The count of samples in the Segment (which may be fewer than in the Media Object). The count could be less than expected given the Segment duration and rate if there are gaps. If not set, every sample from sample_offset onwards is used. Note that a sample is a video frame or audio sample. A (coded) audio frame has multiple audio samples. DEPRECATED: Use object_timerange instead - see AppNote 0036. Service implementations SHOULD continue to store and return it if set.",
                     "type": "integer",
                     "deprecated": true
+                },
+                "init_object": {
+                    "title": "Initialisation Object",
+                    "description": "The Object containing the initialisation segment required to decode the parent Media Object.",
+                    "unevaluatedProperties": false,
+                    "allOf": [
+                        {
+                            "type": "object",
+                            "required": [
+                                "object_id"
+                            ],
+                            "properties": {
+                                "object_id": {
+                                    "description": "The identifier of the initialisation Object.",
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        {
+                            "$ref": "object-core.json"
+                        }
+                    ]
                 }
             }
         },
         {
-            "$ref": "object-core.json"
+            "$ref": "object-media-core.json"
         }
     ]
 }
