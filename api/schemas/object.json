@@ -6,8 +6,7 @@
             "type": "object",
             "required": [
                 "id",
-                "referenced_by_flows",
-                "timerange"
+                "referenced_by_flows"
             ],
             "properties": {
                 "id": {
@@ -26,7 +25,7 @@
                     "$ref": "uuid.json"
                 },
                 "timerange": {
-                    "description": "The timerange covering the sample timestamps embedded in or derived from the Media Object itself, on the Media Object's timeline.",
+                    "description": "The timerange covering the sample timestamps embedded in or derived from the Media Object itself, on the Media Object's timeline. This parameter MUST be set where the Object contains media. It MUST NOT be set where the Object contains an init segment.",
                     "$ref": "timerange.json"
                 },
                 "init_object": {
