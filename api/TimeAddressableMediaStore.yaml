@@ -1792,7 +1792,7 @@ paths:
         - name: include_object_timerange
           in: query
           description: |
-            If set to `true`, the underlying object's timerange should appear in the response (if it differs from the segment timerange).
+            If set to `true`, the underlying object's timerange should appear in the response.
             Assume `false` if omitted.
           schema:
             type: boolean
@@ -1919,7 +1919,7 @@ paths:
         - name: include_object_timerange
           in: query
           description: |
-            If set to `true`, the underlying object's timerange should appear in the response (if it differs from the Flow Segment's `timerange`).
+            If set to `true`, the underlying object's timerange should appear in the response.
             Assume `false` if omitted.
           schema:
             type: boolean
