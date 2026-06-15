@@ -83,7 +83,7 @@
             "type": "boolean"
         },
         "include_object_timerange": {
-            "description": "If set to `true`, the underlying object's timerange should appear in `flows/segments_added` events (if it differs from the Flow Segment's `timerange`). Assume `false` if omitted. This option is the same as the `include_object_timerange` query parameter for the [/flows/{flowId}/segments](#/operations/GET_flows-flowId-segments) API endpoint.",
+            "description": "If set to `true`, the underlying object's timerange should appear in `flows/segments_added` events. Assume `false` if omitted. This option is the same as the `include_object_timerange` query parameter for the [/flows/{flowId}/segments](#/operations/GET_flows-flowId-segments) API endpoint.",
             "type": "boolean"
         },
         "tags": {
