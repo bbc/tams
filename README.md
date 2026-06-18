@@ -166,12 +166,12 @@ Note that the `object_ts` may be a different precision or timebase to the nanose
 
 ```python
 object_ts = to_timestamp(ts)          # `4:0` for `ts = 4.0sec`
-offset_object_ts = object_ts + ts_offset    # `4:0 + -0:700000000 = 3:300000000` (in Flow timeline)
+offset_object_ts = object_ts + ts_offset    # `4:0 + -0:800000000 = 3:200000000` (in Flow timeline)
 if (offset_object_ts < timerange.start or
-      offset_object_ts >= timerange.end):  # `3:300000000 is less than 3:500000000`
+      offset_object_ts >= timerange.end):  # `3:200000000 is less than 3:500000000`
     discard_grain()                  # So this grain is discarded
 else:
-    keep_grain()                     # The first grain to be retained will have `object_ts = 4.2`
+    keep_grain()                     # The first grain to be retained will have `object_ts = 4.3`
                                      # (and `offset_object_ts = 3:500000000 or 3.5sec)`
 ```
 
