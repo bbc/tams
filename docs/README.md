@@ -26,6 +26,8 @@ For more information on how we use application notes, see [here](./appnotes/READ
 | [0017](./appnotes/0017-reuse-of-ids.md)                              | When to re-use IDs in TAMS and compatible systems               |
 | [0018](./appnotes/0018-managing-multiple-object-instances.md)        | Managing Multiple Object Instances                              |
 | [0019](./appnotes/0019-implementing-retention-management.md)         | Methods of implementing retention management                    |
+| [0021](./appnotes/0021-media-integrity.md)                           | Integrity model for media in TAMS, and when interacting with other systems |
+| [0022](./appnotes/0022-transform-architectures.md)                   | Architectures for the transforming of media                      |
 
 ## ADRs
 
@@ -72,15 +74,16 @@ For more information on how we use ADRs, see [here](./adr/README.md).
 | [0033](./adr/0033-segment-created-metadata.md)                     | Add created metadata to segments                                           |
 | [0034](./adr/0034-storage-allow-object_ids.md)                     | Add object_ids option to Flow Storage request                              |
 | [0035](./adr/0035-fine-grained-auth.md)                            | Fine-grained Authorisation in TAMS Workflows                               |
-| [0036](./adr/0036-specifying-partial-segment-usage.md)             | Specifying partial segment usage |
+| [0036](./adr/0036-specifying-partial-segment-usage.md)             | Specifying partial segment usage                                           |
 | [0037](./adr/0037-improve-webhooks.md)                             | Proposal for improvements to the Webhooks endpoints                        |
 | [0038](./adr/0038-improved-storage-management.md)                  | Improved Storage Management                                                |
 | [0039](./adr/0039-remove-pre-actions.md)                           | Proposal to remove pre-actions from storage allocation response            |
-| [0040](./adr/0040-tag-usability-enhancements.md)                   | Tag Usability Enhancements |
-| [0041](./adr/0041-require-explicit-framerate.md)                   | Requiring explicit frame rates |
-| [0042](./adr/0042-uncontrolled-object-instance-labels.md)          | Make `label` Mandatory for Uncontrolled Object Instances |
-| [0043](./adr/0043-signalling-retention-time.md)                    | Signalling retention time |
-| [0044](./adr/0044-signalling-timeouts.md)                          | Signalling timeout periods |
-| [0046](./adr/0046-governance.md)                                   | Governance |
+| [0040](./adr/0040-tag-usability-enhancements.md)                   | Tag Usability Enhancements                                                 |
+| [0041](./adr/0041-require-explicit-framerate.md)                   | Requiring explicit frame rates                                             |
+| [0042](./adr/0042-uncontrolled-object-instance-labels.md)          | Make `label` Mandatory for Uncontrolled Object Instances                   |
+| [0043](./adr/0043-signalling-retention-time.md)                    | Signalling retention time                                                  |
+| [0044](./adr/0044-signalling-timeouts.md)                          | Signalling timeout periods                                                 |
+| [0046](./adr/0046-governance.md)                                   | Governance                                                                 |
+| [0048](./adr/0048-media-integrity.md)                              | Integrity model for media in TAMS, and when interacting with other systems |
 
 \* Note: ADR 0004a was the unintended result of a number clash in the early development of TAMS which wasn't caught before publication

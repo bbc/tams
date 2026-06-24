@@ -2,8 +2,7 @@
     "title": "Flow",
     "description": "Describes a Flow",
     "type": "object",
-    "oneOf":
-    [
+    "oneOf": [
         {
             "$ref": "flow-video.json"
         },

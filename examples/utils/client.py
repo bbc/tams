@@ -1,12 +1,26 @@
 # This file provides functions to make HTTP requests to the TAMS API.
 # The functions include a retry on authentication failures when using renewable credentials.
 
-from typing import AsyncGenerator
+import dataclasses
+from typing import AsyncGenerator, Optional
 from contextlib import asynccontextmanager
 
 import aiohttp
+import aiohttp.client_exceptions
 
 from .credentials import Credentials, RenewableCredentials
+
+
+@dataclasses.dataclass
+class TAMSClientException(Exception):
+    error: aiohttp.client_exceptions.ClientResponseError
+    body: Optional[str]
+
+    def __str__(self) -> str:
+        return f"{str(self.error)}, body={self.body}"
+
+    def __repr__(self) -> str:
+        return f"{type(self).__name__}({self.error.__repr__}, body={self.body})"
 
 
 @asynccontextmanager
@@ -15,6 +29,7 @@ async def request(
     credentials: Credentials,
     method: str,
     url: str,
+    raise_on_error: bool = True,
     **kwargs
 ) -> AsyncGenerator[aiohttp.ClientResponse, None]:
     """Execute a request and retry once if there is a credentials failure"""
@@ -32,6 +47,11 @@ async def request(
     while True:
         async with session.request(method, url, headers=in_headers | credentials.header(), **kwargs) as resp:
             if resp.status != 401 or not isinstance(credentials, RenewableCredentials) or have_retried:
+                if raise_on_error:
+                    try:
+                        resp.raise_for_status()
+                    except aiohttp.client_exceptions.ClientResponseError as e:
+                        raise TAMSClientException(e, await resp.text())
                 yield resp
                 break
 
@@ -45,10 +65,11 @@ async def get_request(
     session: aiohttp.ClientSession,
     credentials: Credentials,
     url: str,
+    raise_on_error: bool = True,
     **kwargs
 ) -> AsyncGenerator[aiohttp.ClientResponse, None]:
     """Execute a GET request and retry once if there is a credentials failure"""
-    async with request(session, credentials, "GET", url, **kwargs) as resp:
+    async with request(session, credentials, "GET", url, raise_on_error=raise_on_error, **kwargs) as resp:
         yield resp
 
 
@@ -57,10 +78,11 @@ async def put_request(
     session: aiohttp.ClientSession,
     credentials: Credentials,
     url: str,
+    raise_on_error: bool = True,
     **kwargs
 ) -> AsyncGenerator[aiohttp.ClientResponse, None]:
     """Execute a PUT request and retry once if there is a credentials failure"""
-    async with request(session, credentials, "PUT", url, **kwargs) as resp:
+    async with request(session, credentials, "PUT", url, raise_on_error=raise_on_error, **kwargs) as resp:
         yield resp
 
 
@@ -70,10 +92,11 @@ async def post_request(
     credentials: Credentials,
     url: str,
     json: dict = {},
+    raise_on_error: bool = True,
     **kwargs
 ) -> AsyncGenerator[aiohttp.ClientResponse, None]:
     """Execute a POST request and retry once if there is a credentials failure"""
-    async with request(session, credentials, "POST", url, json=json, **kwargs) as resp:
+    async with request(session, credentials, "POST", url, json=json, raise_on_error=raise_on_error, **kwargs) as resp:
         yield resp
 
 
@@ -82,8 +105,9 @@ async def delete_request(
     session: aiohttp.ClientSession,
     credentials: Credentials,
     url: str,
+    raise_on_error: bool = True,
     **kwargs
 ) -> AsyncGenerator[aiohttp.ClientResponse, None]:
     """Execute a DELETE request and retry once if there is a credentials failure"""
-    async with request(session, credentials, "DELETE", url, **kwargs) as resp:
+    async with request(session, credentials, "DELETE", url, raise_on_error=raise_on_error, **kwargs) as resp:
         yield resp

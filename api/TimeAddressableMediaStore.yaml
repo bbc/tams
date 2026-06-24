@@ -26,7 +26,7 @@ info:
     **Note**: the examples provided in this specification are for a system which uses a Storage Backend that provides HTTP URLs for uploading and downloading Media Objects in buckets.
     This could for example be implemented using an AWS S3 compatible store using presigned URLs or by a simple file system storage with an HTTP frontend.
     Clients should parse the [/service](#/operations/GET_service) endpoint and handle the Storage Backend type in use appropriately.
-  version: "8.0"
+  version: "8.1"
   contact:
     name: 'BBC R&D - Cloud-Fit Production Team'
     email: 'cloudfit-opensource@rd.bbc.co.uk'
@@ -42,7 +42,7 @@ servers:
     variables:
       version:
         description: API version
-        default: v8.0
+        default: v8.1
 security:
   - bearer_token_auth: []
   - url_token_auth: []
@@ -763,7 +763,7 @@ paths:
         "200":
           $ref: '#/components/responses/trait_resource_info_head_200'
         "404":
-          description: The requested Source does not exist, or does not have a label set.
+          description: The requested Source does not exist.
     get:
       summary: Source Label
       description: Returns the Source label property. This should be a very short, human-readable label that may be displayed in listings of Sources.
@@ -780,7 +780,7 @@ paths:
               schema:
                 type: string
         "404":
-          description: The requested Source does not exist, or does not have a label set.
+          description: The requested Source does not exist.
     put:
       summary: Create or Update Source Label
       description: Create or update the label property. This should be a very short, human-readable label that may be displayed in listings of Sources.
@@ -1076,18 +1076,30 @@ paths:
                 video:
                   summary: Video Flow - H.264 Codec
                   externalValue: examples/flow-get-200-video-h264.json
-                audio:
-                  summary: Audio Flow - AAC Codec
-                  externalValue: examples/flow-get-200-audio-aac.json
                 rawvideo:
                   summary: Video Flow - Uncompressed (Quicktime)
                   externalValue: examples/flow-get-200-video-raw.json
-                jpegimage:
-                  summary: Image Flow - JPEG Codec
-                  externalValue: examples/flow-get-200-image-jpeg.json
+                mxf_jpeg2k:
+                  summary: Video Flow - JPEG-2000 (MXF container)
+                  externalValue: examples/flow-get-200-video-jpeg-mxf.json
+                mxf_h264:
+                  summary: Video Flow - H.264 (MXF container)
+                  externalValue: examples/flow-get-200-video-h264-mxf.json
+                jp2_jpeg2k_singleframe:
+                  summary: Video Flow - JPEG-2000 (JP2 container, single frame segments)
+                  externalValue: examples/flow-get-200-video-jpeg-jp2.json
                 video_vfr:
                   summary: Video Flow - H.264 Codec, Variable Frame Rate
                   externalValue: examples/flow-get-200-video-h264-vfr.json
+                audio:
+                  summary: Audio Flow - AAC Codec
+                  externalValue: examples/flow-get-200-audio-aac.json
+                audio_wav:
+                  summary: Audio Flow - PCM
+                  externalValue: examples/flow-get-200-audio-wav.json
+                jpegimage:
+                  summary: Image Flow - JPEG Codec
+                  externalValue: examples/flow-get-200-image-jpeg.json
                 ttml:
                   summary: Data Flow - TTML
                   description: TAMS can also be used for storing non-AV content such as subtitles or event data
@@ -1391,7 +1403,7 @@ paths:
         "200":
           $ref: '#/components/responses/trait_resource_info_head_200'
         "404":
-          description: The requested Flow does not exist, or does not have a label set.
+          description: The requested Flow does not exist.
     get:
       summary: Flow Label
       description: Returns the Flow label property. This should be a very short, human-readable label that may be displayed in listings of Flows.
@@ -1408,7 +1420,7 @@ paths:
               schema:
                 type: string
         "404":
-          description: The requested Flow does not exist, or does not have a label set.
+          description: The requested Flow does not exist.
     put:
       summary: Create or Update Flow Label
       description: Create or update the label property. This should be a very short, human-readable label that may be displayed in listings of Flows.
@@ -2159,8 +2171,15 @@ paths:
             application/json:
               schema:
                 $ref: schemas/flow-storage.json
-              example:
-                $ref: examples/flow-storage-post-201.json
+              examples:
+                mpegts:
+                  summary: MPEG-TS container Flow
+                  description: Flow using MPEG-TS as the container format, writing to a cloud object store
+                  externalValue: examples/flow-storage-post-201.json
+                wav_proxy:
+                  summary: WAV Flow
+                  description: Flow using WAV as the container format, writing to an HTTP interface running on the same origin as the TAMS API
+                  externalValue: examples/flow-storage-post-201-wav.json
         "400":
           description: Bad request. Invalid Flow storage request JSON or the Flow 'container' is not set. If object_ids supplied, some or all already exist.
         "403":
@@ -2448,7 +2467,6 @@ paths:
           description: Forbidden. You do not have permission to modify this Media Object.
         "404":
           description: The requested Object ID in the path is invalid. 404 MUST be returned if the ID has been assigned via the [`/flows/{flowId}/storage`](#/operations/POST_flows-flowId-storage), but not yet registered against a Flow Segment.
-
   /flow-delete-requests:
     head:
       summary: List Flow Delete Requests
@@ -2548,6 +2566,9 @@ webhooks:
                   properties:
                     flow:
                       $ref: "schemas/flow.json"
+      responses:
+        "200":
+          description: Webhook received successfully
   flows/updated:
     post:
       security:
@@ -2577,6 +2598,9 @@ webhooks:
                   properties:
                     flow:
                       $ref: "schemas/flow.json"
+      responses:
+        "200":
+          description: Webhook received successfully
   flows/deleted:
     post:
       security:
@@ -2606,6 +2630,9 @@ webhooks:
                   properties:
                     flow_id:
                       $ref: "schemas/uuid.json"
+      responses:
+        "200":
+          description: Webhook received successfully
   flows/segments_added:
     post:
       security:
@@ -2641,6 +2668,9 @@ webhooks:
                       type: array
                       items:
                         $ref: 'schemas/flow-segment.json'
+      responses:
+        "200":
+          description: Webhook received successfully
   flows/segments_deleted:
     post:
       security:
@@ -2675,6 +2705,9 @@ webhooks:
                     timerange:
                       description: The timerange of Segments that have been deleted. The timerange MUST intersect with a Segment which has been deleted at both start and end (e.g. it cannot start or end in empty space).
                       $ref: 'schemas/timerange.json'
+      responses:
+        "200":
+          description: Webhook received successfully
   sources/created:
     post:
       security:
@@ -2704,6 +2737,9 @@ webhooks:
                   properties:
                     source:
                       $ref: "schemas/source.json"
+      responses:
+        "200":
+          description: Webhook received successfully
   sources/updated:
     post:
       security:
@@ -2733,6 +2769,9 @@ webhooks:
                   properties:
                     source:
                       $ref: "schemas/source.json"
+      responses:
+        "200":
+          description: Webhook received successfully
   sources/deleted:
     post:
       security:
@@ -2762,6 +2801,9 @@ webhooks:
                   properties:
                     source_id:
                       $ref: "schemas/uuid.json"
+      responses:
+        "200":
+          description: Webhook received successfully
 components:
   responses:
     trait_resource_listing_head_200:

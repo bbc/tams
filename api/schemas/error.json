@@ -3,7 +3,9 @@
     "description": "Provides more information for an error status.",
     "type": "object",
     "required": [
-        "type", "summary", "time"
+        "type",
+        "summary",
+        "time"
     ],
     "properties": {
         "type": {

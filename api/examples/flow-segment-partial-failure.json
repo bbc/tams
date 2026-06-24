@@ -7,14 +7,14 @@
                 "type": "TAMSError",
                 "summary": "Flow segment created failed because ...",
                 "traceback": [
-                  "Exception: The flow segment could not be created",
-                  "The above exception was the direct cause of the following exception:",
-                  "Traceback (most recent call last):",
-                  "  <traceback...>",
-                  "TAMSError: Unable to continue"
+                    "Exception: The flow segment could not be created",
+                    "The above exception was the direct cause of the following exception:",
+                    "Traceback (most recent call last):",
+                    "  <traceback...>",
+                    "TAMSError: Unable to continue"
                 ],
                 "time": "2018-12-10T15:18:52.426792+00:00"
-              }
+            }
         },
         {
             "object_id": "d2a3f8d9-4b8c-4a0a-9d0d-3d3e3e3e3e3e",

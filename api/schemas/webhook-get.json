@@ -8,13 +8,12 @@
         },
         {
             "type": "object",
-            "required":
-            [
+            "required": [
                 "status"
             ],
             "properties": {
                 "error": {
-                    "description": "Provides more information for the error status, as described by the [Error](#/schemas/error) type",
+                    "description": "Provides more information for the error status, as described by the [Error](#/schemas/error) type. Amongst other conditions, implementations MAY use this field to indicate failure to deliver webhooks resulting in return codes other than the 200 Success described in the the webhook event schemas.",
                     "$ref": "error.json"
                 },
                 "status": {
