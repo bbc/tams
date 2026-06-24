@@ -19,12 +19,14 @@ While the focus of this ADR is on the Source level of the TAMS API, there are su
 ## Considered Options
 
 Source Options:
+
 * Option 1: Follow tags example and use two query parameters for value and exists
 * Option 2: Follow tags example but only implement the exists query parameter
 * Option 3: Follow accept_get_urls example and use an empty query parameter
 * Option 4: Do nothing
 
 Flows:
+
 * Option A: Apply the same querying capabilities at both Source and Flow level
 * Option B: Only apply the new query capabilities at the Source level
 
@@ -97,6 +99,5 @@ At the Flow level this is currently some ability to query and update Flow collec
 This behaviour focuses on starting from a known Flow to which the collection is applied.
 There is no equivalent endpoints at the Source level.
 
-If chosen to also apply at the Flow level then need to consider is `flows_collected_by_id=a46c49f1-4764-42b9-9f91-f267a58903c4` too similar to `/flows/a46c49f1-4764-42b9-9f91-f267a58903c4/flow_collection`? 
+If chosen to also apply at the Flow level then need to consider is `flows_collected_by_id=a46c49f1-4764-42b9-9f91-f267a58903c4` too similar to `/flows/a46c49f1-4764-42b9-9f91-f267a58903c4/flow_collection`?
 The first gives you all the metadata about the Flows, where the later only gives you the ID's and roles
-
