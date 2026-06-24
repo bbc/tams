@@ -276,9 +276,12 @@ paths:
               schema:
                 $ref: schemas/profile.json
               examples:
-                video:
-                  summary: Video Profile
-                  externalValue: examples/profile-get-200-video.json
+                video-h264:
+                  summary: h264 TS Video Profile
+                  externalValue: examples/profile-get-200-video-h264.json
+                video-h264-mxf:
+                  summary: h264 MXF Video Profile
+                  externalValue: examples/profile-get-200-video-h264-mxf.json
                 jpegimage:
                   summary: Image Profile
                   externalValue: examples/profile-get-200-image.json
