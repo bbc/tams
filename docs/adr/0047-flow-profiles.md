@@ -57,7 +57,6 @@ Alternatively it could be used as an exclude to look for all Flows which match a
 - Good: Enables brownfield adoption — existing Flows that match a Profile's technical characteristics become discoverable
 - Good: Simplifies edit-by-reference workflows across mixed content where some Flows were created with Profiles and others were not
 - Good: Makes Profiles useful as a query template even in stores where Profile-based creation has not been universally adopted
-- Bad: Requires clear definition of what constitutes a "match"
 - Bad: Full requirements and all possible match modes have not been fully defined
 
 ### Option 3: Do nothing
