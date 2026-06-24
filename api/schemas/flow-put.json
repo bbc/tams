@@ -16,7 +16,7 @@
           ],
           "properties": {
               "profile_id": {
-                  "description": "Profile identifier that was used to create the flow.  When supplying a profile_id no technical metadata should also be provided.  Doing so will result in a 400 validation error",
+                  "description": "Profile identifier that was used to create the flow.  When supplying a profile_id no metadata which can be contained in a Profile should also be provided.  Doing so will result in a 400 validation error",
                   "type": "string",
                   "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
               }
