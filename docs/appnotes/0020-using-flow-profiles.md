@@ -88,6 +88,6 @@ This will mean than when Flows are replicated between the stores then the Profil
 If the Profile does not exist within the destination store then the Profile ID should continue to be preserved.
 This will continue to allow the matching of content within the store by Profile ID, plus the Profile can be added later and will link to the existing content.
 
-For workflows including more than two organisations it is recommended that one organisation takes responsibility for owning and publishing the Profiles.
+For workflows including more than two organisations it is recommended that one organisation takes responsibility for owning and publishing a given Profile.
 These Profiles can then be created in both the source and destination stores using the same UUID.
 The organisation could be a single company or could be an industry body.

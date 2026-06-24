@@ -1310,9 +1310,8 @@ paths:
         codec, essence_parameters etc.) from that profile, along with the metadata provided.  It
         is up to the store implementation whether this is normalised on the flow creation or read-only.
 
-        When creating a flow using a profile it is not possible to override any specific fields as this would 
-        invalidate the link to the profile.  Supplying a profile ID and technical metadata should result in a 400 
-        validation error
+        When creating a flow using a Profile it is not possible to override any specific fields as this would invalidate the link to the Profile.  
+        Supplying a Profile ID and any technical metadata should result in a 400 validation error
       operationId: PUT_flows-flowId
       tags:
         - Flows
