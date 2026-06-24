@@ -1,5 +1,5 @@
 ---
-status: "draft"
+status: "accepted"
 ---
 # Ability to query for Sources without a collected_by value
 
