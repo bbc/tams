@@ -289,7 +289,7 @@ paths:
       description: |
         Create a new Profile to be used when creating flows with the matching metadata.  
         
-        It is not possible to update an existing Profile as this would mean it no longer matches flows that have already been created using it.
+        Services MUST reject requests that would update an existing Profile as this would mean it no longer matches flows that have already been created using it.
         If a change to a Profile is required then a new Profile should be created with the updated information and new flows reference this new Profile.  
         
         Attempting to update an existing profiles should return a 400 error.
