@@ -2148,7 +2148,7 @@ paths:
         `content-type` MUST NOT be set in the request body of this end point at any other time.
         Initialisation segment Objects SHOULD be re-used wherever possible.
 
-        Service implementations need to handle situations where Objects are not used, and where content is were uploaded but no Flow Segment was registered successfully.
+        Service implementations need to handle situations where Objects are not used, and where content is were uploaded but the Object is not successfully registered against a Flow Segment or as an init Object against Media Objects.
         In these circumstances, Services should garbage collect Objects after the timeout advertised in [`min_object_timeout` at the `/service`](#/operations/GET_service) endpoint.
 
         When making requests to the provided `put_url`, clients should include credentials if the provided URL is on the same origin as the API itself, akin to the `same-origin` mode in the [WhatWG Fetch Standard](https://fetch.spec.whatwg.org/#concept-request-credentials-mode).
