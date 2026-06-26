@@ -30,7 +30,7 @@ For more information on how we use application notes, see [here](./appnotes/READ
 | [0021](./appnotes/0021-media-integrity.md)                           | Integrity model for media in TAMS, and when interacting with other systems |
 | [0022](./appnotes/0022-transform-architectures.md)                   | Architectures for the transforming of media                     |
 | [0024](./appnotes/0024-using-init-segments.md)                       | Using Media with Initialisation Segments in TAMS                |
-| [0020](./appnotes/0025-editorial-purpose.md)                         | Editorial purpose                                               |
+| [0025](./appnotes/0025-editorial-purpose.md)                         | Editorial purpose                                               |
 
 ## ADRs
 
@@ -90,11 +90,11 @@ For more information on how we use ADRs, see [here](./adr/README.md).
 | [0046](./adr/0046-governance.md)                                   | Governance                                                                 |
 | [0047](./adr/0047-flow-profiles.md)                                | Adding Flow Profiles to TAMS                                               |
 | [0048](./adr/0048-media-integrity.md)                              | Integrity model for media in TAMS, and when interacting with other systems |
-| [0049](./adr/0049-source-collected_by-query-parameter.md)          | Ability to query for Sources without a collected_by value |
+| [0049](./adr/0049-source-collected_by-query-parameter.md)          | Ability to query for Sources without a collected_by value                  |
 | [0052](./adr/0052-specifying-the-sorting-of-listings.md)           | Options for specifying the sorting of listings                             |
-| [0053](./adr/0053-editorial-purpose-tag.md)                        | Editorial Purpose Tag |
+| [0053](./adr/0053-editorial-purpose-tag.md)                        | Editorial Purpose Tag                                                      |
 | [0054](./adr/0054-selectable-presigned-storage-urls.md)            | Support for selectable presigned storage PUT URLs                          |
 | [0055](./adr/0055-fine-grained-auth-storage-backends.md)           | Support for Fine-Grained Authorisation on Storage Backends                 |
-| [0056](./adr/0056-roles-in-collections.md)                         | Roles in Collections |
+| [0056](./adr/0056-roles-in-collections.md)                         | Roles in Collections                                                       |
 
 \* Note: ADR 0004a was the unintended result of a number clash in the early development of TAMS which wasn't caught before publication
