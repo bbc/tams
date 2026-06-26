@@ -85,8 +85,18 @@ This is the same model as for Flow, Source and Object ID's which should be prese
 For workflows where replication of the same content formats are happening on a regular basis then it is recommended that the same Profile is loaded into both stores using the same UUID.
 This will mean than when Flows are replicated between the stores then the Profile identifier will continue to link to the metadata.
 
-If the Profile does not exist within the destination store then the Profile ID should continue to be preserved.
-This will continue to allow the matching of content within the store by Profile ID, plus the Profile can be added later and will link to the existing content.
+If the Profile does not exist within the destination store then it is not possible to create a Flow using the Profile and doing so should result in an error from the API that the profile does not exist.
+The calling system then has two options:
+
+1. Read the Profile from the originating store and create it using the same ID and parameters in the destination store.
+It is important than no parameters of the Profile are changed in this operation otherwise this invalidates the principal of the Profile ID being the same across stores.
+Once the Profile has been created sucessfully it should then be possible to re-try the Flow creation using the Profile ID.
+
+2. The replication service could drop back to creating the Flow using the full metadata model without the Profile ID.
+It could be possible to preserve the Profile ID through the use of a tag.
+
+Option 1 is the prefered option and the correct way to handle profiles between stores and ensures the Profile ID is persisted between stores.
+Option 2 should only be used if replicating content from a newer store that supports Profiles to an older store which does not.
 
 For workflows including more than two organisations it is recommended that one organisation takes responsibility for owning and publishing a given Profile.
 These Profiles can then be created in both the source and destination stores using the same UUID.
