@@ -2534,6 +2534,9 @@ webhooks:
                   properties:
                     flow:
                       $ref: "schemas/flow.json"
+      responses:
+        "200":
+          description: Webhook received successfully
   flows/updated:
     post:
       security:
@@ -2563,6 +2566,9 @@ webhooks:
                   properties:
                     flow:
                       $ref: "schemas/flow.json"
+      responses:
+        "200":
+          description: Webhook received successfully
   flows/deleted:
     post:
       security:
@@ -2592,6 +2598,9 @@ webhooks:
                   properties:
                     flow_id:
                       $ref: "schemas/uuid.json"
+      responses:
+        "200":
+          description: Webhook received successfully
   flows/segments_added:
     post:
       security:
@@ -2627,6 +2636,9 @@ webhooks:
                       type: array
                       items:
                         $ref: 'schemas/flow-segment.json'
+      responses:
+        "200":
+          description: Webhook received successfully
   flows/segments_deleted:
     post:
       security:
@@ -2661,6 +2673,9 @@ webhooks:
                     timerange:
                       description: The timerange of Segments that have been deleted. The timerange MUST intersect with a Segment which has been deleted at both start and end (e.g. it cannot start or end in empty space).
                       $ref: 'schemas/timerange.json'
+      responses:
+        "200":
+          description: Webhook received successfully
   sources/created:
     post:
       security:
@@ -2690,6 +2705,9 @@ webhooks:
                   properties:
                     source:
                       $ref: "schemas/source.json"
+      responses:
+        "200":
+          description: Webhook received successfully
   sources/updated:
     post:
       security:
@@ -2719,6 +2737,9 @@ webhooks:
                   properties:
                     source:
                       $ref: "schemas/source.json"
+      responses:
+        "200":
+          description: Webhook received successfully
   sources/deleted:
     post:
       security:
@@ -2748,6 +2769,9 @@ webhooks:
                   properties:
                     source_id:
                       $ref: "schemas/uuid.json"
+      responses:
+        "200":
+          description: Webhook received successfully
 components:
   responses:
     trait_resource_listing_head_200:
