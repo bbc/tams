@@ -85,6 +85,6 @@ For more information on how we use ADRs, see [here](./adr/README.md).
 | [0044](./adr/0044-signalling-timeouts.md)                          | Signalling timeout periods                                                 |
 | [0046](./adr/0046-governance.md)                                   | Governance                                                                 |
 | [0048](./adr/0048-media-integrity.md)                              | Integrity model for media in TAMS, and when interacting with other systems |
-| [0049](./adr/0049-source-collected_by-query-parameter.md)                              | Ability to query for Sources without a collected_by value |
+| [0049](./adr/0049-source-collected_by-query-parameter.md)          | Ability to query for Sources without a collected_by value                  |
 
 \* Note: ADR 0004a was the unintended result of a number clash in the early development of TAMS which wasn't caught before publication
