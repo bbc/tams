@@ -32,7 +32,7 @@ Flows:
 
 ## Decision Outcome
 
-Recommendation: Option 3 since this already exists within the API as part of the webhooks, however this requires clarification of empty query parameters which is recommended to match the proposed behaviours.
+Chosen Options 3 and A since this already exists within the API as part of the webhooks, however this requires clarification of empty query parameters which is recommended to match the proposed behaviours.
 
 Additionally it is recommended to add the same capability at the Flow level and again match this with the same parameter as used in the webhooks and clarify the empty query parameter behaviour.
 
