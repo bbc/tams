@@ -31,7 +31,6 @@ For more information on how we use application notes, see [here](./appnotes/READ
 | [0022](./appnotes/0022-transform-architectures.md)                   | Architectures for the transforming of media                     |
 | [0024](./appnotes/0024-using-init-segments.md)                       | Using Media with Initialisation Segments in TAMS                |
 
-
 ## ADRs
 
 This repository uses [(M)ADR documents](https://adr.github.io/madr/) to propose significant changes, facilitate discussions and decision making, and to store a record of options that were considered.
