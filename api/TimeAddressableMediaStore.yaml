@@ -23,7 +23,7 @@ info:
 
     See the [bbc/tams](https://github.com/bbc/tams) repository for more background on TAMS.
 
-    **Note**: the examples provided in this specification are for a system which uses a Storage Backend that provides HTTP URLs for uploading and downloading Media Objects in buckets.
+    **Note**: the examples provided in this specification are for a system which uses a Storage Backend that provides HTTP URLs for uploading and downloading Objects in buckets.
     This could for example be implemented using an AWS S3 compatible store using presigned URLs or by a simple file system storage with an HTTP frontend.
     Clients should parse the [/service](#/operations/GET_service) endpoint and handle the Storage Backend type in use appropriately.
   version: "8.1"
@@ -1158,7 +1158,7 @@ paths:
         Deletes the Flow and associated Segments.
         If Flow Segment deletion takes too long then this request will return 202 Accepted and the `Location` header will point to a Flow Delete Request to monitor deletion progress.
         
-        Services SHALL only delete Media Objects when they are no longer referenced by any Flow Segments or other Media Objects (i.e. as init Objects).
+        Services SHALL only delete Objects when they are no longer referenced by any Flow Segments or other Objects (i.e. as init Objects).
       operationId: DELETE_flows-flowId
       tags:
         - Flows
@@ -1177,7 +1177,7 @@ paths:
               example:
                 $ref: examples/deletion-request-get-200.json
         "204":
-          description: No content. The Flow has been deleted and the Flow Segments have been or will be deleted. Media Objects referenced in other Flows will not be deleted. Media Objects that are no longer referenced by any Segments will be deleted.
+          description: No content. The Flow has been deleted and the Flow Segments have been or will be deleted. Objects referenced in other Flows will not be deleted. Objects that are no longer referenced by any Segments will be deleted.
         "403":
           description: Forbidden. You do not have permission to modify this Flow. It may be marked read-only.
         "404":
@@ -2079,7 +2079,7 @@ paths:
       description: |
         Deletes the Flow Segments. If the deletion takes too long then this request will return 202 Accepted and the `Location` header will point to a Flow Delete Request to monitor deletion progress.
         
-        Services SHALL only delete Media Objects when they are no longer referenced by any Flow Segments or other Media Objects (i.e. as init Objects).
+        Services SHALL only delete Objects when they are no longer referenced by any Flow Segments or other Objects (i.e. as init Objects).
       operationId: DELETE_flows-flowId-segments
       tags:
         - FlowSegments
@@ -2110,7 +2110,7 @@ paths:
               example:
                 $ref: examples/deletion-request-get-200.json
         "204":
-          description: No content. The Flow Segments have been or will be deleted. Media Objects referenced in other Segments will not be deleted. Media Objects that are no longer referenced by any Segments will be deleted.
+          description: No content. The Flow Segments have been or will be deleted. Objects referenced in other Segments will not be deleted. Objects that are no longer referenced by any Segments will be deleted.
         "400":
           description: Bad request. Invalid query options.
         "403":
@@ -2128,13 +2128,13 @@ paths:
     post:
       summary: Allocate Initial Flow Storage
       description: |
-        Allocate initial storage locations for writing Media Objects.
+        Allocate initial storage locations for writing Objects.
 
         The Storage Backend type, which is indicated in the [/service](#/operations/GET_service) resource, determines the information provided in the response.
         The examples and description below are for the "http_object_store" Storage Backend type.
-        This Storage Backend type provides HTTP URLs for uploading and downloading Media Objects in buckets.
+        This Storage Backend type provides HTTP URLs for uploading and downloading Objects in buckets.
 
-        The response will include a PUT URL that a client uses to upload the Media Object.
+        The response will include a PUT URL that a client uses to upload the Object.
         The client is expected to register the Flow Segment using the [/flows/{flowId}/segments](#/operations/POST_flows-flowId-segments) endpoint once the upload is complete.
 
         Clients MAY request Objects in batches to reduce the number of HTTP requests made to the Service.
@@ -2169,7 +2169,7 @@ paths:
               $ref: schemas/flow-storage-post.json
       responses:
         "201":
-          description: Storage locations for writing Media Objects.
+          description: Storage locations for writing Objects.
           content:
             application/json:
               schema:
@@ -2191,15 +2191,15 @@ paths:
           description: The requested Flow does not exist.
   /objects/{objectId}:
     head:
-      summary: Media Object Information
-      description: Return Flow references and other information about Media Objects.
+      summary: Object Information
+      description: Return Flow references and other information about init or Media Objects.
       operationId: HEAD_objects
       tags:
         - Objects
       parameters:
         - name: objectId
           in: path
-          description: The Media Object identifier. The Object ID may include special characters such as `/` which should be URL encoded.
+          description: The Object identifier. The Object ID may include special characters such as `/` which should be URL encoded.
           required: true
           schema:
             type: string
@@ -2214,10 +2214,10 @@ paths:
         - name: accept_get_urls
           in: query
           description: |
-            A comma separated list of labels of Media Object `get_urls` and `init_object.get_urls` to include in the response.
+            A comma separated list of labels of Object `get_urls` and `init_object.get_urls` to include in the response.
             Omitting `accept_get_urls` will result in no filtering of `get_urls` or `init_object.get_urls`.
             An empty `accept_get_urls` results in `get_urls` and `init_object.get_urls` being empty or omitted in the response.
-            Media Object `get_urls` and `init_object.get_urls` with no label will only be returned if `accept_get_urls` is omitted.
+            Object `get_urls` and `init_object.get_urls` with no label will only be returned if `accept_get_urls` is omitted.
             Without `get_urls` or `init_object.get_urls`, the response from the service could be substantially faster if it is not required to
             generate a large number of pre-signed URLs for example.
             Where multiple filter query parameters are provided, the returned `get_urls` and `init_object.get_urls` will match all filters.
@@ -2226,9 +2226,9 @@ paths:
         - name: accept_storage_ids
           in: query
           description: |
-            A comma separated list of `storage_id`s of Media Object `get_urls` and `init_object.get_urls` to include in the response.
+            A comma separated list of `storage_id`s of Object `get_urls` and `init_object.get_urls` to include in the response.
             Omitting `accept_storage_ids`, or providing an empty `accept_storage_ids` will result in no filtering of `get_urls` or `init_object.get_urls`.
-            Media Object `get_urls` and `init_object.get_urls` with no storage ID will only be returned if `accept_storage_ids` is omitted or empty.
+            Object `get_urls` and `init_object.get_urls` with no storage ID will only be returned if `accept_storage_ids` is omitted or empty.
             A full list of available `storage_id`s may be found at the `service/storage-backends` endpoint.
             Where multiple filter query parameters are provided, the returned `get_urls` and `init_object.get_urls` will match all filters.
           schema:
@@ -2282,21 +2282,21 @@ paths:
         "400":
           $ref: '#/components/responses/trait_resource_info_head_400'
         "404":
-          description: The requested Media Object does not exist. 404 MUST be returned if the ID has been assigned via the [`/flows/{flowId}/storage`](#/operations/POST_flows-flowId-storage), but not yet registered against a Flow Segment.
+          description: The requested Object does not exist. 404 MUST be returned if the ID has been assigned via the [`/flows/{flowId}/storage`](#/operations/POST_flows-flowId-storage), but not yet registered against a Flow Segment.
     get:
-      summary: Media Object Information
+      summary: Object Information
       description: |
-        Contains Flows that references the Media Object and other information.
+        Contains Flows that references the init/Media Object and other information.
 
-        The paging query parameters and headers are required for the list of Flow references in the Media Object.
-        Service implementations should return a complete list of Flow references within reason and API clients should expect paging to happen in some rare cases where a Media Object is used in many Flows.
+        The paging query parameters and headers are required for the list of Flow references in the Object.
+        Service implementations should return a complete list of Flow references within reason and API clients should expect paging to happen in some rare cases where a Object is used in many Flows.
       operationId: GET_objects
       tags:
         - Objects
       parameters:
         - name: objectId
           in: path
-          description: The Media Object identifier. The Object ID may include special characters such as `/` which should be URL encoded.
+          description: The Object identifier. The Object ID may include special characters such as `/` which should be URL encoded.
           required: true
           schema:
             type: string
@@ -2311,10 +2311,10 @@ paths:
         - name: accept_get_urls
           in: query
           description: |
-            A comma separated list of labels of Media Object `get_urls` and `init_object.get_urls` to include in the response.
+            A comma separated list of labels of Object `get_urls` and `init_object.get_urls` to include in the response.
             Omitting `accept_get_urls` will result in no filtering of `get_urls` or `init_object.get_urls`.
             An empty `accept_get_urls` results in `get_urls` and `init_object.get_urls` being empty or omitted in the response.
-            Media Object `get_urls` and `init_object.get_urls` with no label will only be returned if `accept_get_urls` is omitted.
+            Object `get_urls` and `init_object.get_urls` with no label will only be returned if `accept_get_urls` is omitted.
             Without `get_urls` and `init_object.get_urls`, the response from the service could be substantially faster if it is not required to
             generate a large number of pre-signed URLs for example.
             Where multiple filter query parameters are provided, the returned `get_urls` and `init_object.get_urls` will match all filters.
@@ -2323,9 +2323,9 @@ paths:
         - name: accept_storage_ids
           in: query
           description: |
-            A comma separated list of `storage_id`s of Media Object `get_urls` and `init_object.get_urls` to include in the response.
+            A comma separated list of `storage_id`s of Object `get_urls` and `init_object.get_urls` to include in the response.
             Omitting `accept_storage_ids`, or providing an empty `accept_storage_ids` will result in no filtering of `get_urls` or `init_object.get_urls`.
-            Media Object `get_urls` and `init_object.get_urls` with no storage ID will only be returned if `accept_storage_ids` is omitted or empty.
+            Object `get_urls` and `init_object.get_urls` with no storage ID will only be returned if `accept_storage_ids` is omitted or empty.
             A full list of available `storage_id`s may be found at the `service/storage-backends` endpoint.
             Where multiple filter query parameters are provided, the returned `get_urls` and `init_object.get_urls` will match all filters.
           schema:
@@ -2386,17 +2386,17 @@ paths:
         "400":
           description: Bad request. Invalid query options.
         "404":
-          description: The requested Media Object does not exist. 404 MUST be returned if the ID has been assigned via the [`/flows/{flowId}/storage`](#/operations/POST_flows-flowId-storage), but not yet registered against a Flow Segment.
+          description: The requested Object does not exist. 404 MUST be returned if the ID has been assigned via the [`/flows/{flowId}/storage`](#/operations/POST_flows-flowId-storage), but not yet registered against a Flow Segment.
   /objects/{objectId}/instances:
     post:
-      summary: Register a Media Object instance
+      summary: Register an Object instance
       description: |
         Request the service to create an Object instance on a new Storage Backend. Or add a new uncontrolled URL to `get_urls`.
 
         To request the duplication of the Object to a new Storage Backend, clients POST a `storage_id` to this endpoint that does not currently have an instance of the Object. The API will then:
 
-        - Allocate storage for Media Object `objectId` on Storage Backend `storage_id`
-        - Copy the Media Object from an existing location to the newly allocated storage
+        - Allocate storage for Object `objectId` on Storage Backend `storage_id`
+        - Copy the Object from an existing location to the newly allocated storage
         - Start advertising the new copy in `get_urls` once ready
 
         The API instances SHOULD be capable of handling the case where the only existant instances are uncontrolled.
@@ -2413,7 +2413,7 @@ paths:
       parameters:
         - name: objectId
           in: path
-          description: The Media Object identifier. The Object ID may include special characters such as `/` which should be URL encoded.
+          description: The Object identifier. The Object ID may include special characters such as `/` which should be URL encoded.
           required: true
           schema:
             type: string
@@ -2436,17 +2436,17 @@ paths:
         "400":
           description: Bad request. Invalid request JSON.
         "403":
-          description: Forbidden. You do not have permission to modify this Media Object.
+          description: Forbidden. You do not have permission to modify this Object.
         "404":
-          description: The Media Object does not exist. 404 MUST be returned if the ID has been assigned via the [`/flows/{flowId}/storage`](#/operations/POST_flows-flowId-storage), but not yet registered against a Flow Segment.
+          description: The Object does not exist. 404 MUST be returned if the ID has been assigned via the [`/flows/{flowId}/storage`](#/operations/POST_flows-flowId-storage), but not yet registered against a Flow Segment.
     delete:
-      summary: Delete a Media Object instance
+      summary: Delete an Object instance
       description: |
-        Delete an instance of a Media Object.
+        Delete an instance of a Object.
 
         One of `storage_id` or `label` MUST be specified in the query parameters. `storage_id` SHOULD be used where `controlled` is `True` for the instance.
 
-        API instances should remove the Media Object instance from the `get_urls` list and then, if the instance is controlled, delete the Object instance from storage.
+        API instances should remove the Object instance from the `get_urls` list and then, if the instance is controlled, delete the Object instance from storage.
 
         API instances SHOULD prevent clients from deleting all Object instances. Additionally, API instances MAY prevent clients from deleting all controlled Object instances. Where clients wish to remove all copies of an Object from the store, they should do so by deleting all Flows or Flow Segments which reference the Object.
 
@@ -2458,27 +2458,27 @@ paths:
       parameters:
         - name: objectId
           in: path
-          description: The Media Object identifier. The Object ID may include special characters such as `/` which should be URL encoded.
+          description: The Object identifier. The Object ID may include special characters such as `/` which should be URL encoded.
           required: true
           schema:
             type: string
         - name: storage_id
           in: query
-          description: The storage_id identifying the Media Object instance to be deleted.
+          description: The storage_id identifying the Object instance to be deleted.
           schema:
             type: string
         - name: label
           in: query
-          description: The label identifying the Media Object instance to be deleted.
+          description: The label identifying the Object instance to be deleted.
           schema:
             type: string
       responses:
         "204":
-          description: No content. The Media Object instance has been deleted.
+          description: No content. The Object instance has been deleted.
         "400":
           description: Bad request. Invalid query options.
         "403":
-          description: Forbidden. You do not have permission to modify this Media Object.
+          description: Forbidden. You do not have permission to modify this Object.
         "404":
           description: The requested Object ID in the path is invalid. 404 MUST be returned if the ID has been assigned via the [`/flows/{flowId}/storage`](#/operations/POST_flows-flowId-storage), but not yet registered against a Flow Segment.
   /flow-delete-requests:
@@ -2898,7 +2898,7 @@ tags:
   - name: Objects
     description: The Object in the Storage Backend(s) that contains the media essence.
   - name: MediaStorage
-    description: The system that stores the Media Objects referenced by Flow Segments.
+    description: The system that stores the Objects referenced by Flow Segments.
   - name: FlowDeleteRequests
     description: Resource for monitoring long running deletion of Flows and Flow Segments.
   - name: Webhooks
