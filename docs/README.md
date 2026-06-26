@@ -30,7 +30,6 @@ For more information on how we use application notes, see [here](./appnotes/READ
 | [0021](./appnotes/0021-media-integrity.md)                           | Integrity model for media in TAMS, and when interacting with other systems |
 | [0022](./appnotes/0022-transform-architectures.md)                   | Architectures for the transforming of media                     |
 
-
 ## ADRs
 
 This repository uses [(M)ADR documents](https://adr.github.io/madr/) to propose significant changes, facilitate discussions and decision making, and to store a record of options that were considered.
@@ -88,6 +87,5 @@ For more information on how we use ADRs, see [here](./adr/README.md).
 | [0046](./adr/0046-governance.md)                                   | Governance                                                                 |
 | [0047](./adr/0047-flow-profiles.md)                                | Adding Flow Profiles to TAMS                                               |
 | [0048](./adr/0048-media-integrity.md)                              | Integrity model for media in TAMS, and when interacting with other systems |
-
 
 \* Note: ADR 0004a was the unintended result of a number clash in the early development of TAMS which wasn't caught before publication
