@@ -10,22 +10,22 @@
             ],
             "properties": {
                 "id": {
-                    "description": "The Media Object identifier.",
+                    "description": "The Object identifier.",
                     "type": "string"
                 },
                 "referenced_by_flows": {
                     "type": "array",
-                    "description": "List of Flows that reference this Media Object via Flow Segments in this store instance.",
+                    "description": "List of Flows that reference this Object via Flow Segments in this store instance. For init Objects, this reference is indirect via Media Objects.",
                     "items": {
                         "$ref": "uuid.json"
                     }
                 },
                 "first_referenced_by_flow": {
-                    "description": "The first Flow that had a Flow Segment reference the Media Object in this store instance. This Flow is also present in 'referenced_by_flows' if it is still referenced by the Flow. This property is optional and may in some implementations become unset if the Flow no longer references the media object, e.g. because it was deleted.",
+                    "description": "The first Flow that had a Flow Segment reference the Object in this store instance. For init Objects, this reference is indirect via Media Objects. This Flow is also present in 'referenced_by_flows' if it is still referenced by the Flow. This property is optional and may in some implementations become unset if the Flow no longer references the Object, e.g. because it was deleted.",
                     "$ref": "uuid.json"
                 },
                 "timerange": {
-                    "description": "The timerange covering the sample timestamps embedded in or derived from the Media Object itself, on the Media Object's timeline. This parameter MUST be set where the Object contains media. It MUST NOT be set where the Object contains an init segment.",
+                    "description": "The timerange covering the sample timestamps embedded in or derived from the Object itself, on the Media Object's timeline. This parameter MUST be set where the Object contains media. It MUST NOT be set where the Object contains an init segment.",
                     "$ref": "timerange.json"
                 },
                 "init_object": {

@@ -1,10 +1,10 @@
 {
     "type": "object",
-    "description": "Provides the location and metadata of the media files corresponding to a Media Object.",
+    "description": "Provides the location and metadata of the files corresponding to a Object.",
     "title": "Object",
     "properties": {
         "get_urls": {
-            "description": "A list of URLs to which a GET request can be made to directly retrieve the contents of the Media Object. This is required by the `http_object_store` Storage Backend type, which is the only one currently described. Clients may choose any URL in the list and treat the content returned as identical, however servers may sort the list such that the preferred URL is first. Storage Backend metadata for controlled URLs should be populated by the TAMS instance based on the Storage Backend the Meda Object instance resides in.",
+            "description": "A list of URLs to which a GET request can be made to directly retrieve the contents of the Object. This is required by the `http_object_store` Storage Backend type, which is the only one currently described. Clients may choose any URL in the list and treat the content returned as identical, however servers may sort the list such that the preferred URL is first. Storage Backend metadata for controlled URLs should be populated by the TAMS instance based on the Storage Backend the Object instance resides in.",
             "type": "array",
             "items": {
                 "type": "object",
@@ -24,7 +24,7 @@
                                 "$ref": "uuid.json"
                             },
                             "url": {
-                                "description": "A URL to which a GET request can be made to directly retrieve the contents of the media object. Clients should include credentials if the provide URL is on the same origin as the API endpoint. This URL SHOULD support the inclusion of checksums in headers as supported by advertised Storage Backend product. See AppNote 0048 for more details.",
+                                "description": "A URL to which a GET request can be made to directly retrieve the contents of the Object. Clients should include credentials if the provide URL is on the same origin as the API endpoint. This URL SHOULD support the inclusion of checksums in headers as supported by advertised Storage Backend product. See AppNote 0048 for more details.",
                                 "type": "string"
                             },
                             "presigned": {
