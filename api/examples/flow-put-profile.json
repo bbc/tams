@@ -1,0 +1,11 @@
+{
+  "id": "6101df05-06bb-41b8-8af4-cf7cd33df209",
+  "source_id": "41d7f7eb-c48d-4513-9b37-17b418d26d7f",
+  "description": "audio capture web",
+  "label": "capture_1",
+  "tags": {
+    "input_quality": "web",
+    "_tams_segmentation_rate": "375/8"
+  },
+  "profile_id": "329b98d6-adeb-418c-8eaf-eca14edc1706"
+}

@@ -26,8 +26,9 @@ For more information on how we use application notes, see [here](./appnotes/READ
 | [0017](./appnotes/0017-reuse-of-ids.md)                              | When to re-use IDs in TAMS and compatible systems               |
 | [0018](./appnotes/0018-managing-multiple-object-instances.md)        | Managing Multiple Object Instances                              |
 | [0019](./appnotes/0019-implementing-retention-management.md)         | Methods of implementing retention management                    |
+| [0020](./appnotes/0020-using-flow-profiles.md)                       | Using Profiles in TAMS                                          |
 | [0021](./appnotes/0021-media-integrity.md)                           | Integrity model for media in TAMS, and when interacting with other systems |
-| [0022](./appnotes/0022-transform-architectures.md)                   | Architectures for the transforming of media                      |
+| [0022](./appnotes/0022-transform-architectures.md)                   | Architectures for the transforming of media                     |
 
 ## ADRs
 
@@ -84,6 +85,7 @@ For more information on how we use ADRs, see [here](./adr/README.md).
 | [0043](./adr/0043-signalling-retention-time.md)                    | Signalling retention time                                                  |
 | [0044](./adr/0044-signalling-timeouts.md)                          | Signalling timeout periods                                                 |
 | [0046](./adr/0046-governance.md)                                   | Governance                                                                 |
+| [0047](./adr/0047-flow-profiles.md)                                | Adding Flow Profiles to TAMS                                               |
 | [0048](./adr/0048-media-integrity.md)                              | Integrity model for media in TAMS, and when interacting with other systems |
 
 \* Note: ADR 0004a was the unintended result of a number clash in the early development of TAMS which wasn't caught before publication
