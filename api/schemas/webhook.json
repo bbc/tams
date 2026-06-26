@@ -47,14 +47,14 @@
             }
         },
         "flow_collected_by_ids": {
-            "description": "Limit Flow and Flow Segment events to those with Flow that is collected by a Flow Collection in the given list of Flow Collection IDs",
+            "description": "Limit Flow and Flow Segment events to those with a Flow that is collected by a Flow Collection in the given list of Flow Collection IDs. An empty array limits events to Flows that are not collected by any Flow Collection.",
             "type": "array",
             "items": {
                 "$ref": "uuid.json"
             }
         },
         "source_collected_by_ids": {
-            "description": "Limit Flow, Flow Segment and Source events to those with Source that is collected by a Source Collection in the given list of Source Collection IDs",
+            "description": "Limit Flow, Flow Segment and Source events to those with a Source that is collected by a Source Collection in the given list of Source Collection IDs. An empty array limits events to Sources that are not collected by any Source Collection.",
             "type": "array",
             "items": {
                 "$ref": "uuid.json"

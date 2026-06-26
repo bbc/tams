@@ -412,6 +412,14 @@ paths:
           description: Filter on Source format.
           schema:
             $ref: 'schemas/content-format.json'
+        - name: collected_by_ids
+          in: query
+          description: |
+            Filter on Sources by the Source Collection(s) that collect them, given as a comma-separated list of Source IDs.
+            Returns Sources whose `collected_by` includes at least one of the given Source IDs.
+            An empty value (`collected_by_ids=`) returns only Sources that are not collected by any Source, i.e. top-level Sources with no `collected_by` value.
+          schema:
+            $ref: 'schemas/uuid-list-empty.json'
         - $ref: '#/components/parameters/trait_resource_paged_key'
         - $ref: '#/components/parameters/trait_paged_limit'
       responses:
@@ -473,6 +481,14 @@ paths:
           description: Filter on Source format.
           schema:
             $ref: 'schemas/content-format.json'
+        - name: collected_by_ids
+          in: query
+          description: |
+            Filter on Sources by the Source Collection(s) that collect them, given as a comma-separated list of Source IDs.
+            Returns Sources whose `collected_by` includes at least one of the given Source IDs.
+            An empty value (`collected_by_ids=`) returns only Sources that are not collected by any Source, i.e. top-level Sources with no `collected_by` value.
+          schema:
+            $ref: 'schemas/uuid-list-empty.json'
         - $ref: '#/components/parameters/trait_resource_paged_key'
         - $ref: '#/components/parameters/trait_paged_limit'
       responses:
@@ -865,6 +881,14 @@ paths:
           description: Filter on video Flows that have the given frame height.
           schema:
             type: integer
+        - name: collected_by_ids
+          in: query
+          description: |
+            Filter on Flows by the Flow Collection(s) that collect them, given as a comma-separated list of Flow IDs.
+            Returns Flows whose `collected_by` includes at least one of the given Flow IDs.
+            An empty value (`collected_by_ids=`) returns only Flows that are not collected by any Flow, i.e. top-level Flows with no `collected_by` value.
+          schema:
+            $ref: 'schemas/uuid-list-empty.json'
         - $ref: '#/components/parameters/trait_resource_paged_key'
         - $ref: '#/components/parameters/trait_paged_limit'
       responses:
@@ -952,6 +976,14 @@ paths:
           description: Filter on video Flows that have the given frame height.
           schema:
             type: integer
+        - name: collected_by_ids
+          in: query
+          description: |
+            Filter on Flows by the Flow Collection(s) that collect them, given as a comma-separated list of Flow IDs.
+            Returns Flows whose `collected_by` includes at least one of the given Flow IDs.
+            An empty value (`collected_by_ids=`) returns only Flows that are not collected by any Flow, i.e. top-level Flows with no `collected_by` value.
+          schema:
+            $ref: 'schemas/uuid-list-empty.json'
         - $ref: '#/components/parameters/trait_resource_paged_key'
         - $ref: '#/components/parameters/trait_paged_limit'
       responses:
