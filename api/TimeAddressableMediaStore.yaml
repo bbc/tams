@@ -26,7 +26,7 @@ info:
     **Note**: the examples provided in this specification are for a system which uses a Storage Backend that provides HTTP URLs for uploading and downloading Media Objects in buckets.
     This could for example be implemented using an AWS S3 compatible store using presigned URLs or by a simple file system storage with an HTTP frontend.
     Clients should parse the [/service](#/operations/GET_service) endpoint and handle the Storage Backend type in use appropriately.
-  version: "8.0"
+  version: "8.1"
   contact:
     name: 'BBC R&D - Cloud-Fit Production Team'
     email: 'cloudfit-opensource@rd.bbc.co.uk'
@@ -42,7 +42,7 @@ servers:
     variables:
       version:
         description: API version
-        default: v8.0
+        default: v8.1
 security:
   - bearer_token_auth: []
   - url_token_auth: []
@@ -2634,7 +2634,6 @@ paths:
           description: Forbidden. You do not have permission to modify this Media Object.
         "404":
           description: The requested Object ID in the path is invalid. 404 MUST be returned if the ID has been assigned via the [`/flows/{flowId}/storage`](#/operations/POST_flows-flowId-storage), but not yet registered against a Flow Segment.
-
   /flow-delete-requests:
     head:
       summary: List Flow Delete Requests
@@ -2734,6 +2733,9 @@ webhooks:
                   properties:
                     flow:
                       $ref: "schemas/flow-get.json"
+      responses:
+        "200":
+          description: Webhook received successfully
   flows/updated:
     post:
       security:
@@ -2763,6 +2765,9 @@ webhooks:
                   properties:
                     flow:
                       $ref: "schemas/flow-get.json"
+      responses:
+        "200":
+          description: Webhook received successfully
   flows/deleted:
     post:
       security:
@@ -2792,6 +2797,9 @@ webhooks:
                   properties:
                     flow_id:
                       $ref: "schemas/uuid.json"
+      responses:
+        "200":
+          description: Webhook received successfully
   flows/segments_added:
     post:
       security:
@@ -2827,6 +2835,9 @@ webhooks:
                       type: array
                       items:
                         $ref: 'schemas/flow-segment.json'
+      responses:
+        "200":
+          description: Webhook received successfully
   flows/segments_deleted:
     post:
       security:
@@ -2861,6 +2872,9 @@ webhooks:
                     timerange:
                       description: The timerange of Segments that have been deleted. The timerange MUST intersect with a Segment which has been deleted at both start and end (e.g. it cannot start or end in empty space).
                       $ref: 'schemas/timerange.json'
+      responses:
+        "200":
+          description: Webhook received successfully
   sources/created:
     post:
       security:
@@ -2890,6 +2904,9 @@ webhooks:
                   properties:
                     source:
                       $ref: "schemas/source.json"
+      responses:
+        "200":
+          description: Webhook received successfully
   sources/updated:
     post:
       security:
@@ -2919,6 +2936,9 @@ webhooks:
                   properties:
                     source:
                       $ref: "schemas/source.json"
+      responses:
+        "200":
+          description: Webhook received successfully
   sources/deleted:
     post:
       security:
@@ -2948,6 +2968,9 @@ webhooks:
                   properties:
                     source_id:
                       $ref: "schemas/uuid.json"
+      responses:
+        "200":
+          description: Webhook received successfully
 components:
   responses:
     trait_resource_listing_head_200:
