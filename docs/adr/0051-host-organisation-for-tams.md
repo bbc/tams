@@ -65,7 +65,8 @@ At a basic level, Linux Foundation projects are required to use an open source l
 
 In terms of that neutral party, Linux Foundation projects are a “series” of LF Projects, LLC, a “series limited liability company” under Delaware law.
 This effectively allows each project to be a distinct legal entity under the parent organisation, with separate obligations, assets and liabilities, without the overhead of managing a large number of companies (_note that this is the author's layperson's understanding, and not a qualified legal opinion_).
-While funded projects exist, so do unfunded ones.
+
+If desirable, a Linux Foundation project can become "funded", starting a "directed fund" to raise revenue (through membership) and spend it as directed.
 
 On Intellectual Property Rights (IPR), it seems to rely on Apache 2.0 and similar licences containing a patent grant and then [Developer Certificate of Origin (DCO)](https://wiki.linuxfoundation.org/dco) sign-off indicating you were able to licence that contribution under Apache 2.0.
 There is some cross-LF activity to defend members from Non-practicing Entities (also known as "patent trolls") depending on membership tier.
@@ -78,6 +79,7 @@ To set up a project requires the support of at least one Linux Foundation member
 - Good, because it is the lightest-touch of the options
 - Good, because it creates space for TAMS applications outside of the Media & Entertainment sector, where it may find broader adoption
 - Neutral, because while it is not a direct fit for TAMS, the Linux Foundation overall is very broad
+- Neutral, because there would be additional steps to operate as a funded project, however this is no different to the existing model
 - Bad, because we have to form, grow and run our own community (rather than being participants in an existing one)
 
 ### Option 2: Academy Software Foundation (AWSF)
@@ -85,22 +87,54 @@ To set up a project requires the support of at least one Linux Foundation member
 Join the Academy Software Foundation (ASWF) as a project, like [OpenTimelineIO](https://github.com/AcademySoftwareFoundation/OpenTimelineIO).
 
 ASWF is a subsidiary of the Linux Foundation, and shares many of the same aspects, for example the legal structure and requirements around licences, participation and ownership.
-It is specifically "motion picture and visual effects" projects, and is fairly well aligned to the Media & Entertainment sector more generally.
-It also comes with more structure and community.
-For example there is a fairly active Slack community and a programme of events such as annual [DevDays](https://www.aswf.io/dev-days/), and on a technical level an active [Technical Advisory Council (TAC)](https://tac.aswf.io/) overseeing projects, and a set of [CI infrastructure](https://www.aswf.io/ci-infrastructure/).
+Its [charter](https://cdn.platform.linuxfoundation.org/agreements/aswf.pdf) describes its scope as:
 
-However it comes with more requirements in initial submission, including consiering the potential "universe of participants" and presenting for approval to the TAC.
+> open source or open specification projects supporting the motion picture industry
+
+The Foundation itself reads this fairly broadly, listing among its [goals](https://www.aswf.io/about/) to "share resources across the motion picture and broader media industries", however in practice many of the projects and members are active in the animation and visual effects space.
+
+It is a membership organisation (a "Directed Fund" of the Linux Foundation), applying the overall principle of separating technical governance from business direction, while providing a way to to collect funds and spend them to further its goals based on the direction of [member organisations](https://www.aswf.io/members/).
+For example, the ASWF funds its use of Slack and has a Working Group managing (and where necessary funding) some [CI infrastructure](https://www.aswf.io/ci-infrastructure/).
+
+It also comes with more requirements in initial submission, including considering the potential "universe of participants" and presenting for approval to the [Technical Advisory Council (TAC)](https://tac.aswf.io/).
 There is also a project lifecycle process into which projects are slotted: Sandbox, Incubation, Graduated, Archived.
 Projects aim to move up from Sandbox to Incubation (or at least make demonstrable progress) within one year.
 Moving to Incubation requires some more complete documentation and pass a growth assessment.
 Annual Reviews take place to re-assess lifecycle stage and look over current activity, stage match and feedback.
 
+### Slack and Community
+
+One of our considerations is around what happens to the existing TAMS community, which is currently centred around a few core spaces (e.g. the CNAP Slack) and events (TAMSCon, the Community Call, etc.)
+
+It seems the [ASWF Slack](https://slack.aswf.io/) is viewed as an enabler for the community it serves: providing a space for the groups involved to come together around a shared goal.
+Members and participants have deep expertise is a wide variety of topics, and it serves the variety of projects under the ASWF umbrella well.
+A few of the TSC members are also members of the ASWF Slack and can see the variety of technical discussions that take place, of a similar character to those in the CNAP Slack (however there are a number of useful private channels within the CNAP workspace: it is not clear to what extent this is possible in the ASWF community).
+
+The ASWF Slack community is geared around a channel-per-project, e.g. there is a `#opentimelineio` channel, plus a handful of working group channels (e.g. `#opentimelineio-examples`).
+In theory it is possible to merge workspaces together, exporting data from our existing workspace and then importing it to the new one, which would reduce (but not entirely mitigate) the impact of moving spaces.
+One of the aspects the ASWF funds is a Slack Pro licence for their workspace, enabling retention of the message history beyond the 3-month limit of Slack Free.
+
+### Events
+
+Typically ASWF has a set of events that run across the Foundation: broadly the Open Source Forum, Open Source Days and Dev Days.
+Of these the Open Source Forum and Open Source Days a in-person presentation sessions about software, open source and best practices (in Los Angeles) open to Foundation members, or members plus individuals for a registration fee.
+Dev Days is a "hackathon" day where participants give a day of their time to work on a task from an Academy Software Foundation project.
+
+In addition to this the various projects and Working Groups have their TSC and other meetings on a regular cadence, along with the fortnightly TAC meeting.
+
+Currently the in-person events are in Los Angeles, although the Foundation have expressed that growing into Europe would have some appeal.
+
+### Pros and Cons
 - Good, because it is well aligned with the sector TAMS works in
 - Good, because it provides a ready-made community to join an grow
-- Neutral, because it is currently relatively VFX/film focused, but TAMS is applicable in that space too
+- Good, because it provides a ready structure to manage funding and spending on resources
+- Neutral/bad, because it is currently VFX/film focused (but seems keen to grow wider than that)
 - Neutral/bad, because it introduces more process around managing the project
+- Neutral/bad, because current events are all in the US (California) and the TAMS community is currently much more focused in Europe: many existing participants would be unable to attend in-person
 - Bad, because it positions TAMS firmly within Media & Entertainment, when the technology may be more widely useful
 - Bad, because it likely forces us to move our existing community, which may come at a cost of engagement and participation
+- Bad, because we'd lose some of the freedom we enjoy to run and manage events within our community
+- Bad, because very few of the existing TAMS community are Members of ASWF: in principle this isn't a barrier to technical participation, but limits event access
 
 ### Option 3: Cloud Native Computing Foundation (CNCF)
 
