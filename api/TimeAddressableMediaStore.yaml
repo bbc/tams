@@ -1874,7 +1874,7 @@ paths:
         Where Flow Segments reference initialisation segment Objects with the same ID, the initialisation segment is the same.
         Consuming clients may choose to ignore initialisation segment Objects that haven't changed in subsequent Flow Segments.
 
-        When making requests to the provided `get_urls`, clients should include credentials if the provided URL is on the same origin as the API itself, akin to the `same-origin` mode in the [WhatWG Fetch Standard](https://fetch.spec.whatwg.org/#concept-request-credentials-mode).
+        When making requests to provided `get_url`'s that are not presigned, clients SHOULD include credentials if the provided URL is on the same origin as the Service itself, akin to the `same-origin` mode in the [WhatWG Fetch Standard](https://fetch.spec.whatwg.org/#concept-request-credentials-mode). Services MAY support the use of out-of-band credentials where the provided URL is on a different origin to the Service itself. Services SHOULD NOT solely require the use of out-of-band credentials.
       operationId: GET_flows-flowId-segments
       tags:
         - FlowSegments
@@ -2151,7 +2151,7 @@ paths:
         Service implementations need to handle situations where Objects are not used, and where content is were uploaded but the Object is not successfully registered against a Flow Segment or as an init Object against Media Objects.
         In these circumstances, Services should garbage collect Objects after the timeout advertised in [`min_object_timeout` at the `/service`](#/operations/GET_service) endpoint.
 
-        When making requests to the provided `put_url`, clients should include credentials if the provided URL is on the same origin as the API itself, akin to the `same-origin` mode in the [WhatWG Fetch Standard](https://fetch.spec.whatwg.org/#concept-request-credentials-mode).
+        When making requests to provided `put_url`'s that are not presigned, clients SHOULD include credentials if the provided URL is on the same origin as the Service itself, akin to the `same-origin` mode in the [WhatWG Fetch Standard](https://fetch.spec.whatwg.org/#concept-request-credentials-mode). Services MAY support the use of out-of-band credentials where the provided URL is on a different origin to the Service itself. Services SHOULD NOT solely require the use of out-of-band credentials.
       operationId: POST_flows-flowId-storage
       tags:
         - MediaStorage
@@ -2290,6 +2290,8 @@ paths:
 
         The paging query parameters and headers are required for the list of Flow references in the Object.
         Service implementations should return a complete list of Flow references within reason and API clients should expect paging to happen in some rare cases where a Object is used in many Flows.
+
+        When making requests to provided `get_url`'s that are not presigned, clients SHOULD include credentials if the provided URL is on the same origin as the Service itself, akin to the `same-origin` mode in the [WhatWG Fetch Standard](https://fetch.spec.whatwg.org/#concept-request-credentials-mode). Services MAY support the use of out-of-band credentials where the provided URL is on a different origin to the Service itself. Services SHOULD NOT solely require the use of out-of-band credentials.
       operationId: GET_objects
       tags:
         - Objects
