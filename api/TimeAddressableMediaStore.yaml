@@ -1863,6 +1863,8 @@ paths:
 
         It may also use a subset of the samples in the Media Object, and if the `include_object_timerange=true` parameter is set, the object's timerange will also be returned to aid identifying which samples to skip.
 
+        Segments are sorted by ascending timerange by default.
+
         Clients should use the pagination options to limit the results to a timerange and/or count.
         Service implementations may also limit the results returned.
         This will be signalled via the paging headers in the response.
