@@ -1864,6 +1864,9 @@ paths:
         It may also use a subset of the samples in the Media Object, and if the `include_object_timerange=true` parameter is set, the object's timerange will also be returned to aid identifying which samples to skip.
 
         Segments are sorted by timerange, in ascending order by default.
+        As Segments in TAMS do not overlap, either of the start or end timestamp of the timerange may be used as the sort key.
+        Service implementations MUST take clusivity markers of the timerange into account.
+        Service implementations should consider edge cases such as a timerange with an exclusive end `[1:0_2:0)` followed by an instantaneous timerange of `[2:0]`.
 
         Clients should use the pagination options to limit the results to a timerange and/or count.
         Service implementations may also limit the results returned.
