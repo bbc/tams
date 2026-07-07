@@ -23,7 +23,7 @@
             "$ref": "mime-type.json"
         },
         "presigned": {
-            "description": "If set to `true`, the `put_url`'s in the response will be presigned. If set to `false`, the `put_url`'s in the response will not be presigned. If `presigned` is set to `false`, the response from the service could be substantially faster if it is not required to generate a large number of pre-signed URLs. Services may choose their own default. If Clients only support one mode of operation, they SHOULD specify this parameter.",
+            "description": "If set to `true`, the `put_url`s in the response will be presigned. If set to `false`, the `put_url`s in the response will not be presigned. If `presigned` is set to `false`, the response from the service could be substantially faster if it is not required to generate a large number of pre-signed URLs. Services may choose their own default. If Clients only support one mode of operation, they SHOULD specify this parameter.",
             "type": "boolean"
         }
     },
