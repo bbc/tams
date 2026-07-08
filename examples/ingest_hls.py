@@ -2,6 +2,7 @@
 # This script demonstrates ingest of media from an HLS playlist into TAMS
 
 import json
+import sys
 from typing import Generator, Any, AsyncGenerator, Optional
 import asyncio
 import os
@@ -356,6 +357,7 @@ if __name__ == "__main__":
             "Require either OAuth2 credentials (--oauth2-url, --client-id, --client-secret) "
             "or basic credentials (--username, --password)"
         )
+        sys.exit(1)
 
     list_filename = args.hls_filename or args.filename
     start_segment = args.hls_start_segment or args.start_segment
