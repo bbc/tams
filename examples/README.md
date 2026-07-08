@@ -25,8 +25,9 @@ Run `make sample_content` to download them and generate a number of playlists us
 The result can be found in the `sample_content_segments/` folder.
 
 - `sample_content_segments/hls_output.m3u8`: Big Buck Bunny as a video-only HLS playlist with 5-second segments
+- `sample_content_segments/tams_edit_test_film_flow.list` Short test film as 5-second H.264 video-only segments in an MPEG-TS container, with associated list file
 - `sample_content_segments/mov_h264_flow.list`: Short test film as a single H.264 video segment in a .mov container
-- `sample_content_segments/wav_pcm_flow.list`: Audio from short test film as a series of .wav files containing PCM 
+- `sample_content_segments/wav_pcm_flow.list`: Audio from short test film as a series of .wav files containing PCM
 
 ### Virtual Environment
 

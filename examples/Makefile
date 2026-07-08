@@ -39,6 +39,9 @@ sample_content_segments/wav_pcm_flow.list: tams-edit-test-film.ts sample_content
 sample_content_segments/mov_h264_flow.list: tams-edit-test-film.ts sample_content_segments
 	ffmpeg -i $< -an -c:v copy -f segment -segment_list $@ -segment_time 60 sample_content_segments/mov_h264_flow_%03d.mov
 
+sample_content_segments/tams_edit_test_film_flow.list: tams-edit-test-film.ts sample_content_segments
+	ffmpeg -i $< -an -c:v copy -f segment -segment_list $@ -segment_time 5 sample_content_segments/tams_edit_test_film_flow_%03d.ts
+
 fetch_sample_media: tams-edit-test-film.ts bbb_sunflower_1080p_30fps_normal.mp4
 
 sample_content: sample_content_segments/hls_output.m3u8 sample_content_segments/wav_pcm_flow.list sample_content_segments/mov_h264_flow.list
