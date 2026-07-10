@@ -184,7 +184,9 @@ Oldest Segments that take the duration over the specified duration will be delet
 
 ### originating_id
 
-Status: **Proposed**
+Status: **Deprecated**
+
+Instead, use `first_referenced_by_flow` in the Object metadata to determine the originating Flow(s) for content.
 
 Proposed in [ADR0004a - Flow and Source References](../adr/0004a-ancestry-relationships.md).
 
@@ -193,7 +195,9 @@ Contains the ID of the originating Flow.
 
 ### originating_timerange
 
-Status: **Proposed**
+Status: **Deprecated**
+
+Instead, use `first_referenced_by_flow` in the Object metadata to determine the originating Flow(s) for content, and the Segment metadata or the originating and destination Flows to determine the mapping of Objects between their respective timelines.
 
 Proposed in [ADR0004a - Flow and Source References](../adr/0004a-ancestry-relationships.md).
 
