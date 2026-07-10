@@ -120,7 +120,7 @@ Known values:
 
 ### hls_exclude
 
-Status: **Experimental**
+Status: **Implementation specific**
 
 Used in the TAMS demonstration at NAB 2025.
 
@@ -130,7 +130,7 @@ Defaults to `false` if the tag is not set.
 
 ### hls_segments
 
-Status: **Experimental**
+Status: **Implementation specific**
 
 Used in the TAMS demonstration at IBC 2024.
 
@@ -278,7 +278,7 @@ A comma separated list of auth classes used to derive permissions on the Source.
 
 ### hls_exclude
 
-Status: **Experimental**
+Status: **Implementation specific**
 
 Used in the TAMS demonstration at NAB 2025.
 
