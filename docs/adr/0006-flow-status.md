@@ -1,7 +1,10 @@
 ---
-status: "accepted"
+status: "deprecated"
 ---
 # Flow Update Status
+
+> [!CAUTION]
+> The tag described in the [More Information](#tamsaws-workshop-discussion---13th-february-2024) section of this ADR has been elevated to the core specification as the `status` [Flow parameter](https://bbc.github.io/tams/main/index.html#/operations/GET_flows-flowId)
 
 ## Context and Problem Statement
 

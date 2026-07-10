@@ -57,9 +57,9 @@ In the case of the 3rd-party API approach, a client makes a request to the the t
 The transform client will then register a new Flow, and provide the Flow ID to the requesting client.
 
 The transform client will transform each Segment in the originating Flow, and write the resultant media back to TAMS against the destination Flow.
-The transform client should set the destination Flow's `flow_status` tag to `awaiting_content` on initial registration, `ingesting` on first write of a Segment, and `closed_complete` once the transform is complete.
+The transform client should set the destination Flow's `status` parameter to `awaiting_content` on initial registration, `ingesting` on first write of a Segment, and `closed_complete` once the transform is complete.
 
-Where the originating Flow has a `flow_status` of `ingesting`, the transform client may need to subscribe to `flows/segments_added` webhook events for the originating Flow and transform new Segments as they become available.
+Where the originating Flow has a `status` of `ingesting`, the transform client may need to subscribe to `flows/segments_added` webhook events for the originating Flow and transform new Segments as they become available.
 
 The transform client may be designed such that all Segments are transformed in parallel, allowing for faster than real-time transforms in many cases.
 
@@ -88,10 +88,10 @@ The requesting client will create a new Flow against the existing Source with th
 The creation of this Flow will result in an event that will be received by the transcode service configured above.
 
 The transcode service will transcode each Segment in the originating Flow, based on the technical properties of the destination Flow, and write the resultant media back to TAMS against the destination Flow.
-The transcode service should set the destination Flow's `flow_status` tag to `awaiting_content` on initial registration, `ingesting` on first write of a Segment, and `closed_complete` once the transcode is complete.
+The transcode service should set the destination Flow's `status` parameter to `awaiting_content` on initial registration, `ingesting` on first write of a Segment, and `closed_complete` once the transcode is complete.
 When the transcode is complete, the `trigger_transcode` tag should be removed from the originating Flow.
 
-Where the originating Flow has a `flow_status` of `ingesting`, the transcode service may need to subscribe to `flows/segments_added` webhook events for the originating Flow and transcode new Segments as they become available.
+Where the originating Flow has a `status` of `ingesting`, the transcode service may need to subscribe to `flows/segments_added` webhook events for the originating Flow and transcode new Segments as they become available.
 
 The transcode service may be designed such that all Segments are transcoded in parallel, allowing for faster than real-time transcodes in many cases.
 
@@ -123,7 +123,7 @@ These Objects will have instances that are "virtual".
 That is to say that the Objects do not exist on disk.
 When a GET request is performed with the instance URL, the Service will perform the transcode to create the Object and return it, as if the media existed on disk.
 
-Where the originating Flow has a `flow_status` of `ingesting`, new Virtual Objects and corresponding Segments should be created as new originating Segments are registered.
+Where the originating Flow has a `status` of `ingesting`, new Virtual Objects and corresponding Segments should be created as new originating Segments are registered.
 
 Clients may wish to initiate a transcode without actually downloading the content.
 For example, to ensure content is available in an appropriate format ahead of playout into broadcast.

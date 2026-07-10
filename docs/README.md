@@ -46,7 +46,7 @@ For more information on how we use ADRs, see [here](./adr/README.md).
 | [0004](./adr/0004-content-deletion.md)                             | Deletion of Content and IDs                                                |
 | [0004a](./adr/0004a-ancestry-relationships.md)*                    | Flow and Source References                                                 |
 | [0005](./adr/0005-flow-read-write-permissions.md)                  | Flow Read-Write Permissions                                                |
-| [0006](./adr/0006-flow-status.md)                                  | Flow Update Status                                                         |
+| [0006](./adr/0006-flow-status.md)                                  | Flow Update Status - **Deprecated**                                        |
 | [0007](./adr/0007-use-timerange-in-flow-segments.md)               | Use Timerange in Flow Segments                                             |
 | [0008](./adr/0008-move-flow-parameters-into-a-sub-property.md)     | Move Flow Parameters into a sub-property                                   |
 | [0009](./adr/0009-allow-segment-overlap.md)                        | Allow Segments to Overlap                                                  |

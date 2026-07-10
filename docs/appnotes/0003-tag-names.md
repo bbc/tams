@@ -99,9 +99,11 @@ Example: For a Flow with `metadata_updated` of `2023-09-14T09:45:26Z`, `segments
 
 ### flow_status
 
-Status: **Proposed**
+Status: **Deprecated**
 
 Proposed in [ADR0006 - Flow Update Status](../adr/0006-flow-status.md).
+
+Replaced by the `status` field in Flow metadata.
 
 Signals the current status of a Flow.
 
