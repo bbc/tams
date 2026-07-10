@@ -923,6 +923,10 @@ paths:
                   summary: Multi-essence Source
                   description: Multi-essence Sources collect multiple Sources of different formats under one Source ID.
                   externalValue: examples/source-get-200-multi.json
+                tags:
+                  summary: Source with tags
+                  description: Source example with tags set matching associated Flow
+                  externalValue: examples/source-get-200-tags.json
         "404":
           description: The requested Source does not exist.
   /sources/{sourceId}/tags:
@@ -1542,6 +1546,9 @@ paths:
                 video_vfr:
                   summary: Video Flow - H.264 Codec, Variable Frame Rate
                   externalValue: examples/flow-get-200-video-h264-vfr.json
+                video_cleanfeed:
+                  summary: Video Flow - H.264 Codec, with Editorial Purpose Tag
+                  externalValue: examples/flow-get-200-video-h264-cleanfeed.json
                 audio:
                   summary: Audio Flow - AAC Codec
                   externalValue: examples/flow-get-200-audio-aac.json
