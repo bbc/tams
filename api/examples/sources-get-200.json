@@ -23,12 +23,10 @@
         "updated": "2008-05-27T18:51:00Z",
         "source_collection": [
             {
-                "id": "2aa143ac-0ab7-4d75-bc32-5c00c13d186f",
-                "role": "video"
+                "id": "2aa143ac-0ab7-4d75-bc32-5c00c13d186f"
             },
             {
-                "id": "7ba3fed1-3fd3-4f0e-8488-92c4ffe13838",
-                "role": "audio"
+                "id": "7ba3fed1-3fd3-4f0e-8488-92c4ffe13838"
             }
         ]
     },
