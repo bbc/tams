@@ -92,5 +92,6 @@ For more information on how we use ADRs, see [here](./adr/README.md).
 | [0052](./adr/0052-specifying-the-sorting-of-listings.md)           | Options for specifying the sorting of listings                             |
 | [0054](./adr/0054-selectable-presigned-storage-urls.md)            | Support for selectable presigned storage PUT URLs                          |
 | [0055](./adr/0055-fine-grained-auth-storage-backends.md)           | Support for Fine-Grained Authorisation on Storage Backends                 |
+| [0056](./adr/0056-roles-in-collections.md)                         | Roles in Collections |
 
 \* Note: ADR 0004a was the unintended result of a number clash in the early development of TAMS which wasn't caught before publication
