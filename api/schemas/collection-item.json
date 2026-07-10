@@ -3,16 +3,20 @@
     "description": "Describes how an entity (Source or Flow) is collected into another entity of the same type",
     "type": "object",
     "required": [
-        "id",
-        "role"
+        "id"
     ],
     "properties": {
         "id": {
             "description": "Source or Flow Identifier of the member of this collection. Sources MUST only collect Sources, and Flows MUST only collect Flows. Must already be registered in this service instance",
             "$ref": "uuid.json"
         },
+        "priority": {
+            "description": "A number indicating the position of this element in the collection, provided to allow stable sorting in UIs and the presentation of defaults. Implementations SHOULD return results sorted by this field in ascending order, and items with no `priority` set sorted last. Where multiple elements have the same priority, their order is implementation-defined.",
+            "type": "integer",
+            "minimum": 0
+        },
         "role": {
-            "description": "A human-readable role of the element in this collection (e.g. 'R' to denote a right audio channel in a collection of mono audio Sources)",
+            "description": "An optional string describing the purpose of this element in the collection, primarily intended to be human-readable.",
             "type": "string"
         }
     }
