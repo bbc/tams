@@ -160,7 +160,7 @@ Known values:
 
 ### language_code
 
-Status: **Experimental**
+Status: **Proposed**
 
 The language of the Flow as an [ISO 639:2023 Set 3 code](https://iso639-3.sil.org/code_tables/639/data/all) (This replaces ISO 639-3, but is still tracked by the linked website which uses the old naming).
 Where possible, the equivalent Source tag should also be set.
@@ -284,7 +284,7 @@ Defaults to `false` if the tag is not set.
 
 ### language_code
 
-Status: **Experimental**
+Status: **Proposed**
 
 The language of the Source as an [ISO 639-3 code](https://iso639-3.sil.org/code_tables/639/data/all).
 Where possible, the equivalent Flow tag should also be set.
