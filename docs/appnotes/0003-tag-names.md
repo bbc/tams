@@ -51,7 +51,7 @@ The tags below are marked with the following statuses:
 
 ### auth_classes
 
-Status: **Experimental**
+Status: **Proposed**
 
 Suggested as a way to build lightweight Attribute-based Access Control in [AppNote0016: Authorisation in TAMS workflows](./0016-authorisation-in-tams-workflows.md).
 A comma seperated list of auth classes used to derive permissions on the Flow.
@@ -267,7 +267,7 @@ Actual Segment rates/durations may vary.
 
 ### auth_classes
 
-Status: **Experimental**
+Status: **Proposed**
 
 Suggested as a way to build lightweight Attribute-based Access Control in [AppNote0016: Authorisation in TAMS workflows](./0016-authorisation-in-tams-workflows.md).
 A comma separated list of auth classes used to derive permissions on the Source.
