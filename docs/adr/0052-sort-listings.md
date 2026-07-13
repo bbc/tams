@@ -64,10 +64,9 @@ Consider a deployment with a large number of live ingests.
 The first few pages of results ordered by `segments_updated` newest first would essentially be non-deterministic.
 Clients wishing to query Flows with recently updated segments should instead use the available filters to select for recently/currently ingesting Flows, and sort by some other appropriate parameter.
 
-<!-- This is an optional element. Feel free to remove. -->
 ### Implementation
 
-{Once the proposal has been implemented, add a link to the relevant PRs here}
+Implemented in [PR 224](https://github.com/bbc/tams/pull/224).
 
 ## Pros and Cons of the Options
 
