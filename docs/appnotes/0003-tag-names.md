@@ -295,3 +295,12 @@ Examples:
 * [`fra`](https://iso639-3.sil.org/code/fra) for audio containing French speech
 * [`deu`](https://iso639-3.sil.org/code/deu) for German captions
 * `["eng", "fra"]` for audio where both English and French are spoken
+
+## Known Storage Backend Tags
+
+### auth_classes
+
+Status: **Experimental**
+
+Suggested as a way to build lightweight Attribute-based Access Control in [AppNote0016: Authorisation in TAMS workflows](./0016-authorisation-in-tams-workflows.md).
+A comma seperated list of auth classes used to derive permissions on the Storage Backend.

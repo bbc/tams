@@ -138,7 +138,7 @@ For example - hiding collection relationships may result in clients deciding to 
 | `/`                                  | `HEAD`/`GET` | Available to all                                                                        |
 | `/service`                           | `HEAD`/`GET` | Available to all                                                                        |
 |                                      | `POST`       | Request must have admin permissions. |
-| `/service/storage-backends`          | `HEAD`/`GET` | Available to all                                                                        |
+| `/service/storage-backends`          | `HEAD`/`GET` | Restrict returned data to only the Storage Backends that the request has any permission on. |
 | `/service/webhooks`                  | `HEAD`/`GET` | Restrict returned data to only the webhooks that the request has read permission on. |
 |                                      | `POST`       | If the request includes Source or Flow filters, the request must have read permissions on all Source or Flow IDs requested. Otherwise, reject. Note that this endpoint only allows creation, not modification, of webhooks. |
 | `/service/webhooks/{webhookId}`      | `HEAD`/`GET` | Request must have read permissions on {webhookId}.                    |
@@ -181,13 +181,13 @@ For example - hiding collection relationships may result in clients deciding to 
 | `/flows/{flowId}/avg_bit_rate`       | `HEAD`/`GET` | Request must have read permissions on {flowId}. |
 |                                      | `PUT`        | Request must have write permissions on {flowId}. |
 |                                      | `DELETE`     | Request must have write permissions on {flowId}. |
-| `/flows/{flowId}/segments`           | `HEAD`/`GET` | Request must have read permissions on {flowId}. |
+| `/flows/{flowId}/segments`           | `HEAD`/`GET` | Request must have read permissions on {flowId}. Restrict returned `get_urls` to only the Storage Backends that the request has read permission on. If the request has access but all of the Object Instances have been filtered out, return the response with an empty `get_urls` and/or `init_object.get_urls` list. |
 |                                      | `POST`       | Request must have write permissions on {flowId}, and either this must be the first registration of the Media Object(s) (i.e. `/objects/{objectId}` returns 404) or the request must have read access to the Media Object(s) being written. Otherwise reject.    |
 |                                      | `DELETE`     | Request must have delete permissions on {flowId}. |
-| `/flows/{flowId}/storage`            | `POST`       | Request must have write permissions on {flowId}. |
-| `/objects/{objectId}`                | `HEAD`/`GET` | Restrict returned data in `referenced_by_flows` property to only the Flows that the request has read access to. If the request has read access to no Flows of this object, return 404, however if the request has access but all of the Flows have been filtered out, return the response with an empty `referenced_by_flows` list. |
-| `/objects/{objectId}/instances`      | `POST`       | Request must have write permissions on {objectId}. |
-|                                      | `DELETE`     | Request must have write permissions on {objectId}. |
+| `/flows/{flowId}/storage`            | `POST`       | Request must have write permissions on {flowId}, and the Storage Backend requested. |
+| `/objects/{objectId}`                | `HEAD`/`GET` | Restrict returned data in `referenced_by_flows` property to only the Flows that the request has read access to. Restrict returned `get_urls` to only the Storage Backends that the request has read permission on. If the request has read access to no Flows of this object, return 404. However if the request has access but all of the Flows have been filtered out, return the response with an empty `referenced_by_flows` list. If the request has access but all of the Object Instances have been filtered out, return the response with an empty `get_urls` and/or `init_object.get_urls` list. |
+| `/objects/{objectId}/instances`      | `POST`       | Request must have write permissions on {objectId}, and the Storage Backend requested. |
+|                                      | `DELETE`     | Request must have write permissions on {objectId}, and the Storage Backend requested. |
 | `/flow-delete-requests`              | `HEAD`/`GET` | Request must have admin permissions. |
 | `/flow-delete-requests/{request-id}` | `HEAD`/`GET` | Request must have delete permissions on the Delete Request's Flow ID. |
 
@@ -255,6 +255,13 @@ Propagation should also be triggered when a new Source/Flow is added to a Source
 
 Implementations may wish to support auth classes and related auth logic that explicitly denies permissions against resources.
 In these cases, a matching "deny" class takes precedent over an "allow" class.
+
+### Storage Backend Delete permission
+
+This Application Note only makes use of Read and Write permissions on Storage Backends.
+Implementations may wish to additionally support specific Delete permissions on Storage Backends.
+This permission would allow/deny deletion of Flows/Segments/Object Instances on specific Storage Backends, even if they have Delete permissions on the given resource.
+This mode of operation may be useful for use cases such as Records of Transmission, or archive copies of Flows.
 
 ## Where to Enforce Authorisation
 

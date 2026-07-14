@@ -128,6 +128,27 @@ paths:
       operationId: HEAD_storage-backends
       tags:
         - Service
+      parameters:
+        - name: tag.{name}
+          in: query
+          description: |
+            Filter on Storage Backends that have a tag named {name} with a value in the given comma-seperated list of values.
+            The {name} and the value MUST be URL encoded where special characters are present.
+            Where the tag's value is a string, at least one of the given values will match.
+            Where the tag's value is an array, at least one value in the array will match at least one of the given values.
+            Partial string matches of the values are not valid.
+          schema:
+            $ref: 'schemas/url-tag-list.json'
+        - name: tag_exists.{name}
+          in: query
+          description: |
+            Filter on Storage Backends that have a tag named {name} regardless of value.
+            The {name} MUST be URL encoded where special characters are present.
+            If set to true then the presence of the tag is filtered for.
+            If set to false then its absence is.
+            If left out then no filtering on tag presence is performed.
+          schema:
+            type: boolean
       responses:
         "200":
           $ref: '#/components/responses/trait_resource_listing_head_200'
@@ -137,6 +158,27 @@ paths:
       operationId: GET_storage-backends
       tags:
         - Service
+      parameters:
+        - name: tag.{name}
+          in: query
+          description: |
+            Filter on Storage Backends that have a tag named {name} with a value in the given comma-seperated list of values.
+            The {name} and the value MUST be URL encoded where special characters are present.
+            Where the tag's value is a string, at least one of the given values will match.
+            Where the tag's value is an array, at least one value in the array will match at least one of the given values.
+            Partial string matches of the values are not valid.
+          schema:
+            $ref: 'schemas/url-tag-list.json'
+        - name: tag_exists.{name}
+          in: query
+          description: |
+            Filter on Storage Backends that have a tag named {name} regardless of value.
+            The {name} MUST be URL encoded where special characters are present.
+            If set to true then the presence of the tag is filtered for.
+            If set to false then its absence is.
+            If left out then no filtering on tag presence is performed.
+          schema:
+            type: boolean
       responses:
         "200":
           description: ""
@@ -1804,6 +1846,18 @@ paths:
             Where multiple filter query parameters are provided, the returned `get_urls` and `init_object.get_urls` will match all filters.
           schema:
             type: boolean
+        - name: storage_backend_tag.{name}
+          in: query
+          description: |
+            Filter Flow Segment `get_urls` and `init_object.get_urls` on tag values. This option is the same as the `tag.{name}` query parameter on the `/service/storage-backends` API endpoint.
+          schema:
+            type: string
+        - name: storage_backend_tag_exists.{name}
+          in: query
+          description: |
+            Filter Flow Segment `get_urls` and `init_object.get_urls` on tag names. This option is the same as the `tag_exists.{name}` query parameter on the `/service/storage-backends` API endpoint.
+          schema:
+            type: boolean
         - name: include_object_timerange
           in: query
           description: |
@@ -1937,6 +1991,18 @@ paths:
             If omitted, both presigned and non-presigned URLs will be returned.
             If `presigned` is set to `false`, the response from the service could be substantially faster if it is not required to generate a large number of pre-signed URLs.
             Where multiple filter query parameters are provided, the returned `get_urls` and `init_object.get_urls` will match all filters.
+          schema:
+            type: boolean
+        - name: storage_backend_tag.{name}
+          in: query
+          description: |
+            Filter Flow Segment `get_urls` and `init_object.get_urls` on tag values. This option is the same as the `tag.{name}` query parameter on the `/service/storage-backends` API endpoint.
+          schema:
+            type: string
+        - name: storage_backend_tag_exists.{name}
+          in: query
+          description: |
+            Filter Flow Segment `get_urls` and `init_object.get_urls` on tag names. This option is the same as the `tag_exists.{name}` query parameter on the `/service/storage-backends` API endpoint.
           schema:
             type: boolean
         - name: include_object_timerange
@@ -2262,6 +2328,18 @@ paths:
             Filter `referenced_by_flows` on tag names. This option is the same as the `tag_exists.{name}` query parameter on the `/flows/` API endpoint.
           schema:
             type: boolean
+        - name: storage_backend_tag.{name}
+          in: query
+          description: |
+            Filter `get_urls` and `init_object.get_urls` on tag values. This option is the same as the `tag.{name}` query parameter on the `/service/storage-backends` API endpoint.
+          schema:
+            type: string
+        - name: storage_backend_tag_exists.{name}
+          in: query
+          description: |
+            Filter `get_urls` and `init_object.get_urls` on tag names. This option is the same as the `tag_exists.{name}` query parameter on the `/service/storage-backends` API endpoint.
+          schema:
+            type: boolean
         - $ref: '#/components/parameters/trait_resource_paged_key'
         - $ref: '#/components/parameters/trait_paged_limit'
       responses:
@@ -2357,6 +2435,18 @@ paths:
           in: query
           description: |
             Filter `referenced_by_flows` on tag names. This option is the same as the `tag_exists.{name}` query parameter on the `/flows/` API endpoint.
+          schema:
+            type: boolean
+        - name: storage_backend_tag.{name}
+          in: query
+          description: |
+            Filter `get_urls` and `init_object.get_urls` on tag values. This option is the same as the `tag.{name}` query parameter on the `/service/storage-backends` API endpoint.
+          schema:
+            type: string
+        - name: storage_backend_tag_exists.{name}
+          in: query
+          description: |
+            Filter `get_urls` and `init_object.get_urls` on tag names. This option is the same as the `tag_exists.{name}` query parameter on the `/service/storage-backends` API endpoint.
           schema:
             type: boolean
         - $ref: '#/components/parameters/trait_resource_paged_key'
