@@ -25,6 +25,10 @@
         "store_product": {
             "description": "The storage product name.",
             "type": "string"
+        },
+        "tags": {
+            "description": "Key value is a freeform string.",
+            "$ref": "tags.json"
         }
     }
 }
