@@ -21,6 +21,9 @@ class Tams(object):
     logger: Logger
     api_url: str
 
+    async def StorageBackend(self, request: Request, storage_id: UUID):
+        return await StorageBackend(self.client, self.api_url, request, storage_id)._async_init()
+
     async def Flow(self, request: Request, flow_id: UUID):
         return await Flow(self.client, self.api_url, request, flow_id)._async_init()
 
@@ -103,6 +106,9 @@ class Tams(object):
 
         return json_resp(filtered_body, res.status, cast(dict[str, str], res.headers))
 
+    async def filtered_storage_backends(self, request: Request, groups: list[str]) -> HTTPResponse:
+        return await self._filtered_resource_listing(request, groups)
+
     async def filtered_sources(self, request: Request, groups: list[str]) -> HTTPResponse:
         return await self._filtered_resource_listing(request, groups)
 
@@ -112,31 +118,125 @@ class Tams(object):
     async def filtered_webhooks(self, request: Request, groups: list[str]) -> HTTPResponse:
         return await self._filtered_resource_listing(request, groups)
 
-    async def filtered_object(self, request: Request, object_id: UUID, groups: list[str]) -> HTTPResponse:
-        orig_auth_classes_str = request.args.get("tag.auth_classes", "")
-        orig_auth_classes = orig_auth_classes_str.split(",") if orig_auth_classes_str else []
+    async def filtered_object(self, request: Request, groups: list[str]) -> HTTPResponse:
+        # Initially filter by request's permissions in upstream request
+        # Returned results will then have the user-specified filters applied
+        orig_flow_auth_classes_str = request.args.get("flow_tag.auth_classes", "")
+        orig_flow_auth_classes = orig_flow_auth_classes_str.split(",") if orig_flow_auth_classes_str else []
+        request.args["flow_tag.auth_classes"] = ",".join(groups)
 
-        request.args["tag.auth_classes"] = ",".join(groups)
+        orig_storage_backend_auth_classes_str = request.args.get("storage_backend_tag.auth_classes", "")
+        orig_storage_backend_auth_classes = (
+            orig_storage_backend_auth_classes_str.split(",") if orig_storage_backend_auth_classes_str else [])
+        request.args["storage_backend_tag.auth_classes"] = ",".join(groups)
+
+        # Set `verbose_storage` to True to include `storage_id` alongside `get_url`s
+        # If originally false, verbose data will be filtered out before returning
+        orig_verbose_storage_str = request.args.get("verbose_storage", "false")
+        orig_verbose_storage_bool = (orig_verbose_storage_str.lower() == "true")
+        request.args["verbose_storage"] = "true"
+
+        res = await self.passthrough_request(request)
+        assert res.body
+        json_body = json.loads(res.body)
+
+        # Handle user specified filters on `auth_classes`
+        filtered_referenced_by_flows = []
+        if len(orig_flow_auth_classes) > 0:
+            for flow in json_body["referenced_by_flows"]:
+                flow = await self.Flow(request, flow)
+                if flow.has_any(orig_flow_auth_classes):
+                    filtered_referenced_by_flows.append(flow)
+        else:
+            filtered_referenced_by_flows = json_body["referenced_by_flows"]
+        json_body["referenced_by_flows"] = filtered_referenced_by_flows
+
+        json_body["get_urls"] = await self.filtered_get_urls(
+            request,
+            json_body["get_urls"],
+            orig_storage_backend_auth_classes,
+            orig_verbose_storage_bool)
+
+        if json_body.get("init_object", None):
+            json_body["init_object"]["get_urls"] = await self.filtered_get_urls(
+                request,
+                json_body["init_object"]["get_urls"],
+                orig_storage_backend_auth_classes,
+                orig_verbose_storage_bool)
+
+        return json_resp(json_body, res.status, cast(dict[str, str], res.headers))
+
+    async def filtered_segments(self, request: Request, groups: list[str]) -> HTTPResponse:
+        # Initially filter by request's permissions in upstream request
+        # Returned results will then have the user-specified filters applied
+        orig_storage_backend_auth_classes_str = request.args.get("storage_backend_tag.auth_classes", "")
+        orig_storage_backend_auth_classes = (
+            orig_storage_backend_auth_classes_str.split(",") if orig_storage_backend_auth_classes_str else [])
+        request.args["storage_backend_tag.auth_classes"] = ",".join(groups)
+
+        # Set `verbose_storage` to True to include `storage_id` alongside `get_url`s
+        # If originally false, verbose data will be filtered out before returning
+        orig_verbose_storage_str = request.args.get("verbose_storage", "false")
+        orig_verbose_storage_bool = (orig_verbose_storage_str.lower() == "true")
+        request.args["verbose_storage"] = "true"
 
         res = await self.passthrough_request(request)
 
         assert res.body
         json_body = json.loads(res.body)
 
-        filtered_referenced_by_flows = []
+        # Handle user specified filters on `auth_classes`
+        #
+        # Note: The following for-loop is quite inefficient and potentially slow.
+        # While the use of asyncio in this implementation allows for requests to be
+        # processed in parallel, the items in this for-loop will be processed sequentially
+        # but without blocking. A complete implementation may wish to parallelise this
+        # loop. This hasn't been done here to help with readability.
+        filtered_body = []
+        for segment in json_body:
+            filtered_segment = deepcopy(segment)
+            filtered_segment["get_urls"] = await self.filtered_get_urls(
+                request,
+                segment["get_urls"],
+                orig_storage_backend_auth_classes,
+                orig_verbose_storage_bool)
 
-        # Handle user specified filter on `auth_classes`
-        if len(orig_auth_classes) > 0:
-            for flow in json_body["referenced_by_flows"]:
-                flow = await self.Flow(request, flow)
-                if flow.has_any(orig_auth_classes):
-                    filtered_referenced_by_flows.append(flow)
+            if filtered_segment.get("init_object", None):
+                filtered_segment["init_object"]["get_urls"] = await self.filtered_get_urls(
+                    request,
+                    filtered_segment["init_object"]["get_urls"],
+                    orig_storage_backend_auth_classes,
+                    orig_verbose_storage_bool)
+
+            filtered_body.append(filtered_segment)
+
+        return json_resp(filtered_body, res.status, cast(dict[str, str], res.headers))
+
+    async def filtered_get_urls(self, request: Request, get_urls: dict, groups: list[str], verbose_storage: bool):
+        if len(groups) > 0:
+            filtered_get_urls = []
+
+            # Note: The following for-loop is quite inefficient and potentially slow.
+            # While the use of asyncio in this implementation allows for requests to be
+            # processed in parallel, the items in this for-loop will be processed sequentially
+            # but without blocking. A complete implementation may wish to parallelise this
+            # loop. This hasn't been done here to help with readability.
+            for get_url in get_urls:
+                storage_backend = await self.StorageBackend(request, get_url["storage_id"])
+                if storage_backend.has_read(groups):
+                    filtered_get_url = {}
+                    if verbose_storage:
+                        filtered_get_urls.append(get_url)
+                    else:
+                        filtered_get_url = {"url": get_url["url"]}
+                        if "presigned" in get_url:
+                            filtered_get_url["presigned"] = get_url["presigned"]
+                        if "label" in get_url:
+                            filtered_get_url["label"] = get_url["label"]
+                        filtered_get_urls.append(filtered_get_url)
+            return filtered_get_urls
         else:
-            filtered_referenced_by_flows = json_body["referenced_by_flows"]
-
-        json_body["referenced_by_flows"] = filtered_referenced_by_flows
-
-        return json_resp(json_body, res.status, cast(dict[str, str], res.headers))
+            return get_urls
 
     async def validate_webhook(self, request: Request, groups: list[str]):
         # Validates webhook based on permissions
@@ -367,6 +467,24 @@ class Resource(object):
 
         if any_is_delete(changed_classes):
             self.has_delete(groups, throw=True)
+
+
+class StorageBackend(Resource):
+    def __init__(self, client: AsyncClient, api_url: str, request: Request, storage_id: UUID) -> None:
+        super().__init__(client, api_url, request)
+        self.storage_id = storage_id
+
+    async def _async_init(self):
+        _storage_backends = await self._get_upstream("service/storage-backends")
+
+        self.exists = False
+
+        for _storage_backend in _storage_backends:
+            if _storage_backend["id"] == self.storage_id:
+                self.classes = _storage_backend.get("tags", {}).get("auth_classes", [])
+                break
+
+        return self
 
 
 class Flow(Resource):

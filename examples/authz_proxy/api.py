@@ -1,4 +1,5 @@
 import os
+import json
 from functools import wraps
 from uuid import UUID
 
@@ -84,8 +85,8 @@ async def post_service(request: Request, groups: list[str]):
 @app.route('/service/storage-backends', methods=['GET', 'HEAD'])
 @handle_token()
 async def storage_backends(request: Request, groups: list[str]):
-    # Available to all
-    return await app.ctx.tams.passthrough_request(request)
+    # Restrict returned data to only the storage backends that the request has any permission on.
+    return await app.ctx.tams.filtered_storage_backends(request, groups)
 
 
 @app.route('/service/webhooks', methods=['GET', 'HEAD'])
@@ -481,8 +482,12 @@ async def put_del_flow_avg_bit_rate(request: Request, groups: list[str], flow_id
 @passthrough_if_admin()
 async def flow_segments(request: Request, groups: list[str], flow_id: UUID):
     # Request must have read permissions on {flowID}.
+    # Restrict returned `get_urls` to only the Storage Backends that the request has read permission on.
+    # If the request has access but all of the Object Instances have been filtered out, 
+    # return the response with an empty `get_urls` and/or `init_object.get_urls` list.
     (await app.ctx.tams.Flow(request, flow_id)).has_read(groups, throw=True)
-    return await app.ctx.tams.passthrough_request(request)
+    filtered_groups = filter_read(groups)
+    return await app.ctx.tams.filtered_segments(request, filtered_groups)
 
 
 @app.route('/flows/<flow_id:uuid>/segments', methods=['POST'])
@@ -532,8 +537,21 @@ async def del_flow_segments(request: Request, groups: list[str], flow_id: UUID):
 @handle_token()
 @passthrough_if_admin()
 async def post_flow_storage(request: Request, groups: list[str], flow_id: UUID):
-    # Request must have write permissions on {flowId}.
+    # Request must have write permissions on {flowId}, and the Storage Backend requested.
     (await app.ctx.tams.Flow(request, flow_id)).has_write(groups, throw=True)
+
+    storage_id = request.json.get("storage_id", None)
+    if not storage_id:
+        # If `storage_id` isn't provided, get the default
+        storage_backends = (await app.ctx.tams.get_upstream(request, "/service/storage-backends")).json()
+        for storage_backend in storage_backends:
+            if storage_backend.get("default_storage", False):
+                storage_id = storage_backend["id"]
+                break
+    assert (storage_id)
+
+    (await app.ctx.tams.StorageBackend(request, storage_id)).has_write(groups, throw=True)
+
     return await app.ctx.tams.passthrough_request(request)
 
 
@@ -542,19 +560,40 @@ async def post_flow_storage(request: Request, groups: list[str], flow_id: UUID):
 @passthrough_if_admin()
 async def object(request: Request, groups: list[str], object_id: UUID):
     # Restrict returned data in referenced_by_flows property to only the Flows that the request has read access to.
+    # Restrict returned `get_urls` to only the Storage Backends that the request has read permission on.
     # If the request has read access to no Flows of this object, return 404,
     # however if the request has access but all of the Flows have been filtered out,
     # return the response with an empty referenced_by_flows list.
+    # If the request has access but all of the Object Instances have been filtered out,
+    # return the response with an empty `get_urls` and/or `init_object.get_urls` list.
     await (await app.ctx.tams.MediaObject(request, object_id)).has_read(groups, throw=True)
-    return await app.ctx.tams.filtered_object(request, object_id, groups)
+    filtered_groups = filter_read(groups)
+    return await app.ctx.tams.filtered_object(request, filtered_groups)
 
 
-@app.route('/objects/<object_id:uuid>/instances', methods=['POST', 'DELETE'])
+@app.route('/objects/<object_id:uuid>/instances', methods=['POST'])
 @handle_token()
 @passthrough_if_admin()
-async def post_del_object_instances(request: Request, groups: list[str], object_id: UUID):
-    # Request must have write permissions on {objectId}.
+async def post_object_instances(request: Request, groups: list[str], object_id: UUID):
+    # Request must have write permissions on {objectId}, and the Storage Backend requested.
     await (await app.ctx.tams.MediaObject(request, object_id)).has_write(groups, throw=True)
+    assert request.body
+    json_body = json.loads(request.body)
+    if json_body.get("storage_id", None):
+        storage_id = json_body["storage_id"]
+        await (await app.ctx.tams.StorageBackend(request, storage_id)).has_write(groups, throw=True)
+    return await app.ctx.tams.passthrough_request(request)
+
+
+@app.route('/objects/<object_id:uuid>/instances', methods=['DELETE'])
+@handle_token()
+@passthrough_if_admin()
+async def del_object_instances(request: Request, groups: list[str], object_id: UUID):
+    # Request must have write permissions on {objectId}, and the Storage Backend requested.
+    await (await app.ctx.tams.MediaObject(request, object_id)).has_write(groups, throw=True)
+    if request.args.get("storage_id", None):
+        storage_id = request.args["storage_id"]
+        await (await app.ctx.tams.StorageBackend(request, storage_id)).has_write(groups, throw=True)
     return await app.ctx.tams.passthrough_request(request)
 
 
