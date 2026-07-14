@@ -1204,6 +1204,11 @@ paths:
               - created
               - metadata_updated
               - label
+        - name: status
+          in: query
+          description: Filter on Flows on the value of `status`.
+          schema:
+            $ref: schemas/flow-status.json
         - name: tag.{name}
           in: query
           description: |
@@ -1331,6 +1336,11 @@ paths:
               - created
               - metadata_updated
               - label
+        - name: status
+          in: query
+          description: Filter on Flows on the value of `status`.
+          schema:
+            $ref: schemas/flow-status.json
         - name: tag.{name}
           in: query
           description: |
