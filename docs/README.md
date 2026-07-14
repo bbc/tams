@@ -89,6 +89,6 @@ For more information on how we use ADRs, see [here](./adr/README.md).
 | [0046](./adr/0046-governance.md)                                   | Governance |
 | [0047](./adr/0047-flow-profiles.md)                                | Adding Flow Profiles to TAMS                                               |
 | [0048](./adr/0048-media-integrity.md)                              | Integrity model for media in TAMS, and when interacting with other systems |
-| [0052](./adr/0052-sort-listings.md)                                | Options for specifying the sorting of Listings |
+| [0052](./adr/0052-specifying-the-sorting-of-listings.md)           | Options for specifying the sorting of listings                             |
 
 \* Note: ADR 0004a was the unintended result of a number clash in the early development of TAMS which wasn't caught before publication

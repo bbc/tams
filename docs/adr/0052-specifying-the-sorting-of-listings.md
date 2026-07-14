@@ -1,7 +1,7 @@
 ---
 status: "proposed"
 ---
-# Options for specifying the sorting of Listings
+# Options for specifying the sorting of listings
 
 ## Context and Problem Statement
 
