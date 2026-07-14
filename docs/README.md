@@ -90,5 +90,6 @@ For more information on how we use ADRs, see [here](./adr/README.md).
 | [0047](./adr/0047-flow-profiles.md)                                | Adding Flow Profiles to TAMS                                               |
 | [0048](./adr/0048-media-integrity.md)                              | Integrity model for media in TAMS, and when interacting with other systems |
 | [0052](./adr/0052-specifying-the-sorting-of-listings.md)           | Options for specifying the sorting of listings                             |
+| [0053](./adr/0053-fine-grained-auth-storage-backends.md)           | Support for Fine-Grained Authorisation on Storage Backends                 |
 
 \* Note: ADR 0004a was the unintended result of a number clash in the early development of TAMS which wasn't caught before publication
