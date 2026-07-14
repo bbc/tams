@@ -33,7 +33,7 @@ As such, it is not included in this ADR.
 Chosen option: "Option 3 - Define a set list of sorting keys clients may select from".
 Although some endpoints only have a single obvious option for sorting.
 These will use "Option 2 - Define a single key all implementations should sort listings by".
-This provides the most clarity and flexibility to implementations without placing undue burdon to Service implementations.
+This provides the most clarity and flexibility to implementations without placing undue burden to Service implementations.
 All endpoints will have a `reverse_order` query parameter, matching that which currently exists on the `/flows/{flowId}/segments` endpoint.
 
 Datetime keys shall be sorted newest-first by default.
