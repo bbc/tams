@@ -135,8 +135,31 @@ paths:
           schema:
             default: false
             type: boolean
+        - $ref: '#/components/parameters/trait_resource_paged_key'
+        - $ref: '#/components/parameters/trait_paged_limit'
       responses:
         "200":
+          headers:
+            Link:
+              description: Provides references to cursors for paging. Only the 'rel' attribute with value 'next' is currently supported. If 'next' is not present then it is the last page.
+              schema:
+                type: string
+            X-Paging-Limit:
+              description: Identifies the current limit being used for paging. This may not match the requested value if the requested value was too high for the service implementation
+              schema:
+                type: integer
+            X-Paging-Count:
+              description: The number of items in the returned data set.
+              schema:
+                type: integer
+            X-Paging-Reverse-Order:
+              description: The items are returned in reverse order.
+              schema:
+                type: boolean
+            X-Paging-NextKey:
+              description: Opaque string that can be supplied to the `page` query parameter to get the next page of results.
+              schema:
+                type: string
           $ref: '#/components/responses/trait_resource_listing_head_200'
     get:
       summary: Storage Backend Information
@@ -155,9 +178,32 @@ paths:
           schema:
             default: false
             type: boolean
+        - $ref: '#/components/parameters/trait_resource_paged_key'
+        - $ref: '#/components/parameters/trait_paged_limit'
       responses:
         "200":
           description: ""
+          headers:
+            Link:
+              description: Provides references to cursors for paging. Only the 'rel' attribute with value 'next' is currently supported. If 'next' is not present then it is the last page.
+              schema:
+                type: string
+            X-Paging-Limit:
+              description: Identifies the current limit being used for paging. This may not match the requested value if the requested value was too high for the service implementation
+              schema:
+                type: integer
+            X-Paging-Count:
+              description: The number of items in the returned data set.
+              schema:
+                type: integer
+            X-Paging-Reverse-Order:
+              description: The items are returned in reverse order.
+              schema:
+                type: boolean
+            X-Paging-NextKey:
+              description: Opaque string that can be supplied to the `page` query parameter to get the next page of results.
+              schema:
+                type: string
           content:
             application/json:
               schema:
@@ -398,6 +444,14 @@ paths:
               description: Identifies the current limit being used for paging. This may not match the requested value if the requested value was too high for the implementation
               schema:
                 type: integer
+            X-Paging-Count:
+              description: The number of items in the returned data set.
+              schema:
+                type: integer
+            X-Paging-Reverse-Order:
+              description: The items are returned in reverse order.
+              schema:
+                type: boolean
             X-Paging-NextKey:
               description: Opaque string that can be supplied to the `page` query parameter to get the next page of results.
               schema:
@@ -460,6 +514,14 @@ paths:
               description: Identifies the current limit being used for paging. This may not match the requested value if the requested value was too high for the implementation
               schema:
                 type: integer
+            X-Paging-Count:
+              description: The number of items in the returned data set.
+              schema:
+                type: integer
+            X-Paging-Reverse-Order:
+              description: The items are returned in reverse order.
+              schema:
+                type: boolean
             X-Paging-NextKey:
               description: Opaque string that can be supplied to the `page` query parameter to get the next page of results.
               schema:
@@ -664,6 +726,14 @@ paths:
               description: Identifies the current limit being used for paging. This may not match the requested value if the requested value was too high for the service implementation
               schema:
                 type: integer
+            X-Paging-Count:
+              description: The number of items in the returned data set.
+              schema:
+                type: integer
+            X-Paging-Reverse-Order:
+              description: The items are returned in reverse order.
+              schema:
+                type: boolean
             X-Paging-NextKey:
               description: Opaque string that can be supplied to the `page` query parameter to get the next page of results.
               schema:
@@ -745,6 +815,14 @@ paths:
               description: Identifies the current limit being used for paging. This may not match the requested value if the requested value was too high for the service implementation
               schema:
                 type: integer
+            X-Paging-Count:
+              description: The number of items in the returned data set.
+              schema:
+                type: integer
+            X-Paging-Reverse-Order:
+              description: The items are returned in reverse order.
+              schema:
+                type: boolean
             X-Paging-NextKey:
               description: Opaque string that can be supplied to the `page` query parameter to get the next page of results.
               schema:
@@ -1167,6 +1245,14 @@ paths:
               description: Identifies the current limit being used for paging. This may not match the requested value if the requested value was too high for the service implementation
               schema:
                 type: integer
+            X-Paging-Count:
+              description: The number of items in the returned data set.
+              schema:
+                type: integer
+            X-Paging-Reverse-Order:
+              description: The items are returned in reverse order.
+              schema:
+                type: boolean
             X-Paging-NextKey:
               description: Opaque string that can be supplied to the `page` query parameter to get the next page of results.
               schema:
@@ -1284,6 +1370,14 @@ paths:
               description: Identifies the current limit being used for paging. This may not match the requested value if the requested value was too high for the service implementation
               schema:
                 type: integer
+            X-Paging-Count:
+              description: The number of items in the returned data set.
+              schema:
+                type: integer
+            X-Paging-Reverse-Order:
+              description: The items are returned in reverse order.
+              schema:
+                type: boolean
             X-Paging-NextKey:
               description: Opaque string that can be supplied to the `page` query parameter to get the next page of results.
               schema:
@@ -2843,8 +2937,31 @@ paths:
             enum:
               - created
               - expiry
+        - $ref: '#/components/parameters/trait_resource_paged_key'
+        - $ref: '#/components/parameters/trait_paged_limit'
       responses:
         "200":
+          headers:
+            Link:
+              description: Provides references to cursors for paging. Only the 'rel' attribute with value 'next' is currently supported. If 'next' is not present then it is the last page.
+              schema:
+                type: string
+            X-Paging-Limit:
+              description: Identifies the current limit being used for paging. This may not match the requested value if the requested value was too high for the service implementation
+              schema:
+                type: integer
+            X-Paging-Count:
+              description: The number of items in the returned data set.
+              schema:
+                type: integer
+            X-Paging-Reverse-Order:
+              description: The items are returned in reverse order.
+              schema:
+                type: boolean
+            X-Paging-NextKey:
+              description: Opaque string that can be supplied to the `page` query parameter to get the next page of results.
+              schema:
+                type: string
           $ref: '#/components/responses/trait_resource_listing_head_200'
     get:
       summary: List Flow Delete Requests
@@ -2874,9 +2991,32 @@ paths:
             enum:
               - created
               - expiry
+        - $ref: '#/components/parameters/trait_resource_paged_key'
+        - $ref: '#/components/parameters/trait_paged_limit'
       responses:
         "200":
           description: ""
+          headers:
+            Link:
+              description: Provides references to cursors for paging. Only the 'rel' attribute with value 'next' is currently supported. If 'next' is not present then it is the last page.
+              schema:
+                type: string
+            X-Paging-Limit:
+              description: Identifies the current limit being used for paging. This may not match the requested value if the requested value was too high for the service implementation
+              schema:
+                type: integer
+            X-Paging-Count:
+              description: The number of items in the returned data set.
+              schema:
+                type: integer
+            X-Paging-Reverse-Order:
+              description: The items are returned in reverse order.
+              schema:
+                type: boolean
+            X-Paging-NextKey:
+              description: Opaque string that can be supplied to the `page` query parameter to get the next page of results.
+              schema:
+                type: string
           content:
             application/json:
               schema:
