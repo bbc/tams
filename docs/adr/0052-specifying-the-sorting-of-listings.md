@@ -57,6 +57,10 @@ The available sorting keys for each endpoint shall be:
   * `created` (default)
   * `expiry`
 
+Many of these attributes are not required.
+As such, sorting will fallback to `id` for resources where the selected attribute is not set.
+Those items using this fallback will be sorted after those that aren't by default, and before when using `reverse_order`.
+
 Note that the `/flows` endpoint will not allow sorting on `segments_updated` or `timerange`, and the `/flow-delete-requests` endpoint will not allow sorting on `updated`.
 This is due to those parameters updating very frequently in many cases.
 This would likely lead to the order of the the more recent values behaving erratically.
