@@ -321,7 +321,7 @@ paths:
         required: true
       responses:
         "201":
-          description: The flow has been created.
+          description: The Profile has been created.
           content:
             application/json:
               example:
