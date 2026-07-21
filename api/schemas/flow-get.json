@@ -11,7 +11,11 @@
   },
   "allOf": [
     {
-        "$ref": "flow-common.json"
+        "profile_id":
+        {
+            "description": "Profile identifier that was used to create the flow.",
+            "$ref": "uuid.json"
+        }
     },
     {
       "oneOf": [
