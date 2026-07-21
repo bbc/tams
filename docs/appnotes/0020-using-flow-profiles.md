@@ -77,6 +77,21 @@ As per standard behaviour, the API should only return results which match all fi
 In future it is proposed to add additional match methods when querying Flows using a Profile.
 This would include options for a "greedy match" where all Flows which match the technical characteristics are returned even if not created or updated to include a Profile.
 
+### Updating Flows created using a Profile
+
+For Flows created by specifying all technical characteristics directly, updates can include any of those parameters without restriction. 
+When a Flow is created from a Profile then it inherits all the technical characteristics from the Profile.
+This means if that Flow then needs to be updated then consideration needs to be given to the fields which were inherited.
+
+For the standard fields (eg label, description, tags) which form part of the common Flow metadata and provided directly regardless of the Profile then these can be updated through the standard process.
+For the fields inherited from the Profile then the store should reject an attempt to update them directly as a 400 error since this is a bad request.
+The store should also provide a suitable error message indicating why it has rejected the update.
+
+In the scenario where the technical characteristics do need to be changed on a Flow created from a Profile then it is necessary to remove the link to the Profile as part of the update since it will no longer match the Profile entirely.
+This is achieved by means of sending the `profile_id` field with an empty string as part of the update.
+This will then break the link to the Profile and allow the store to update the technical parameters.
+It should be noted that searching for Flows using a Profile will no longer include the updated Flow since it no longer matches or is linked to the Profile.
+
 ## Multi-store working with Profiles
 
 The UUID of a Profile is assumed to be globally unique.
@@ -90,14 +105,31 @@ The calling system then has two options:
 
 1. Read the Profile from the originating store and create it using the same ID and parameters in the destination store.
 It is important than no parameters of the Profile are changed in this operation otherwise this invalidates the principal of the Profile ID being the same across stores.
-Once the Profile has been created sucessfully it should then be possible to re-try the Flow creation using the Profile ID.
+Once the Profile has been created successfully it should then be possible to re-try the Flow creation using the Profile ID.
 
 2. The replication service could drop back to creating the Flow using the full metadata model without the Profile ID.
 It could be possible to preserve the Profile ID through the use of a tag.
 
-Option 1 is the prefered option and the correct way to handle profiles between stores and ensures the Profile ID is persisted between stores.
+Option 1 is the preferred option and the correct way to handle profiles between stores and ensures the Profile ID is persisted between stores.
 Option 2 should only be used if replicating content from a newer store that supports Profiles to an older store which does not.
 
 For workflows including more than two organisations it is recommended that one organisation takes responsibility for owning and publishing a given Profile.
 These Profiles can then be created in both the source and destination stores using the same UUID.
 The organisation could be a single company or could be an industry body.
+
+## Profile Impact on Bitrate Properties
+
+The Profiles process splits the two bitrate fields `avg_bit_rate` and `max_bit_rate` such that they come from different places.
+The `avg_bit_rate` is provided as part of the Profile, while the `max_bit_rate` remains part of the main flow metadata.
+
+For the Profiles to work it is necessary for there to be a bitrate present in a Profile to be able to determine between different qualities where all the other technical parameters remain the same.
+For example a h.264 file at 1080p50 could be at either 50Mbps or 100Mbps and this needs to be part of the Profile to be able to tell them apart.
+This is why the `avg_bit_rate` is included in the Profile to enable this workflow.
+
+In the context of Profiles the `avg_bit_rate` is considered to be the bitrate that the encoder is aiming to set for typical content.
+This is not intended to take into account any unusually low bitrates which an encoder may create for static content such as bars or black.
+Clients should not retrospectively update `avg_bit_rate` on a Flow that was created from a Profile, as changing the value would break the matching between the Flow and its Profile.
+
+The `max_bit_rate` is defined in [AppNote 0013](https://github.com/bbc/tams/blob/main/docs/appnotes/0013-setting-flow-bit-rate-properties.md) and is considered the actual measured peak value of the segments in TAMS.
+Since this is dependent on the actual behaviours of the encoder in relation to the actual content that is being encoded then this cannot be predicted in advance or will be consistent across Flows.
+As such this cannot be included within a Profile and should be set by the encoder in the same manner regardless of whether the Flow was created directly or using a Profile. 
