@@ -156,9 +156,17 @@ paths:
       parameters:
         - name: format
           in: query
-          description: Filter on Profile format.
+          description: Filter on Profile format. Only single-essence formats are supported.
           schema:
-            $ref: 'schemas/content-format.json'
+            title: Profile Content Format
+            description: Identifies the content format for a Profile using a URN string. The multi format is not applicable to Profiles.
+            type: string
+            format: uri
+            enum:
+              - urn:x-nmos:format:video
+              - urn:x-tam:format:image
+              - urn:x-nmos:format:audio
+              - urn:x-nmos:format:data
         - name: codec
           in: query
           description: Filter on Profile codec.
