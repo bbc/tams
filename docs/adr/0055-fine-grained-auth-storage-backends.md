@@ -72,6 +72,7 @@ Good/Neutral/Bad as per Option 3, with the last point replaced by:
 
 * Neutral, because changing of auth classes (or other tags) wouldn't require a re-deploy of the TAMS Service Implementation
   * Though use cases for frequent updating of these parameters are unclear
+* Bad, because additional CRUD logic, and associated methods and storage would be required to manage these tags
 
 ### Option 5: Add an auth-specific parameter to Storage Backends
 
