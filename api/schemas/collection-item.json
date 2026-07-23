@@ -16,7 +16,7 @@
             "minimum": 0
         },
         "role": {
-            "description": "An optional string describing the purpose of this element in the collection, primarily intended to be human-readable.",
+            "description": "The purpose of this element in the collection, primarily intended to be human-readable.",
             "type": "string"
         }
     }

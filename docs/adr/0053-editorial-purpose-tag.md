@@ -56,7 +56,7 @@ TAMS could use the same descriptors, or their names.
 As Option 1a, using MPEG-DASH role values instead.
 
 MPEG-DASH contains a role attribute for an `AdaptationSet`, which describes the purose of that particular track.
-A number of values for that attribute are given in the specification (see ISO/IEC 23009-1:2022 section 5.8.5.5), covering the `main` content along with others such as `alternate`, `supplementary`, `commentary`, `description`, etc.
+A number of values for that attribute are given in the specification (see [ISO/IEC 23009-1:2022](https://standards.iso.org/ittf/PubliclyAvailableStandards/c083314_ISO_IEC%2023009-1_2022(en).zip) section 5.8.5.5), covering the `main` content along with others such as `alternate`, `supplementary`, `commentary`, `description`, etc.
 TAMS could use these descriptors for the table directly.
 
 * Good, because it is part of an established standard
