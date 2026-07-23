@@ -25,7 +25,7 @@ Some better recommendations would be useful around how these cases should be han
 * Option 2: Replace `role` with additional controlled fields
 * Option 3: Use `role` as editorial purpose, use other queries for Flow/Source properties
 * Option 4a: Capture editorial purpose elsewhere, use `role` as an optional label
-* Option 4b: Capture editorial purpose elsehwere, use `role` as an optional label, add a `priority` for sorting
+* Option 4b: Capture editorial purpose elsewhere, use `role` as an optional label, add a `priority` for sorting
 
 ## Decision Outcome
 
