@@ -41,12 +41,124 @@ These options are all related, as illustrated by the following diagram (where bo
 
 ## Decision Outcome
 
-Chosen option: **TBD**, because
+Chosen option: **TBD**, because...
 
-Option 5 (AOM) is unlikely to be a good fit based on the heavy focus on AV1, which TAMS is related to, but not closely.
-Similarly Option 3 (CNCF) seems to consider projects which exist at another layer of the stack to TAMS.
+### Detailed SWOT Analysis of Options
 
-{Justification, e.g., only option which resolves requirements, or comes out best (see below)}.
+To aid making this decision, an analysis of Strengths, Weaknesses, Opportunities and Threats (SWOT) was conducted to provide another lens for analysing the options, as captured in the table below.
+In this context a Strength is akin to a "Good" in the ADR options, a Weakness akin to a "Bad", an Opportunity is something positive that could come to pass with some work (or some good luck) as a result, and a Threat is the opposite - something negative that could come to pass, but that is less certain than a Weakness.
+
+Alliance for Open Media (Option 5) has been removed from the scope of this analysis as it is unlikely to be a good fit based on the heavy focus on AV1, which TAMS is related to, but not closely.
+Similarly Cloud Native Computing Foundation (Option 3) has also been removed from the scope, since it seems to consider projects which exist at another layer of the stack to TAMS and is otherwise very similar to the Academy Software Foundation (Option 2).
+<!-- markdownlint-disable MD033 -->
+<table>
+  <thead>
+    <tr>
+      <th>Option</th>
+      <th>Strengths</th>
+      <th>Weaknesses</th>
+      <th>Opportunities</th>
+      <th>Threats</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="3"><b>Linux Foundation</b> (Option 1)</td>
+      <td>Closest to existing model</td>
+      <td>Have to form/grow/run own community</td>
+      <td>May be able to move beyond media & entertainment</td>
+      <td>May face some limitations/restrictions by being unfunded</td>
+    </tr>
+    <tr>
+      <td>Light-touch overall with considerable freedom</td>
+      <td></td>
+      <td>Could move to another sub-foundation/switch to funded later</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Keeps the most options open in future</td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td rowspan="4"><b>Academy Software Foundation</b> (Option 2)</td>
+      <td>Ready-made community</td>
+      <td>More process around managing the project</td>
+      <td>Making a common home for open source media software and unifying with fellow travellers (e.g. OpenTimelineIO)</td>
+      <td>Positions TAMS initially within Media & Entertainment: limits multi-use applicability</td>
+    </tr>
+    <tr>
+      <td>Existing funding and structure</td>
+      <td>Harder to join and set up: more process and structure involved</td>
+      <td>Growing towards the film/VFX industry as a broader TAMS market</td>
+      <td>Film/VFX prominence overshadows the more broadcast/news positioning of TAMS</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>Need to move existing community</td>
+      <td>May help push into poorly served regions: e.g. US market</td>
+      <td>Lots of work involved for us in broadening ASWF beyond film/VFX</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td>Some effort from Premier tier members, who provide 1x FTE</td>
+      <td>Some cultural mismatch due to different sectors/industries/geographies: may be high-friction</td>
+    </tr><tr>
+      <td rowspan="2"><b>Joint Development Foundation</b> (Option 4)</td>
+      <td>More rigourous handling of IPR</td>
+      <td>Differs from how TAMS works today, which is much more like a software project</td>
+      <td>Possible path to formal standardisation, if that's a route we want to take</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>Not aimed at developing/owning software directly</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td rowspan="2"><b>Form a sub-foundation</b> (<a href="./0046-governance.md#option-5-form-a-new-industry-organisation">ADR0046 Option 5</a>)</td>
+      <td>Provides a common space for open source broadcast software to grow</td>
+      <td>Lots of work for us to set it up, and high overhead to run</td>
+      <td>Potentially fills a gap in our sector</td>
+      <td>There are many other organisations that partially cover this need, and adding a "competitor" is challenging and risky</td>
+    </tr>
+    <tr>
+      <td>Considerable freedom to set direction and approach</td>
+      <td>Likely to require some kind of funding plan for e.g. legal support and admin costs</td>
+      <td>May be able to join forces with comparable open source broadcast technology under and common framework</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td rowspan="4"><b>Retain the status quo</b> (<a href="./0046-governance.md#option-1-keep-tams-under-the-control-of-the-bbc">ADR0046 Option 1</a>)</td>
+      <td>No effort required</td>
+      <td>No legal entity or trademark protection</td>
+      <td></td>
+      <td>Project could stall if the BBC re-prioritise away from it</td>
+    </tr>
+    <tr>
+      <td>TSC already functioning</td>
+      <td>Perceived as BBC-owned &mdash; limits adoption</td>
+      <td>None: this is the baseline we're trying to improve on</td>
+      <td>Single-org perception limits vendor adoption and contributions</td>
+    </tr>
+    <tr>
+      <td>Working so far...</td>
+      <td>Contributors and TSC members lack any formal governance rights or status</td>
+      <td></td>
+      <td>Subject to BBC enterprise controls: org is not really set up for this!</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>BBC Charter renewal means long-term outlook remains unknown</td>
+    </tr>
+  </tbody>
+</table>
+<!-- markdownlint-enable MD033 -->
 
 ### Implementation
 
