@@ -79,7 +79,7 @@ This would include options for a "greedy match" where all Flows which match the 
 
 ### Updating Flows created using a Profile
 
-For Flows created by specifying all technical characteristics directly, updates can include any of those parameters without restriction. 
+For Flows created by specifying all technical characteristics directly, updates can include any of those parameters without restriction.
 When a Flow is created from a Profile then it inherits all the technical characteristics from the Profile.
 This means if that Flow then needs to be updated then consideration needs to be given to the fields which were inherited.
 
@@ -132,4 +132,4 @@ Clients should not retrospectively update `avg_bit_rate` on a Flow that was crea
 
 The `max_bit_rate` is defined in [AppNote 0013](https://github.com/bbc/tams/blob/main/docs/appnotes/0013-setting-flow-bit-rate-properties.md) and is considered the actual measured peak value of the segments in TAMS.
 Since this is dependent on the actual behaviours of the encoder in relation to the actual content that is being encoded then this cannot be predicted in advance or will be consistent across Flows.
-As such this cannot be included within a Profile and should be set by the encoder in the same manner regardless of whether the Flow was created directly or using a Profile. 
+As such this cannot be included within a Profile and should be set by the encoder in the same manner regardless of whether the Flow was created directly or using a Profile.
