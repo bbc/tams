@@ -6,11 +6,31 @@
         {
             "$ref": "flow-common.json"
         },
-        { "$ref": "flow-video.json" },
-        { "$ref": "flow-audio.json" },
-        { "$ref": "flow-image.json" },
-        { "$ref": "flow-data.json" },
-        { "$ref": "flow-multi.json" }
+        {
+          "title": "Video Flow",
+          "description": "Create a Flow by specifying video technical characteristics directly",
+          "$ref": "flow-video.json"
+        },
+        {
+          "title": "Audio Flow",
+          "description": "Create a Flow by specifying audio technical characteristics directly",
+          "$ref": "flow-audio.json"
+        },
+        {
+          "title": "Image Flow",
+          "description": "Create a Flow by specifying image technical characteristics directly",
+          "$ref": "flow-image.json"
+        },
+        {
+          "title": "Data Flow",
+          "description": "Create a Flow by specifying data technical characteristics directly",
+          "$ref": "flow-data.json"
+        },
+        {
+          "title": "Multi-essence Flow",
+          "description": "Create a Flow by specifying multi-essence technical characteristics directly",
+          "$ref": "flow-multi.json"
+        }
       ]
     }
   ]
