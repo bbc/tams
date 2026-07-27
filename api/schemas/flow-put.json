@@ -7,31 +7,36 @@
             "$ref": "flow-common.json"
         },
         {
-          "title": "Video Flow",
-          "description": "Create a Flow by specifying video technical characteristics directly",
-          "$ref": "flow-video.json"
-        },
-        {
-          "title": "Audio Flow",
-          "description": "Create a Flow by specifying audio technical characteristics directly",
-          "$ref": "flow-audio.json"
-        },
-        {
-          "title": "Image Flow",
-          "description": "Create a Flow by specifying image technical characteristics directly",
-          "$ref": "flow-image.json"
-        },
-        {
-          "title": "Data Flow",
-          "description": "Create a Flow by specifying data technical characteristics directly",
-          "$ref": "flow-data.json"
-        },
-        {
-          "title": "Multi-essence Flow",
-          "description": "Create a Flow by specifying multi-essence technical characteristics directly",
-          "$ref": "flow-multi.json"
+            "oneOf": [
+                {
+                    "type": "object",
+                    "title": "Flow Profile",
+                    "required": [
+                        "profile_id"
+                    ],
+                    "properties": {
+                        "profile_id": {
+                            "description": "Profile identifier that was used to create the flow.  When supplying a profile_id no metadata which can be contained in a Profile should also be provided, doing so will result in a 400 validation error.  Trying to create a Flow using a Profile ID that does not exist should also provide a 400 validation error",
+                            "$ref": "uuid.json"
+                        }
+                    }
+                },
+                {
+                    "$ref": "flow-video.json"
+                },
+                {
+                    "$ref": "flow-audio.json"
+                },
+                {
+                    "$ref": "flow-image.json"
+                },
+                {
+                    "$ref": "flow-data.json"
+                },
+                {
+                    "$ref": "flow-multi.json"
+                }
+            ]
         }
-      ]
-    }
-  ]
+    ]
 }
