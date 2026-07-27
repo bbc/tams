@@ -1917,7 +1917,7 @@ paths:
         A precise definition can be found in the [Setting Flow Bit Rate Properties](https://github.com/bbc/tams/blob/main/docs/appnotes/0013-setting-flow-bit-rate-properties.md) AppNote.
 
         When a Flow is created from a Profile then the average bit rate is inherited from the Profile.
-        In this scenario is it not possible to update the avrage bit rate directly as it would invalidate the link to the Profile.
+        In this scenario is it not possible to update the average bit rate directly as it would invalidate the link to the Profile.
         Any attempt to update the average bitrate should be rejected by the store with a 400 error message as this is a bad request.
         To update the average bit rate then it is necessary to remove the link to the Profile first before updating directly.
       operationId: PUT_flows-flowId-avg-bit-rate
