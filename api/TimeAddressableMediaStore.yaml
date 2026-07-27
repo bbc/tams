@@ -1327,7 +1327,7 @@ paths:
         For the standard fields (eg label, description, tags) which form part of the common Flow metadata and provided directly regardless of the Profile then these can be updated through the standard process.
 
         In the scenario where the technical characteristics do need to be changed on a Flow created from a Profile then it is necessary to remove the link to the Profile as part of the update since it will no longer match the Profile entirely.
-        This is achieved by means of sending the `profile_id` field with an empty string as part of the update.
+        This is achieved by means of setting the `profile_id` field to an empty string as part of the update.
         This will then break the link to the Profile and allow the store to update the technical parameters.
         It should be noted that searching for Flows using a Profile will no longer include the updated Flow since it no longer matches or is linked to the Profile.
       operationId: PUT_flows-flowId
