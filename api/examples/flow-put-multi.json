@@ -9,17 +9,14 @@
     },
     "flow_collection": [
         {
-            "id": "4f79cfd1-c057-47f4-8e4d-1b126ca7bf34",
-            "priority": 1
+            "id": "4f79cfd1-c057-47f4-8e4d-1b126ca7bf34"
         },
         {
-            "id": "6101df05-06bb-41b8-8af4-cf7cd33df209",
-            "priority": 1
+            "id": "6101df05-06bb-41b8-8af4-cf7cd33df209"
         },
         {
             "id": "c8943cb3-08df-46de-8ce8-0d7d70ed204c",
-            "role": "audio_description",
-            "priority": 2
+            "role": "audio_description"
         },
         {
             "id": "e85efab4-993b-4ad6-9af3-4cd8d0d38860",

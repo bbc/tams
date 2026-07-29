@@ -11,7 +11,6 @@
     "flow_collection": [
         {
             "id": "32b75860-83e5-48c9-8d6b-de46bdbc7f80",
-            "priority": 1,
             "container_mapping": {
                 "mp2ts_container": {
                     "pid": 256
@@ -20,7 +19,6 @@
         },
         {
             "id": "94996f2e-0cb5-43d3-ab6c-db5a9cf667aa",
-            "priority": 1,
             "container_mapping": {
                 "track_index": 1,
                 "format_track_index": 0,
@@ -31,7 +29,6 @@
         },
         {
             "id": "9ba0523e-22a0-4c69-a598-baf4be244a79",
-            "priority": 2,
             "container_mapping": {
                 "track_index": 2,
                 "format_track_index": 1,

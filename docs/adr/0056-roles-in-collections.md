@@ -26,10 +26,11 @@ Some better recommendations would be useful around how these cases should be han
 * Option 3: Use `role` as editorial purpose, use other queries for Flow/Source properties
 * Option 4a: Capture editorial purpose elsewhere, use `role` as an optional label
 * Option 4b: Capture editorial purpose elsewhere, use `role` as an optional label, add a `priority` for sorting
+* Option 4c: Capture editorial purpose elsewhere, use `role` as an optional label, insist list is ordered
 
 ## Decision Outcome
 
-Chosen option: Option 4b because it avoids storing properties of Flows and Sources on collection items, instead keeping them on the objects they naturally fit with.
+Chosen option: Option 4c because it avoids storing properties of Flows and Sources on collection items, instead keeping them on the objects they naturally fit with and naturally providing an ordering without additional fields.
 It also limits the changes required to the API, and while in some cases it may trigger extra API requests (e.g. to get the details of items in a collection), it is likely the details of those collection items will be needed anyway, so the requests would be needed, and was made less onerous by the additional query parameters introduced in [ADR0049](./0049-source-collected_by-query-parameter.md) (<https://github.com/bbc/tams/pull/183>).
 Furthermore the TAMS API is intended not to serve as a Media Asset Manager and provide minimal library management and discovery features: through that lens the additional request burden seems reasonable and if it becomes too onerous in a particular deployment, that may indicate a MAM is required.
 
@@ -101,4 +102,16 @@ Not being set causes sorting last.
 * Good, because it simplifies client implementations that need not worry about the "correct" value of `role`.
 * Good, because it avoids a breaking change to the specification.
 * Good, because it provides an optional stable ordering and default-selection behaviour in UIs and players.
+* Bad, because it forces clients to make additional requests to locate all the data they need.
+
+### Option 4c: Capture editorial purpose elsewhere, use `role` as an optional label, insist list is sorted
+
+As Option 4a, except indicate that collections are a sorted list and that sort order should be retained when displayed (e.g. in a UI) and for selecting defaults.
+
+* Good, because it keeps properties of the Source/Flow on that object, instead of in the collection.
+* Good, because it simplifies client implementations that need not worry about the "correct" value of `role`.
+* Good, because it avoids a breaking change to the specification.
+* Good, because it provides an optional stable ordering and default-selection behaviour in UIs and players.
+* Good, because the sort order is simple and intuitive.
+* Neutral, because service implementations must capture the sort order of the list.
 * Bad, because it forces clients to make additional requests to locate all the data they need.
