@@ -1593,7 +1593,7 @@ paths:
         Service implementations SHOULD verify that Flow metadata is compatible with the associated Source.
         Service implementations MAY accept modification/addition of parameters, and reflect such changes in the Source, where it will not bring any Flows of the Source into conflict.
         Where metadata would result in any Flow of the Source coming into conflict, the request SHOULD be rejected with a 400 response.
-        Examples of conflicting metadata include `format` not matching, or the `priority` or `role` in `source_collection` and `flow_collection` not matching.
+        Examples of conflicting metadata include `format` not matching, or `role` or ordering in `source_collection` and `flow_collection` not matching.
         It may also be possible for service implementations to detect some instances where multiple Flows should not be considered of the same Source, such as audio Flows with different numbers of tracks.
         Further guidance on when Flows/Sources may be considered the same/different may be found in the [Practical Guidance for Media](https://specs.amwa.tv/ms-04/releases/v1.0.0/docs/3.0._Practical_Guidance_for_Media.html) section of AMWA MS-04.
 
@@ -2021,7 +2021,7 @@ paths:
           $ref: '#/components/responses/trait_resource_info_head_404'
     get:
       summary: Flow Collection
-      description: Returns the Flow collection property. A list of Flows that are collected together by this Flow, sorted in ascending `priority` order (where no `priority` sorts last).
+      description: Returns the Flow collection property. An ordered list of Flows that are collected together by this Flow.
       operationId: GET_flows-flowId-flow-collection
       tags:
         - Flows
@@ -2039,7 +2039,7 @@ paths:
     put:
       summary: Create or Update Flow Collection
       description: |
-        Create or update the Flow collection property. A list of Flows that are collected together by this Flow.
+        Create or update the Flow collection property. An ordered list of Flows that are collected together by this Flow.
 
         Service implementations SHOULD verify that Flow metadata is compatible with the associated Source.
         Service implementations MAY accept modification/addition of parameters, and reflect such changes in the Source, where it will not bring any Flows of the Source into conflict.
