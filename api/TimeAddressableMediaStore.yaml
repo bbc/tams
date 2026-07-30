@@ -960,7 +960,11 @@ paths:
               example: |
                 "ingest_service_api"
               schema:
-                type: string
+                oneOf:
+                  - type: string
+                  - type: array
+                    items:
+                      type: string
         "404":
           description: The requested Source or tag does not exist.
     put:
@@ -975,7 +979,11 @@ paths:
             example: |
               "new_value"
             schema:
-              type: string
+              oneOf:
+                - type: string
+                - type: array
+                  items:
+                    type: string
         required: true
       responses:
         "204":
@@ -1597,7 +1605,7 @@ paths:
       description: |
         Deletes the Flow and associated Segments.
         If Flow Segment deletion takes too long then this request will return 202 Accepted and the `Location` header will point to a Flow Delete Request to monitor deletion progress.
-        
+
         Services SHALL only delete Objects when they are no longer referenced by any Flow Segments or other Objects (i.e. as init Objects).
       operationId: DELETE_flows-flowId
       tags:
@@ -1697,7 +1705,11 @@ paths:
               example: |
                 "full"
               schema:
-                type: string
+                oneOf:
+                  - type: string
+                  - type: array
+                    items:
+                      type: string
         "404":
           description: The requested Flow or tag does not exist.
     put:
@@ -1712,7 +1724,11 @@ paths:
             example: |
               "proxy"
             schema:
-              type: string
+              oneOf:
+                - type: string
+                - type: array
+                  items:
+                    type: string
         required: true
       responses:
         "204":
@@ -2528,7 +2544,7 @@ paths:
       summary: Delete Flow Segment
       description: |
         Deletes the Flow Segments. If the deletion takes too long then this request will return 202 Accepted and the `Location` header will point to a Flow Delete Request to monitor deletion progress.
-        
+
         Services SHALL only delete Objects when they are no longer referenced by any Flow Segments or other Objects (i.e. as init Objects).
       operationId: DELETE_flows-flowId-segments
       tags:
