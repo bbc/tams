@@ -31,6 +31,7 @@ Several possible organisations were identified, from discussions and suggestions
 Note that these options are in no particular order, except as to make the rest of the document flow better.
 
 - Option 1: Linux Foundation (LF)
+- Option 1a: Linux Foundation, with funding
 - Option 2: Academy Software Foundation (ASWF)
 - Option 3: Cloud Native Computing Foundation (CNCF)
 - Option 4: Joint Development Foundation (JDF)
@@ -77,6 +78,25 @@ Similarly Cloud Native Computing Foundation (Option 3) has also been removed fro
     </tr>
     <tr>
       <td>Keeps the most options open in future</td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  <tr>
+      <td rowspan="3"><b>Linux Foundation, funded</b><br/>(Option 1a)</td>
+      <td>Similar to existing model</td>
+      <td>Have to form/grow/run own community</td>
+      <td>May be able to move beyond media & entertainment</td>
+      <td>Unlikely to be able to switch back to unfunded later</td>
+    </tr>
+    <tr>
+      <td>Light-touch overall with considerable freedom</td>
+      <td>Significant upfront and ongoing costs for our community</td>
+      <td></td>
+      <td>May be complex for the BBC to be involved (likely on a special Associate tier)</td>
+    </tr>
+    <tr>
+      <td>Clear approach to how we manage funding</td>
       <td></td>
       <td></td>
       <td></td>
@@ -177,8 +197,7 @@ At a basic level, Linux Foundation projects are required to use an open source l
 
 In terms of that neutral party, Linux Foundation projects are a “series” of LF Projects, LLC, a “series limited liability company” under Delaware law.
 This effectively allows each project to be a distinct legal entity under the parent organisation, with separate obligations, assets and liabilities, without the overhead of managing a large number of companies (_note that this is the author's layperson's understanding, and not a qualified legal opinion_).
-
-If desirable, a Linux Foundation project can become "funded", starting a "directed fund" to raise revenue (through membership) and spend it as directed.
+This option specifically considers the "Community Project" [style of project](https://www.linuxfoundation.org/projects/hosting).
 
 On IPR, it seems to rely on Apache 2.0 and similar licences containing a patent grant and then [Developer Certificate of Origin (DCO)](https://wiki.linuxfoundation.org/dco) sign-off indicating you were able to licence that contribution under Apache 2.0.
 There is some cross-LF activity to defend members from Non-practicing Entities (also known as "patent trolls") depending on membership tier.
@@ -194,6 +213,23 @@ To set up a project requires the support of at least one Linux Foundation member
 - Neutral, because while it is not a direct fit for TAMS, the Linux Foundation overall is very broad
 - Neutral, because there would be additional steps to operate as a funded project, however this is no different to the existing model
 - Bad, because we have to form, grow and run our own community (rather than being participants in an existing one)
+
+### Option 1a: Linux Foundation, with funding
+
+As Option 1, but use the "Community Project + Funding" form of [Linux Foundation project](https://www.linuxfoundation.org/projects/hosting), like the [Yocto Project](https://www.yoctoproject.org/).
+
+In this model organisations become members of the project in exchange for an annual membership fee, which is put towards infrastructure, events and similar (with the Linux Foundation taking 8%).
+They are a Directed Fund where paying members at an appropriate level receive some control over how the project is run and the funds are spent (e.g. through seats and votes on the Governing Board) and other benefits, however technical participation is open to all.
+
+- Good, because it offers us considerable freedom in how to operate TAMS
+- Good, because it allows our existing community and process to remain, only changing the underlying ownership
+- Good, because it is the lightest-touch of the options
+- Good, because it creates space for TAMS applications outside of the Media & Entertainment sector, where it may find broader adoption
+- Good, because it has proven templates for setting up the legal and IP framework around the TAMS specification
+- Neutral, because while it is not a direct fit for TAMS, the Linux Foundation overall is very broad
+- Neutral, because there would be additional steps to operate as a funded project, however this is no different to the existing model
+- Bad, because we have to form, grow and run our own community (rather than being participants in an existing one)
+- Bad, because several of our community would need to put in substantial funding (both to join our project, and if necessary the Linux Foundation) to get set up
 
 ### Option 2: Academy Software Foundation (AWSF)
 
