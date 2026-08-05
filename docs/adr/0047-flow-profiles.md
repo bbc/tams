@@ -65,3 +65,9 @@ Alternatively it could be used as an exclude to look for all Flows which match a
 - Bad: Remaining challenges around content discovery remain
 - Bad: Edit-by-reference workflows continue to require client-side matching of all technical parameters across multiple Sources
 - Bad: No formal mechanism for defining or communicating house formats between systems
+
+## Data Model Changes
+
+The following diagram details the changes required to achieve the implementation of Profiles within the API schema files:
+
+![Diagram showing schema file changes](images/adr0047-flow-profile-data-model-changes.png)
