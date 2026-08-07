@@ -323,3 +323,52 @@ AOM is a JDF predominantly concerned with the developmnt and promotion of the AV
 While there is a working group considering [Storage and Transport Formats](https://aomedia.org/about/organization/#storage-and-transport-formats-working-group) the primary concern seems to be the codec itself.
 
 - Bad, because of the significant focus on AV1
+
+## Appendix: Detailed Organisation Research
+
+Based on the [questions laid out above](#decision-drivers), research was carried out into each candidate organisation.
+This was used as the basis of each Option, the Pros and Cons and the SWOT analysis above, and is reproduced here for completeness.
+
+### How does governance work?
+
+<!-- markdownlint-disable MD033 -->
+|  | How does governance work? |
+| -- | -- |
+| Academy Software Foundation | The principles of the ASWF include open licence, separation of technical concerns, open participation and neutral ownership. TAMS being framed as a broadcast technology falls outside of the organisation scope of motion picture and special effects.<br />There is a clear application, approval and project governance process that seeks to facilitate a universe of participants and encourage phased progression and growth. |
+| Alliance for Open Media | With foundations in the AV1 codec the scope of the organisation has expanded to include working groups, each with a select focus.<br />There appears to be alignment with TAMS and the objectives of the Storage and Formats working group. Steering group governance stems from a hierarchy of steering committees from member organisations. |
+| Cloud-native Computing Foundation | The principles of the CNCF are for projects to contribute to the cloud-native echo system and to be a vendor neutral home.<br />Organisations are self-governed and supported by an oversight committee which can provide support when called upon, supported by standard templates that can be adjusted to meet project needs and criteria to encourage project progress. |
+| Joint Development Foundation | The organisation is focused on the fast initialisation of projects moving to longer-term standards and specifications (including source code and data).  A clear process of execution of the membership agreement and the establishment of a project charter with a capability to include project sponsorship. |
+| Linux Foundation | The foundation requires projects to use an approved open source licensing model supported by a clear strategy for Intellectual Property ownership and for all assets to be neutrally owned. <br />Oversight is minimal, with a focus on the separation of business and technical governance to be documented in a charter. |
+<!-- markdownlint-enable MD033 -->
+
+|  | What is the legal structure? |
+| -- | -- |
+| Academy Software Foundation | US Law, 501c6 Series LLC (Limited Liability Company). |
+| Alliance for Open Media | The organisation has adopted a number of patent, software and contributor licence agreements that are aligned with the objectives of the organisation and that contributors must comply. Operates within the organisation of the Joint Development Foundation. |
+| Cloud-native Computing Foundation | US Law, 501c6 Series LLC (Limited Liability Company). |
+| Joint Development Foundation | US Law, operates as a subsidiary of the Joint Development Foundation Projects (501 non-profit). |
+| Linux Foundation | US Law,. 501c6 LLC (Limited Liability Company), each project is ‘series’ which is a subset of the LLC. |
+
+|  | What evidence is there of existing unfunded projects, would it be compatible with TAMS? |
+| -- | -- |
+| Academy Software Foundation | The foundation is formed to manage the curation of a community, a number of projects (approximately ten) supported by funding to be used by all projects. |
+| Alliance for Open Media | Unclear. |
+| Cloud-native Computing Foundation | The foundation is formed to manage the curation of a community, a number of projects (approximately ten) supported by funding to be used by all projects. |
+| Joint Development Foundation | Participation is accepted with no fee or sponsorship. |
+| Linux Foundation | Participation is feasible under both community and funding models, and additional scope for combinations. Models without funding receive less support than those with funding, the Linux foundation receives a percentage of the funding to aid support and organisation. |
+
+|  | How are Intellectual Property Rights managed and addressed? |
+| -- | -- |
+| Academy Software Foundation | It is dependent on the software licence that the project adopts, TAMS uses Apache 2.0 which grants permission to use the code and contributors own their own copyright. |
+| Alliance for Open Media | The organisation has a set of patent licences that govern how IPR is managed. |
+| Cloud-native Computing Foundation | The organisation charter clearly defines how IPR is to be managed and which specific licences are to be adopted and used. |
+| Joint Development Foundation | A flexible approach with a series of well-defined policies being offered to projects to adopt that are aligned with established copyright licences and options. |
+| Linux Foundation |It is dependent on the software licence that the project adopts, TAMS uses Apache 2.0 which grants permission to use the code and contributors own their own copyright. |
+
+|  | How is the community managed? |
+| -- | -- |
+| Academy Software Foundation | In addition to annual events, the organisation leverages an establish digital community and has discovered that this is enabling a wider community of ideas and knowledge sharing alongside membership projects.  |
+| Alliance for Open Media | This is a project of the Joint Development Foundation and it is likely that communities are out of scope. |
+| Cloud-native Computing Foundation | An established large community around the cloud-native ecosystem which would require integration from the existing TAMS community. |
+| Joint Development Foundation | The organisation is focused on the principles of establishing work and communities are out of scope. |
+| Linux Foundation | The foundation provides a set of tools to support project management and community integration; projects are expected to manage communities independently. |
