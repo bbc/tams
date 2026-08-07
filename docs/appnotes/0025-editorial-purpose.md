@@ -37,4 +37,4 @@ _Note that in general, audio Flows and Sources should also use a [language code]
 | Name | Description |
 | ---- | ----------- |
 | `sdh` | Subtitles for the Deaf and Hard of Hearing, including descriptive information of audio cues and other non-dialogue sound |
-| `transcript` | Subtitles containing only the spoken words |
+| `transcript` | Transcript containing only the spoken words |
