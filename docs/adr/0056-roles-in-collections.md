@@ -87,6 +87,7 @@ Make `role` an optional field, intended solely to aid with human readability and
 Require clients to make Source/Flow listing requests for Sources/Flows collected by a given ID to find full details.
 
 * Good, because it keeps properties of the Source/Flow on that object, instead of in the collection.
+* Good, because it allows editorial purpose to be captured even without the presence of a collection.
 * Good, because it simplifies client implementations that need not worry about the "correct" value of `role`.
 * Good, because it avoids a breaking change to the specification.
 * Bad, because it forces clients to make additional requests to locate all the data they need.
@@ -99,6 +100,7 @@ Lower priorities sort first, with the order of equivalent values being undefined
 Not being set causes sorting last.
 
 * Good, because it keeps properties of the Source/Flow on that object, instead of in the collection.
+* Good, because it allows editorial purpose to be captured even without the presence of a collection.
 * Good, because it simplifies client implementations that need not worry about the "correct" value of `role`.
 * Good, because it avoids a breaking change to the specification.
 * Good, because it provides an optional stable ordering and default-selection behaviour in UIs and players.
@@ -109,6 +111,7 @@ Not being set causes sorting last.
 As Option 4a, except indicate that collections are a sorted list and that sort order should be retained when displayed (e.g. in a UI) and for selecting defaults.
 
 * Good, because it keeps properties of the Source/Flow on that object, instead of in the collection.
+* Good, because it allows editorial purpose to be captured even without the presence of a collection.
 * Good, because it simplifies client implementations that need not worry about the "correct" value of `role`.
 * Good, because it avoids a breaking change to the specification.
 * Good, because it provides an optional stable ordering and default-selection behaviour in UIs and players.
