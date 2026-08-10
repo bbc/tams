@@ -1,5 +1,5 @@
 ---
-status: "proposed"
+status: "accepted"
 ---
 # Support for Fine-Grained Authorisation on Storage Backends
 
