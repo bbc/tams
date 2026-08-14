@@ -42,7 +42,47 @@ These options are all related, as illustrated by the following diagram (where bo
 
 ## Decision Outcome
 
-Chosen option: **TBD**, because...
+**Chosen option: Option 1 — Linux Foundation**, because it best preserves TAMS's breadth of applicability, minimises friction, and keeps the most options open for the future.
+
+### Reasons
+
+#### 1. Applicability beyond Media & Entertainment
+
+TAMS is fundamentally a standard for managing time-addressable content — video, audio and data on a timeline.
+While adoption today is concentrated in broadcast, news and sports, there is no technical reason this model could not serve workloads in other domains where live or near-live content is produced and stored.
+Aligning TAMS with an industry-specific organisation risks signalling — intentionally or otherwise — that the standard is scoped only to that industry.
+The Linux Foundation's sector-neutral positioning avoids constraining the project's long-term reach.
+
+#### 2. Community and cultural fit
+
+The Academy Software Foundation provides a ready-made community, but that community is primarily oriented around film, VFX and post-production tooling.
+The typical TAMS adopter — a broadcast, news or sports organisation — sits in a different part of the media landscape with different workflows, timelines and concerns.
+There is a risk that TAMS would occupy a niche position within a community whose focus lies elsewhere, making it harder to attract engagement from the organisations most likely to benefit from it.
+Conversely, broadcast organisations looking at TAMS might perceive it as part of a VFX-oriented ecosystem that does not reflect their world.
+Joint events and activities would be a hard sell where the VFX and broadcast audiences are only partially aligned.
+
+#### 3. Friction and operational overhead
+
+ASWF comes with more process around managing a project: a formal submission and approval process, a lifecycle from Sandbox through Incubation to Graduation, annual reviews, and a requirement to move the existing community into ASWF infrastructure.
+By contrast, the Linux Foundation approach is the closest to TAMS's existing operating model — the TSC, community Slack and current contribution processes can continue with minimal disruption.
+LF is "light-touch overall with considerable freedom", which is a strength the TSC values.
+
+#### 4. Flexibility and reversibility
+
+The SWOT analysis identified "keeps the most options open in future" as a strength of the Linux Foundation path, and "could move to another sub-foundation or switch to funded later" as an opportunity.
+Should circumstances change — for example, should ASWF broaden its positioning to encompass broadcast-oriented projects — TAMS could move at that point.
+The reverse journey, moving out of a more structured organisation, would involve greater overhead and disruption.
+
+#### Acknowledged trade-offs
+
+There is a recognised weakness: TAMS will need to continue building its own community rather than inheriting one, and an unfunded project may face some limitations in the support available.
+However, the TSC judged that community fit, long-term flexibility and minimal friction outweigh the short-term benefit of a pre-existing audience whose interests are not well aligned with TAMS's direction.
+MXL provides a recent precedent for a media-adjacent project successfully taking this route within the Linux Foundation.
+
+#### The Future
+
+While **Option 1 - Linux Foundation** is the right choice for TAMS at present due to the reasons outlined, it may not be the final form, and the flexibility to change in the future is part of what makes this option appealing.
+To that end, the TSC will keep this under consideration and commits to beginning a review of this position and whether our surrounding context has changed around September 2027 (12 months hence) and updating this document with the outcome of that review.
 
 ### Detailed SWOT Analysis of Options
 
