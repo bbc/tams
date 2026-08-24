@@ -22,23 +22,23 @@ When given a single Source ID:
 2. Get the details of collected Sources (`GET /sources?source_collected_by_ids=<given_source_id>`).
    Choose the correct Sources to play.  
     1. If there is only one of each type (e.g. one audio, one video) then these can be selected directly.  
-    2. Otherwise select a Source of each desired type with the lowest `priority` in the collection by default.  
+    2. Otherwise select the first Source of each desired type in the order they are presented by the collection.
     3. Otherwise (or if a selected Source is multi-essence) the correct Source to play cannot be determined automatically.
-       Provide a suitable error to the user and insist they be specific.  
+       Fall back to manual selection by the user.
 3. For each selected mono-essence Source, list the Flows that represent that Source with `GET /flows?source=<selected_source_id>`.
    Apply any other relevant filtering (e.g. by codec, frame size, etc.)
 4. Filter the returned list of Flows to remove any that do not meet requirements, such as codecs, containers or bitrates that are not readable by this system.
 5. If constructing an adaptive bitrate (ABR) ladder for a suitable player, use this list to set quality steps in the player and stop here.
 6. If `generation` is present, sort the list by `generation` in ascending order.
-7. If `avg_bit_rate` is present, for each Flow with the same `generation` (or every Flow if `generation` is not present), sort the list by `avg_bit_rate` in descending order.
+7. Where Flows have the same `generation`, sort the list by `avg_bit_rate` in descending order (if `avg_bit_rate` is present).
 8. Choose the entry at the top of the list as the "best available" quality.
 
 To read a given Flow ID, accounting for the possibility that `container_mapping` is used:
 
 1. `GET` the Flow and check if `container` is set.
-   If it is, skip to step 5, making a note of any `container_mapping` property on the Flow.
+   If it is, skip to step 4, making a note of any `container_mapping` property on the Flow.
 2. Check to see if the Flow is collected by a multi-essence Flow.
-   Examine the Flows it is collected by (using `GET /flows?flows_collected_by_id=<this_flow_id>` to find one where `container` is set
+   Examine the Flows it is collected by (using `GET /flows?collected_by_ids=<this_flow_id>` to find one where `container` is set
 3. Examine the `collects` property of the multi-essence Flow, and check the `container_mapping` to identify which track to filter out of the multi-essence Flow.
 4. Get the list of segments using `GET /flows/<flowid>/segments`
 5. Fetch each object, filter the relevant track (if `container_mapping` is used) and then remap timing as usual
