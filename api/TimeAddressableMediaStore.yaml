@@ -2237,6 +2237,78 @@ paths:
           description: Forbidden. You do not have permission to modify this Flow. It may be marked read-only.
         "404":
           description: The requested Flow ID in the path is invalid.
+  /flows/{flowId}/status:
+    parameters:
+      - name: flowId
+        in: path
+        required: true
+        schema:
+          $ref: 'schemas/uuid.json'
+        description: The Flow identifier.
+    head:
+      summary: Flow Status
+      description: Return Flow status path headers
+      operationId: HEAD_flows-flowId-status
+      tags:
+        - Flows
+      responses:
+        "200":
+          $ref: '#/components/responses/trait_resource_info_head_200'
+        "404":
+          description: The requested Flow does not exist.
+    get:
+      summary: Flow Status
+      description: Returns the Flow status property.
+      operationId: GET_flows-flowId-status
+      tags:
+        - Flows
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              example: |
+                "closed_complete"
+              schema:
+                $ref: schemas/flow-status.json
+        "404":
+          description: The requested Flow does not exist.
+    put:
+      summary: Create or Update Flow Status
+      description: Create or update the status property.
+      operationId: PUT_flows-flowId-status
+      tags:
+        - Flows
+      requestBody:
+        content:
+          application/json:
+            example: |
+              "closed_complete"
+            schema:
+              $ref: schemas/flow-status.json
+        required: true
+      responses:
+        "204":
+          description: No content. The status has been created or updated.
+        "400":
+          description: Bad request. Invalid Flow status.
+        "403":
+          description: Forbidden. You do not have permission to modify this Flow. It may be marked read-only.
+        "404":
+          description: The requested Flow does not exist.
+    delete:
+      summary: Delete Flow Status
+      description: Delete the status property.
+      operationId: DELETE_flows-flowId-status
+      tags:
+        - Flows
+      responses:
+        "204":
+          description: No content. The Flow status property has been deleted.
+        "403":
+          description: Forbidden. You do not have permission to modify this Flow. It may be marked read-only.
+        "404":
+          description: The requested Flow ID in the path is invalid.  
   /flows/{flowId}/segments:
     parameters:
       - name: flowId
