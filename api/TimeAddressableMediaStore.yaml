@@ -2267,8 +2267,7 @@ paths:
           description: ""
           content:
             application/json:
-              example: |
-                "closed_complete"
+              example: "closed_complete"
               schema:
                 $ref: schemas/flow-status.json
         "404":
@@ -2282,8 +2281,7 @@ paths:
       requestBody:
         content:
           application/json:
-            example: |
-              "closed_complete"
+            example: "closed_complete"
             schema:
               $ref: schemas/flow-status.json
         required: true
