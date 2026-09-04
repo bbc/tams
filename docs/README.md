@@ -29,6 +29,7 @@ For more information on how we use application notes, see [here](./appnotes/READ
 | [0020](./appnotes/0020-using-flow-profiles.md)                       | Using Profiles in TAMS                                          |
 | [0021](./appnotes/0021-media-integrity.md)                           | Integrity model for media in TAMS, and when interacting with other systems |
 | [0022](./appnotes/0022-transform-architectures.md)                   | Architectures for the transforming of media                     |
+| [0023](./appnotes/0023-finding-flows-to-play.md)                     | Finding Flows to Play                                           |
 | [0024](./appnotes/0024-using-init-segments.md)                       | Using Media with Initialisation Segments in TAMS                |
 | [0025](./appnotes/0025-editorial-purpose.md)                         | Editorial purpose                                               |
 
