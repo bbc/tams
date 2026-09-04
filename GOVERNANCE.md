@@ -14,7 +14,13 @@ The TSC will be responsible for identifying, agreeing and implementing the gover
 3. Create space to grow the community
 4. Provide a framework to set project direction and facilitate technical decision making
 
-## Phase 1: Setup Period (now)
+## Current Status
+
+TAMS will become a Community Project under the Linux Foundation, as discussed in detail by [ADR0051](./docs/adr/0051-host-organisation-for-tams.md).
+This was decided by a [vote of the TSC](https://github.com/bbc/tams/wiki/TSC-Meetings-2026#2026-09-04) and is now in the process of being implemented (phase 2, below).
+As part of that implementation, this document will be updated.
+
+## Phase 1: Setup Period (completed)
 
 Initially the TSC will be formed from several of the team at BBC R&D and AWS who were involved in TAMS becoming an industry initiative, balanced out by other organisations.
 In the Setup Period, the TSC is charged with setting up an open governance process and identifying a suitable organisation to take control of the project.
@@ -25,7 +31,7 @@ However the BBC commits this will end and a decision will be made and published 
 After the TSC has agreed on the governance approach, this document will be updated to describe it, and the community will be informed.
 In the meantime, suggestions and comments are greatly appreciated.
 
-## Phase 2: Transition Period
+## Phase 2: Transition Period (now)
 
 Immediately after the completion of the Setup Period, the TSC will work to implement the approach that was decided.
 This will involve any relevant project setup process with the organisation selected, and moving the TAMS repository out of the BBC’s GitHub Organisation.
