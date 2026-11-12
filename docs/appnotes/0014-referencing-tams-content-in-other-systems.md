@@ -15,6 +15,26 @@ In some cases a client may choose to ignore the location part of the URI, and pa
 These could be applied to another TAMS interface known to the client: for example a local cache or a store interface aggregator.
 This is made possible by Flows and Sources having a unique identifier, which should always point to that particular Flow or Source without colliding.
 
+#### Including the full API path
+
+A URI reference should always include the full path to the TAMS API, so that it directly matches the URL used to access that resource through the API.
+This applies equally to `https://` and `tams://` references.
+Where a TAMS instance is served from a path below the domain, all of the path elements between the domain and the TAMS API endpoints must be included in the reference.
+For example, a Flow on a TAMS instance served from `https://tams.example.com/path/` should be referred to as:
+
+```text
+https://tams.example.com/path/flows/f87f7f32-a34d-4a6f-b085-a5ee49b4b2f8
+```
+
+This includes any additional path elements added by the deployment, such as an API version or a deployment stage:
+
+```text
+https://tams.example.com/tams/v8.2/flows/f87f7f32-a34d-4a6f-b085-a5ee49b4b2f8
+tams://tams.example.com/path/flows/f87f7f32-a34d-4a6f-b085-a5ee49b4b2f8
+```
+
+The simpler examples below omit any such path for clarity.
+
 #### Referring directly to a Flow
 
 ```text
