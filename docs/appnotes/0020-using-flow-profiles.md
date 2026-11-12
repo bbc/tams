@@ -92,6 +92,30 @@ This is achieved by means of sending the `profile_id` field with an empty string
 This will then break the link to the Profile and allow the store to update the technical parameters.
 It should be noted that searching for Flows using a Profile will no longer include the updated Flow since it no longer matches or is linked to the Profile.
 
+### Deleting a Profile
+
+While a Profile is in use it should be considered immutable and permanent.
+A Profile is in use when one or more Flows in the store reference it through their `profile_id`.
+Removing a Profile that is in use would break the link between those Flows and the Profile, so that searching for Flows by Profile, and any system relying on the Profile to describe those Flows, would no longer work.
+
+There are however real world cases where a Profile needs to be removed, for example:
+
+* A Profile was created by mistake, such as with incorrect technical parameters
+* A test creates a Profile as part of generating test material and needs to clean up after itself
+
+To support these cases the store allows a Profile to be deleted only when it is not in use.
+If any Flow in the store still references the Profile then the store must reject the delete request with a 400 error and a suitable error message indicating that the Profile is still in use.
+
+To delete a Profile that is in use, a client must first deal with every Flow which references it.
+These Flows can be found by querying the Flows endpoint with the `profile_id` query parameter.
+Each Flow must then either be deleted, or have its link to the Profile removed by setting `profile_id` to an empty string as described above.
+Only once no Flows reference the Profile can it be deleted.
+
+Deleting a Profile only removes it from that store.
+Other stores holding the same Profile, and Flows in those stores which reference it, are not affected.
+Since Profile IDs are expected to be globally unique, the ID of a deleted Profile must not be reused for a Profile with different parameters.
+It is valid to create the same Profile again with the same ID and identical parameters, for example when replicating Flows from another store which still uses it.
+
 ## Multi-store working with Profiles
 
 The UUID of a Profile is assumed to be globally unique.
