@@ -428,6 +428,31 @@ paths:
           description: Bad request. Invalid Profile JSON or Profile already exists.
         "404":
           description: The requested Profile ID in the path is invalid.
+    delete:
+      summary: Delete Profile
+      description: |
+        Deletes the Profile from this store.
+        This is intended for removing Profiles that are not in use by any existing Flows.
+
+        A Profile is in use if any Flow in the store references it in its `profile_id`.
+        Service implementations MUST reject the request if the Profile is in use, as deleting it would break the link between those Flows and the Profile.
+        Flows that reference the Profile can be found using the `profile_id` query parameter on the [/flows](#/operations/GET_flows) endpoint.
+        To allow the Profile to be deleted, those Flows must first be deleted or have their link to the Profile removed.
+
+        Deleting a Profile only affects this store.
+        The Profile ID MUST NOT be reused for a Profile with different metadata, although the same Profile may be created again with the same ID and identical metadata (e.g. when replicating from another store).
+      operationId: DELETE_profiles-profileId
+      tags:
+        - Profiles
+      responses:
+        "204":
+          description: No content. The Profile has been deleted.
+        "400":
+          description: Bad request. The Profile is in use by one or more Flows and cannot be deleted.
+        "403":
+          description: Forbidden. You do not have permission to delete this Profile.
+        "404":
+          description: The requested Profile ID in the path is invalid.
   /service/webhooks:
     head:
       summary: List Webhook URLs
