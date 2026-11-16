@@ -43,6 +43,8 @@ DEFAULT_FLOW_METADATA = {
     }
 }
 
+MAX_SEGMENTS_PER_PAGE = 30
+
 
 async def put_flow(
     session: aiohttp.ClientSession,
@@ -84,7 +86,7 @@ async def get_media_storage_urls(
             credentials,
             f"{tams_url}/flows/{flow_id}/storage",
             json={
-                "limit": segment_count
+                "limit": min(segment_count, MAX_SEGMENTS_PER_PAGE)
             }
         ) as resp:
             # Context manager will raise on failure
