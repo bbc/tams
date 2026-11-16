@@ -104,7 +104,7 @@ There are however real world cases where a Profile needs to be removed, for exam
 * A test creates a Profile as part of generating test material and needs to clean up after itself
 
 To support these cases the store allows a Profile to be deleted only when it is not in use.
-If any Flow in the store still references the Profile then the store must reject the delete request with a 400 error and a suitable error message indicating that the Profile is still in use.
+If any Flow in the store still references the Profile then the store must reject the delete request with a 409 error and a suitable error message indicating that the Profile is still in use.
 
 To delete a Profile that is in use, a client must first deal with every Flow which references it.
 These Flows can be found by querying the Flows endpoint with the `profile_id` query parameter.

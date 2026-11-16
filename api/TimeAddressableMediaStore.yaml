@@ -447,8 +447,8 @@ paths:
       responses:
         "204":
           description: No content. The Profile has been deleted.
-        "400":
-          description: Bad request. The Profile is in use by one or more Flows and cannot be deleted.
+        "409":
+          description: Conflict. The Profile is in use by one or more Flows and cannot be deleted.
         "403":
           description: Forbidden. You do not have permission to delete this Profile.
         "404":

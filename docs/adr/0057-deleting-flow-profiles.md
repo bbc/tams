@@ -34,7 +34,7 @@ Chosen option: "Option 3: Allow Profiles to be deleted only when not in use", be
 
 A `DELETE` method will be added to `/service/profiles/{profileId}`.
 A Profile is in use when any Flow in the store references it in its `profile_id`.
-Service implementations must reject a request to delete a Profile that is in use with a 400 response.
+Service implementations must reject a request to delete a Profile that is in use with a 409 response.
 To delete such a Profile, Clients must first delete the referencing Flows or remove their link to the Profile, as described in AppNote0020.
 
 Deleting a Profile only affects that store.
