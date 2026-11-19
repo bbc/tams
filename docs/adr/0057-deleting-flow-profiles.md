@@ -44,7 +44,7 @@ The existing rule that Profiles are immutable is unchanged, since deleting a Pro
 
 ### Implementation
 
-Implemented in [PR #TBC](https://github.com/bbc/tams/pulls)
+Implemented in [PR #250](https://github.com/bbc/tams/pull/250)
 
 ## Pros and Cons of the Options
 
