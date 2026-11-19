@@ -56,6 +56,19 @@ Status: **Proposed**
 Suggested as a way to build lightweight Attribute-based Access Control in [AppNote0016: Authorisation in TAMS workflows](./0016-authorisation-in-tams-workflows.md).
 A comma seperated list of auth classes used to derive permissions on the Flow.
 
+### c2pa-live-method
+
+Status: **Proposed**
+
+Proposed in [APPNOTE0011 - C2PA provenance across related Sources and Flows](../appnotes/0011-c2pa.md).
+
+Signals the C2PA live media method used in a Flow.
+Set a single string value alongside `c2pa-provenance`:
+
+* `per-segment-manifest`: Per-segment C2PA Manifest Box method (C2PA Section 15.4)
+* `verifiable-segment-info`: Verifiable Segment Info method (C2PA Section 15.5)
+* No Tag: The method is unknown.
+
 ### c2pa-provenance
 
 Status: **Proposed**
