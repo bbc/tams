@@ -5,7 +5,8 @@ This repository contains API definitions for a Time-addressable Media Store (TAM
 ## Overview
 
 Time-addressable media is defined by a timeline, with media elements placed upon it, building upon concepts familiar from IMF.
-Media stored in TAMS are identified with UUIDs according to the scheme used in [AMWA NMOS IS-04](https://specs.amwa.tv/is-04/releases/v1.3.2/APIs/schemas/).
+Media stored in TAMS are identified with UUIDs as defined in [RFC9562](https://www.rfc-editor.org/rfc/rfc9562), following the identity model used in [AMWA NMOS IS-04](https://specs.amwa.tv/is-04/releases/v1.3.2/APIs/schemas/).
+Note that NMOS IS-04 currently only accepts UUID versions 1-5 (see [AMWA-TV/is-04#205](https://github.com/AMWA-TV/is-04/issues/205)), so stores which expose identifiers to NMOS systems SHOULD use those versions until NMOS supports the newer versions.
 Once written, the media, and their association with the timeline, are immutable.
 
 Thanks to this immutability, a UUID and a timerange always refers to a specific sequence of media.
