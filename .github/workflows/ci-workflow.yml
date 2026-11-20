@@ -22,6 +22,10 @@ on:
         default: false
         type: boolean
 
+# Read-only token by default, a job that needs more declares it
+permissions:
+  contents: read
+
 jobs:
   CI:
     name: CI
@@ -38,6 +42,10 @@ jobs:
 
   configure_build:
     name: Configure Build
+    # The lastSuccessful step lists the runs of this workflow, the rest only reads the repository
+    permissions:
+      contents: read
+      actions: read
     runs-on: ubuntu-22.04
     if: ${{ ! (( github.event_name == 'pull_request' ) && github.event.pull_request.head.repo.fork ) }}
     outputs:
