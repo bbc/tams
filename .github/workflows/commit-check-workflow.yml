@@ -15,6 +15,7 @@ jobs:
           fetch-depth: ${{github.event.pull_request.commits}} # only checkout commits from this PR
           repository: ${{github.event.pull_request.head.repo.full_name}}
           ref: ${{github.event.pull_request.head.ref}}
+          persist-credentials: false
 
       - name: Check PR commit messages don't start with 'FIXUP'
         run: "[ $(git log --grep '^FIXUP' | wc -c) -eq 0 ]"

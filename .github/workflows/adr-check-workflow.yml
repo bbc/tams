@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: Check out PR code
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - name: Check ADRs aren't still marked as "proposed"
         working-directory: ./docs/adr
