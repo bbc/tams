@@ -15,7 +15,7 @@ jobs:
       releaseRef: refs/tags/${{ steps.nextVersion.outputs.version }}
     steps:
       - name: Check out repository code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.4.0
         with:
           ssh-key: ${{ secrets.WRITE_ACCESS_DEPLOY_KEY }}
           fetch-depth: 0 # check out entire repo for version calculation
@@ -40,7 +40,7 @@ jobs:
 
       - name: Create release
         id: release
-        uses: actions/github-script@v7
+        uses: actions/github-script@v7.1.0
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
           script: |
