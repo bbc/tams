@@ -10,7 +10,9 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Check out PR code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.4.0
+        with:
+          persist-credentials: false
 
       - name: Check ADRs aren't still marked as "proposed"
         working-directory: ./docs/adr

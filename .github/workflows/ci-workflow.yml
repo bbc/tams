@@ -22,13 +22,19 @@ on:
         default: false
         type: boolean
 
+# Read-only token by default, a job that needs more declares it
+permissions:
+  contents: read
+
 jobs:
   CI:
     name: CI
     runs-on: ubuntu-22.04
     steps:
       - name: Check out repository code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.4.0
+        with:
+          persist-credentials: false
 
       - name: Lint Markdown docs
         run: make lint-markdown
@@ -38,6 +44,10 @@ jobs:
 
   configure_build:
     name: Configure Build
+    # The lastSuccessful step lists the runs of this workflow, the rest only reads the repository
+    permissions:
+      contents: read
+      actions: read
     runs-on: ubuntu-22.04
     if: ${{ ! (( github.event_name == 'pull_request' ) && github.event.pull_request.head.repo.fork ) }}
     outputs:
@@ -45,9 +55,10 @@ jobs:
       shouldUpload: ${{ steps.shouldUpload.outputs.upload }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.4.0
         with:
           fetch-depth: 0 # check out the entire repo history for SHA verification in lastSuccessful step
+          persist-credentials: false
 
       - name: Identify latest successful run
         id: lastSuccessful
@@ -70,7 +81,7 @@ jobs:
 
       - name: Get Tags
         id: get_tags
-        uses: octokit/request-action@v2.x
+        uses: octokit/request-action@v2.4.0
         if: ${{ inputs.forceDocsUpload || ( steps.shouldUpload.outputs.upload == 'true' ) }}
         with:
           route: GET /repos/${{ github.repository }}/git/matching-refs/tags
@@ -99,15 +110,16 @@ jobs:
         branch: ${{ fromJSON(needs.configure_build.outputs.branches_list) }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.4.0
         with:
           ref: ${{ matrix.branch }}
+          persist-credentials: false
 
       - name: Render API docs
         run: make render
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.6.2
         if: ${{ inputs.forceDocsUpload || ( needs.configure_build.outputs.shouldUpload == 'true' ) }}
         with:
           name: ${{ strategy.job-index }}
@@ -131,12 +143,13 @@ jobs:
     if: ${{ inputs.forceDocsUpload || ( needs.configure_build.outputs.shouldUpload == 'true' ) }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.4.0
         with:
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Setup Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v5.0.0
 
       - name: Download artifacts
         run: gh run download ${{ vars.GITHUB_RUN_ID }} --dir branches
@@ -163,13 +176,13 @@ jobs:
           echo "</p></body></html>" >> index.html
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v3.0.1
         with:
           path: ./public/
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v4.0.5
 
       - name: Adding summary
         run: |
