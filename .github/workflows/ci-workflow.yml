@@ -81,7 +81,7 @@ jobs:
 
       - name: Get Tags
         id: get_tags
-        uses: octokit/request-action@v2.x
+        uses: octokit/request-action@v2.4.0
         if: ${{ inputs.forceDocsUpload || ( steps.shouldUpload.outputs.upload == 'true' ) }}
         with:
           route: GET /repos/${{ github.repository }}/git/matching-refs/tags
